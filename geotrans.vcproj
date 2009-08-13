@@ -19,8 +19,8 @@
        <Configurations>^M
                <Configuration^M
                        Name="Debug|Win32"^M
-                       OutputDirectory=".\."^M
-                       IntermediateDirectory=".\."^M
+                       OutputDirectory="$(SolutionDir)lib_$(PlatformName)"^M
+                       IntermediateDirectory="_MSVC_$(PlatformName)_$(ConfigurationName)"^M
                        ConfigurationType="4"^M
                        InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"^M
                        UseOfMFC="0"^M
@@ -47,13 +47,13 @@
                                AdditionalIncludeDirectories="dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm"^M
                                PreprocessorDefinitions="WIN32;_DEBUG;_LIB;LITTLE_ENDIAN;_CRT_SECURE_NO_WARNINGS"^M
                                StringPooling="true"^M
-                               MinimalRebuild="true"^M
+                               MinimalRebuild="false"^M
                                BasicRuntimeChecks="3"^M
                                RuntimeLibrary="3"^M
                                PrecompiledHeaderFile=".\./dtcc.pch"^M
-                               AssemblerListingLocation=".\./"^M
-                               ObjectFile=".\./"^M
-                               ProgramDataBaseFileName=".\./"^M
+                               AssemblerListingLocation=""^M
+                               ObjectFile="$(IntDir)\"^M
+                               ProgramDataBaseFileName="$(IntDir)\vc80.pdb"^M
                                BrowseInformation="1"^M
                                WarningLevel="4"^M
                                SuppressStartupBanner="true"^M
@@ -72,7 +72,7 @@
                        />^M
                        <Tool^M
                                Name="VCLibrarianTool"^M
-                               OutputFile="geotransd.lib"^M
+                               OutputFile="$(ProjectName)-d.lib"^M
                                SuppressStartupBanner="true"^M
                        />^M
                        <Tool^M
@@ -95,8 +95,8 @@
                </Configuration>^M
                <Configuration^M
                        Name="Debug|x64"^M
-                       OutputDirectory="$(PlatformName)\$(ConfigurationName)"^M
-                       IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"^M
+                       OutputDirectory="$(SolutionDir)lib_$(PlatformName)"^M
+                       IntermediateDirectory="_MSVC_$(PlatformName)_$(ConfigurationName)"^M
                        ConfigurationType="4"^M
                        InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"^M
                        UseOfMFC="0"^M
@@ -124,17 +124,17 @@
                                AdditionalIncludeDirectories="dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm"^M
                                PreprocessorDefinitions="WIN32;_DEBUG;_LIB;LITTLE_ENDIAN;_CRT_SECURE_NO_WARNINGS"^M
                                StringPooling="true"^M
-                               MinimalRebuild="true"^M
+                               MinimalRebuild="false"^M
                                BasicRuntimeChecks="3"^M
                                RuntimeLibrary="3"^M
                                PrecompiledHeaderFile=".\./dtcc.pch"^M
-                               AssemblerListingLocation=".\./"^M
-                               ObjectFile=".\./"^M
-                               ProgramDataBaseFileName=".\./"^M
+                               AssemblerListingLocation=""^M
+                               ObjectFile="$(IntDir)\"^M
+                               ProgramDataBaseFileName="$(IntDir)\vc80.pdb"^M
                                BrowseInformation="1"^M
                                WarningLevel="4"^M
                                SuppressStartupBanner="true"^M
-                               DebugInformationFormat="3"^M
+                               DebugInformationFormat="1"^M
                        />^M
                        <Tool^M
                                Name="VCManagedResourceCompilerTool"^M
@@ -149,7 +149,7 @@
                        />^M
                        <Tool^M
                                Name="VCLibrarianTool"^M
-                               OutputFile="geotransd.lib"^M
+                               OutputFile="$(ProjectName)-d.lib"^M
                                SuppressStartupBanner="true"^M
                        />^M
                        <Tool^M
@@ -172,8 +172,8 @@
                </Configuration>^M
                <Configuration^M
                        Name="Release|Win32"^M
-                       OutputDirectory=".\./Release"^M
-                       IntermediateDirectory=".\./Release"^M
+                       OutputDirectory="$(SolutionDir)lib_$(PlatformName)"^M
+                       IntermediateDirectory="_MSVC_$(PlatformName)_$(ConfigurationName)"^M
                        ConfigurationType="4"^M
                        InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"^M
                        UseOfMFC="0"^M
@@ -204,9 +204,9 @@
                                RuntimeLibrary="0"^M
                                EnableFunctionLevelLinking="true"^M
                                PrecompiledHeaderFile=".\./Release/dtcc.pch"^M
-                               AssemblerListingLocation=".\./Release/"^M
-                               ObjectFile=".\./Release/"^M
-                               ProgramDataBaseFileName=".\./Release/"^M
+                               AssemblerListingLocation=""^M
+                               ObjectFile="$(IntDir)\"^M
+                               ProgramDataBaseFileName="$(IntDir)\vc80.pdb"^M
                                WarningLevel="2"^M
                                SuppressStartupBanner="true"^M
                        />^M
@@ -223,7 +223,7 @@
                        />^M
                        <Tool^M
                                Name="VCLibrarianTool"^M
-                               OutputFile="geotranss.lib"^M
+                               OutputFile="$(ProjectName)-s.lib"^M
                                SuppressStartupBanner="true"^M
                        />^M
                        <Tool^M
@@ -246,8 +246,8 @@
                </Configuration>^M
                <Configuration^M
                        Name="Release|x64"^M
-                       OutputDirectory="$(PlatformName)\$(ConfigurationName)"^M
-                       IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"^M
+                       OutputDirectory="$(SolutionDir)lib_$(PlatformName)"^M
+                       IntermediateDirectory="_MSVC_$(PlatformName)_$(ConfigurationName)"^M
                        ConfigurationType="4"^M
                        InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"^M
                        UseOfMFC="0"^M
@@ -279,9 +279,9 @@
                                RuntimeLibrary="0"^M
                                EnableFunctionLevelLinking="true"^M
                                PrecompiledHeaderFile=".\./Release/dtcc.pch"^M
-                               AssemblerListingLocation=".\./Release/"^M
-                               ObjectFile=".\./Release/"^M
-                               ProgramDataBaseFileName=".\./Release/"^M
+                               AssemblerListingLocation=""^M
+                               ObjectFile="$(IntDir)\"^M
+                               ProgramDataBaseFileName="$(IntDir)\vc80.pdb"^M
                                WarningLevel="2"^M
                                SuppressStartupBanner="true"^M
                        />^M
@@ -298,7 +298,7 @@
                        />^M
                        <Tool^M
                                Name="VCLibrarianTool"^M
-                               OutputFile="geotranss.lib"^M
+                               OutputFile="$(ProjectName)-s.lib"^M
                                SuppressStartupBanner="true"^M
                        />^M
                        <Tool^M
@@ -321,8 +321,8 @@
                </Configuration>^M
                <Configuration^M
                        Name="ReleaseDLL|Win32"^M
-                       OutputDirectory="$(ConfigurationName)"^M
-                       IntermediateDirectory="$(ConfigurationName)"^M
+                       OutputDirectory="$(SolutionDir)lib_$(PlatformName)"^M
+                       IntermediateDirectory="_MSVC_$(PlatformName)_$(ConfigurationName)"^M
                        ConfigurationType="4"^M
                        InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"^M
                        UseOfMFC="0"^M
@@ -353,9 +353,9 @@
                                RuntimeLibrary="2"^M
                                EnableFunctionLevelLinking="true"^M
                                PrecompiledHeaderFile=".\./Release/dtcc.pch"^M
-                               AssemblerListingLocation=".\./Release/"^M
-                               ObjectFile=".\./Release/"^M
-                               ProgramDataBaseFileName=".\./Release/"^M
+                               AssemblerListingLocation=""^M
+                               ObjectFile="$(IntDir)\"^M
+                               ProgramDataBaseFileName="$(IntDir)\vc80.pdb"^M
                                WarningLevel="2"^M
                                SuppressStartupBanner="true"^M
                        />^M
@@ -372,7 +372,7 @@
                        />^M
                        <Tool^M
                                Name="VCLibrarianTool"^M
-                               OutputFile="geotrans.lib"^M
+                               OutputFile="$(ProjectName).lib"^M
                                SuppressStartupBanner="true"^M
                        />^M
                        <Tool^M
@@ -395,8 +395,8 @@
                </Configuration>^M
                <Configuration^M
                        Name="ReleaseDLL|x64"^M
-                       OutputDirectory="$(PlatformName)\$(ConfigurationName)"^M
-                       IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"^M
+                       OutputDirectory="$(SolutionDir)lib_$(PlatformName)"^M
+                       IntermediateDirectory="_MSVC_$(PlatformName)_$(ConfigurationName)"^M
                        ConfigurationType="4"^M
                        InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"^M
                        UseOfMFC="0"^M
@@ -428,9 +428,9 @@
                                RuntimeLibrary="2"^M
                                EnableFunctionLevelLinking="true"^M
                                PrecompiledHeaderFile=".\./Release/dtcc.pch"^M
-                               AssemblerListingLocation=".\./Release/"^M
-                               ObjectFile=".\./Release/"^M
-                               ProgramDataBaseFileName=".\./Release/"^M
+                               AssemblerListingLocation=""^M
+                               ObjectFile="$(IntDir)\"^M
+                               ProgramDataBaseFileName="$(IntDir)\vc80.pdb"^M
                                WarningLevel="2"^M
                                SuppressStartupBanner="true"^M
                        />^M
@@ -447,7 +447,7 @@
                        />^M
                        <Tool^M
                                Name="VCLibrarianTool"^M
-                               OutputFile="geotrans.lib"^M
+                               OutputFile="$(ProjectName).lib"^M
                                SuppressStartupBanner="true"^M
                        />^M
                        <Tool^M
