@@ -1,0 +1,647 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|Win32">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|x64">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{11028FBC-A980-4451-8B00-1D3997B7994A}</ProjectGuid>
+    <RootNamespace>geotrans</RootNamespace>
+    <ProjectName>geotrans</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)lib_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_MSVC_$(Platform)_$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)lib_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_MSVC_$(Platform)_$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)lib_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_MSVC_$(Platform)_$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)lib_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_MSVC_$(Platform)_$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">$(SolutionDir)lib_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">_MSVC_$(Platform)_$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">$(SolutionDir)lib_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">_MSVC_$(Platform)_$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;LITTLE_ENDIAN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\./dtcc.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>
+      </AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <BrowseInformation>
+      </BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)-d.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>dtcc.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>REM pushd works for case where $(SolutionDir) is a UNC path (cd doesn%27t work)
+pushd $(SolutionDir)
+if exist include\geotrans goto theend
+mkdir include\geotrans
+echo "Copying include files into include\geotrans"
+pushd include\geotrans
+REM triple quotes for case where $(ProjectDir) is a UNC path with spaces
+copy """$(ProjectDir)dt_cc\albers\*.h"""
+copy """$(ProjectDir)dt_cc\azeq\*.h"""
+copy """$(ProjectDir)dt_cc\bng\*.h"""
+copy """$(ProjectDir)dt_cc\bonne\*.h"""
+copy """$(ProjectDir)dt_cc\cassini\*.h"""
+copy """$(ProjectDir)dt_cc\cyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\datum\*.h"""
+copy """$(ProjectDir)dt_cc\eckert4\*.h"""
+copy """$(ProjectDir)dt_cc\eckert6\*.h"""
+copy """$(ProjectDir)dt_cc\ellipse\*.h"""
+copy """$(ProjectDir)dt_cc\eqdcyl\*.h"""
+copy """$(ProjectDir)dt_cc\gars\*.h"""
+copy """$(ProjectDir)dt_cc\geocent\*.h"""
+copy """$(ProjectDir)dt_cc\geoid\*.h"""
+copy """$(ProjectDir)dt_cc\georef\*.h"""
+copy """$(ProjectDir)dt_cc\gnomonic\*.h"""
+copy """$(ProjectDir)dt_cc\grinten\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_1\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_2\*.h"""
+copy """$(ProjectDir)dt_cc\loccart\*.h"""
+copy """$(ProjectDir)dt_cc\mercator\*.h"""
+copy """$(ProjectDir)dt_cc\mgrs\*.h"""
+copy """$(ProjectDir)dt_cc\miller\*.h"""
+copy """$(ProjectDir)dt_cc\mollweid\*.h"""
+copy """$(ProjectDir)dt_cc\neys\*.h"""
+copy """$(ProjectDir)dt_cc\nzmg\*.h"""
+copy """$(ProjectDir)dt_cc\omerc\*.h"""
+copy """$(ProjectDir)dt_cc\orthogr\*.h"""
+copy """$(ProjectDir)dt_cc\polarst\*.h"""
+copy """$(ProjectDir)dt_cc\polycon\*.h"""
+copy """$(ProjectDir)dt_cc\sinusoid\*.h"""
+copy """$(ProjectDir)dt_cc\stereogr\*.h"""
+copy """$(ProjectDir)dt_cc\threads\*.h"""
+copy """$(ProjectDir)dt_cc\tranmerc\*.h"""
+copy """$(ProjectDir)dt_cc\trcyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\ups\*.h"""
+copy """$(ProjectDir)dt_cc\usng\*.h"""
+copy """$(ProjectDir)dt_cc\utm\*.h"""
+copy """$(ProjectDir)engine\src\*.h"""
+popd
+:theend
+popd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;_LIB;LITTLE_ENDIAN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\./dtcc.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>
+      </AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <BrowseInformation>
+      </BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)-d.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>dtcc.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>REM pushd works for case where $(SolutionDir) is a UNC path (cd doesn%27t work)
+pushd $(SolutionDir)
+if exist include\geotrans goto theend
+mkdir include\geotrans
+echo "Copying include files into include\geotrans"
+pushd include\geotrans
+REM triple quotes for case where $(ProjectDir) is a UNC path with spaces
+copy """$(ProjectDir)dt_cc\albers\*.h"""
+copy """$(ProjectDir)dt_cc\azeq\*.h"""
+copy """$(ProjectDir)dt_cc\bng\*.h"""
+copy """$(ProjectDir)dt_cc\bonne\*.h"""
+copy """$(ProjectDir)dt_cc\cassini\*.h"""
+copy """$(ProjectDir)dt_cc\cyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\datum\*.h"""
+copy """$(ProjectDir)dt_cc\eckert4\*.h"""
+copy """$(ProjectDir)dt_cc\eckert6\*.h"""
+copy """$(ProjectDir)dt_cc\ellipse\*.h"""
+copy """$(ProjectDir)dt_cc\eqdcyl\*.h"""
+copy """$(ProjectDir)dt_cc\gars\*.h"""
+copy """$(ProjectDir)dt_cc\geocent\*.h"""
+copy """$(ProjectDir)dt_cc\geoid\*.h"""
+copy """$(ProjectDir)dt_cc\georef\*.h"""
+copy """$(ProjectDir)dt_cc\gnomonic\*.h"""
+copy """$(ProjectDir)dt_cc\grinten\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_1\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_2\*.h"""
+copy """$(ProjectDir)dt_cc\loccart\*.h"""
+copy """$(ProjectDir)dt_cc\mercator\*.h"""
+copy """$(ProjectDir)dt_cc\mgrs\*.h"""
+copy """$(ProjectDir)dt_cc\miller\*.h"""
+copy """$(ProjectDir)dt_cc\mollweid\*.h"""
+copy """$(ProjectDir)dt_cc\neys\*.h"""
+copy """$(ProjectDir)dt_cc\nzmg\*.h"""
+copy """$(ProjectDir)dt_cc\omerc\*.h"""
+copy """$(ProjectDir)dt_cc\orthogr\*.h"""
+copy """$(ProjectDir)dt_cc\polarst\*.h"""
+copy """$(ProjectDir)dt_cc\polycon\*.h"""
+copy """$(ProjectDir)dt_cc\sinusoid\*.h"""
+copy """$(ProjectDir)dt_cc\stereogr\*.h"""
+copy """$(ProjectDir)dt_cc\threads\*.h"""
+copy """$(ProjectDir)dt_cc\tranmerc\*.h"""
+copy """$(ProjectDir)dt_cc\trcyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\ups\*.h"""
+copy """$(ProjectDir)dt_cc\usng\*.h"""
+copy """$(ProjectDir)dt_cc\utm\*.h"""
+copy """$(ProjectDir)engine\src\*.h"""
+popd
+:theend
+popd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\./Release/dtcc.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>
+      </AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level2</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)-s.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\./Release/dtcc.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>REM pushd works for case where $(SolutionDir) is a UNC path (cd doesn%27t work)
+pushd $(SolutionDir)
+if exist include\geotrans goto theend
+mkdir include\geotrans
+echo "Copying include files into include\geotrans"
+pushd include\geotrans
+REM triple quotes for case where $(ProjectDir) is a UNC path with spaces
+copy """$(ProjectDir)dt_cc\albers\*.h"""
+copy """$(ProjectDir)dt_cc\azeq\*.h"""
+copy """$(ProjectDir)dt_cc\bng\*.h"""
+copy """$(ProjectDir)dt_cc\bonne\*.h"""
+copy """$(ProjectDir)dt_cc\cassini\*.h"""
+copy """$(ProjectDir)dt_cc\cyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\datum\*.h"""
+copy """$(ProjectDir)dt_cc\eckert4\*.h"""
+copy """$(ProjectDir)dt_cc\eckert6\*.h"""
+copy """$(ProjectDir)dt_cc\ellipse\*.h"""
+copy """$(ProjectDir)dt_cc\eqdcyl\*.h"""
+copy """$(ProjectDir)dt_cc\gars\*.h"""
+copy """$(ProjectDir)dt_cc\geocent\*.h"""
+copy """$(ProjectDir)dt_cc\geoid\*.h"""
+copy """$(ProjectDir)dt_cc\georef\*.h"""
+copy """$(ProjectDir)dt_cc\gnomonic\*.h"""
+copy """$(ProjectDir)dt_cc\grinten\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_1\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_2\*.h"""
+copy """$(ProjectDir)dt_cc\loccart\*.h"""
+copy """$(ProjectDir)dt_cc\mercator\*.h"""
+copy """$(ProjectDir)dt_cc\mgrs\*.h"""
+copy """$(ProjectDir)dt_cc\miller\*.h"""
+copy """$(ProjectDir)dt_cc\mollweid\*.h"""
+copy """$(ProjectDir)dt_cc\neys\*.h"""
+copy """$(ProjectDir)dt_cc\nzmg\*.h"""
+copy """$(ProjectDir)dt_cc\omerc\*.h"""
+copy """$(ProjectDir)dt_cc\orthogr\*.h"""
+copy """$(ProjectDir)dt_cc\polarst\*.h"""
+copy """$(ProjectDir)dt_cc\polycon\*.h"""
+copy """$(ProjectDir)dt_cc\sinusoid\*.h"""
+copy """$(ProjectDir)dt_cc\stereogr\*.h"""
+copy """$(ProjectDir)dt_cc\threads\*.h"""
+copy """$(ProjectDir)dt_cc\tranmerc\*.h"""
+copy """$(ProjectDir)dt_cc\trcyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\ups\*.h"""
+copy """$(ProjectDir)dt_cc\usng\*.h"""
+copy """$(ProjectDir)dt_cc\utm\*.h"""
+copy """$(ProjectDir)engine\src\*.h"""
+popd
+:theend
+popd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\./Release/dtcc.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>
+      </AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level2</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)-s.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\./Release/dtcc.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>REM pushd works for case where $(SolutionDir) is a UNC path (cd doesn%27t work)
+pushd $(SolutionDir)
+if exist include\geotrans goto theend
+mkdir include\geotrans
+echo "Copying include files into include\geotrans"
+pushd include\geotrans
+REM triple quotes for case where $(ProjectDir) is a UNC path with spaces
+copy """$(ProjectDir)dt_cc\albers\*.h"""
+copy """$(ProjectDir)dt_cc\azeq\*.h"""
+copy """$(ProjectDir)dt_cc\bng\*.h"""
+copy """$(ProjectDir)dt_cc\bonne\*.h"""
+copy """$(ProjectDir)dt_cc\cassini\*.h"""
+copy """$(ProjectDir)dt_cc\cyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\datum\*.h"""
+copy """$(ProjectDir)dt_cc\eckert4\*.h"""
+copy """$(ProjectDir)dt_cc\eckert6\*.h"""
+copy """$(ProjectDir)dt_cc\ellipse\*.h"""
+copy """$(ProjectDir)dt_cc\eqdcyl\*.h"""
+copy """$(ProjectDir)dt_cc\gars\*.h"""
+copy """$(ProjectDir)dt_cc\geocent\*.h"""
+copy """$(ProjectDir)dt_cc\geoid\*.h"""
+copy """$(ProjectDir)dt_cc\georef\*.h"""
+copy """$(ProjectDir)dt_cc\gnomonic\*.h"""
+copy """$(ProjectDir)dt_cc\grinten\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_1\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_2\*.h"""
+copy """$(ProjectDir)dt_cc\loccart\*.h"""
+copy """$(ProjectDir)dt_cc\mercator\*.h"""
+copy """$(ProjectDir)dt_cc\mgrs\*.h"""
+copy """$(ProjectDir)dt_cc\miller\*.h"""
+copy """$(ProjectDir)dt_cc\mollweid\*.h"""
+copy """$(ProjectDir)dt_cc\neys\*.h"""
+copy """$(ProjectDir)dt_cc\nzmg\*.h"""
+copy """$(ProjectDir)dt_cc\omerc\*.h"""
+copy """$(ProjectDir)dt_cc\orthogr\*.h"""
+copy """$(ProjectDir)dt_cc\polarst\*.h"""
+copy """$(ProjectDir)dt_cc\polycon\*.h"""
+copy """$(ProjectDir)dt_cc\sinusoid\*.h"""
+copy """$(ProjectDir)dt_cc\stereogr\*.h"""
+copy """$(ProjectDir)dt_cc\threads\*.h"""
+copy """$(ProjectDir)dt_cc\tranmerc\*.h"""
+copy """$(ProjectDir)dt_cc\trcyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\ups\*.h"""
+copy """$(ProjectDir)dt_cc\usng\*.h"""
+copy """$(ProjectDir)dt_cc\utm\*.h"""
+copy """$(ProjectDir)engine\src\*.h"""
+popd
+:theend
+popd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\./Release/dtcc.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>
+      </AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level2</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\./Release/dtcc.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>REM pushd works for case where $(SolutionDir) is a UNC path (cd doesn%27t work)
+pushd $(SolutionDir)
+if exist include\geotrans goto theend
+mkdir include\geotrans
+echo "Copying include files into include\geotrans"
+pushd include\geotrans
+REM triple quotes for case where $(ProjectDir) is a UNC path with spaces
+copy """$(ProjectDir)dt_cc\albers\*.h"""
+copy """$(ProjectDir)dt_cc\azeq\*.h"""
+copy """$(ProjectDir)dt_cc\bng\*.h"""
+copy """$(ProjectDir)dt_cc\bonne\*.h"""
+copy """$(ProjectDir)dt_cc\cassini\*.h"""
+copy """$(ProjectDir)dt_cc\cyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\datum\*.h"""
+copy """$(ProjectDir)dt_cc\eckert4\*.h"""
+copy """$(ProjectDir)dt_cc\eckert6\*.h"""
+copy """$(ProjectDir)dt_cc\ellipse\*.h"""
+copy """$(ProjectDir)dt_cc\eqdcyl\*.h"""
+copy """$(ProjectDir)dt_cc\gars\*.h"""
+copy """$(ProjectDir)dt_cc\geocent\*.h"""
+copy """$(ProjectDir)dt_cc\geoid\*.h"""
+copy """$(ProjectDir)dt_cc\georef\*.h"""
+copy """$(ProjectDir)dt_cc\gnomonic\*.h"""
+copy """$(ProjectDir)dt_cc\grinten\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_1\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_2\*.h"""
+copy """$(ProjectDir)dt_cc\loccart\*.h"""
+copy """$(ProjectDir)dt_cc\mercator\*.h"""
+copy """$(ProjectDir)dt_cc\mgrs\*.h"""
+copy """$(ProjectDir)dt_cc\miller\*.h"""
+copy """$(ProjectDir)dt_cc\mollweid\*.h"""
+copy """$(ProjectDir)dt_cc\neys\*.h"""
+copy """$(ProjectDir)dt_cc\nzmg\*.h"""
+copy """$(ProjectDir)dt_cc\omerc\*.h"""
+copy """$(ProjectDir)dt_cc\orthogr\*.h"""
+copy """$(ProjectDir)dt_cc\polarst\*.h"""
+copy """$(ProjectDir)dt_cc\polycon\*.h"""
+copy """$(ProjectDir)dt_cc\sinusoid\*.h"""
+copy """$(ProjectDir)dt_cc\stereogr\*.h"""
+copy """$(ProjectDir)dt_cc\threads\*.h"""
+copy """$(ProjectDir)dt_cc\tranmerc\*.h"""
+copy """$(ProjectDir)dt_cc\trcyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\ups\*.h"""
+copy """$(ProjectDir)dt_cc\usng\*.h"""
+copy """$(ProjectDir)dt_cc\utm\*.h"""
+copy """$(ProjectDir)engine\src\*.h"""
+popd
+:theend
+popd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\./Release/dtcc.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>
+      </AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc80.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level2</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\./Release/dtcc.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>REM pushd works for case where $(SolutionDir) is a UNC path (cd doesn%27t work)
+pushd $(SolutionDir)
+if exist include\geotrans goto theend
+mkdir include\geotrans
+echo "Copying include files into include\geotrans"
+pushd include\geotrans
+REM triple quotes for case where $(ProjectDir) is a UNC path with spaces
+copy """$(ProjectDir)dt_cc\albers\*.h"""
+copy """$(ProjectDir)dt_cc\azeq\*.h"""
+copy """$(ProjectDir)dt_cc\bng\*.h"""
+copy """$(ProjectDir)dt_cc\bonne\*.h"""
+copy """$(ProjectDir)dt_cc\cassini\*.h"""
+copy """$(ProjectDir)dt_cc\cyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\datum\*.h"""
+copy """$(ProjectDir)dt_cc\eckert4\*.h"""
+copy """$(ProjectDir)dt_cc\eckert6\*.h"""
+copy """$(ProjectDir)dt_cc\ellipse\*.h"""
+copy """$(ProjectDir)dt_cc\eqdcyl\*.h"""
+copy """$(ProjectDir)dt_cc\gars\*.h"""
+copy """$(ProjectDir)dt_cc\geocent\*.h"""
+copy """$(ProjectDir)dt_cc\geoid\*.h"""
+copy """$(ProjectDir)dt_cc\georef\*.h"""
+copy """$(ProjectDir)dt_cc\gnomonic\*.h"""
+copy """$(ProjectDir)dt_cc\grinten\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_1\*.h"""
+copy """$(ProjectDir)dt_cc\lambert_2\*.h"""
+copy """$(ProjectDir)dt_cc\loccart\*.h"""
+copy """$(ProjectDir)dt_cc\mercator\*.h"""
+copy """$(ProjectDir)dt_cc\mgrs\*.h"""
+copy """$(ProjectDir)dt_cc\miller\*.h"""
+copy """$(ProjectDir)dt_cc\mollweid\*.h"""
+copy """$(ProjectDir)dt_cc\neys\*.h"""
+copy """$(ProjectDir)dt_cc\nzmg\*.h"""
+copy """$(ProjectDir)dt_cc\omerc\*.h"""
+copy """$(ProjectDir)dt_cc\orthogr\*.h"""
+copy """$(ProjectDir)dt_cc\polarst\*.h"""
+copy """$(ProjectDir)dt_cc\polycon\*.h"""
+copy """$(ProjectDir)dt_cc\sinusoid\*.h"""
+copy """$(ProjectDir)dt_cc\stereogr\*.h"""
+copy """$(ProjectDir)dt_cc\threads\*.h"""
+copy """$(ProjectDir)dt_cc\tranmerc\*.h"""
+copy """$(ProjectDir)dt_cc\trcyleqa\*.h"""
+copy """$(ProjectDir)dt_cc\ups\*.h"""
+copy """$(ProjectDir)dt_cc\usng\*.h"""
+copy """$(ProjectDir)dt_cc\utm\*.h"""
+copy """$(ProjectDir)engine\src\*.h"""
+popd
+:theend
+popd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="dt_cc\albers\albers.c" />
+    <ClCompile Include="dt_cc\azeq\azeq.c" />
+    <ClCompile Include="dt_cc\bng\bng.c" />
+    <ClCompile Include="dt_cc\bonne\bonne.c" />
+    <ClCompile Include="dt_cc\cassini\cassini.c" />
+    <ClCompile Include="dt_cc\cyleqa\cyleqa.c" />
+    <ClCompile Include="dt_cc\datum\datum.c" />
+    <ClCompile Include="dt_cc\eckert4\eckert4.c" />
+    <ClCompile Include="dt_cc\eckert6\eckert6.c" />
+    <ClCompile Include="dt_cc\ellipse\ellipse.c" />
+    <ClCompile Include="engine\src\engine.c" />
+    <ClCompile Include="dt_cc\eqdcyl\eqdcyl.c" />
+    <ClCompile Include="dt_cc\gars\gars.c" />
+    <ClCompile Include="dt_cc\geocent\geocent.c" />
+    <ClCompile Include="dt_cc\geoid\geoid.c" />
+    <ClCompile Include="dt_cc\georef\georef.c" />
+    <ClCompile Include="dt_cc\gnomonic\gnomonic.c" />
+    <ClCompile Include="dt_cc\grinten\grinten.c" />
+    <ClCompile Include="dt_cc\lambert_1\lambert_1.c" />
+    <ClCompile Include="dt_cc\lambert_2\lambert_2.c" />
+    <ClCompile Include="dt_cc\loccart\loccart.c" />
+    <ClCompile Include="dt_cc\mercator\mercator.c" />
+    <ClCompile Include="dt_cc\mgrs\mgrs.c" />
+    <ClCompile Include="dt_cc\miller\miller.c" />
+    <ClCompile Include="dt_cc\mollweid\mollweid.c" />
+    <ClCompile Include="dt_cc\neys\neys.c" />
+    <ClCompile Include="dt_cc\nzmg\nzmg.c" />
+    <ClCompile Include="dt_cc\omerc\omerc.c" />
+    <ClCompile Include="dt_cc\orthogr\orthogr.c" />
+    <ClCompile Include="dt_cc\polarst\polarst.c" />
+    <ClCompile Include="dt_cc\polycon\polycon.c" />
+    <ClCompile Include="dt_cc\sinusoid\sinusoid.c" />
+    <ClCompile Include="dt_cc\stereogr\stereogr.c" />
+    <ClCompile Include="dt_cc\threads\threads.c" />
+    <ClCompile Include="dt_cc\tranmerc\tranmerc.c" />
+    <ClCompile Include="dt_cc\trcyleqa\trcyleqa.c" />
+    <ClCompile Include="dt_cc\ups\ups.c" />
+    <ClCompile Include="dt_cc\usng\usng.c" />
+    <ClCompile Include="dt_cc\utm\utm.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

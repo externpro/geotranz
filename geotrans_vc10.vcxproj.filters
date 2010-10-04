@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{81e64e00-fbdc-42e1-bede-df17c4772e2b}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{89139d5b-72eb-4cc6-988d-8dc8424e3638}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dt_cc\albers\albers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\azeq\azeq.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\bng\bng.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\bonne\bonne.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\cassini\cassini.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\cyleqa\cyleqa.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\datum\datum.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\eckert4\eckert4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\eckert6\eckert6.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\ellipse\ellipse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\src\engine.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\eqdcyl\eqdcyl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\gars\gars.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\geocent\geocent.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\geoid\geoid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\georef\georef.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\gnomonic\gnomonic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\grinten\grinten.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\lambert_1\lambert_1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\lambert_2\lambert_2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\loccart\loccart.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\mercator\mercator.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\mgrs\mgrs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\miller\miller.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\mollweid\mollweid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\neys\neys.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\nzmg\nzmg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\omerc\omerc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\orthogr\orthogr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\polarst\polarst.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\polycon\polycon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\sinusoid\sinusoid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\stereogr\stereogr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\threads\threads.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\tranmerc\tranmerc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\trcyleqa\trcyleqa.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\ups\ups.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\usng\usng.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dt_cc\utm\utm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
