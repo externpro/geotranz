@@ -98,6 +98,10 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">_MSVC_$(Platform)_$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">$(SolutionDir)lib_$(Platform)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">_MSVC_$(Platform)_$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)-d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)-d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)-s</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectName)-s</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -190,7 +194,7 @@ popd</Command>
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN64;_DEBUG;_LIB;LITTLE_ENDIAN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_LIB;LITTLE_ENDIAN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -359,7 +363,7 @@ popd</Command>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_LIB;LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -524,7 +528,7 @@ popd</Command>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>dt_cc\albers;dt_cc\azeq;dt_cc\bng;dt_cc\bonne;dt_cc\cassini;dt_cc\cyleqa;dt_cc\datum;dt_cc\eckert4;dt_cc\eckert6;dt_cc\ellipse;dt_cc\eqdcyl;dt_cc\gars;dt_cc\geocent;dt_cc\geoid;dt_cc\georef;dt_cc\gnomonic;dt_cc\grinten;dt_cc\lambert_1;dt_cc\lambert_2;dt_cc\loccart;dt_cc\mercator;dt_cc\mgrs;dt_cc\miller;dt_cc\mollweid;dt_cc\neys;dt_cc\nzmg;dt_cc\omerc;dt_cc\orthogr;dt_cc\polarst;dt_cc\polycon;dt_cc\sinusoid;dt_cc\stereogr;dt_cc\threads;dt_cc\tranmerc;dt_cc\trcyleqa;dt_cc\ups;dt_cc\usng;dt_cc\utm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_LIB;LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
