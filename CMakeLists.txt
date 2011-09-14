@@ -4,7 +4,7 @@ set(lib_name geotrans)
 if(MSVC)
   add_definitions(
     -D_CRT_SECURE_NO_WARNINGS
-  )
+    )
 endif()
 #######################################
 # include directories
@@ -47,7 +47,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/ups
   ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/usng
   ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/utm
-)
+  )
 #######################################
 # library sources
 set(${lib_name}_libsrcs
@@ -90,8 +90,7 @@ set(${lib_name}_libsrcs
   dt_cc/usng/usng.c
   dt_cc/utm/utm.c
   engine/src/engine.c
-)
+  )
 #######################################
 # library
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
-
