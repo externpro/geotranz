@@ -1,0 +1,32 @@
+COORDINATES: Geodetic
+DATUM: TOY-B1
+# ELLIPSOID: BR
+NO HEIGHT
+END OF HEADER
+
+# Mauritius
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+# Warning: Output Geodetic Coordinates:  Location is not within valid domain for current datum 
+-20.00000, 57.54222 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+# Warning: Output Geodetic Coordinates:  Location is not within valid domain for current datum 
+-20.00000, 57.54805 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+# Warning: Output Geodetic Coordinates:  Location is not within valid domain for current datum 
+-20.00000, 57.56945 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+# Warning: Output Geodetic Coordinates:  Location is not within valid domain for current datum 
+-20.00000, 57.65306 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+# Warning: Output Geodetic Coordinates:  Location is not within valid domain for current datum 
+-20.29332, 57.78139 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+# Warning: Output Geodetic Coordinates:  Location is not within valid domain for current datum 
+-20.52860, 57.51584 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+# Warning: Output Geodetic Coordinates:  Location is not within valid domain for current datum 
+-20.46666, 57.29556 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+# Warning: Output Geodetic Coordinates:  Location is not within valid domain for current datum 
+-20.00000, 57.54222 # CE90: Unk, LE90: Unk, SE90: Unk
+#

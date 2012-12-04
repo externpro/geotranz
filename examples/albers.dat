@@ -1,0 +1,29 @@
+PROJECTION: Albers Equal Area Conic
+DATUM: WGE
+# ELLIPSOID: WE
+CENTRAL MERIDIAN: 57.53847
+ORIGIN LATITUDE: -20.26430
+STANDARD PARALLEL ONE: -20.52861
+STANDARD PARALLEL TWO: -20.00000
+FALSE EASTING: 0
+FALSE NORTHING: 0
+END OF HEADER
+
+# Mauritius
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+788, 29982 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+1398, 29982 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+3637, 29982 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+12387, 29978 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+25768, -2510 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+-1965, -28539 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+-24948, -21700 # CE90: Unk, LE90: Unk, SE90: Unk
+# Warning: Input Geodetic Coordinates:  Location is not within valid domain for current datum 
+788, 29982 # CE90: Unk, LE90: Unk, SE90: Unk
+#

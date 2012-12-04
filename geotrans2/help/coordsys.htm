@@ -1,0 +1,1642 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="coordsys_files/filelist.xml">
+<title>Coordinate Reference Frames</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="country-region"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place"/>
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>150</w:Zoom>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Times;
+	panose-1:2 2 6 3 5 4 5 2 3 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:536902279 -2147483648 8 0 511 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<meta name=Template content="C:\Program Files\Microsoft Office\Office\html.dot">
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="9218"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor=white lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt'><b><span style='font-size:13.5pt'>Coordinate Reference
+Frames<o:p></o:p></span></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>This section describes each of the coordinate
+reference frame types currently supported by GEOTRANS.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#geocentric">Geocentric Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#loccart">Local Cartesian Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#geodetic">Geodetic Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#GEOREF">GEOREF Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#GARS">Global Area Reference System (GARS)
+Coordinates</a><span class=MsoHyperlink><o:p></o:p></span></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#MGRS">Military Grid Reference System (MGRS)
+Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#usng">United States National Grid (USNG)
+Coordinates</a><span class=MsoHyperlink><o:p></o:p></span></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#UTM">Universal Transverse Mercator (UTM)
+Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#UPS">Universal Polar Stereographic (UPS)
+Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#albers">Albers Equal Area Conic Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#azeq">Azimuthal Equidistant Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#bonne">Bonne Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#BNG">British National Grid Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#cassini">Cassini Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#cyleqa">Cylindrical Equal Area Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#eckert4">Eckert IV Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#eckert6">Eckert VI Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#eqdcyl">Equidistant Cylindrical Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#gnomonic">Gnomonic Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#lambert_1">Lambert Conformal Conic (1
+parallel) Projection</a><span class=MsoHyperlink><o:p></o:p></span></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#lambert">Lambert Conformal Conic (2 parallel)
+Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#Mercator">Mercator Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#miller">Miller Cylindrical Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#mollweide">Mollweide Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#nzmg">New Zealand Map Grid Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#neys">Ney's (Modified Lambert Conformal Conic)
+Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#omerc">Oblique Mercator Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#orthogr">Orthographic Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#polarst">Polar Stereographic Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#polyconic">Polyconic Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#sinusoidal">Sinusoidal Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#stereogr">Stereographic Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#trcyleqa">Transverse Cylindrical Equal Area
+Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#tranmerc">Transverse Mercator Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#grinten">Van der Grinten Projection</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><a href="#F16GRS">F-16 Grid Referense System Coordinates</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=geocentric></a><b>Geocentric
+Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="coordDescriptions.htm#geocentric">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#x">X</a> – the X
+coordinate value, in meters,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#y">Y</a> – the Y
+coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#z">Z</a> – the Z
+coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=loccart></a><b>Local
+Cartesian Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="coordDescriptions.htm#loccart">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#x">X</a> – the X coordinate
+value, in meters,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#y">Y</a> – the Y
+coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#z">Z</a> – the Z
+coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=geodetic></a><b>Geodetic
+Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="coordDescriptions.htm#geodetic">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#heighttype">Height
+Type</a> – the type of the height values used, No Height, Ellipsoid Height, <a
+name="OLE_LINK1"></a><a name="OLE_LINK2"><span style='mso-bookmark:OLE_LINK1'>MSL-EGM96-15M-BL
+Height (recommended), </span></a>MSL-EGM96-VG-NS Height, MSL-EGM84-10D-BL
+Height, or MSL-EGM84-10D-NS Height,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#latitude">Latitude</a>
+– the Latitude value, in degrees, degrees/minutes, or degrees/minutes/seconds,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#longitude">Longitude</a>
+– the Longitude value, in degrees, degrees/minutes, or degrees/minutes/seconds,
+and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#height">Height</a>
+– the height above the reference surface, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=GEOREF></a><b>GEOREF
+Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a href="coordDescriptions.htm#GEOREF">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify;tab-stops:.5in'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#GEOREF">GEOREF
+Coordinate String</a> – an alphanumeric string made up of four letters followed
+by up to ten digits.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=Mercator></a><a name=GARS></a><b>GARS
+Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a href="coordDescriptions.htm#GARS">Description</a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify;tab-stops:.5in'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#GARS">GARS
+Coordinate String</a> – an alphanumeric string made up of three digits,
+followed by two letters and two digits.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><b>Mercator Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#mercator">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#latTrueScale">Latitude_of_True_Scale</a>
+– a latitude value that specifies the parallel where the point scale factor is
+1.0,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the equator).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Note: The <a
+href="fields.htm#scaleFactor">Scale Factor</a> field is an <u>output</u> field.
+The Scale Factor value is calculated and displayed based on the ellipsoid
+parameters and the Latitude of True Scale.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=tranmerc></a><b>Transverse
+Mercator Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#tranmerc">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the parallel where the point
+scale factor is 1.0,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#scaleFactor">Scale
+Factor</a> – a real number between 0.3 and 3.0 that specifies the projection
+scale factor, the ratio between distances in the projection and distances on
+the surface of the reference ellipsoid,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the equator).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=UTM></a><b>Universal Transverse
+Mercator (UTM) Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#UTM">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#zone">Zone</a> –
+the UTM zone number,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#hemisphere">Hemisphere</a>
+– the hemisphere ('N' or 'S'),</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Zone Override:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#override">Override</a>
+– In the Output Area, allows you to specify in which UTM zone the output
+coordinates will be located.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=polarst></a><b>Polar
+Stereographic Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#polarst">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#lonDownFromPole">Longitude
+Down from Pole</a> – a longitude value that specifies the orientation of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#latTrueScale">Latitude
+of True Scale</a> – the latitude at which the scale factor is one,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the pole), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the pole).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=UPS></a><b>Universal Polar
+Stereographic (UPS) Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#UPS">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#hemisphere">Hemisphere</a>
+– the hemisphere ('N' or 'S'),</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=MGRS></a><b>Military Grid Reference
+System (MGRS) Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a href="coordDescriptions.htm#MGRS">Description</a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#MGRS">MGRS
+Coordinates</a> – an alphanumeric string made up of from zero to two digits, followed
+by three letters, followed by up to ten digits.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=albers></a><a name=usng></a><st1:place
+w:st="on"><st1:country-region w:st="on"><b>United States</b></st1:country-region></st1:place><b>
+National Grid (USNG) Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a href="coordDescriptions.htm#USNG">Description</a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#USNG">USNG
+Coordinates</a> – an alphanumeric string made up of from zero to two digits,
+followed by three letters, followed by up to ten digits.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><b>Albers Equal Area Conic Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#albers">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstStdParallel">1st
+Standard Parallel</a> – a latitude value that specifies one of the two the
+parallels where the point scale factor is 1.0,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstStdParallel">2nd
+Standard Parallel</a> – a latitude value that specifies one of the two the
+parallels where the point scale factor is 1.0,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=azeq></a><b>Azimuthal
+Equidistant Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#azeq">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=bonne></a><b>Bonne Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#bonne">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=BNG></a><b>British National
+Grid Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#BNG">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#BNGCoordStr">BNG
+Coordinate String</a> – an alphanumeric string made up of two letters followed
+by up to ten digits.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=cassini></a><b>Cassini
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#cassini">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=cyleqa></a><b>Cylindrical
+Equal Area Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#cyleqa">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=eckert4></a><b>Eckert IV
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#eckert4">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=eckert6></a><b>Eckert VI
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#eckert6">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=eqdcyl></a><b>Equidistant
+Cylindrical Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#eqdcyl">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=gnomonic></a><b>Gnomonic
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#gnomonic">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name="lambert_1"></a><b>Lambert
+Conformal Conic (1 parallel) Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#lambert_1">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#scaleFactor">Scale
+Factor</a> – a real number between 0.3 and 3.0 that specifies the projection
+scale factor, the ratio between distances in the projection and distances on
+the surface of the reference ellipsoid,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=lambert></a><b>Lambert
+Conformal Conic (2 parallel) Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#lambert">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstStdParallel">1st
+Standard Parallel</a> – a latitude value that specifies one of the two the
+parallels where the point scale factor is 1.0,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstStdParallel">2nd
+Standard Parallel</a> – a latitude value that specifies one of the two the
+parallels where the point scale factor is 1.0,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p class=MsoNormal style='margin-top:6.0pt;text-align:justify;line-height:18.0pt'>Note
+that when the two standard parallel parameters are both set to the same
+latitude value, the result is a Lambert Conformal Conic projection with one
+standard parallel at the specified latitude.<span style='mso-bidi-font-size:
+10.0pt;font-family:Times'><o:p></o:p></span></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=miller></a><b>Miller
+Cylindrical Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#miller">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X coordinate
+at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=mollweide></a><b>Mollweide
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#mollweide">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=nzmg></a><st1:place w:st="on"><st1:country-region
+ w:st="on"><b>New Zealand</b></st1:country-region></st1:place><b> Map Grid
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#nzmg">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=neys></a><b>Ney's (Modified
+Lambert Conformal Conic) Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#neys">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstStdParallel">1st
+Standard Parallel</a> – a latitude value that specifies one of the two the
+parallels where the point scale factor is 1.0,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Note: The <a
+href="fields.htm#firstStdParallel">2nd Standard Parallel</a> field is a <u>read
+only</u> field. The 2nd Standard Parallel value is fixed at 89 59 59.0.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=omerc></a><b>Oblique Mercator
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#omerc">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstLat">Latitude
+1</a> – latitude of the first point lying on the central line of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstLon">Longitude
+1</a> – longitude of the first point lying on the central line of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstLat">Latitude
+2</a> – latitude of the second point lying on the central line of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#firstLon">Longitude
+2</a> – longitude of the second point lying on the central line of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#scaleFactor">Scale
+Factor</a> – a real number between 0.3 and 3.0 that specifies the projection
+scale factor, the ratio between distances in the projection and distances on
+the surface of the reference ellipsoid,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=orthogr></a><b>Orthographic
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#orthogr">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X coordinate
+at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=polyconic></a><b>Polyconic
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#polyconic">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=sinusoidal></a><b>Sinusoidal
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#sinusoidal">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y coordinate
+at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=stereogr></a><b>Stereographic
+Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#stereogr">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=trcyleqa></a><b>Transverse
+Cylindrical Equal Area Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#trcyleqa">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#olat">Origin
+Latitude</a> – a latitude value that specifies the vertical center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#scaleFactor">Scale
+Factor</a> – a real number between 0.3 and 3.0 that specifies the projection
+scale factor, the ratio between distances in the projection and distances on
+the surface of the reference ellipsoid,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=grinten></a><b>Van der
+Grinten Projection<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a
+href="projectionDescriptions.htm#grinten">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#centMerid">Central
+Meridian</a> – a longitude value that specifies the horizontal center of the
+projection,</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseEasting">False
+Easting</a> – a coordinate value in meters that specifies the Easting/X
+coordinate at the origin of the projection (i.e., the <st1:place w:st="on">Central
+ Meridian</st1:place>), and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#falseNorthing">False
+Northing</a> – a coordinate value in meters that specifies the Northing/Y
+coordinate at the origin of the projection (i.e., the Origin Latitude).</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#easting">Easting/X</a>
+– the Easting/X coordinate value, in meters, and</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#northing">Northing/Y</a>
+– the Northing/Y coordinate value, in meters.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a name=F16GRS></a><b>F-16 Grid
+Reference System Coordinates<o:p></o:p></b></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><a href="coordDescriptions.htm#F16GRS">Description</a></p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Parameters:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'>None.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'>Coordinates:</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt;text-align:justify'><a href="fields.htm#F16GRS">F-16 GRS
+Coordinates</a> - an alphanumeric string made up of from zero to two digits,
+followed by three letters, followed by up to ten digits.</p>
+
+<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
+margin-bottom:.0001pt;text-align:justify'><o:p>&nbsp;</o:p></p>
+
+</div>
+
+</body>
+
+</html>
