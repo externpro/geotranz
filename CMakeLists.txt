@@ -1,3 +1,6 @@
+cmake_minimum_required(VERSION 2.8.5)
+project(geotrans)
+include(flags OPTIONAL)
 set(lib_name geotrans)
 #######################################
 # preprocessor
@@ -91,6 +94,59 @@ set(${lib_name}_libsrcs
   dt_cc/utm/utm.c
   engine/src/engine.c
   )
+set(${lib_name}_libhdrs
+  dt_cc/albers/albers.h
+  dt_cc/azeq/azeq.h
+  dt_cc/bng/bng.h
+  dt_cc/bonne/bonne.h
+  dt_cc/cassini/cassini.h
+  dt_cc/cyleqa/cyleqa.h
+  dt_cc/datum/datum.h
+  dt_cc/eckert4/eckert4.h
+  dt_cc/eckert6/eckert6.h
+  dt_cc/ellipse/ellipse.h
+  dt_cc/eqdcyl/eqdcyl.h
+  dt_cc/gars/gars.h
+  dt_cc/geocent/geocent.h
+  dt_cc/geoid/geoid.h
+  dt_cc/georef/georef.h
+  dt_cc/gnomonic/gnomonic.h
+  dt_cc/grinten/grinten.h
+  dt_cc/lambert_1/lambert_1.h
+  dt_cc/lambert_2/lambert_2.h
+  dt_cc/loccart/loccart.h
+  dt_cc/mercator/mercator.h
+  dt_cc/mgrs/mgrs.h
+  dt_cc/miller/miller.h
+  dt_cc/mollweid/mollweid.h
+  dt_cc/neys/neys.h
+  dt_cc/nzmg/nzmg.h
+  dt_cc/omerc/omerc.h
+  dt_cc/orthogr/orthogr.h
+  dt_cc/polarst/polarst.h
+  dt_cc/polycon/polycon.h
+  dt_cc/sinusoid/sinusoid.h
+  dt_cc/stereogr/stereogr.h
+  dt_cc/threads/threads.h
+  dt_cc/tranmerc/tranmerc.h
+  dt_cc/trcyleqa/trcyleqa.h
+  dt_cc/ups/ups.h
+  dt_cc/usng/usng.h
+  dt_cc/utm/utm.h
+  engine/src/engine.h
+  )
+set(${lib_name}_data
+  geotrans2/data/3_param.dat
+  geotrans2/data/7_param.dat
+  geotrans2/data/egm84.grd
+  geotrans2/data/egm96.grd
+  geotrans2/data/ellips.dat
+  )
 #######################################
 # library
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
+#######################################
+# install
+install(TARGETS ${lib_name} DESTINATION lib${NUMBITS})
+install(FILES ${${lib_name}_libhdrs} DESTINATION include/geotrans)
+install(FILES ${${lib_name}_data} DESTINATION include/geotrans/data)
