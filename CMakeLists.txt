@@ -4,6 +4,11 @@ include(flags OPTIONAL)
 set(lib_name geotrans)
 #######################################
 # preprocessor
+include(TestBigEndian)
+test_big_endian(IS_BIG_ENDIAN)
+if(NOT ${IS_BIG_ENDIAN})
+  add_definitions(-DLITTLE_ENDIAN)
+endif()
 if(MSVC)
   add_definitions(
     -D_CRT_SECURE_NO_WARNINGS
