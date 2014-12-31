@@ -776,6 +776,8 @@ SVC_Status String_to_Longitude(const char *str, double *val)
 
     free(reference_Pointer);
   }
+  else
+    error_Code = SVC_Error;
   return error_Code;
 }/* String_to_Longitude */
 
@@ -1181,6 +1183,8 @@ SVC_Status String_to_Latitude(const char *str, double *val)
 
     free(reference_Pointer);
   }
+  else
+    error_Code = SVC_Error;
   return error_Code;
 }
 
