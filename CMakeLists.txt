@@ -55,6 +55,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/ups
   ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/usng
   ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/utm
+  ${CMAKE_CURRENT_SOURCE_DIR}/engine/src
   )
 #######################################
 # library sources
@@ -98,6 +99,8 @@ set(${lib_name}_libsrcs
   dt_cc/usng/usng.c
   dt_cc/utm/utm.c
   engine/src/engine.c
+  geotrans2/src/strndup.c
+  geotrans2/src/strtoval.c
   )
 set(${lib_name}_libhdrs
   dt_cc/albers/albers.h
@@ -139,6 +142,9 @@ set(${lib_name}_libhdrs
   dt_cc/usng/usng.h
   dt_cc/utm/utm.h
   engine/src/engine.h
+  geotrans2/src/comphack.h
+  geotrans2/src/strndup.h
+  geotrans2/src/strtoval.h
   )
 set(${lib_name}_data
   geotrans2/data/3_param.dat
