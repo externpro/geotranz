@@ -165,5 +165,4 @@ install(TARGETS ${lib_name} EXPORT ${PROJECT_NAME}-targets
   )
 install(FILES ${${lib_name}_libhdrs} DESTINATION include/geotrans)
 install(FILES ${${lib_name}_data} DESTINATION include/geotrans/data)
-install(FILES usexp-${PROJECT_NAME}-config.cmake DESTINATION share/cmake)
 install(EXPORT ${PROJECT_NAME}-targets DESTINATION lib${NUMBITS}/cmake)
