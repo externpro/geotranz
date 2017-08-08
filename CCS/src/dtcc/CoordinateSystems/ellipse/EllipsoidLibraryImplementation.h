@@ -98,6 +98,7 @@
 
 namespace MSP
 {
+  class CCSThreadMutex;
   namespace CCS
   {
     class Ellipsoid;
@@ -290,6 +291,7 @@ namespace MSP
 
    private:
 
+      static CCSThreadMutex mutex;
       static EllipsoidLibraryImplementation* instance;
       static int instanceCount;
 

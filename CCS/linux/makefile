@@ -49,7 +49,8 @@ LIBJNI = libjnimsp_ccs.so
 ####
 
 DTCCSRCS = \
-        threads/threads.cpp \
+        threads/CCSThreadMutex.cpp \
+        threads/CCSThreadLock.cpp \
         albers/AlbersEqualAreaConic.cpp \
         azeq/AzimuthalEquidistant.cpp \
         bng/BritishNationalGrid.cpp \
@@ -92,7 +93,8 @@ DTCCSRCS = \
         utm/UTM.cpp
 
 DTCC_O = \
-        threads.cpp \
+        CCSThreadMutex.cpp \
+        CCSThreadLock.cpp \
         AlbersEqualAreaConic.cpp \
         AzimuthalEquidistant.cpp \
         BritishNationalGrid.cpp \

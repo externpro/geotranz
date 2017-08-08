@@ -529,14 +529,20 @@ public class StringToVal
             }        
           }
 
-          if ((str.contains("N")) || (str.contains("n")) || 
-              (str.contains("S")) || (str.contains("s")))
+          int indexOfN = str.indexOf('N');
+          int indexOfn = str.indexOf('n');
+          int indexOfS = str.indexOf('S');
+          int indexOfs = str.indexOf('s');
+          if ((indexOfN != -1) || (indexOfn != -1) ||
+              (indexOfS != -1) || (indexOfs != -1))
           {
             throw new CoordinateConversionException(ErrorMessages.hemisphere);
           }
 
-          if ((str.contains("E")) ||
-              (str.contains("e")))
+          int indexOfE = str.indexOf('E');
+          int indexOfe = str.indexOf('e');
+          if ((indexOfE != -1) ||
+              (indexOfe != -1))
           {
             if (sign == -1)
             {
@@ -544,8 +550,10 @@ public class StringToVal
             }
           }
 
-          if ((str.contains("W")) ||
-              (str.contains("w")))
+          int indexOfW = str.indexOf('W');
+          int indexOfw = str.indexOf('w');
+          if ((indexOfW != -1) ||
+              (indexOfw != -1))
           {
             if (sign == -1)
             {
@@ -627,7 +635,6 @@ public class StringToVal
        H = optional hemisphere (NSEW)
        / = separator character, one of / : sp
     */
-
     if (str.length() > 0)
     {
       reference_Pointer = str.toCharArray();
@@ -657,14 +664,20 @@ public class StringToVal
           }        
         }
 
-        if ((str.contains("W")) || (str.contains("w")) ||
-            (str.contains("E")) || (str.contains("e")))
+        int indexOfW = str.indexOf('W');
+        int indexOfw = str.indexOf('w');
+        int indexOfE = str.indexOf('E');
+        int indexOfe = str.indexOf('e');
+        if ((indexOfW != -1) || (indexOfw != -1) ||
+            (indexOfE != -1) || (indexOfe != -1))
         {
           throw new CoordinateConversionException(ErrorMessages.hemisphere);
         }
 
-        if ((str.contains("N")) ||
-            (str.contains("n")))
+        int indexOfN = str.indexOf('N');
+        int indexOfn = str.indexOf('n');
+        if ((indexOfN != -1) ||
+            (indexOfn != -1))
         {
           if (sign == -1)
           {
@@ -672,8 +685,10 @@ public class StringToVal
           }
         }
 
-        if ((str.contains("S")) ||
-            (str.contains("s")))
+        int indexOfS = str.indexOf('S');
+        int indexOfs = str.indexOf('s');
+        if ((indexOfS != -1) ||
+            (indexOfs != -1))
         {
           if (sign == -1)
           {

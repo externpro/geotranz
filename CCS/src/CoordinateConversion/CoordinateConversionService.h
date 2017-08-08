@@ -76,6 +76,7 @@
  *    06-06-06          Added support for USNG
  *    07-17-06          Added support for GARS
  *    03-17-07          Original C++ Code
+ *    07-20-10          NGL BAEts27152 Updated getServiceVersion to return an int
  */
 
 
@@ -97,6 +98,7 @@
 
 namespace MSP
 {
+  class CCSThreadMutex;
   namespace CCS
   {
     class EllipsoidLibrary;
@@ -288,7 +290,7 @@ namespace MSP
       *
       * @return Service version
       */
-         double getServiceVersion() const;
+      int getServiceVersion();
 
 
      /*
@@ -314,6 +316,8 @@ namespace MSP
 
 
     private:
+
+      static CCSThreadMutex mutex;
 
       /* Object used to keep track of the number of ccs objects */
       struct CCSData

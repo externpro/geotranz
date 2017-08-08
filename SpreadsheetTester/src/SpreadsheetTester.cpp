@@ -34,7 +34,8 @@ latitude 2, results.
 History
 -------
 7-12-2000
-01-06-2009 - updated to work with thread safe msp ccs 
+01-06-2009 - updated to work with thread safe msp ccs
+06-16-2010 - S. Gillis, BAEts26660, spreadsheet tester has incorrect datum string
  
 */
 
@@ -1571,7 +1572,7 @@ bool SpreadsheetTester::Set_Projection(SourceOrTarget::Enum direction, const cha
   {
     coordinateSystemState[direction].coordinateType = CoordinateType::mercatorStandardParallel;
   }
-  else if (strstr("MERCATOR_(SCALE FACTOR)", projection_str))
+  else if (strstr("MERCATOR_(SCALE_FACTOR)", projection_str))
   {
     coordinateSystemState[direction].coordinateType = CoordinateType::mercatorScaleFactor;
   }

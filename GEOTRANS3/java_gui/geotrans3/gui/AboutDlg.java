@@ -4,6 +4,12 @@
  * About.java
  *
  * Created on May 18, 2001, 7:37 PM
+ *
+ * MODIFICATION HISTORY:
+ *
+ * DATE      NAME        DR#               DESCRIPTION
+ *
+ * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
  */
 
 package geotrans3.gui;
@@ -68,7 +74,7 @@ public class AboutDlg extends javax.swing.JDialog {
     iconPanel = new javax.swing.JPanel();
     tempPanel = new javax.swing.JPanel();
 
-    setTitle("About MSP GEOTRANS 3.0");
+    setTitle("About MSP GEOTRANS 3.1");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -85,7 +91,7 @@ public class AboutDlg extends javax.swing.JDialog {
     versionPanel.setPreferredSize(new java.awt.Dimension(50, 5));
     versionPanel.setLayout(new java.awt.GridLayout(1, 1));
 
-    versionLabel.setText("MSP GEOTRANS 3.0");
+    versionLabel.setText("MSP GEOTRANS 3.1");
     versionPanel.add(versionLabel);
 
     descriptPanel.add(versionPanel);

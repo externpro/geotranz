@@ -66,7 +66,10 @@
  *
  *    Date              Description
  *    ----              -----------
- *    2-27-07          Original C++ Code
+ *    2-27-07           Original C++ Code
+ *    7/18/2010   NGL   BAEts27181 Add logic for special zones over southern
+ *                      Norway and Svalbard. This was removed with BAEts24468 
+ *                      and we are being asked to put it back in.
  *
  */
 
@@ -300,7 +303,8 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic( MSP::CCS::GeodeticCoordinate
 
   if (temp_zone > 60)
     temp_zone = 1;
-
+  
+  /* allow UTM zone override up to +/- one zone of the calculated zone */  
   if (UTM_Override)
   {
     if ((temp_zone == 1) && (UTM_Override == 60))
@@ -312,7 +316,25 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic( MSP::CCS::GeodeticCoordinate
     else
       throw CoordinateConversionException( ErrorMessages::zoneOverride );
   }
-
+  else /* not UTM zone override */
+  {
+    /* check for special zone cases over southern Norway and Svalbard */
+    if ((Lat_Degrees > 55) && (Lat_Degrees < 64) && (Long_Degrees > -1)
+        && (Long_Degrees < 3))
+      temp_zone = 31;
+    if ((Lat_Degrees > 55) && (Lat_Degrees < 64) && (Long_Degrees > 2)
+        && (Long_Degrees < 12))
+      temp_zone = 32;
+    if ((Lat_Degrees > 71) && (Long_Degrees > -1) && (Long_Degrees < 9))
+      temp_zone = 31;
+    if ((Lat_Degrees > 71) && (Long_Degrees > 8) && (Long_Degrees < 21))
+      temp_zone = 33;
+    if ((Lat_Degrees > 71) && (Long_Degrees > 20) && (Long_Degrees < 33))
+      temp_zone = 35;
+    if ((Lat_Degrees > 71) && (Long_Degrees > 32) && (Long_Degrees < 42))
+      temp_zone = 37;
+  }
+ 
   TransverseMercator transverseMercator = *transverseMercatorMap[temp_zone];
 
   if (latitude < 0)

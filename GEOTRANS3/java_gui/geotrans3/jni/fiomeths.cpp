@@ -58,6 +58,8 @@
  *    08-17-05          Changed Lambert_Conformal_Conic to CoordinateType::lambertConformalConic2Parallels
  *    01-18-06          Added changes for new height types
  *    04-18-07          Updated to use C++ MSPCCS
+ *    05-12-10          S. Gillis, BAEts26542, MSP TS MSL-HAW conversion
+ *                      should use CCS
  */
 
 
@@ -150,6 +152,7 @@ typedef enum File_Header_Declarations
   FHD_MSL_EGM96_VG_NS_Height,   /* MSL EGM96 VG NS Height */
   FHD_MSL_EGM84_10D_BL_Height,  /* MSL EGM84 10D BL Height */
   FHD_MSL_EGM84_10D_NS_Height,  /* MSL EGM84 10D NS Height */
+  FHD_MSL_EGM84_30M_BL_Height,  /* MSL EGM84 30M BL Height */
   FHD_Central_Meridian,         /* Central Meridian */
   FHD_Origin_Latitude,          /* Origin Latitude */
   FHD_Origin_Longitude,         /* Origin Longitude */
@@ -262,6 +265,7 @@ const char* msl_EGM96_15M_BL_Height_Header_String = "MSL-EGM96-15M-BL HEIGHT";
 const char* msl_EGM96_VG_NS_Height_Header_String = "MSL-EGM96-VG-NS HEIGHT";
 const char* msl_EGM84_10D_BL_Height_Header_String = "MSL-EGM84-10D-BL HEIGHT";
 const char* msl_EGM84_10D_NS_Height_Header_String = "MSL-EGM84-10D-NS HEIGHT";
+const char* msl_EGM84_30M_BL_Height_Header_String = "MSL-EGM84-30M-BL HEIGHT";
 const char* central_Meridian_Header_String = "CENTRAL MERIDIAN";
 const char* origin_Latitude_Header_String = "ORIGIN LATITUDE";
 const char* origin_Longitude_Header_String = "ORIGIN LONGITUDE";
@@ -382,6 +386,8 @@ FVC_Status Next_Header_Line(FILE *file, FHD_Value *header)
           header_Line = FHD_MSL_EGM84_10D_BL_Height;
         else if (strstr(header_Value, msl_EGM84_10D_NS_Height_Header_String))
           header_Line = FHD_MSL_EGM84_10D_NS_Height;
+        else if (strstr(header_Value, msl_EGM84_30M_BL_Height_Header_String))
+          header_Line = FHD_MSL_EGM84_30M_BL_Height;
         else if (strstr(header_Value, central_Meridian_Header_String))
           header_Line = FHD_Central_Meridian;
         else if (strstr(header_Value, lat_Of_True_Scale_Header_String))
@@ -1261,6 +1267,11 @@ long Fiomeths::parseInputFileHeader(FILE *file)
         heightType = HeightType::EGM84TenDegNaturalSpline;
         break;
       }
+      case FHD_MSL_EGM84_30M_BL_Height:
+      {
+        heightType = HeightType::EGM84ThirtyMinBiLinear;
+        break;
+      }
       case FHD_Central_Meridian:
       {
         double value = 0.0;
@@ -1949,6 +1960,8 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
           fprintf(outputFile, "%s", msl_EGM84_10D_BL_Height_Header_String);
         else if (params.heightType() == HeightType::EGM84TenDegNaturalSpline)
           fprintf(outputFile, "%s", msl_EGM84_10D_NS_Height_Header_String);
+        else if (params.heightType() == HeightType::EGM84ThirtyMinBiLinear)
+          fprintf(outputFile, "%s", msl_EGM84_30M_BL_Height_Header_String);
         fprintf(outputFile,"\n");
 
         if(outputLatitudeLongitudeOrder)

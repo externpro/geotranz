@@ -61,7 +61,14 @@
  *    24-May-99         Original Code
  *    09-Jan-06         Added new geoid height interpolation methods
  *    03-14-07          Original C++ Code
- *
+ *    05-12-10          S. Gillis, BAEts26542, MSP TS MSL-HAE conversion 
+ *                      should use CCS 
+ *    06-11-10          S. Gillis, BAEts26724, Fixed memory error problem
+ *                      when MSPCCS_DATA is not set
+ *    06-16-10          S. Gillis, BAEts27144, Fixed memory error problem
+ *                      when MSPCCS_DATA is not set
+ *    07-07-10          K.Lam, BAEts27269, Replace C functions in threads.h
+ *                      with C++ methods in classes CCSThreadMutex
  */
 
 
@@ -74,9 +81,12 @@
 #include <stdlib.h>  
 #include <stdio.h>
 #include "GeoidLibrary.h"
-#include "threads.h"
 #include "CoordinateConversionException.h"
 #include "ErrorMessages.h"
+#include "CCSThreadMutex.h"
+#include "CCSThreadLock.h"
+
+#include <vector>
 
 /*
  *    string.h   - standard C string handling library
@@ -90,6 +100,8 @@
 
 
 using namespace MSP::CCS;
+using MSP::CCSThreadMutex;
+using MSP::CCSThreadLock;
 
 
 /***************************************************************************/
@@ -105,6 +117,8 @@ const int EGM96_COLS = 1441;                   /* 360 degrees of longitude at 15
 const int EGM96_ROWS = 721;                    /* 180 degrees of latitude  at 15 minute spacing */
 const int EGM84_COLS = 37;                     /* 360 degrees of longitude at 10 degree spacing */
 const int EGM84_ROWS = 19;                     /* 180 degrees of latitude  at 10 degree spacing */
+const int EGM84_30_MIN_COLS = 721;             /* 360 degrees of longitude at 30 minute spacing */
+const int EGM84_30_MIN_ROWS = 361;             /* 180 degrees of latitude  at 30 minute spacing */
 const int EGM96_HEADER_ITEMS = 6;              /* min, max lat, min, max long, lat, long spacing*/
 const double SCALE_FACTOR_15_MINUTES = .25;    /* 4 grid cells per degree at 15 minute spacing  */
 const double SCALE_FACTOR_10_DEGREES = 10;     /* 1 / 10.0 grid cells per degree at 10 degree spacing */
@@ -113,6 +127,7 @@ const double SCALE_FACTOR_1_DEGREE = 1;        /* 1 grid cell per degree at 1 de
 const double SCALE_FACTOR_2_DEGREES = 2;       /* 1 / 2 grid cells per degree at 2 degree spacing */
 const int EGM96_ELEVATIONS = EGM96_COLS * EGM96_ROWS;
 const int EGM84_ELEVATIONS = EGM84_COLS * EGM84_ROWS;
+const int EGM84_30_MIN_ELEVATIONS = EGM84_30_MIN_COLS * EGM84_30_MIN_ROWS; 
 const int EGM96_INSET_AREAS = 53;
 
 
@@ -187,33 +202,46 @@ const EGM96_Variable_Grid EGM96_Variable_Grid_Table[EGM96_INSET_AREAS] =
  *
  */
 
-float readFloat( int *numRead, FILE* file )
-/*
- * The private function readFloat returns the geoid height
- * read from the geoid file. 4 bytes are read from the file and,
- * if necessary, the bytes are swapped.
- *
- *    numRead   : Number of heights read from file         (output)
- *
- */
+void swapBytes(
+   void   *buffer,
+   size_t size,
+   size_t count)
 {
-  float result;
-  char* swap = ( char* )&result;
-  char temp;
-
-  *numRead = fread( swap, 4, 1, file );
-#ifdef LITTLE_ENDIAN
-  temp = swap[0];
-  swap[0] = swap[3];
-  swap[3] = temp;
-  temp = swap[1];
-  swap[1] = swap[2];
-  swap[2] = temp;
-#endif
-
-  return result;
+   char *b = (char *) buffer;
+   char temp;
+   for (size_t c = 0; c < count; c ++)
+   {
+      for (size_t s = 0; s < size / 2; s ++)
+      {
+         temp = b[c*size + s];
+         b[c*size + s] = b[c*size + size - s - 1];
+         b[c*size + size - s - 1] = temp;
+      }
+   }
 }
 
+
+size_t readBinary(
+   void   *buffer,
+   size_t  size,
+   size_t  count,
+   FILE   *stream )
+{
+   size_t actual_count = fread(buffer, size, count, stream);
+
+   if(ferror(stream) || actual_count < count )
+   {
+      char message[256] = "";
+      strcpy( message, "Error reading binary file." );
+      throw CoordinateConversionException( message );
+   }
+
+#ifdef LITTLE_ENDIAN
+   swapBytes(buffer, size, count);
+#endif
+
+   return actual_count;
+}
 
 /************************************************************************/
 /*                              FUNCTIONS     
@@ -229,6 +257,7 @@ class MSP::CCS::GeoidLibraryCleaner
 
   ~GeoidLibraryCleaner()
   {
+    CCSThreadLock lock(&GeoidLibrary::mutex);
     GeoidLibrary::deleteInstance();
   }
 
@@ -236,12 +265,14 @@ class MSP::CCS::GeoidLibraryCleaner
 
 
 // Make this class a singleton, so the data files are only initialized once
+CCSThreadMutex GeoidLibrary::mutex;
 GeoidLibrary* GeoidLibrary::instance = 0;
 int GeoidLibrary::instanceCount = 0;
 
 
 GeoidLibrary* GeoidLibrary::getInstance()
 {
+  CCSThreadLock lock(&mutex);
   if( instance == 0 )
     instance = new GeoidLibrary;
 
@@ -257,7 +288,8 @@ void GeoidLibrary::removeInstance()
  * The function removeInstance removes this GeoidLibrary instance from the
  * total number of instances. 
  */
-  if( --instanceCount < 1 )
+  CCSThreadLock lock(&mutex);
+  if ( --instanceCount < 1 )
   {
     deleteInstance();
   }
@@ -280,39 +312,47 @@ void GeoidLibrary::deleteInstance()
 
 GeoidLibrary::GeoidLibrary()
 {
-/*
- * The constructor creates an empty list which is used to store the geoid separation data
- * contained in the data files egm84.grd and egm96.grd
- */
-
-  egm96GeoidList.reserve( EGM96_ELEVATIONS );
-  egm84GeoidList.reserve( EGM84_ELEVATIONS );
-
-  loadGeoids();
+   loadGeoids();
 }
 
 
 GeoidLibrary::GeoidLibrary( const GeoidLibrary &gl )
 {
-  egm96GeoidList = gl.egm96GeoidList;
-  egm84GeoidList = gl.egm84GeoidList;
+   *this = gl;
 }
 
 
 GeoidLibrary::~GeoidLibrary()
 {
-  egm96GeoidList.clear();
-  egm84GeoidList.clear();
+  delete [] egm96GeoidList;
+  delete [] egm84GeoidList;
+  delete [] egm84ThirtyMinGeoidList;
 }
 
 
 GeoidLibrary& GeoidLibrary::operator=( const GeoidLibrary &gl )
 {
   if ( &gl == this )
-	  return *this;
+     return *this;
 
-  egm96GeoidList = gl.egm96GeoidList;
-  egm84GeoidList = gl.egm84GeoidList;
+  egm96GeoidList = new float[EGM96_ELEVATIONS]; 
+  egm84GeoidList = new float[EGM84_ELEVATIONS];
+  egm84ThirtyMinGeoidList = new double[EGM84_30_MIN_ELEVATIONS];
+
+  for( int i = 0; i < EGM96_ELEVATIONS; i++ )
+  {
+     egm96GeoidList[i] = gl.egm96GeoidList[i];
+  }
+
+  for( int j = 0; j < EGM84_ELEVATIONS; j++ )
+  {
+     egm84GeoidList[j] = gl.egm84GeoidList[j];
+  }
+
+  for( int k = 0; k < EGM84_30_MIN_ELEVATIONS; k++ )
+  {
+     egm84ThirtyMinGeoidList[k] = gl.egm84ThirtyMinGeoidList[k];
+  }
 
   return *this;
 }
@@ -330,13 +370,17 @@ void GeoidLibrary::loadGeoids()
  * any of the other functions in this component.
  */
 
-    initializeEGM96Geoid();
-
-    initializeEGM84Geoid();
+   initializeEGM96Geoid();
+   initializeEGM84Geoid();
+   initializeEGM84ThirtyMinGeoid();
 }
 
 
-void GeoidLibrary::convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight( double longitude, double latitude,  double ellipsoidHeight, double *geoidHeight )
+void GeoidLibrary::convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight(
+   double longitude,
+   double latitude,
+   double ellipsoidHeight,
+   double *geoidHeight )
 {
 /*
  * The function convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight converts the specified WGS84
@@ -352,12 +396,20 @@ void GeoidLibrary::convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight( double 
 
   double  delta_height;
 
-  bilinearInterpolate( longitude, latitude, SCALE_FACTOR_15_MINUTES, EGM96_COLS, EGM96_ROWS, egm96GeoidList, &delta_height );
+  bilinearInterpolate(
+     longitude, latitude,
+     SCALE_FACTOR_15_MINUTES, EGM96_COLS, EGM96_ROWS, egm96GeoidList,
+     &delta_height );
+
   *geoidHeight = ellipsoidHeight - delta_height;
 }
 
 
-void GeoidLibrary::convertEllipsoidToEGM96VariableNaturalSplineHeight( double longitude, double latitude, double ellipsoidHeight, double *geoidHeight )
+void GeoidLibrary::convertEllipsoidToEGM96VariableNaturalSplineHeight(
+   double longitude,
+   double latitude,
+   double ellipsoidHeight,
+   double *geoidHeight )
 {
 /*
  * The function convertEllipsoidToEGM96VariableNaturalSplineHeight converts the specified WGS84
@@ -385,8 +437,10 @@ void GeoidLibrary::convertEllipsoidToEGM96VariableNaturalSplineHeight( double lo
 
   while( !found && i < EGM96_INSET_AREAS )
   {
-    if( ( latitude_degrees >= EGM96_Variable_Grid_Table[i].min_lat ) && ( longitude_degrees >= EGM96_Variable_Grid_Table[i].min_lon ) &&
-        ( latitude_degrees < EGM96_Variable_Grid_Table[i].max_lat ) && ( longitude_degrees < EGM96_Variable_Grid_Table[i].max_lon ) )
+    if(( latitude_degrees  >= EGM96_Variable_Grid_Table[i].min_lat ) &&
+       ( longitude_degrees >= EGM96_Variable_Grid_Table[i].min_lon ) &&
+       ( latitude_degrees   < EGM96_Variable_Grid_Table[i].max_lat ) &&
+       ( longitude_degrees  < EGM96_Variable_Grid_Table[i].max_lon ) )
     {
       scale_factor = SCALE_FACTOR_30_MINUTES; // use 30 minute by 30 minute grid
       num_cols = 721;
@@ -413,17 +467,25 @@ void GeoidLibrary::convertEllipsoidToEGM96VariableNaturalSplineHeight( double lo
     }
   }
 
-  naturalSplineInterpolate( longitude, latitude, scale_factor, num_cols, num_rows, EGM96_ELEVATIONS-1, egm96GeoidList, &delta_height );
+  naturalSplineInterpolate(
+     longitude, latitude,
+     scale_factor, num_cols, num_rows, EGM96_ELEVATIONS-1, egm96GeoidList,
+     &delta_height );
+
   *geoidHeight = ellipsoidHeight - delta_height;
 }
 
 
-void GeoidLibrary::convertEllipsoidToEGM84TenDegBilinearHeight( double longitude, double latitude, double ellipsoidHeight, double *geoidHeight )
+void GeoidLibrary::convertEllipsoidToEGM84TenDegBilinearHeight(
+   double longitude,
+   double latitude,
+   double ellipsoidHeight,
+   double *geoidHeight )
 {
 /*
  * The function convertEllipsoidToEGM84TenDegBilinearHeight converts the specified WGS84
  * ellipsoid height at the specified geodetic coordinates to the equivalent
- * geoid height, using the EGM84 gravity model and the bilinear interpolation method..
+ * geoid height, using the EGM84 gravity model and the bilinear interpolation method.
  *
  *    longitude          : Geodetic longitude in radians          (input)
  *    latitude           : Geodetic latitude in radians           (input)
@@ -432,14 +494,22 @@ void GeoidLibrary::convertEllipsoidToEGM84TenDegBilinearHeight( double longitude
  *
  */
 
-  double delta_height;
+   double delta_height;
 
-  bilinearInterpolate( longitude, latitude, SCALE_FACTOR_10_DEGREES, EGM84_COLS, EGM84_ROWS, egm84GeoidList, &delta_height );
-  *geoidHeight = ellipsoidHeight - delta_height;
+   bilinearInterpolate(
+      longitude, latitude,
+      SCALE_FACTOR_10_DEGREES, EGM84_COLS, EGM84_ROWS, egm84GeoidList,
+      &delta_height );
+
+   *geoidHeight = ellipsoidHeight - delta_height;
 }
 
 
-void GeoidLibrary::convertEllipsoidToEGM84TenDegNaturalSplineHeight( double longitude, double latitude, double ellipsoidHeight, double *geoidHeight )
+void GeoidLibrary::convertEllipsoidToEGM84TenDegNaturalSplineHeight(
+   double longitude,
+   double latitude,
+   double ellipsoidHeight,
+   double *geoidHeight )
 {
 /*
  * The function convertEllipsoidToEGM84TenDegNaturalSplineHeight converts the specified WGS84
@@ -455,7 +525,39 @@ void GeoidLibrary::convertEllipsoidToEGM84TenDegNaturalSplineHeight( double long
 
   double delta_height;
 
-  naturalSplineInterpolate( longitude, latitude, SCALE_FACTOR_10_DEGREES, EGM84_COLS, EGM84_ROWS, EGM84_ELEVATIONS-1, egm84GeoidList, &delta_height );
+  naturalSplineInterpolate(
+     longitude, latitude,
+     SCALE_FACTOR_10_DEGREES, EGM84_COLS, EGM84_ROWS, EGM84_ELEVATIONS-1,
+     egm84GeoidList, &delta_height );
+
+  *geoidHeight = ellipsoidHeight - delta_height;
+}
+
+
+void GeoidLibrary::convertEllipsoidToEGM84ThirtyMinBiLinearHeight( 
+    double longitude, double latitude, double ellipsoidHeight, 
+    double *geoidHeight )
+{
+/*
+ * The function convertEllipsoidToEGM84ThirtyMinBiLinearHeight converts the 
+ * specified WGS84 ellipsoid height at the specified geodetic coordinates to the
+ * equivalent geoid height, using the EGM84 gravity model and the bilinear 
+ * interpolation method..
+ *
+ *    longitude           : Geodetic longitude in radians          (input)
+ *    latitude            : Geodetic latitude in radians           (input)
+ *    ellipsoidHeight     : Ellipsoid height, in meters            (input)
+ *    geoidHeight         : Geoid height, in meters.               (output)
+ *
+ */
+
+  double delta_height;
+
+  bilinearInterpolateDoubleHeights(
+     longitude, latitude,
+     SCALE_FACTOR_30_MINUTES, EGM84_30_MIN_COLS, EGM84_30_MIN_ROWS,
+     egm84ThirtyMinGeoidList, &delta_height );
+
   *geoidHeight = ellipsoidHeight - delta_height;
 }
 
@@ -476,12 +578,20 @@ void GeoidLibrary::convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight( double 
 
   double  delta_height;
 
-  bilinearInterpolate( longitude, latitude, SCALE_FACTOR_15_MINUTES, EGM96_COLS, EGM96_ROWS, egm96GeoidList, &delta_height );
+  bilinearInterpolate(
+     longitude, latitude,
+     SCALE_FACTOR_15_MINUTES, EGM96_COLS, EGM96_ROWS, egm96GeoidList,
+     &delta_height );
+
   *ellipsoidHeight = geoidHeight + delta_height;
 }
 
 
-void GeoidLibrary::convertEGM96VariableNaturalSplineToEllipsoidHeight( double longitude, double latitude, double geoidHeight, double *ellipsoidHeight )
+void GeoidLibrary::convertEGM96VariableNaturalSplineToEllipsoidHeight(
+   double longitude,
+   double latitude,
+   double geoidHeight,
+   double *ellipsoidHeight )
 {
 /*
  * The function convertEGM96VariableNaturalSplineToEllipsoidHeight converts the specified WGS84
@@ -509,8 +619,10 @@ void GeoidLibrary::convertEGM96VariableNaturalSplineToEllipsoidHeight( double lo
 
   while( !found && i < EGM96_INSET_AREAS )
   {
-    if( ( latitude_degrees >= EGM96_Variable_Grid_Table[i].min_lat ) && ( longitude_degrees >= EGM96_Variable_Grid_Table[i].min_lon ) &&
-        ( latitude_degrees < EGM96_Variable_Grid_Table[i].max_lat ) && ( longitude_degrees < EGM96_Variable_Grid_Table[i].max_lon ) )
+    if(( latitude_degrees  >= EGM96_Variable_Grid_Table[i].min_lat ) &&
+       ( longitude_degrees >= EGM96_Variable_Grid_Table[i].min_lon ) &&
+       ( latitude_degrees   < EGM96_Variable_Grid_Table[i].max_lat ) &&
+       ( longitude_degrees  < EGM96_Variable_Grid_Table[i].max_lon ) )
     {
       scale_factor = SCALE_FACTOR_30_MINUTES; // use 30 minute by 30 minute grid
       num_cols = 721;
@@ -537,7 +649,11 @@ void GeoidLibrary::convertEGM96VariableNaturalSplineToEllipsoidHeight( double lo
     }
   }
 
-  naturalSplineInterpolate( longitude, latitude, scale_factor, num_cols, num_rows, EGM96_ELEVATIONS-1, egm96GeoidList, &delta_height );
+  naturalSplineInterpolate(
+     longitude, latitude,
+     scale_factor, num_cols, num_rows, EGM96_ELEVATIONS-1, egm96GeoidList,
+     &delta_height );
+
   *ellipsoidHeight = geoidHeight + delta_height;
 }
 
@@ -558,12 +674,20 @@ void GeoidLibrary::convertEGM84TenDegBilinearToEllipsoidHeight( double longitude
 
   double  delta_height;
 
-  bilinearInterpolate( longitude, latitude, SCALE_FACTOR_10_DEGREES, EGM84_COLS, EGM84_ROWS, egm84GeoidList, &delta_height );
+  bilinearInterpolate(
+     longitude, latitude,
+     SCALE_FACTOR_10_DEGREES, EGM84_COLS, EGM84_ROWS, egm84GeoidList,
+     &delta_height );
+
   *ellipsoidHeight = geoidHeight + delta_height;
 }
 
 
-void GeoidLibrary::convertEGM84TenDegNaturalSplineToEllipsoidHeight( double longitude, double latitude, double geoidHeight, double *ellipsoidHeight )
+void GeoidLibrary::convertEGM84TenDegNaturalSplineToEllipsoidHeight(
+   double longitude,
+   double latitude,
+   double geoidHeight,
+   double *ellipsoidHeight )
 {
 /*
  * The function convertEGM84TenDegNaturalSplineToEllipsoidHeight converts the specified WGS84
@@ -579,7 +703,37 @@ void GeoidLibrary::convertEGM84TenDegNaturalSplineToEllipsoidHeight( double long
 
   double  delta_height;
 
-  naturalSplineInterpolate( longitude, latitude, SCALE_FACTOR_10_DEGREES, EGM84_COLS, EGM84_ROWS, EGM84_ELEVATIONS-1, egm84GeoidList, &delta_height );
+  naturalSplineInterpolate(
+     longitude, latitude, SCALE_FACTOR_10_DEGREES,
+     EGM84_COLS, EGM84_ROWS, EGM84_ELEVATIONS-1,
+     egm84GeoidList, &delta_height );
+
+  *ellipsoidHeight = geoidHeight + delta_height;
+}
+
+
+void GeoidLibrary::convertEGM84ThirtyMinBiLinearToEllipsoidHeight( 
+    double longitude, double latitude, double geoidHeight, 
+    double *ellipsoidHeight )
+{
+/*
+ * The function convertEGM84ThirtyMinBiLinearToEllipsoidHeight converts the 
+ * specified WGS84 geoid height at the specified geodetic coordinates to the 
+ * equivalent ellipsoid height, using the EGM84 gravity model and the bilinear 
+ * interpolation method.
+ *
+ *    longitude           : Geodetic longitude in radians          (input)
+ *    latitude            : Geodetic latitude in radians           (input)
+ *    geoidHeight         : Geoid height, in meters.               (input)
+ *    ellipsoidHeight     : Ellipsoid height, in meters            (output)
+ *
+ */
+
+  double  delta_height;
+
+  bilinearInterpolateDoubleHeights( longitude, latitude, SCALE_FACTOR_30_MINUTES, 
+      EGM84_30_MIN_COLS, EGM84_30_MIN_ROWS, egm84ThirtyMinGeoidList, 
+      &delta_height );
   *ellipsoidHeight = geoidHeight + delta_height;
 }
 
@@ -608,10 +762,7 @@ void GeoidLibrary::initializeEGM96Geoid()
   long num = 0;
   FILE*  geoid_height_file;
 
-  Thread_Mutex geoid_96_mutex;
-  long mutex_error = Threads_Create_Mutex( &geoid_96_mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( geoid_96_mutex );
+  CCSThreadLock lock(&mutex);
 
 /*  Check the environment for a user provided path, else current directory;   */
 /*  Build a File Name, including specified or default path:                   */
@@ -624,7 +775,7 @@ void GeoidLibrary::initializeEGM96Geoid()
   }
   else
   {
-    file_name = new char[ 18 ];
+    file_name = new char[ 21 ];
     strcpy( file_name, "../../data/" );
   }
   strcat( file_name, "egm96.grd" );
@@ -636,11 +787,6 @@ void GeoidLibrary::initializeEGM96Geoid()
     delete [] file_name;
     file_name = 0;
 
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex( geoid_96_mutex );
-    if( !mutex_error )
-      Threads_Destroy_Mutex( geoid_96_mutex );
-
     char message[256] = "";
     strcpy( message, ErrorMessages::geoidFileOpenError );
     strcat( message, ": egm96.grd\n" );
@@ -649,33 +795,23 @@ void GeoidLibrary::initializeEGM96Geoid()
 
 /*  Skip the Header Line:                                                     */
 
-  while ( num < EGM96_HEADER_ITEMS )
-  {
-    if ( feof( geoid_height_file ) ) break;
-    if ( ferror( geoid_height_file ) ) break;
-    egm96GeoidList.push_back( readFloat( &items_read, geoid_height_file ) );
-    items_discarded += items_read;
-    num++;
-  }
-
+  float egm96GeoidHeaderList[EGM96_HEADER_ITEMS];
+  items_discarded = readBinary(
+     egm96GeoidHeaderList, 4, EGM96_HEADER_ITEMS, geoid_height_file );
+  
 /*  Determine if header read properly, or NOT:                                */
 
-  if( egm96GeoidList[0] !=  -90.0 ||
-      egm96GeoidList[1] !=   90.0 ||
-      egm96GeoidList[2] !=    0.0 ||
-      egm96GeoidList[3] !=  360.0 ||
-      egm96GeoidList[4] !=  SCALE_FACTOR_15_MINUTES ||
-      egm96GeoidList[5] !=  SCALE_FACTOR_15_MINUTES ||
+  if( egm96GeoidHeaderList[0] !=  -90.0 ||
+      egm96GeoidHeaderList[1] !=   90.0 ||
+      egm96GeoidHeaderList[2] !=    0.0 ||
+      egm96GeoidHeaderList[3] !=  360.0 ||
+      egm96GeoidHeaderList[4] !=  SCALE_FACTOR_15_MINUTES ||
+      egm96GeoidHeaderList[5] !=  SCALE_FACTOR_15_MINUTES ||
       items_discarded != EGM96_HEADER_ITEMS )
   {
     fclose( geoid_height_file );
     delete [] file_name;
     file_name = 0;
-
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex( geoid_96_mutex );
-    if( !mutex_error )
-      Threads_Destroy_Mutex( geoid_96_mutex );
 
     char message[256] = "";
     strcpy( message, ErrorMessages::geoidFileParseError );
@@ -684,44 +820,12 @@ void GeoidLibrary::initializeEGM96Geoid()
   }
 
 /*  Extract elements from the file:                                           */
-  egm96GeoidList.clear();
-
-  num = 0;
-  while ( num < EGM96_ELEVATIONS )
-  {
-    if ( feof( geoid_height_file ) ) break;
-    if ( ferror( geoid_height_file ) ) break;
-    egm96GeoidList.push_back( readFloat ( &items_read, geoid_height_file ) );
-    elevations_read += items_read;
-    num++;
-  }
-
-/*  Determine if all elevations of file read properly, or NOT:                */
-
-  if ( elevations_read != EGM96_ELEVATIONS )
-  {
-    fclose(geoid_height_file);
-    delete [] file_name;
-    file_name = 0;
-
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex( geoid_96_mutex );
-    if( !mutex_error )
-      Threads_Destroy_Mutex( geoid_96_mutex );
-
-    char message[256] = "";
-    strcpy( message, ErrorMessages::geoidFileParseError );
-    strcat( message, ": egm96.grd\n" );
-    throw CoordinateConversionException( message );
-  }
+  egm96GeoidList = new float[EGM96_ELEVATIONS];
+  elevations_read = readBinary(
+     egm96GeoidList, 4, EGM96_ELEVATIONS, geoid_height_file );
 
   fclose( geoid_height_file );
   geoid_height_file = 0;
-
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( geoid_96_mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( geoid_96_mutex );
 
   delete [] file_name;
   file_name = 0;
@@ -746,10 +850,7 @@ void GeoidLibrary::initializeEGM84Geoid()
   long num = 0;
   FILE*  geoid_height_file;
 
-  Thread_Mutex geoid_84_mutex;
-  long mutex_error = Threads_Create_Mutex( &geoid_84_mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( geoid_84_mutex );
+  CCSThreadLock lock(&mutex);
 
 /*  Check the environment for a user provided path, else current directory;   */
 /*  Build a File Name, including specified or default path:                   */
@@ -762,7 +863,7 @@ void GeoidLibrary::initializeEGM84Geoid()
   }
   else
   {
-    file_name =new char[ 18 ];
+    file_name =new char[ 21 ];
     strcpy( file_name, "../../data/" );
   }
   strcat( file_name, "egm84.grd" );
@@ -774,11 +875,6 @@ void GeoidLibrary::initializeEGM84Geoid()
     delete [] file_name;
     file_name = 0;
 
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex( geoid_84_mutex );
-    if( !mutex_error )
-      Threads_Destroy_Mutex( geoid_84_mutex );
-
     char message[256] = "";
     strcpy( message, ErrorMessages::geoidFileOpenError );
     strcat( message, ": egm84.grd\n" );
@@ -786,56 +882,90 @@ void GeoidLibrary::initializeEGM84Geoid()
   }
 
 
-/*  Extract elements from the file:                                           */
-
-  num = 0;
-  while( num < EGM84_ELEVATIONS )
-  {
-    if ( feof( geoid_height_file ) ) break;
-    if ( ferror( geoid_height_file ) ) break;
-    egm84GeoidList.push_back( readFloat( &items_read, geoid_height_file ) );
-
-    elevations_read += items_read;
-    num++;
-  }
-
-
-/*  Determine if all elevations of file read properly, or NOT:                */
-
-  if( ( elevations_read ) != EGM84_ELEVATIONS )
-  {
-    fclose( geoid_height_file );
-    delete [] file_name;
-    file_name = 0;
-
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex( geoid_84_mutex );
-    if( !mutex_error )
-      Threads_Destroy_Mutex( geoid_84_mutex );
-
-    char message[256] = "";
-    strcpy( message, ErrorMessages::geoidFileParseError );
-    strcat( message, ": egm84.grd\n" );
-    throw CoordinateConversionException( message );
-  }
+  /*  Extract elements from the file:                     */
+  egm84GeoidList = new float[EGM84_ELEVATIONS];
+  elevations_read = readBinary(
+     egm84GeoidList, 4, EGM84_ELEVATIONS, geoid_height_file );
 
   fclose( geoid_height_file );
-
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( geoid_84_mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( geoid_84_mutex );
 
   delete [] file_name;
   file_name = 0;
 }
 
-
-void GeoidLibrary::bilinearInterpolate( double longitude, double latitude, double scale_factor, int num_cols, int num_rows,
-                          std::vector<float>& height_buffer, double *delta_height )
+void GeoidLibrary::initializeEGM84ThirtyMinGeoid()
 {
 /*
- * The private function bilinearInterpolate returns the height of the
+ * The function initializeEGM84ThirtyMinGeoid reads geoid separation data from 
+ * a file in the current directory and builds the geoid separation table from it.
+ * If the separation file can not be found or accessed, an error code of
+ * GEOID_FILE_OPEN_ERROR is returned, If the separation file is incomplete
+ * or improperly formatted, an error code of GEOID_INITIALIZE_ERROR is returned,
+ * otherwise GEOID_NO_ERROR is returned.
+ */
+
+  int items_read = 0;
+  char* file_name = 0;
+  char* path_name = getenv( "MSPCCS_DATA" );
+  long elevations_read = 0;
+  long num = 0;
+  FILE*  geoid_height_file;
+
+  CCSThreadLock lock(&mutex);
+
+/*  Check the environment for a user provided path, else current directory;   */
+/*  Build a File Name, including specified or default path:                   */
+
+  if (path_name != NULL)
+  {
+    file_name = new char[ strlen( path_name ) + 12 ]; 
+    strcpy( file_name, path_name );
+    strcat( file_name, "/" );
+  }
+  else
+  {
+    file_name =new char[ 22 ]; 
+    strcpy( file_name, "../../data/" );
+  }
+  strcat( file_name, "wwgrid.bin" );
+
+/*  Open the File READONLY, or Return Error Condition:                        */
+
+  if( ( geoid_height_file = fopen( file_name, "rb" ) ) == NULL )
+  {
+    delete [] file_name;
+    file_name = 0;
+
+    char message[256] = "";
+    strcpy( message, ErrorMessages::geoidFileOpenError );
+    strcat( message, ": wwgrid.bin\n" );
+    throw CoordinateConversionException( message );
+  }
+
+
+/*  Extract elements from the file:                                           */
+
+  egm84ThirtyMinGeoidList = new double[EGM84_30_MIN_ELEVATIONS];
+  elevations_read = readBinary(
+     egm84ThirtyMinGeoidList, 8, EGM84_30_MIN_ELEVATIONS, geoid_height_file );
+
+  fclose( geoid_height_file );
+
+  delete [] file_name;
+  file_name = 0;
+}
+
+void GeoidLibrary::bilinearInterpolateDoubleHeights(
+   double longitude,
+   double latitude,
+   double scale_factor,
+   int num_cols,
+   int num_rows,
+   double *height_buffer,
+   double *delta_height )
+{
+/*
+ * The private function bilinearInterpolateDoubleHeights returns the height of the
  * WGS84 geoid above or below the WGS84 ellipsoid, at the
  * specified geodetic coordinates, using a grid of height adjustments
  * and the bilinear interpolation method.
@@ -845,12 +975,12 @@ void GeoidLibrary::bilinearInterpolate( double longitude, double latitude, doubl
  *    scale_factor        : Grid scale factor                      (input)
  *    num_cols            : Number of columns in grid              (input)
  *    num_rows            : Number of rows in grid                 (input)
- *    height_buffer       : Grid of height adjustments             (input)
+ *    height_buffer       : Grid of height adjustments, doubles    (input)
  *    delta_height        : Height Adjustment, in meters.          (output)
  *
  */
 
-   int index;
+  int index;
   int post_x, post_y;
   double offset_x, offset_y;
   double delta_x, delta_y;
@@ -923,6 +1053,7 @@ void GeoidLibrary::bilinearInterpolate( double longitude, double latitude, doubl
     height_sw = height_buffer[ max_index ];
   else
     height_sw = height_buffer[ index ];
+
   // SE Height
   end_index = index + 1;
   if( end_index > max_index )
@@ -935,7 +1066,7 @@ void GeoidLibrary::bilinearInterpolate( double longitude, double latitude, doubl
   // North latitude - scale_factor
   south_lat = ( 90 - ( post_y * scale_factor ) ) - scale_factor;
 
-  /*  Perform Bi-Linear Interpolation to compute Height above Ellipsoid:        */
+  /*  Perform Bi-Linear Interpolation to compute Height above Ellipsoid:     */
 
   if( longitude_dd < 0.0 )
     delta_x = ( longitude_dd + 360.0 - west_lon ) / scale_factor;
@@ -951,12 +1082,152 @@ void GeoidLibrary::bilinearInterpolate( double longitude, double latitude, doubl
   w_ne = delta_x * delta_y;
   w_nw = _1_minus_delta_x * delta_y;
 
-  *delta_height = height_sw * w_sw + height_se * w_se + height_ne * w_ne + height_nw * w_nw;
+  *delta_height =
+     height_sw * w_sw + height_se * w_se + height_ne * w_ne + height_nw * w_nw;
 }
 
 
-void GeoidLibrary::naturalSplineInterpolate( double longitude, double latitude, double scale_factor, int num_cols, int num_rows,
-                               int max_index, std::vector<float>& height_buffer, double *delta_height )
+void GeoidLibrary::bilinearInterpolate(
+   double longitude,
+   double latitude,
+   double scale_factor,
+   int num_cols,
+   int num_rows,
+   float  *height_buffer,
+   double *delta_height )
+{
+/*
+ * The private function bilinearInterpolate returns the height of the
+ * WGS84 geoid above or below the WGS84 ellipsoid, at the
+ * specified geodetic coordinates, using a grid of height adjustments
+ * and the bilinear interpolation method.
+ *
+ *    longitude           : Geodetic longitude in radians          (input)
+ *    latitude            : Geodetic latitude in radians           (input)
+ *    scale_factor        : Grid scale factor                      (input)
+ *    num_cols            : Number of columns in grid              (input)
+ *    num_rows            : Number of rows in grid                 (input)
+ *    height_buffer       : Grid of height adjustments, floats     (input)
+ *    delta_height        : Height Adjustment, in meters.          (output)
+ *
+ */
+
+  int index;
+  int post_x, post_y;
+  double offset_x, offset_y;
+  double delta_x, delta_y;
+  double _1_minus_delta_x, _1_minus_delta_y;
+  double latitude_dd, longitude_dd;
+  double height_se, height_sw, height_ne, height_nw;
+  double w_sw, w_se, w_ne, w_nw;
+  double south_lat, west_lon;
+  int end_index = 0;
+  int max_index = num_rows * num_cols - 1;
+  char errorStatus[50] = "";
+
+  if( ( latitude < -PI_OVER_2 ) || ( latitude > PI_OVER_2 ) )
+  { /* Latitude out of range */
+    strcat( errorStatus, ErrorMessages::latitude );
+  }
+  if( ( longitude < -PI ) || ( longitude > TWO_PI ) )
+  { /* Longitude out of range */
+    strcat( errorStatus, ErrorMessages::longitude );
+  }
+
+  if( strlen( errorStatus ) > 0)
+    throw CoordinateConversionException( errorStatus );
+
+  latitude_dd  = latitude  * _180_OVER_PI;
+  longitude_dd = longitude * _180_OVER_PI;
+
+  /*  Compute X and Y Offsets into Geoid Height Array:                        */
+
+  if( longitude_dd < 0.0 )
+  {
+    offset_x = ( longitude_dd + 360.0 ) / scale_factor;
+  }
+  else
+  {
+    offset_x = longitude_dd / scale_factor;
+  }
+  offset_y = ( 90 - latitude_dd ) / scale_factor;
+
+  /*  Find Four Nearest Geoid Height Cells for specified latitude, longitude; */
+  /*  Assumes that (0,0) of Geoid Height Array is at Northwest corner:        */
+
+  post_x = ( int )( offset_x );
+  if( ( post_x + 1 ) == num_cols )
+    post_x--;
+  post_y = ( int )( offset_y + 1.0e-11 );
+  if( ( post_y + 1 ) == num_rows )
+   post_y--;
+
+  // NW Height
+  index = post_y * num_cols + post_x;
+  if( index < 0 )
+    height_nw = height_buffer[ 0 ];
+  else if( index > max_index )
+    height_nw = height_buffer[ max_index ];
+  else
+    height_nw = height_buffer[ index ];
+  // NE Height
+  end_index = index + 1;
+  if( end_index > max_index )
+    height_ne  = height_buffer[ max_index ];
+  else
+    height_ne  = height_buffer[ end_index ];
+
+  // SW Height
+  index = ( post_y + 1 ) * num_cols + post_x;  
+  if( index < 0 )
+    height_sw = height_buffer[ 0 ];
+  else if( index > max_index )
+    height_sw = height_buffer[ max_index ];
+  else
+    height_sw = height_buffer[ index ];
+
+  // SE Height
+  end_index = index + 1;
+  if( end_index > max_index )
+    height_se  = height_buffer[ max_index ];
+  else
+    height_se  = height_buffer[ end_index ];
+
+  west_lon = post_x * scale_factor;
+
+  // North latitude - scale_factor
+  south_lat = ( 90 - ( post_y * scale_factor ) ) - scale_factor;
+
+  /*  Perform Bi-Linear Interpolation to compute Height above Ellipsoid:    */
+
+  if( longitude_dd < 0.0 )
+    delta_x = ( longitude_dd + 360.0 - west_lon ) / scale_factor;
+  else
+    delta_x = ( longitude_dd - west_lon ) / scale_factor;
+  delta_y = ( latitude_dd - south_lat ) / scale_factor;
+
+  _1_minus_delta_x = 1 - delta_x;
+  _1_minus_delta_y = 1 - delta_y;
+
+  w_sw = _1_minus_delta_x * _1_minus_delta_y;
+  w_se = delta_x * _1_minus_delta_y;
+  w_ne = delta_x * delta_y;
+  w_nw = _1_minus_delta_x * delta_y;
+
+  *delta_height =
+     height_sw * w_sw + height_se * w_se + height_ne * w_ne + height_nw * w_nw;
+}
+
+
+void GeoidLibrary::naturalSplineInterpolate(
+   double longitude,
+   double latitude,
+   double scale_factor,
+   int num_cols,
+   int num_rows,
+   int max_index,
+   float  *height_buffer,
+   double *delta_height )
 {
 /*
  * The private function naturalSplineInterpolate returns the height of the
@@ -1007,7 +1278,7 @@ void GeoidLibrary::naturalSplineInterpolate( double longitude, double latitude, 
   latitude_dd  = latitude  * _180_OVER_PI;
   longitude_dd = longitude * _180_OVER_PI;
 
-  /*  Compute X and Y Offsets into Geoid Height Array:                          */
+  /*  Compute X and Y Offsets into Geoid Height Array:                        */
 
   if( longitude_dd < 0.0 )
   {
@@ -1019,8 +1290,8 @@ void GeoidLibrary::naturalSplineInterpolate( double longitude, double latitude, 
   }
   offset_y = ( 90.0 - latitude_dd ) / scale_factor;
 
-  /*  Find Four Nearest Geoid Height Cells for specified latitude, longitude;   */
-  /*  Assumes that (0,0) of Geoid Height Array is at Northwest corner:          */
+  /*  Find Four Nearest Geoid Height Cells for specified latitude, longitude; */
+  /*  Assumes that (0,0) of Geoid Height Array is at Northwest corner:        */
 
   post_x = ( int ) offset_x;
   if ( ( post_x + 1 ) == num_cols)
@@ -1094,7 +1365,7 @@ void GeoidLibrary::naturalSplineInterpolate( double longitude, double latitude, 
   // North latitude - scale_factor
   south_lat = ( 90 - ( post_y * scale_factor ) ) - scale_factor;   
 
-  /*  Perform Non-Linear Interpolation to compute Height above Ellipsoid:        */
+  /*  Perform Non-Linear Interpolation to compute Height above Ellipsoid:     */
 
   if( longitude_dd < 0.0 )
     delta_x = ( longitude_dd + 360.0 - west_lon ) / scale_factor;
@@ -1117,12 +1388,20 @@ void GeoidLibrary::naturalSplineInterpolate( double longitude, double latitude, 
   _3_minus_2_times_delta_x = 3 - 2 * delta_x;
   _3_minus_2_times_delta_y = 3 - 2 * delta_y;
 
-  w_sw = _1_minus_delta_x2 * _1_minus_delta_y2 * ( _3_minus_2_times_1_minus_delta_x * _3_minus_2_times_1_minus_delta_y );
-  w_se = delta_x2 * _1_minus_delta_y2 * ( _3_minus_2_times_delta_x * _3_minus_2_times_1_minus_delta_y );
-  w_ne = delta_x2 * delta_y2 * ( _3_minus_2_times_delta_x * _3_minus_2_times_delta_y );
-  w_nw = _1_minus_delta_x2 * delta_y2 * (  _3_minus_2_times_1_minus_delta_x * _3_minus_2_times_delta_y );
+  w_sw = _1_minus_delta_x2 * _1_minus_delta_y2 * 
+     ( _3_minus_2_times_1_minus_delta_x * _3_minus_2_times_1_minus_delta_y );
 
-  *delta_height = height_sw * w_sw + height_se * w_se + height_ne * w_ne + height_nw * w_nw;
+  w_se = delta_x2 * _1_minus_delta_y2 * 
+     ( _3_minus_2_times_delta_x * _3_minus_2_times_1_minus_delta_y );
+
+  w_ne = delta_x2 * delta_y2 * 
+     ( _3_minus_2_times_delta_x * _3_minus_2_times_delta_y );
+
+  w_nw = _1_minus_delta_x2 * delta_y2 * 
+     (  _3_minus_2_times_1_minus_delta_x * _3_minus_2_times_delta_y );
+
+  *delta_height = 
+     height_sw * w_sw + height_se * w_se + height_ne * w_ne + height_nw * w_nw;
 }
 
 // CLASSIFICATION: UNCLASSIFIED

@@ -4,6 +4,14 @@
  * FilePanel.java
  *
  * Created on April 2, 2001, 3:53 PM
+ *
+ * MODIFICATION HISTORY:
+ *
+ * DATE        NAME              DR#               DESCRIPTION
+ * 
+ * 05/12/10    S Gillis          BAEts26542        MSP TS MSL-HAE conversion 
+ *                                                 should use CCS         
+ * 
  */
 
 /**
@@ -1298,6 +1306,8 @@ public class MasterPanel extends javax.swing.JPanel
                         heightLabel.setText("MSL-EGM84-10D-BL Height");
                     else if (height_Type == HeightType.MSL_EGM84_10D_NS_HEIGHT)
                         heightLabel.setText("MSL-EGM84-10D-NS Height");
+                    else if (height_Type == HeightType.MSL_EGM84_30M_BL_HEIGHT)
+                        heightLabel.setText("MSL-EGM84-30M-BL Height");
                     else if (height_Type == HeightType.NO_HEIGHT)
                         heightLabel.setText("No Height");
                     else
@@ -2515,6 +2525,7 @@ public class MasterPanel extends javax.swing.JPanel
          heightComboBox.addItem("MSL-EGM96-VG-NS Height");
          heightComboBox.addItem("MSL-EGM84-10D-BL Height");
          heightComboBox.addItem("MSL-EGM84-10D-NS Height");
+         heightComboBox.addItem("MSL-EGM84-30M-BL Height");
    }
 
 

@@ -6,6 +6,12 @@
  *
  * @author  amy
  * @version
+ *
+ * MODIFICATION HISTORY:
+ *
+ * DATE      NAME        DR#               DESCRIPTION
+ *
+ * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
  */
 package geotrans3.gui;
 
@@ -182,7 +188,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     helpMenuSeparator = new javax.swing.JSeparator();
     aboutMenuItem = new javax.swing.JMenuItem();
 
-    setTitle("MSP GEOTRANS 3.0");
+    setTitle("MSP GEOTRANS 3.1");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {

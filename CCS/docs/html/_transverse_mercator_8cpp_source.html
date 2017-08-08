@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>MSP GEOTRANS: V:/CCS/src/dtcc/CoordinateSystems/tranmerc/TransverseMercator.cpp Source File</title>
+<title>MSP GEOTRANS: Y:/msp/devkits/temp_geotrans/master/geotrans3.1/CCS/src/dtcc/CoordinateSystems/tranmerc/TransverseMercator.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>V:/CCS/src/dtcc/CoordinateSystems/tranmerc/TransverseMercator.cpp</h1><a href="_transverse_mercator_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">// CLASSIFICATION: UNCLASSIFIED</span>
+<h1>Y:/msp/devkits/temp_geotrans/master/geotrans3.1/CCS/src/dtcc/CoordinateSystems/tranmerc/TransverseMercator.cpp</h1><a href="_transverse_mercator_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">// CLASSIFICATION: UNCLASSIFIED</span>
 <a name="l00002"></a>00002 
 <a name="l00003"></a>00003 <span class="comment">/***************************************************************************/</span>
 <a name="l00004"></a>00004 <span class="comment">/* RSC IDENTIFIER: TRANSVERSE MERCATOR</span>
@@ -102,10 +102,10 @@
 <a name="l00077"></a>00077 <span class="comment"> *    Date              Description</span>
 <a name="l00078"></a>00078 <span class="comment"> *    ----              -----------</span>
 <a name="l00079"></a>00079 <span class="comment"> *    2-26-07           Original C++ Code</span>
-<a name="l00080"></a>00080 <span class="comment"> *</span>
-<a name="l00081"></a>00081 <span class="comment"> */</span>
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083 
+<a name="l00080"></a>00080 <span class="comment"> *    7/19/10   NGL     BAEts27271 Correct the test for TRANMERC_LON_WARNING in</span>
+<a name="l00081"></a>00081 <span class="comment"> *                      convertToGeodetic, by removing the multipy by cos(latitude)</span>
+<a name="l00082"></a>00082 <span class="comment"> *</span>
+<a name="l00083"></a>00083 <span class="comment"> */</span>
 <a name="l00084"></a>00084 <span class="comment">/***************************************************************************/</span>
 <a name="l00085"></a>00085 <span class="comment">/*</span>
 <a name="l00086"></a>00086 <span class="comment"> *                               INCLUDES</span>
@@ -655,10 +655,10 @@
 <a name="l00630"></a>00630       <span class="keywordflow">throw</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_exception.html">CoordinateConversionException</a>( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a477e4d68cf41ca24f9eab5517dd48203">ErrorMessages::easting</a> );
 <a name="l00631"></a>00631   }
 <a name="l00632"></a>00632 
-<a name="l00633"></a>00633   <span class="keywordflow">if</span> (fabs(dlam) &gt; (9.0 * <a class="code" href="_coordinate_conversion_service_8cpp.html#a952eac791b596a61bba0a133a3bb439f">PI</a> / 180) * cos(latitude))
+<a name="l00633"></a>00633   <span class="keywordflow">if</span> (fabs(dlam) &gt; (9.0 * <a class="code" href="_coordinate_conversion_service_8cpp.html#a952eac791b596a61bba0a133a3bb439f">PI</a> / 180))
 <a name="l00634"></a>00634   { <span class="comment">/* Distortion will result if longitude is more than 9 degrees from the Central Meridian at the equator */</span>
 <a name="l00635"></a>00635     <span class="comment">/* and decreases to 0 degrees at the poles */</span>
-<a name="l00636"></a>00636     <span class="comment">/* As you move towards the poles, distortion will become more significant */</span>
+<a name="l00636"></a>00636     <span class="comment">/* As you move towards the poles, distortion will become less significant */</span>
 <a name="l00637"></a>00637     strcat( errorStatus, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_warning_messages.html#a3c73926106a640fa7f0079714fcf4be9">MSP::CCS::WarningMessages::longitude</a> );
 <a name="l00638"></a>00638   }
 <a name="l00639"></a>00639 
@@ -695,7 +695,7 @@
 <a name="l00670"></a>00670 
 <a name="l00671"></a>00671 <span class="comment">// CLASSIFICATION: UNCLASSIFIED</span>
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Wed Nov 25 10:53:09 2009 for MSP GEOTRANS by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Aug 3 10:29:11 2010 for MSP GEOTRANS by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

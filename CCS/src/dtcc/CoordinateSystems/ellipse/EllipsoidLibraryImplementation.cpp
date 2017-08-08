@@ -86,7 +86,10 @@
  *    24-May-99         Added user-defined ellipsoids (GEOTRANS for JMTK)
  *    06-27-06          Moved data file to data directory
  *    03-09-07          Original C++ Code
- *
+ *    06-11-10          S. Gillis, BAEts26724, Fixed memory error problem
+ *                      when MSPCCS_DATA is not set
+ *    07-07-10          K.Lam, BAEts27269, Replace C functions in threads.h
+ *                      with C++ methods in classes CCSThreadMutex
  */
 
 
@@ -102,9 +105,10 @@
 #include "EllipsoidLibraryImplementation.h"
 #include "Ellipsoid.h"
 #include "DatumLibraryImplementation.h"
-#include "threads.h"
 #include "CoordinateConversionException.h"
 #include "ErrorMessages.h"
+#include "CCSThreadMutex.h"
+#include "CCSThreadLock.h"
 
 /*
  *    ctype.h    - standard C character handling library
@@ -122,6 +126,8 @@
 
 
 using namespace MSP::CCS;
+using MSP::CCSThreadMutex;
+using MSP::CCSThreadLock;
 
 
 /***************************************************************************/
@@ -152,6 +158,7 @@ class MSP::CCS::EllipsoidLibraryImplementationCleaner
 
   ~EllipsoidLibraryImplementationCleaner()
   {
+    CCSThreadLock lock(&EllipsoidLibraryImplementation::mutex);
     EllipsoidLibraryImplementation::deleteInstance();
   }
 
@@ -159,12 +166,14 @@ class MSP::CCS::EllipsoidLibraryImplementationCleaner
 
 
 // Make this class a singleton, so the data file is only initialized once
+CCSThreadMutex EllipsoidLibraryImplementation::mutex;
 EllipsoidLibraryImplementation* EllipsoidLibraryImplementation::instance = 0;
 int EllipsoidLibraryImplementation::instanceCount = 0;
 
 
 EllipsoidLibraryImplementation* EllipsoidLibraryImplementation::getInstance()
 {
+  CCSThreadLock lock(&mutex);
   if( instance == 0 )
     instance = new EllipsoidLibraryImplementation;
 
@@ -180,6 +189,7 @@ void EllipsoidLibraryImplementation::removeInstance()
  * The function removeInstance removes this EllipsoidLibraryImplementation instance from the
  * total number of instances. 
  */
+  CCSThreadLock lock(&mutex);
   if( --instanceCount < 1 )
   {
     deleteInstance();
@@ -211,7 +221,14 @@ EllipsoidLibraryImplementation::EllipsoidLibraryImplementation():
 
   ellipsoidList.reserve( MAX_ELLIPSOIDS );
 
-  loadEllipsoids();
+  try
+  {
+    loadEllipsoids();
+  }
+  catch(CoordinateConversionException e)
+  {
+    throw e;
+  }
 }
 
 
@@ -314,10 +331,7 @@ void EllipsoidLibraryImplementation::defineEllipsoid( const char* code, const ch
 
     numEllipsoids++;
 
-    Thread_Mutex ellipsoid_mutex;
-    long mutex_error = Threads_Create_Mutex(&ellipsoid_mutex);
-    if( !mutex_error )
-      mutex_error = Threads_Lock_Mutex(ellipsoid_mutex);
+    CCSThreadLock lock(&mutex);
 
     /*output updated ellipsoid table*/
     PathName = getenv( "MSPCCS_DATA" );
@@ -334,11 +348,6 @@ void EllipsoidLibraryImplementation::defineEllipsoid( const char* code, const ch
 
     if( ( fp = fopen( FileName, "w" ) ) == NULL )
     { /* fatal error */
-      if( !mutex_error )
-        mutex_error = Threads_Unlock_Mutex(ellipsoid_mutex);
-      if( !mutex_error )
-        Threads_Destroy_Mutex(ellipsoid_mutex);
-
       throw CoordinateConversionException( ErrorMessages::ellipsoidFileOpenError );
     }
 
@@ -359,11 +368,6 @@ void EllipsoidLibraryImplementation::defineEllipsoid( const char* code, const ch
     }
 
     fclose( fp );
-
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex(ellipsoid_mutex);
-    if( !mutex_error )
-      Threads_Destroy_Mutex(ellipsoid_mutex);
   }
 } 
 
@@ -417,10 +421,7 @@ void EllipsoidLibraryImplementation::removeEllipsoid( const char* code )
     numEllipsoids--;
     ellipsoidList.resize( numEllipsoids );
 
-    Thread_Mutex ellipsoid_mutex;
-    long mutex_error = Threads_Create_Mutex(&ellipsoid_mutex);
-    if( !mutex_error )
-      mutex_error = Threads_Lock_Mutex(ellipsoid_mutex);
+    CCSThreadLock lock(&mutex);
 
     /*output updated ellipsoid table*/
     PathName = getenv( "MSPCCS_DATA" );
@@ -436,11 +437,6 @@ void EllipsoidLibraryImplementation::removeEllipsoid( const char* code )
     strcat( FileName, "ellips.dat" );
     if( ( fp = fopen( FileName, "w" ) ) == NULL )
     { /* fatal error */
-      if( !mutex_error )
-        mutex_error = Threads_Unlock_Mutex(ellipsoid_mutex);
-      if( !mutex_error )
-        Threads_Destroy_Mutex(ellipsoid_mutex);
-
       throw CoordinateConversionException( ErrorMessages::ellipsoidFileOpenError );
     }
     /* write file */
@@ -460,11 +456,6 @@ void EllipsoidLibraryImplementation::removeEllipsoid( const char* code )
     }
 
     fclose( fp );
-
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex(ellipsoid_mutex);
-    if( !mutex_error )
-      Threads_Destroy_Mutex(ellipsoid_mutex);
   }
 }
 
@@ -673,10 +664,7 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
   char buffer[ELLIPSOID_BUF];
   long index = 0;                     /* Array index                         */
 
-  Thread_Mutex ellipsoid_mutex;
-  long mutex_error = Threads_Create_Mutex(&ellipsoid_mutex);
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex(ellipsoid_mutex);
+  CCSThreadLock lock(&mutex);
 
   /*  Check the environment for a user provided path, else current directory;   */
   /*  Build a File Name, including specified or default path:                   */
@@ -690,7 +678,7 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
   }
   else
   {
-    FileName = new char[ 19 ];
+    FileName = new char[ 22 ];
     strcpy( FileName, "../../data/" );
   }
   strcat( FileName, "ellips.dat" );
@@ -701,11 +689,6 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
   {
     delete [] FileName;
     FileName = 0;
-
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex(ellipsoid_mutex);
-    if( !mutex_error )
-      Threads_Destroy_Mutex(ellipsoid_mutex);
 
     throw CoordinateConversionException( ErrorMessages::ellipsoidFileOpenError );
   }
@@ -749,11 +732,6 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
   }
   
   fclose( fp );
-
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex(ellipsoid_mutex);
-  if( !mutex_error )
-    Threads_Destroy_Mutex(ellipsoid_mutex);
 
   delete [] FileName;
   FileName = 0;

@@ -4,6 +4,12 @@
  * StringHandler.java
  *
  * Created on April 9, 2001, 4:22 PM
+ *
+ * MODIFICATION HISTORY:
+ *
+ * DATE      NAME        DR#               DESCRIPTION
+ *
+ * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
  */
 
 package geotrans3.misc;
@@ -23,7 +29,7 @@ import geotrans3.utility.Constants;
  */
 public class StringHandler extends Object 
 {
-  private final java.lang.String title = "MSP GEOTRANS 3.0";
+  private final java.lang.String title = "MSP GEOTRANS 3.1";
   
   private java.lang.String errorMsg[];
   private boolean ccsError = false;

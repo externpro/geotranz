@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>MSP GEOTRANS: V:/CCS/src/CoordinateConversion/CoordinateConversionService.h Source File</title>
+<title>MSP GEOTRANS: Y:/msp/devkits/temp_geotrans/master/geotrans3.1/CCS/src/CoordinateConversion/CoordinateConversionService.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -23,7 +23,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>V:/CCS/src/CoordinateConversion/CoordinateConversionService.h</h1><a href="_coordinate_conversion_service_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">// CLASSIFICATION: UNCLASSIFIED</span>
+<h1>Y:/msp/devkits/temp_geotrans/master/geotrans3.1/CCS/src/CoordinateConversion/CoordinateConversionService.h</h1><a href="_coordinate_conversion_service_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">// CLASSIFICATION: UNCLASSIFIED</span>
 <a name="l00002"></a>00002 <span class="preprocessor">#ifndef CoordinateConversionService_H</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="preprocessor">#define CoordinateConversionService_H</span>
 <a name="l00004"></a>00004 <span class="preprocessor"></span>
@@ -101,374 +101,378 @@
 <a name="l00076"></a>00076 <span class="comment"> *    06-06-06          Added support for USNG</span>
 <a name="l00077"></a>00077 <span class="comment"> *    07-17-06          Added support for GARS</span>
 <a name="l00078"></a>00078 <span class="comment"> *    03-17-07          Original C++ Code</span>
-<a name="l00079"></a>00079 <span class="comment"> */</span>
-<a name="l00080"></a>00080 
+<a name="l00079"></a>00079 <span class="comment"> *    07-20-10          NGL BAEts27152 Updated getServiceVersion to return an int</span>
+<a name="l00080"></a>00080 <span class="comment"> */</span>
 <a name="l00081"></a>00081 
-<a name="l00082"></a>00082 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00083"></a>00083 <span class="preprocessor">#include &quot;<a class="code" href="_coordinate_type_8h.html">CoordinateType.h</a>&quot;</span>
-<a name="l00084"></a>00084 <span class="preprocessor">#include &quot;<a class="code" href="_precision_8h.html">Precision.h</a>&quot;</span>
-<a name="l00085"></a>00085 <span class="preprocessor">#include &quot;<a class="code" href="_source_or_target_8h.html">SourceOrTarget.h</a>&quot;</span>
-<a name="l00086"></a>00086 <span class="preprocessor">#include &quot;<a class="code" href="_coordinate_tuple_8h.html">CoordinateTuple.h</a>&quot;</span>
-<a name="l00087"></a>00087 
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00084"></a>00084 <span class="preprocessor">#include &quot;<a class="code" href="_coordinate_type_8h.html">CoordinateType.h</a>&quot;</span>
+<a name="l00085"></a>00085 <span class="preprocessor">#include &quot;<a class="code" href="_precision_8h.html">Precision.h</a>&quot;</span>
+<a name="l00086"></a>00086 <span class="preprocessor">#include &quot;<a class="code" href="_source_or_target_8h.html">SourceOrTarget.h</a>&quot;</span>
+<a name="l00087"></a>00087 <span class="preprocessor">#include &quot;<a class="code" href="_coordinate_tuple_8h.html">CoordinateTuple.h</a>&quot;</span>
 <a name="l00088"></a>00088 
-<a name="l00089"></a>00089 <span class="preprocessor">#ifdef WIN32</span>
-<a name="l00090"></a>00090 <span class="preprocessor"></span><span class="preprocessor">#ifdef MSP_CCS_EX</span>
-<a name="l00091"></a>00091 <span class="preprocessor"></span><span class="preprocessor">#define MSP_CCS __declspec(dllexport)</span>
-<a name="l00092"></a>00092 <span class="preprocessor"></span><span class="preprocessor">#else</span>
-<a name="l00093"></a>00093 <span class="preprocessor"></span><span class="preprocessor">#define MSP_CCS __declspec(dllimport)</span>
-<a name="l00094"></a>00094 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090 <span class="preprocessor">#ifdef WIN32</span>
+<a name="l00091"></a>00091 <span class="preprocessor"></span><span class="preprocessor">#ifdef MSP_CCS_EX</span>
+<a name="l00092"></a>00092 <span class="preprocessor"></span><span class="preprocessor">#define MSP_CCS __declspec(dllexport)</span>
+<a name="l00093"></a>00093 <span class="preprocessor"></span><span class="preprocessor">#else</span>
+<a name="l00094"></a>00094 <span class="preprocessor"></span><span class="preprocessor">#define MSP_CCS __declspec(dllimport)</span>
 <a name="l00095"></a>00095 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00096"></a>00096 <span class="preprocessor"></span>
-<a name="l00097"></a>00097 
-<a name="l00098"></a><a class="code" href="namespace_m_s_p.html">00098</a> <span class="keyword">namespace </span>MSP
-<a name="l00099"></a>00099 {
-<a name="l00100"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html">00100</a>   <span class="keyword">namespace </span>CCS
-<a name="l00101"></a>00101   {
-<a name="l00102"></a>00102     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library.html">EllipsoidLibrary</a>;
-<a name="l00103"></a>00103     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library_implementation.html">EllipsoidLibraryImplementation</a>;
-<a name="l00104"></a>00104     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library.html">DatumLibrary</a>;
-<a name="l00105"></a>00105     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html">DatumLibraryImplementation</a>;
-<a name="l00106"></a>00106     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geoid_library.html">GeoidLibrary</a>;
-<a name="l00107"></a>00107     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>;
-<a name="l00108"></a>00108     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a>;
-<a name="l00109"></a>00109     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>;
-<a name="l00110"></a>00110     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection3_parameters.html">MapProjection3Parameters</a>;
-<a name="l00111"></a>00111     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection4_parameters.html">MapProjection4Parameters</a>;
-<a name="l00112"></a>00112     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection5_parameters.html">MapProjection5Parameters</a>;
-<a name="l00113"></a>00113     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection6_parameters.html">MapProjection6Parameters</a>;
-<a name="l00114"></a>00114     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a>;
-<a name="l00115"></a>00115     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_parameters.html">GeodeticParameters</a>;
-<a name="l00116"></a>00116     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian_parameters.html">LocalCartesianParameters</a>;
-<a name="l00117"></a>00117     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_mercator_standard_parallel_parameters.html">MercatorStandardParallelParameters</a>;
-<a name="l00118"></a>00118     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_mercator_scale_factor_parameters.html">MercatorScaleFactorParameters</a>;
-<a name="l00119"></a>00119     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a>;
-<a name="l00120"></a>00120     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_oblique_mercator_parameters.html">ObliqueMercatorParameters</a>;
-<a name="l00121"></a>00121     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_standard_parallel_parameters.html">PolarStereographicStandardParallelParameters</a>;
-<a name="l00122"></a>00122     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_scale_factor_parameters.html">PolarStereographicScaleFactorParameters</a>;
-<a name="l00123"></a>00123     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_parameters.html">UTMParameters</a>;
-<a name="l00124"></a>00124     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MapProjectionCoordinates</a>;
-<a name="l00125"></a>00125     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_b_n_g_coordinates.html">BNGCoordinates</a>;
-<a name="l00126"></a>00126     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">CartesianCoordinates</a>;
-<a name="l00127"></a>00127     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">GeodeticCoordinates</a>;
-<a name="l00128"></a>00128     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_g_e_o_r_e_f_coordinates.html">GEOREFCoordinates</a>;
-<a name="l00129"></a>00129     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a>;
-<a name="l00130"></a>00130     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_m_g_r_sor_u_s_n_g_coordinates.html">MGRSorUSNGCoordinates</a>;
-<a name="l00131"></a>00131     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_p_s_coordinates.html">UPSCoordinates</a>;
-<a name="l00132"></a>00132     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a>;
-<a name="l00133"></a>00133     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">CoordinateSystem</a>;
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136   <span class="comment">/***************************************************************************/</span>
-<a name="l00137"></a>00137   <span class="comment">/*</span>
-<a name="l00138"></a>00138 <span class="comment">   *                              DEFINES</span>
-<a name="l00139"></a>00139 <span class="comment">   */</span>
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141     <span class="comment">/* Symbolic constants */</span>
-<a name="l00142"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a9165fd4ed72bbaf5d5ad696260ba580c">00142</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a9165fd4ed72bbaf5d5ad696260ba580c">NUMBER_COORD_SYS</a> = 37;       <span class="comment">/* Number of coordinate systems        */</span>
-<a name="l00143"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3b67e89edc4a35016a57ecddbbee0f45">00143</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3b67e89edc4a35016a57ecddbbee0f45">COORD_SYS_CODE_LENGTH</a> = 3;   <span class="comment">/* Length of coordinate system codes (including null) */</span>
-<a name="l00144"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3023923fc5f0fe656b1aa7801b3db104">00144</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3023923fc5f0fe656b1aa7801b3db104">COORD_SYS_NAME_LENGTH</a> = 50;  <span class="comment">/* Max length of coordinate system names (including null) */</span>
-<a name="l00145"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a49b33a11803b24376bb71e67268f5884">00145</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a49b33a11803b24376bb71e67268f5884">DATUM_CODE_LENGTH</a> = 7;       <span class="comment">/* Length of datum codes (including null) */</span>
-<a name="l00146"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a1df5ba93c1d9a8065a571c33a175f0f9">00146</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a1df5ba93c1d9a8065a571c33a175f0f9">DATUM_NAME_LENGTH</a> = 33;      <span class="comment">/* Max length of datum names (including null) */</span>
-<a name="l00147"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a8a2572dcbaf28735a7ae597f122a70d6">00147</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a8a2572dcbaf28735a7ae597f122a70d6">ELLIPSOID_CODE_LENGTH</a> = 3;   <span class="comment">/* Length of ellipsoid codes (including null) */</span>
-<a name="l00148"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a288f38bde22e4e506fdd624a36a91bd7">00148</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a288f38bde22e4e506fdd624a36a91bd7">ELLIPSOID_NAME_LENGTH</a> = 30;  <span class="comment">/* Max length of ellipsoid names (including null) */</span>
-<a name="l00149"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#aaa5ceda2430a7ef5f9bf13c5bad3b5f0">00149</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#aaa5ceda2430a7ef5f9bf13c5bad3b5f0">CONVERT_MSG_LENGTH</a> = 2048;   <span class="comment">/* Max length of coordinate conversion status message */</span>
-<a name="l00150"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a808451cf46e696b69d252a0176a1b174">00150</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a808451cf46e696b69d252a0176a1b174">RETURN_MSG_LENGTH</a> = 256;     <span class="comment">/* Max length of return code status message */</span>
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152 
-<a name="l00156"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html">00156</a>     <span class="keyword">struct </span><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html">Color</a>
-<a name="l00157"></a>00157     {
-<a name="l00159"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8df">00159</a>       <span class="keyword">enum</span> <a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8df">Enum</a>
-<a name="l00160"></a>00160       {
-<a name="l00161"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa584b8720319ca51033f911b9ad07a0dc">00161</a>         <a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa584b8720319ca51033f911b9ad07a0dc">red</a>,
-<a name="l00162"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa6118a4fe3ac32a81dff4021999d05caf">00162</a>         <a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa6118a4fe3ac32a81dff4021999d05caf">yellow</a>,
-<a name="l00163"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa5780345c5939ee4b376ac9844ccdf0e6">00163</a>         <a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa5780345c5939ee4b376ac9844ccdf0e6">green</a>
-<a name="l00164"></a>00164       };
-<a name="l00165"></a>00165     };
-<a name="l00166"></a>00166 
-<a name="l00171"></a>00171 <span class="preprocessor">#ifdef WIN32</span>
-<a name="l00172"></a>00172 <span class="preprocessor"></span>   <span class="keyword">class </span>MSP_CCS CoordinateConversionService
-<a name="l00173"></a>00173 #else
-<a name="l00174"></a><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">00174</a>    class <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a>
-<a name="l00175"></a>00175 #endif
-<a name="l00176"></a>00176     {
-<a name="l00177"></a>00177     <span class="keyword">public</span>:
-<a name="l00178"></a>00178 
-<a name="l00190"></a>00190       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* sourceDatumCode, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a>* sourceParameters, <span class="keyword">const</span> <span class="keywordtype">char</span>* targetDatumCode, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a>* targetParameters );
-<a name="l00191"></a>00191 
-<a name="l00197"></a>00197       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a>( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a> &amp;ccs );
-<a name="l00198"></a>00198 
-<a name="l00202"></a>00202       ~<a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a>( <span class="keywordtype">void</span> );
-<a name="l00203"></a>00203 
-<a name="l00209"></a>00209       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a> &amp;operator=( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a> &amp;ccs );
-<a name="l00210"></a>00210 
-<a name="l00211"></a>00211 
-<a name="l00224"></a>00224       <span class="keywordtype">void</span> convertSourceToTarget( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>* sourceCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>* sourceAccuracy, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>&amp; targetCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>&amp; targetAccuracy );
-<a name="l00225"></a>00225 
-<a name="l00226"></a>00226 
-<a name="l00239"></a>00239       <span class="keywordtype">void</span> convertTargetToSource( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>* targetCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>* targetAccuracy, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>&amp; sourceCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>&amp; sourceAccurac );
-<a name="l00240"></a>00240     
-<a name="l00241"></a>00241   
-<a name="l00252"></a>00252       <span class="keywordtype">void</span> convertSourceToTargetCollection( <span class="keyword">const</span> std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; sourceCoordinates, <span class="keyword">const</span> std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; sourceAccuracy, std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; targetCoordinates, std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; targetAccuracy );
-<a name="l00253"></a>00253 
-<a name="l00254"></a>00254 
-<a name="l00265"></a>00265       <span class="keywordtype">void</span> convertTargetToSourceCollection( <span class="keyword">const</span> std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; targetCoordinates, <span class="keyword">const</span> std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; targetAccuracy, std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; sourceCoordinates, std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; sourceAccuracy );
-<a name="l00266"></a>00266 
-<a name="l00267"></a>00267 
-<a name="l00268"></a>00268       <span class="comment">/*</span>
-<a name="l00269"></a>00269 <span class="comment">       * The function getEllipsoidLibrary returns the ellipsoid library </span>
-<a name="l00270"></a>00270 <span class="comment">       * which provides access to ellipsoidparameter information.</span>
-<a name="l00271"></a>00271 <span class="comment">       * </span>
-<a name="l00272"></a>00272 <span class="comment">       */</span>
-<a name="l00273"></a>00273 
-<a name="l00274"></a>00274       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library.html">EllipsoidLibrary</a>* getEllipsoidLibrary();
+<a name="l00096"></a>00096 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00097"></a>00097 <span class="preprocessor"></span>
+<a name="l00098"></a>00098 
+<a name="l00099"></a><a class="code" href="namespace_m_s_p.html">00099</a> <span class="keyword">namespace </span>MSP
+<a name="l00100"></a>00100 {
+<a name="l00101"></a>00101   <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_thread_mutex.html">CCSThreadMutex</a>;
+<a name="l00102"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html">00102</a>   <span class="keyword">namespace </span>CCS
+<a name="l00103"></a>00103   {
+<a name="l00104"></a>00104     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library.html">EllipsoidLibrary</a>;
+<a name="l00105"></a>00105     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library_implementation.html">EllipsoidLibraryImplementation</a>;
+<a name="l00106"></a>00106     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library.html">DatumLibrary</a>;
+<a name="l00107"></a>00107     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html">DatumLibraryImplementation</a>;
+<a name="l00108"></a>00108     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geoid_library.html">GeoidLibrary</a>;
+<a name="l00109"></a>00109     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>;
+<a name="l00110"></a>00110     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a>;
+<a name="l00111"></a>00111     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>;
+<a name="l00112"></a>00112     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection3_parameters.html">MapProjection3Parameters</a>;
+<a name="l00113"></a>00113     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection4_parameters.html">MapProjection4Parameters</a>;
+<a name="l00114"></a>00114     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection5_parameters.html">MapProjection5Parameters</a>;
+<a name="l00115"></a>00115     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection6_parameters.html">MapProjection6Parameters</a>;
+<a name="l00116"></a>00116     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a>;
+<a name="l00117"></a>00117     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_parameters.html">GeodeticParameters</a>;
+<a name="l00118"></a>00118     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian_parameters.html">LocalCartesianParameters</a>;
+<a name="l00119"></a>00119     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_mercator_standard_parallel_parameters.html">MercatorStandardParallelParameters</a>;
+<a name="l00120"></a>00120     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_mercator_scale_factor_parameters.html">MercatorScaleFactorParameters</a>;
+<a name="l00121"></a>00121     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a>;
+<a name="l00122"></a>00122     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_oblique_mercator_parameters.html">ObliqueMercatorParameters</a>;
+<a name="l00123"></a>00123     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_standard_parallel_parameters.html">PolarStereographicStandardParallelParameters</a>;
+<a name="l00124"></a>00124     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_scale_factor_parameters.html">PolarStereographicScaleFactorParameters</a>;
+<a name="l00125"></a>00125     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_parameters.html">UTMParameters</a>;
+<a name="l00126"></a>00126     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MapProjectionCoordinates</a>;
+<a name="l00127"></a>00127     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_b_n_g_coordinates.html">BNGCoordinates</a>;
+<a name="l00128"></a>00128     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">CartesianCoordinates</a>;
+<a name="l00129"></a>00129     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">GeodeticCoordinates</a>;
+<a name="l00130"></a>00130     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_g_e_o_r_e_f_coordinates.html">GEOREFCoordinates</a>;
+<a name="l00131"></a>00131     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a>;
+<a name="l00132"></a>00132     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_m_g_r_sor_u_s_n_g_coordinates.html">MGRSorUSNGCoordinates</a>;
+<a name="l00133"></a>00133     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_p_s_coordinates.html">UPSCoordinates</a>;
+<a name="l00134"></a>00134     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a>;
+<a name="l00135"></a>00135     <span class="keyword">class </span><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">CoordinateSystem</a>;
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138   <span class="comment">/***************************************************************************/</span>
+<a name="l00139"></a>00139   <span class="comment">/*</span>
+<a name="l00140"></a>00140 <span class="comment">   *                              DEFINES</span>
+<a name="l00141"></a>00141 <span class="comment">   */</span>
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143     <span class="comment">/* Symbolic constants */</span>
+<a name="l00144"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a9165fd4ed72bbaf5d5ad696260ba580c">00144</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a9165fd4ed72bbaf5d5ad696260ba580c">NUMBER_COORD_SYS</a> = 37;       <span class="comment">/* Number of coordinate systems        */</span>
+<a name="l00145"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3b67e89edc4a35016a57ecddbbee0f45">00145</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3b67e89edc4a35016a57ecddbbee0f45">COORD_SYS_CODE_LENGTH</a> = 3;   <span class="comment">/* Length of coordinate system codes (including null) */</span>
+<a name="l00146"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3023923fc5f0fe656b1aa7801b3db104">00146</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3023923fc5f0fe656b1aa7801b3db104">COORD_SYS_NAME_LENGTH</a> = 50;  <span class="comment">/* Max length of coordinate system names (including null) */</span>
+<a name="l00147"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a49b33a11803b24376bb71e67268f5884">00147</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a49b33a11803b24376bb71e67268f5884">DATUM_CODE_LENGTH</a> = 7;       <span class="comment">/* Length of datum codes (including null) */</span>
+<a name="l00148"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a1df5ba93c1d9a8065a571c33a175f0f9">00148</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a1df5ba93c1d9a8065a571c33a175f0f9">DATUM_NAME_LENGTH</a> = 33;      <span class="comment">/* Max length of datum names (including null) */</span>
+<a name="l00149"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a8a2572dcbaf28735a7ae597f122a70d6">00149</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a8a2572dcbaf28735a7ae597f122a70d6">ELLIPSOID_CODE_LENGTH</a> = 3;   <span class="comment">/* Length of ellipsoid codes (including null) */</span>
+<a name="l00150"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a288f38bde22e4e506fdd624a36a91bd7">00150</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a288f38bde22e4e506fdd624a36a91bd7">ELLIPSOID_NAME_LENGTH</a> = 30;  <span class="comment">/* Max length of ellipsoid names (including null) */</span>
+<a name="l00151"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#aaa5ceda2430a7ef5f9bf13c5bad3b5f0">00151</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#aaa5ceda2430a7ef5f9bf13c5bad3b5f0">CONVERT_MSG_LENGTH</a> = 2048;   <span class="comment">/* Max length of coordinate conversion status message */</span>
+<a name="l00152"></a><a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a808451cf46e696b69d252a0176a1b174">00152</a>     <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a808451cf46e696b69d252a0176a1b174">RETURN_MSG_LENGTH</a> = 256;     <span class="comment">/* Max length of return code status message */</span>
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154 
+<a name="l00158"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html">00158</a>     <span class="keyword">struct </span><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html">Color</a>
+<a name="l00159"></a>00159     {
+<a name="l00161"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8df">00161</a>       <span class="keyword">enum</span> <a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8df">Enum</a>
+<a name="l00162"></a>00162       {
+<a name="l00163"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa584b8720319ca51033f911b9ad07a0dc">00163</a>         <a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa584b8720319ca51033f911b9ad07a0dc">red</a>,
+<a name="l00164"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa6118a4fe3ac32a81dff4021999d05caf">00164</a>         <a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa6118a4fe3ac32a81dff4021999d05caf">yellow</a>,
+<a name="l00165"></a><a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa5780345c5939ee4b376ac9844ccdf0e6">00165</a>         <a class="code" href="struct_m_s_p_1_1_c_c_s_1_1_color.html#aabfd734dee6f7cf6e9b346ef7e65a8dfa5780345c5939ee4b376ac9844ccdf0e6">green</a>
+<a name="l00166"></a>00166       };
+<a name="l00167"></a>00167     };
+<a name="l00168"></a>00168 
+<a name="l00173"></a>00173 <span class="preprocessor">#ifdef WIN32</span>
+<a name="l00174"></a>00174 <span class="preprocessor"></span>   <span class="keyword">class </span>MSP_CCS CoordinateConversionService
+<a name="l00175"></a>00175 #else
+<a name="l00176"></a><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">00176</a>    class <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a>
+<a name="l00177"></a>00177 #endif
+<a name="l00178"></a>00178     {
+<a name="l00179"></a>00179     <span class="keyword">public</span>:
+<a name="l00180"></a>00180 
+<a name="l00192"></a>00192       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* sourceDatumCode, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a>* sourceParameters, <span class="keyword">const</span> <span class="keywordtype">char</span>* targetDatumCode, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a>* targetParameters );
+<a name="l00193"></a>00193 
+<a name="l00199"></a>00199       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a>( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a> &amp;ccs );
+<a name="l00200"></a>00200 
+<a name="l00204"></a>00204       ~<a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a>( <span class="keywordtype">void</span> );
+<a name="l00205"></a>00205 
+<a name="l00211"></a>00211       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a> &amp;operator=( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html">CoordinateConversionService</a> &amp;ccs );
+<a name="l00212"></a>00212 
+<a name="l00213"></a>00213 
+<a name="l00226"></a>00226       <span class="keywordtype">void</span> convertSourceToTarget( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>* sourceCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>* sourceAccuracy, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>&amp; targetCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>&amp; targetAccuracy );
+<a name="l00227"></a>00227 
+<a name="l00228"></a>00228 
+<a name="l00241"></a>00241       <span class="keywordtype">void</span> convertTargetToSource( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>* targetCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>* targetAccuracy, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>&amp; sourceCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>&amp; sourceAccurac );
+<a name="l00242"></a>00242     
+<a name="l00243"></a>00243   
+<a name="l00254"></a>00254       <span class="keywordtype">void</span> convertSourceToTargetCollection( <span class="keyword">const</span> std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; sourceCoordinates, <span class="keyword">const</span> std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; sourceAccuracy, std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; targetCoordinates, std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; targetAccuracy );
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256 
+<a name="l00267"></a>00267       <span class="keywordtype">void</span> convertTargetToSourceCollection( <span class="keyword">const</span> std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; targetCoordinates, <span class="keyword">const</span> std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; targetAccuracy, std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; sourceCoordinates, std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; sourceAccuracy );
+<a name="l00268"></a>00268 
+<a name="l00269"></a>00269 
+<a name="l00270"></a>00270       <span class="comment">/*</span>
+<a name="l00271"></a>00271 <span class="comment">       * The function getEllipsoidLibrary returns the ellipsoid library </span>
+<a name="l00272"></a>00272 <span class="comment">       * which provides access to ellipsoidparameter information.</span>
+<a name="l00273"></a>00273 <span class="comment">       * </span>
+<a name="l00274"></a>00274 <span class="comment">       */</span>
 <a name="l00275"></a>00275 
-<a name="l00276"></a>00276 
-<a name="l00277"></a>00277       <span class="comment">/*</span>
-<a name="l00278"></a>00278 <span class="comment">      * The function getDatumLibrary returns the datum library </span>
-<a name="l00279"></a>00279 <span class="comment">      * which provides access to datum transformation and parameter information.</span>
-<a name="l00280"></a>00280 <span class="comment">      * </span>
-<a name="l00281"></a>00281 <span class="comment">      * @return Datum library</span>
-<a name="l00282"></a>00282 <span class="comment">      */</span>
-<a name="l00283"></a>00283       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library.html">DatumLibrary</a>* getDatumLibrary();
-<a name="l00284"></a>00284 
-<a name="l00285"></a>00285 
-<a name="l00286"></a>00286      <span class="comment">/*</span>
-<a name="l00287"></a>00287 <span class="comment">      * The function getServiceVersion returns current service version.</span>
-<a name="l00288"></a>00288 <span class="comment">      *</span>
-<a name="l00289"></a>00289 <span class="comment">      * @return Service version</span>
-<a name="l00290"></a>00290 <span class="comment">      */</span>
-<a name="l00291"></a>00291          <span class="keywordtype">double</span> getServiceVersion() <span class="keyword">const</span>;
-<a name="l00292"></a>00292 
-<a name="l00293"></a>00293 
-<a name="l00294"></a>00294      <span class="comment">/*</span>
-<a name="l00295"></a>00295 <span class="comment">      *  The function getDatum returns the index of the current datum.</span>
-<a name="l00296"></a>00296 <span class="comment">      *</span>
-<a name="l00297"></a>00297 <span class="comment">      * @param[in] direction - indicates whether the datum is to be used for input or output</span>
-<a name="l00298"></a>00298 <span class="comment">      * @return Index identifying the index of the current datum</span>
-<a name="l00299"></a>00299 <span class="comment">      */</span>
-<a name="l00300"></a>00300 
-<a name="l00301"></a>00301       <span class="keyword">const</span> <span class="keywordtype">char</span>* getDatum( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction ) <span class="keyword">const</span>;
+<a name="l00276"></a>00276       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library.html">EllipsoidLibrary</a>* getEllipsoidLibrary();
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278 
+<a name="l00279"></a>00279       <span class="comment">/*</span>
+<a name="l00280"></a>00280 <span class="comment">      * The function getDatumLibrary returns the datum library </span>
+<a name="l00281"></a>00281 <span class="comment">      * which provides access to datum transformation and parameter information.</span>
+<a name="l00282"></a>00282 <span class="comment">      * </span>
+<a name="l00283"></a>00283 <span class="comment">      * @return Datum library</span>
+<a name="l00284"></a>00284 <span class="comment">      */</span>
+<a name="l00285"></a>00285       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library.html">DatumLibrary</a>* getDatumLibrary();
+<a name="l00286"></a>00286 
+<a name="l00287"></a>00287 
+<a name="l00288"></a>00288      <span class="comment">/*</span>
+<a name="l00289"></a>00289 <span class="comment">      * The function getServiceVersion returns current service version.</span>
+<a name="l00290"></a>00290 <span class="comment">      *</span>
+<a name="l00291"></a>00291 <span class="comment">      * @return Service version</span>
+<a name="l00292"></a>00292 <span class="comment">      */</span>
+<a name="l00293"></a>00293       <span class="keywordtype">int</span> getServiceVersion();
+<a name="l00294"></a>00294 
+<a name="l00295"></a>00295 
+<a name="l00296"></a>00296      <span class="comment">/*</span>
+<a name="l00297"></a>00297 <span class="comment">      *  The function getDatum returns the index of the current datum.</span>
+<a name="l00298"></a>00298 <span class="comment">      *</span>
+<a name="l00299"></a>00299 <span class="comment">      * @param[in] direction - indicates whether the datum is to be used for input or output</span>
+<a name="l00300"></a>00300 <span class="comment">      * @return Index identifying the index of the current datum</span>
+<a name="l00301"></a>00301 <span class="comment">      */</span>
 <a name="l00302"></a>00302 
-<a name="l00303"></a>00303 
-<a name="l00304"></a>00304      <span class="comment">/*</span>
-<a name="l00305"></a>00305 <span class="comment">      *  The function getCoordinateSystem returns the current coordinate system</span>
-<a name="l00306"></a>00306 <span class="comment">      *  type.</span>
-<a name="l00307"></a>00307 <span class="comment">      *</span>
-<a name="l00308"></a>00308 <span class="comment">      *  @param[in] direction  - Indicates whether the coordinate system is to </span>
-<a name="l00309"></a>00309 <span class="comment">      *                          be used for input or output</span>
-<a name="l00310"></a>00310 <span class="comment">      *  @return Parameters identifies current coordinate system type</span>
-<a name="l00311"></a>00311 <span class="comment">      */</span>
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a>* getCoordinateSystem( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction ) <span class="keyword">const</span>;
+<a name="l00303"></a>00303       <span class="keyword">const</span> <span class="keywordtype">char</span>* getDatum( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction ) <span class="keyword">const</span>;
+<a name="l00304"></a>00304 
+<a name="l00305"></a>00305 
+<a name="l00306"></a>00306      <span class="comment">/*</span>
+<a name="l00307"></a>00307 <span class="comment">      *  The function getCoordinateSystem returns the current coordinate system</span>
+<a name="l00308"></a>00308 <span class="comment">      *  type.</span>
+<a name="l00309"></a>00309 <span class="comment">      *</span>
+<a name="l00310"></a>00310 <span class="comment">      *  @param[in] direction  - Indicates whether the coordinate system is to </span>
+<a name="l00311"></a>00311 <span class="comment">      *                          be used for input or output</span>
+<a name="l00312"></a>00312 <span class="comment">      *  @return Parameters identifies current coordinate system type</span>
+<a name="l00313"></a>00313 <span class="comment">      */</span>
 <a name="l00314"></a>00314 
-<a name="l00315"></a>00315 
-<a name="l00316"></a>00316     <span class="keyword">private</span>:
+<a name="l00315"></a>00315       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a>* getCoordinateSystem( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction ) <span class="keyword">const</span>;
+<a name="l00316"></a>00316 
 <a name="l00317"></a>00317 
-<a name="l00318"></a>00318       <span class="comment">/* Object used to keep track of the number of ccs objects */</span>
-<a name="l00319"></a>00319       <span class="keyword">struct </span>CCSData
-<a name="l00320"></a>00320       {
-<a name="l00321"></a>00321         <span class="keywordtype">int</span> refCount;
-<a name="l00322"></a>00322 
-<a name="l00323"></a>00323         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library.html">EllipsoidLibrary</a>* ellipsoidLibrary;
-<a name="l00324"></a>00324         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library_implementation.html">EllipsoidLibraryImplementation</a>* ellipsoidLibraryImplementation;
-<a name="l00325"></a>00325         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library.html">DatumLibrary</a>* datumLibrary;
-<a name="l00326"></a>00326         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html">DatumLibraryImplementation</a>* datumLibraryImplementation;
-<a name="l00327"></a>00327         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geoid_library.html">GeoidLibrary</a>* geoidLibrary;
-<a name="l00328"></a>00328 
-<a name="l00329"></a>00329         CCSData();
-<a name="l00330"></a>00330         ~CCSData();
-<a name="l00331"></a>00331       };
+<a name="l00318"></a>00318     <span class="keyword">private</span>:
+<a name="l00319"></a>00319 
+<a name="l00320"></a>00320       <span class="keyword">static</span> <a class="code" href="class_m_s_p_1_1_c_c_s_thread_mutex.html">CCSThreadMutex</a> mutex;
+<a name="l00321"></a>00321 
+<a name="l00322"></a>00322       <span class="comment">/* Object used to keep track of the number of ccs objects */</span>
+<a name="l00323"></a>00323       <span class="keyword">struct </span>CCSData
+<a name="l00324"></a>00324       {
+<a name="l00325"></a>00325         <span class="keywordtype">int</span> refCount;
+<a name="l00326"></a>00326 
+<a name="l00327"></a>00327         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library.html">EllipsoidLibrary</a>* ellipsoidLibrary;
+<a name="l00328"></a>00328         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library_implementation.html">EllipsoidLibraryImplementation</a>* ellipsoidLibraryImplementation;
+<a name="l00329"></a>00329         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library.html">DatumLibrary</a>* datumLibrary;
+<a name="l00330"></a>00330         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html">DatumLibraryImplementation</a>* datumLibraryImplementation;
+<a name="l00331"></a>00331         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geoid_library.html">GeoidLibrary</a>* geoidLibrary;
 <a name="l00332"></a>00332 
-<a name="l00333"></a>00333       CCSData* ccsData;
-<a name="l00334"></a>00334 
-<a name="l00335"></a>00335       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library_implementation.html">EllipsoidLibraryImplementation</a>* ellipsoidLibraryImplementation;
-<a name="l00336"></a>00336       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html">DatumLibraryImplementation</a>* datumLibraryImplementation;
-<a name="l00337"></a>00337       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geoid_library.html">GeoidLibrary</a>* geoidLibrary;
+<a name="l00333"></a>00333         CCSData();
+<a name="l00334"></a>00334         ~CCSData();
+<a name="l00335"></a>00335       };
+<a name="l00336"></a>00336 
+<a name="l00337"></a>00337       CCSData* ccsData;
 <a name="l00338"></a>00338 
-<a name="l00339"></a>00339 <span class="comment">//compiler bug on solaris 8. Parameters needs to be public</span>
-<a name="l00340"></a>00340 <span class="preprocessor">#ifdef SOLARIS</span>
-<a name="l00341"></a>00341 <span class="preprocessor"></span>    <span class="keyword">public</span>:
-<a name="l00342"></a>00342 <span class="preprocessor">#endif</span>
-<a name="l00343"></a>00343 <span class="preprocessor"></span>
-<a name="l00344"></a>00344       <span class="comment">/* Coordinate System Definition with Multiple Variants */</span>
-<a name="l00345"></a>00345       <span class="keyword">union </span>Parameters
-<a name="l00346"></a>00346       {
-<a name="l00347"></a>00347         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a>*        coordinateSystemParameters;
-<a name="l00348"></a>00348         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection3_parameters.html">MapProjection3Parameters</a>*          mapProjection3Parameters;
-<a name="l00349"></a>00349         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection4_parameters.html">MapProjection4Parameters</a>*          mapProjection4Parameters;
-<a name="l00350"></a>00350         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection5_parameters.html">MapProjection5Parameters</a>*          mapProjection5Parameters;
-<a name="l00351"></a>00351         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection6_parameters.html">MapProjection6Parameters</a>*          mapProjection6Parameters;
-<a name="l00352"></a>00352         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a>*  equidistantCylindricalParameters;
-<a name="l00353"></a>00353         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_parameters.html">GeodeticParameters</a>*                geodeticParameters;
-<a name="l00354"></a>00354         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian_parameters.html">LocalCartesianParameters</a>*          localCartesianParameters;
-<a name="l00355"></a>00355         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_mercator_standard_parallel_parameters.html">MercatorStandardParallelParameters</a>* mercatorStandardParallelParameters;
-<a name="l00356"></a>00356         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_mercator_scale_factor_parameters.html">MercatorScaleFactorParameters</a>*     mercatorScaleFactorParameters;
-<a name="l00357"></a>00357         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a>*                    neysParameters;
-<a name="l00358"></a>00358         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_oblique_mercator_parameters.html">ObliqueMercatorParameters</a>*         obliqueMercatorParameters;
-<a name="l00359"></a>00359         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_standard_parallel_parameters.html">PolarStereographicStandardParallelParameters</a>* polarStereographicStandardParallelParameters;
-<a name="l00360"></a>00360         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_scale_factor_parameters.html">PolarStereographicScaleFactorParameters</a>* polarStereographicScaleFactorParameters;
-<a name="l00361"></a>00361         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_parameters.html">UTMParameters</a>*                     utmParameters;
-<a name="l00362"></a>00362       };
-<a name="l00363"></a>00363 
-<a name="l00364"></a>00364       <span class="comment">/* Coordinate Tuple Definition with Multiple Variants */</span>
-<a name="l00365"></a>00365       <span class="keyword">union </span>Coordinates
-<a name="l00366"></a>00366       {
-<a name="l00367"></a>00367         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MapProjectionCoordinates</a>*     mapProjectionCoordinates;
-<a name="l00368"></a>00368         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_b_n_g_coordinates.html">BNGCoordinates</a>*               bngCoordinates;
-<a name="l00369"></a>00369         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">CartesianCoordinates</a>*         cartesianCoordinates;
-<a name="l00370"></a>00370         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">GeodeticCoordinates</a>*          geodeticCoordinates;
-<a name="l00371"></a>00371         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_g_e_o_r_e_f_coordinates.html">GEOREFCoordinates</a>*            georefCoordinates;
-<a name="l00372"></a>00372         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a>*              garsCoordinates;
-<a name="l00373"></a>00373         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_m_g_r_sor_u_s_n_g_coordinates.html">MGRSorUSNGCoordinates</a>*        mgrsOrUSNGCoordinates;
-<a name="l00374"></a>00374         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_p_s_coordinates.html">UPSCoordinates</a>*               upsCoordinates;
-<a name="l00375"></a>00375         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a>*               utmCoordinates;
-<a name="l00376"></a>00376       };
-<a name="l00377"></a>00377 
-<a name="l00378"></a>00378       <span class="keyword">struct </span>Coordinate_System_Row
-<a name="l00379"></a>00379       {
-<a name="l00380"></a>00380         <span class="keywordtype">char</span> Name[<a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3023923fc5f0fe656b1aa7801b3db104">COORD_SYS_NAME_LENGTH</a>];
-<a name="l00381"></a>00381         <span class="keywordtype">char</span> Code[<a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3b67e89edc4a35016a57ecddbbee0f45">COORD_SYS_CODE_LENGTH</a>];
-<a name="l00382"></a>00382         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> coordinateSystem;
-<a name="l00383"></a>00383       };
-<a name="l00384"></a>00384 
-<a name="l00385"></a>00385 
-<a name="l00386"></a>00386       <span class="comment">/* Coordinate Conversion Service State Definition */</span>
-<a name="l00387"></a>00387       <span class="keyword">struct </span>Coordinate_State_Row
-<a name="l00388"></a>00388       {
-<a name="l00389"></a>00389         <span class="keywordtype">char</span> datumCode[<a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a49b33a11803b24376bb71e67268f5884">DATUM_CODE_LENGTH</a>];   <span class="comment">/* currently specified datum code  */</span>
-<a name="l00390"></a>00390         <span class="keywordtype">long</span> datumIndex;                     <span class="comment">/* currently specified datum index */</span>
-<a name="l00391"></a>00391         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> coordinateType; <span class="comment">/* current coordinate system type  */</span>
-<a name="l00392"></a>00392         Parameters parameters;               <span class="comment">/* current coordinate system parameters */</span>
-<a name="l00393"></a>00393         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">CoordinateSystem</a>* coordinateSystem;  <span class="comment">/* current coordinate system */</span>
-<a name="l00394"></a>00394       };
-<a name="l00395"></a>00395 
-<a name="l00396"></a>00396       <span class="comment">/* coordinateSystemState[x] is set up as follows:</span>
-<a name="l00397"></a>00397 <span class="comment">         c = Number of IO states (Source, Target, etc.) */</span>
-<a name="l00398"></a>00398       Coordinate_State_Row coordinateSystemState[2];
+<a name="l00339"></a>00339       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_library_implementation.html">EllipsoidLibraryImplementation</a>* ellipsoidLibraryImplementation;
+<a name="l00340"></a>00340       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html">DatumLibraryImplementation</a>* datumLibraryImplementation;
+<a name="l00341"></a>00341       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geoid_library.html">GeoidLibrary</a>* geoidLibrary;
+<a name="l00342"></a>00342 
+<a name="l00343"></a>00343 <span class="comment">//compiler bug on solaris 8. Parameters needs to be public</span>
+<a name="l00344"></a>00344 <span class="preprocessor">#ifdef SOLARIS</span>
+<a name="l00345"></a>00345 <span class="preprocessor"></span>    <span class="keyword">public</span>:
+<a name="l00346"></a>00346 <span class="preprocessor">#endif</span>
+<a name="l00347"></a>00347 <span class="preprocessor"></span>
+<a name="l00348"></a>00348       <span class="comment">/* Coordinate System Definition with Multiple Variants */</span>
+<a name="l00349"></a>00349       <span class="keyword">union </span>Parameters
+<a name="l00350"></a>00350       {
+<a name="l00351"></a>00351         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a>*        coordinateSystemParameters;
+<a name="l00352"></a>00352         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection3_parameters.html">MapProjection3Parameters</a>*          mapProjection3Parameters;
+<a name="l00353"></a>00353         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection4_parameters.html">MapProjection4Parameters</a>*          mapProjection4Parameters;
+<a name="l00354"></a>00354         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection5_parameters.html">MapProjection5Parameters</a>*          mapProjection5Parameters;
+<a name="l00355"></a>00355         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection6_parameters.html">MapProjection6Parameters</a>*          mapProjection6Parameters;
+<a name="l00356"></a>00356         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a>*  equidistantCylindricalParameters;
+<a name="l00357"></a>00357         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_parameters.html">GeodeticParameters</a>*                geodeticParameters;
+<a name="l00358"></a>00358         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian_parameters.html">LocalCartesianParameters</a>*          localCartesianParameters;
+<a name="l00359"></a>00359         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_mercator_standard_parallel_parameters.html">MercatorStandardParallelParameters</a>* mercatorStandardParallelParameters;
+<a name="l00360"></a>00360         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_mercator_scale_factor_parameters.html">MercatorScaleFactorParameters</a>*     mercatorScaleFactorParameters;
+<a name="l00361"></a>00361         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a>*                    neysParameters;
+<a name="l00362"></a>00362         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_oblique_mercator_parameters.html">ObliqueMercatorParameters</a>*         obliqueMercatorParameters;
+<a name="l00363"></a>00363         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_standard_parallel_parameters.html">PolarStereographicStandardParallelParameters</a>* polarStereographicStandardParallelParameters;
+<a name="l00364"></a>00364         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_scale_factor_parameters.html">PolarStereographicScaleFactorParameters</a>* polarStereographicScaleFactorParameters;
+<a name="l00365"></a>00365         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_parameters.html">UTMParameters</a>*                     utmParameters;
+<a name="l00366"></a>00366       };
+<a name="l00367"></a>00367 
+<a name="l00368"></a>00368       <span class="comment">/* Coordinate Tuple Definition with Multiple Variants */</span>
+<a name="l00369"></a>00369       <span class="keyword">union </span>Coordinates
+<a name="l00370"></a>00370       {
+<a name="l00371"></a>00371         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MapProjectionCoordinates</a>*     mapProjectionCoordinates;
+<a name="l00372"></a>00372         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_b_n_g_coordinates.html">BNGCoordinates</a>*               bngCoordinates;
+<a name="l00373"></a>00373         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">CartesianCoordinates</a>*         cartesianCoordinates;
+<a name="l00374"></a>00374         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">GeodeticCoordinates</a>*          geodeticCoordinates;
+<a name="l00375"></a>00375         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_g_e_o_r_e_f_coordinates.html">GEOREFCoordinates</a>*            georefCoordinates;
+<a name="l00376"></a>00376         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a>*              garsCoordinates;
+<a name="l00377"></a>00377         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_m_g_r_sor_u_s_n_g_coordinates.html">MGRSorUSNGCoordinates</a>*        mgrsOrUSNGCoordinates;
+<a name="l00378"></a>00378         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_p_s_coordinates.html">UPSCoordinates</a>*               upsCoordinates;
+<a name="l00379"></a>00379         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a>*               utmCoordinates;
+<a name="l00380"></a>00380       };
+<a name="l00381"></a>00381 
+<a name="l00382"></a>00382       <span class="keyword">struct </span>Coordinate_System_Row
+<a name="l00383"></a>00383       {
+<a name="l00384"></a>00384         <span class="keywordtype">char</span> Name[<a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3023923fc5f0fe656b1aa7801b3db104">COORD_SYS_NAME_LENGTH</a>];
+<a name="l00385"></a>00385         <span class="keywordtype">char</span> Code[<a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a3b67e89edc4a35016a57ecddbbee0f45">COORD_SYS_CODE_LENGTH</a>];
+<a name="l00386"></a>00386         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> coordinateSystem;
+<a name="l00387"></a>00387       };
+<a name="l00388"></a>00388 
+<a name="l00389"></a>00389 
+<a name="l00390"></a>00390       <span class="comment">/* Coordinate Conversion Service State Definition */</span>
+<a name="l00391"></a>00391       <span class="keyword">struct </span>Coordinate_State_Row
+<a name="l00392"></a>00392       {
+<a name="l00393"></a>00393         <span class="keywordtype">char</span> datumCode[<a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a49b33a11803b24376bb71e67268f5884">DATUM_CODE_LENGTH</a>];   <span class="comment">/* currently specified datum code  */</span>
+<a name="l00394"></a>00394         <span class="keywordtype">long</span> datumIndex;                     <span class="comment">/* currently specified datum index */</span>
+<a name="l00395"></a>00395         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> coordinateType; <span class="comment">/* current coordinate system type  */</span>
+<a name="l00396"></a>00396         Parameters parameters;               <span class="comment">/* current coordinate system parameters */</span>
+<a name="l00397"></a>00397         <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">CoordinateSystem</a>* coordinateSystem;  <span class="comment">/* current coordinate system */</span>
+<a name="l00398"></a>00398       };
 <a name="l00399"></a>00399 
-<a name="l00400"></a>00400       <span class="comment">/* Local State Variables */</span>
-<a name="l00401"></a>00401       Coordinate_System_Row Coordinate_System_Table[<a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a9165fd4ed72bbaf5d5ad696260ba580c">NUMBER_COORD_SYS</a>];
-<a name="l00402"></a>00402 
-<a name="l00403"></a>00403       <span class="keywordtype">long</span> WGS84_datum_index;
-<a name="l00404"></a>00404 
-<a name="l00405"></a>00405 
-<a name="l00406"></a>00406       <span class="comment">/*</span>
-<a name="l00407"></a>00407 <span class="comment">       *  The function setDataLibraries sets the initial state of the engine in</span>
-<a name="l00408"></a>00408 <span class="comment">       *  in preparation for coordinate conversion and/or datum transformation</span>
-<a name="l00409"></a>00409 <span class="comment">       *  operations.</span>
-<a name="l00410"></a>00410 <span class="comment">       */</span>
-<a name="l00411"></a>00411 
-<a name="l00412"></a>00412       <span class="keywordtype">void</span> setDataLibraries();
-<a name="l00413"></a>00413 
-<a name="l00414"></a>00414 
-<a name="l00415"></a>00415       <span class="comment">/*</span>
-<a name="l00416"></a>00416 <span class="comment">       *  The function initCoordinateSystemState initializes coordinateSystemState.</span>
-<a name="l00417"></a>00417 <span class="comment">       *</span>
-<a name="l00418"></a>00418 <span class="comment">       *  direction  : Indicates whether the coordinate system is to be used for</span>
-<a name="l00419"></a>00419 <span class="comment">       *               source or target                                      (input)</span>
-<a name="l00420"></a>00420 <span class="comment">       */</span>
-<a name="l00421"></a>00421 
-<a name="l00422"></a>00422       <span class="keywordtype">void</span> initCoordinateSystemState( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction );
-<a name="l00423"></a>00423 
-<a name="l00424"></a>00424 
-<a name="l00425"></a>00425       <span class="comment">/*</span>
-<a name="l00426"></a>00426 <span class="comment">       *  The function deleteCoordinateSystem frees memory of coordinateSystemState.</span>
-<a name="l00427"></a>00427 <span class="comment">       *</span>
-<a name="l00428"></a>00428 <span class="comment">       *  direction  : Indicates whether the coordinate system is to be used for</span>
-<a name="l00429"></a>00429 <span class="comment">       *               source or target                                      (input)</span>
-<a name="l00430"></a>00430 <span class="comment">       */</span>
-<a name="l00431"></a>00431 
-<a name="l00432"></a>00432       <span class="keywordtype">void</span> deleteCoordinateSystem( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction );
-<a name="l00433"></a>00433 
-<a name="l00434"></a>00434 
-<a name="l00435"></a>00435       <span class="comment">/*</span>
-<a name="l00436"></a>00436 <span class="comment">       *  The function copyParameters uses the input parameters to set the value of the </span>
-<a name="l00437"></a>00437 <span class="comment">       *  current parameters.</span>
-<a name="l00438"></a>00438 <span class="comment">       *</span>
-<a name="l00439"></a>00439 <span class="comment">       *  direction       : Indicates whether the coordinate system is to be used for</span>
-<a name="l00440"></a>00440 <span class="comment">       *                  source or target                                      (input)</span>
-<a name="l00441"></a>00441 <span class="comment">       *  coordinateType  : Coordinate system type                              (input)</span>
-<a name="l00442"></a>00442 <span class="comment">       *  parameters      : Coordinate system parameters to copy                (input)</span>
-<a name="l00443"></a>00443 <span class="comment">       */</span>
-<a name="l00444"></a>00444 
-<a name="l00445"></a>00445       <span class="keywordtype">void</span> copyParameters( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> coordinateType, Parameters parameters );
-<a name="l00446"></a>00446 
-<a name="l00447"></a>00447 
-<a name="l00448"></a>00448       <span class="comment">/*</span>
-<a name="l00449"></a>00449 <span class="comment">       *  The function setDatum sets the datum to the</span>
-<a name="l00450"></a>00450 <span class="comment">       *  datum corresponding to the specified index.</span>
-<a name="l00451"></a>00451 <span class="comment">       *</span>
-<a name="l00452"></a>00452 <span class="comment">       *  direction  : Indicates whether the datum is to be used for input or</span>
-<a name="l00453"></a>00453 <span class="comment">       *               output                                                (input)</span>
-<a name="l00454"></a>00454 <span class="comment">       *  index      : Identifies the index of the datum to be used          (input)</span>
-<a name="l00455"></a>00455 <span class="comment">       */</span>
-<a name="l00456"></a>00456 
-<a name="l00457"></a>00457       <span class="keywordtype">void</span> setDatum( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction, <span class="keyword">const</span> <span class="keywordtype">char</span>* index );
-<a name="l00458"></a>00458 
-<a name="l00459"></a>00459 
-<a name="l00460"></a>00460       <span class="comment">/*</span>
-<a name="l00461"></a>00461 <span class="comment">       *  The function setCoordinateSystem sets the coordinate system</span>
-<a name="l00462"></a>00462 <span class="comment">       *  to the specified coordinate system type.</span>
-<a name="l00463"></a>00463 <span class="comment">       *</span>
-<a name="l00464"></a>00464 <span class="comment">       *  direction  : Indicates whether the coordinate system is to be used for</span>
-<a name="l00465"></a>00465 <span class="comment">       *               input or output                                       (input)</span>
-<a name="l00466"></a>00466 <span class="comment">       *  parameters : Coordinate system parameters to be used               (input)</span>
-<a name="l00467"></a>00467 <span class="comment">       */</span>
-<a name="l00468"></a>00468 
-<a name="l00469"></a>00469       <span class="keywordtype">void</span> setCoordinateSystem( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a>* parameters );
-<a name="l00470"></a>00470 
-<a name="l00471"></a>00471 
-<a name="l00472"></a>00472       <span class="comment">/*</span>
-<a name="l00473"></a>00473 <span class="comment">       *  The function setParameters calls the setParameters function of the source or target</span>
-<a name="l00474"></a>00474 <span class="comment">       *  coordinate system.</span>
-<a name="l00475"></a>00475 <span class="comment">       *</span>
-<a name="l00476"></a>00476 <span class="comment">       *  direction  : Indicates whether the coordinate system is to be used for</span>
-<a name="l00477"></a>00477 <span class="comment">       *               source or target                                      (input)</span>
-<a name="l00478"></a>00478 <span class="comment">       */</span>
-<a name="l00479"></a>00479 
-<a name="l00480"></a>00480       <span class="keywordtype">void</span> setParameters( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction );
-<a name="l00481"></a>00481 
-<a name="l00482"></a>00482 
-<a name="l00483"></a>00483       <span class="comment">/*</span>
-<a name="l00484"></a>00484 <span class="comment">       *  The function convert converts the current input coordinates in the coordinate</span>
-<a name="l00485"></a>00485 <span class="comment">       *  system defined by the current input coordinate system parameters and input datum,</span>
-<a name="l00486"></a>00486 <span class="comment">       *  into output coordinates in the coordinate system defined by the output coordinate</span>
-<a name="l00487"></a>00487 <span class="comment">       *  system parameters and output datum.</span>
-<a name="l00488"></a>00488 <span class="comment">       *</span>
-<a name="l00489"></a>00489 <span class="comment">       *  sourceDirection: Indicates which set of coordinates and parameters to use as the source (input)</span>
-<a name="l00490"></a>00490 <span class="comment">       *  targetDirection: Indicates which set of coordinates and parameters to use as the target (input)</span>
-<a name="l00491"></a>00491 <span class="comment">       */</span>
-<a name="l00492"></a>00492 
-<a name="l00493"></a>00493       <span class="keywordtype">void</span> convert( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> sourceDirection, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> targetDirection, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>* sourceCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>* sourceAccuracy, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>&amp; targetCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>&amp; targetAccuracy );
-<a name="l00494"></a>00494 
-<a name="l00495"></a>00495 
-<a name="l00496"></a>00496       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">GeodeticCoordinates</a>* convertSourceToGeodetic( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> sourceDirection, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>* sourceCoordinates, <span class="keywordtype">char</span>* sourceWarningMessage );
-<a name="l00497"></a>00497 
+<a name="l00400"></a>00400       <span class="comment">/* coordinateSystemState[x] is set up as follows:</span>
+<a name="l00401"></a>00401 <span class="comment">         c = Number of IO states (Source, Target, etc.) */</span>
+<a name="l00402"></a>00402       Coordinate_State_Row coordinateSystemState[2];
+<a name="l00403"></a>00403 
+<a name="l00404"></a>00404       <span class="comment">/* Local State Variables */</span>
+<a name="l00405"></a>00405       Coordinate_System_Row Coordinate_System_Table[<a class="code" href="namespace_m_s_p_1_1_c_c_s.html#a9165fd4ed72bbaf5d5ad696260ba580c">NUMBER_COORD_SYS</a>];
+<a name="l00406"></a>00406 
+<a name="l00407"></a>00407       <span class="keywordtype">long</span> WGS84_datum_index;
+<a name="l00408"></a>00408 
+<a name="l00409"></a>00409 
+<a name="l00410"></a>00410       <span class="comment">/*</span>
+<a name="l00411"></a>00411 <span class="comment">       *  The function setDataLibraries sets the initial state of the engine in</span>
+<a name="l00412"></a>00412 <span class="comment">       *  in preparation for coordinate conversion and/or datum transformation</span>
+<a name="l00413"></a>00413 <span class="comment">       *  operations.</span>
+<a name="l00414"></a>00414 <span class="comment">       */</span>
+<a name="l00415"></a>00415 
+<a name="l00416"></a>00416       <span class="keywordtype">void</span> setDataLibraries();
+<a name="l00417"></a>00417 
+<a name="l00418"></a>00418 
+<a name="l00419"></a>00419       <span class="comment">/*</span>
+<a name="l00420"></a>00420 <span class="comment">       *  The function initCoordinateSystemState initializes coordinateSystemState.</span>
+<a name="l00421"></a>00421 <span class="comment">       *</span>
+<a name="l00422"></a>00422 <span class="comment">       *  direction  : Indicates whether the coordinate system is to be used for</span>
+<a name="l00423"></a>00423 <span class="comment">       *               source or target                                      (input)</span>
+<a name="l00424"></a>00424 <span class="comment">       */</span>
+<a name="l00425"></a>00425 
+<a name="l00426"></a>00426       <span class="keywordtype">void</span> initCoordinateSystemState( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction );
+<a name="l00427"></a>00427 
+<a name="l00428"></a>00428 
+<a name="l00429"></a>00429       <span class="comment">/*</span>
+<a name="l00430"></a>00430 <span class="comment">       *  The function deleteCoordinateSystem frees memory of coordinateSystemState.</span>
+<a name="l00431"></a>00431 <span class="comment">       *</span>
+<a name="l00432"></a>00432 <span class="comment">       *  direction  : Indicates whether the coordinate system is to be used for</span>
+<a name="l00433"></a>00433 <span class="comment">       *               source or target                                      (input)</span>
+<a name="l00434"></a>00434 <span class="comment">       */</span>
+<a name="l00435"></a>00435 
+<a name="l00436"></a>00436       <span class="keywordtype">void</span> deleteCoordinateSystem( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction );
+<a name="l00437"></a>00437 
+<a name="l00438"></a>00438 
+<a name="l00439"></a>00439       <span class="comment">/*</span>
+<a name="l00440"></a>00440 <span class="comment">       *  The function copyParameters uses the input parameters to set the value of the </span>
+<a name="l00441"></a>00441 <span class="comment">       *  current parameters.</span>
+<a name="l00442"></a>00442 <span class="comment">       *</span>
+<a name="l00443"></a>00443 <span class="comment">       *  direction       : Indicates whether the coordinate system is to be used for</span>
+<a name="l00444"></a>00444 <span class="comment">       *                  source or target                                      (input)</span>
+<a name="l00445"></a>00445 <span class="comment">       *  coordinateType  : Coordinate system type                              (input)</span>
+<a name="l00446"></a>00446 <span class="comment">       *  parameters      : Coordinate system parameters to copy                (input)</span>
+<a name="l00447"></a>00447 <span class="comment">       */</span>
+<a name="l00448"></a>00448 
+<a name="l00449"></a>00449       <span class="keywordtype">void</span> copyParameters( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> coordinateType, Parameters parameters );
+<a name="l00450"></a>00450 
+<a name="l00451"></a>00451 
+<a name="l00452"></a>00452       <span class="comment">/*</span>
+<a name="l00453"></a>00453 <span class="comment">       *  The function setDatum sets the datum to the</span>
+<a name="l00454"></a>00454 <span class="comment">       *  datum corresponding to the specified index.</span>
+<a name="l00455"></a>00455 <span class="comment">       *</span>
+<a name="l00456"></a>00456 <span class="comment">       *  direction  : Indicates whether the datum is to be used for input or</span>
+<a name="l00457"></a>00457 <span class="comment">       *               output                                                (input)</span>
+<a name="l00458"></a>00458 <span class="comment">       *  index      : Identifies the index of the datum to be used          (input)</span>
+<a name="l00459"></a>00459 <span class="comment">       */</span>
+<a name="l00460"></a>00460 
+<a name="l00461"></a>00461       <span class="keywordtype">void</span> setDatum( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction, <span class="keyword">const</span> <span class="keywordtype">char</span>* index );
+<a name="l00462"></a>00462 
+<a name="l00463"></a>00463 
+<a name="l00464"></a>00464       <span class="comment">/*</span>
+<a name="l00465"></a>00465 <span class="comment">       *  The function setCoordinateSystem sets the coordinate system</span>
+<a name="l00466"></a>00466 <span class="comment">       *  to the specified coordinate system type.</span>
+<a name="l00467"></a>00467 <span class="comment">       *</span>
+<a name="l00468"></a>00468 <span class="comment">       *  direction  : Indicates whether the coordinate system is to be used for</span>
+<a name="l00469"></a>00469 <span class="comment">       *               input or output                                       (input)</span>
+<a name="l00470"></a>00470 <span class="comment">       *  parameters : Coordinate system parameters to be used               (input)</span>
+<a name="l00471"></a>00471 <span class="comment">       */</span>
+<a name="l00472"></a>00472 
+<a name="l00473"></a>00473       <span class="keywordtype">void</span> setCoordinateSystem( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a>* parameters );
+<a name="l00474"></a>00474 
+<a name="l00475"></a>00475 
+<a name="l00476"></a>00476       <span class="comment">/*</span>
+<a name="l00477"></a>00477 <span class="comment">       *  The function setParameters calls the setParameters function of the source or target</span>
+<a name="l00478"></a>00478 <span class="comment">       *  coordinate system.</span>
+<a name="l00479"></a>00479 <span class="comment">       *</span>
+<a name="l00480"></a>00480 <span class="comment">       *  direction  : Indicates whether the coordinate system is to be used for</span>
+<a name="l00481"></a>00481 <span class="comment">       *               source or target                                      (input)</span>
+<a name="l00482"></a>00482 <span class="comment">       */</span>
+<a name="l00483"></a>00483 
+<a name="l00484"></a>00484       <span class="keywordtype">void</span> setParameters( <span class="keyword">const</span> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> direction );
+<a name="l00485"></a>00485 
+<a name="l00486"></a>00486 
+<a name="l00487"></a>00487       <span class="comment">/*</span>
+<a name="l00488"></a>00488 <span class="comment">       *  The function convert converts the current input coordinates in the coordinate</span>
+<a name="l00489"></a>00489 <span class="comment">       *  system defined by the current input coordinate system parameters and input datum,</span>
+<a name="l00490"></a>00490 <span class="comment">       *  into output coordinates in the coordinate system defined by the output coordinate</span>
+<a name="l00491"></a>00491 <span class="comment">       *  system parameters and output datum.</span>
+<a name="l00492"></a>00492 <span class="comment">       *</span>
+<a name="l00493"></a>00493 <span class="comment">       *  sourceDirection: Indicates which set of coordinates and parameters to use as the source (input)</span>
+<a name="l00494"></a>00494 <span class="comment">       *  targetDirection: Indicates which set of coordinates and parameters to use as the target (input)</span>
+<a name="l00495"></a>00495 <span class="comment">       */</span>
+<a name="l00496"></a>00496 
+<a name="l00497"></a>00497       <span class="keywordtype">void</span> convert( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> sourceDirection, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> targetDirection, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>* sourceCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>* sourceAccuracy, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>&amp; targetCoordinates, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_accuracy.html">Accuracy</a>&amp; targetAccuracy );
 <a name="l00498"></a>00498 
-<a name="l00499"></a>00499       <span class="keywordtype">void</span> convertGeodeticToTarget( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> targetDirection, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">GeodeticCoordinates</a>* _shiftedGeodetic, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>&amp; targetCoordinates, <span class="keywordtype">char</span>* targetWarningMessage );
-<a name="l00500"></a>00500 
+<a name="l00499"></a>00499 
+<a name="l00500"></a>00500       <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">GeodeticCoordinates</a>* convertSourceToGeodetic( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> sourceDirection, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>* sourceCoordinates, <span class="keywordtype">char</span>* sourceWarningMessage );
 <a name="l00501"></a>00501 
-<a name="l00502"></a>00502       <span class="comment">/*</span>
-<a name="l00503"></a>00503 <span class="comment">       *  The function convertCollection will convert a list of source coordinates to a list of target coordinates</span>
-<a name="l00504"></a>00504 <span class="comment">       *  in a single step.</span>
-<a name="l00505"></a>00505 <span class="comment">       *</span>
-<a name="l00506"></a>00506 <span class="comment">       *  sourceCoordinatesCollection      : Coordinates of the source coordinate system to be converted   (input)</span>
-<a name="l00507"></a>00507 <span class="comment">       *  sourceAccuracyCollection         : Source circular, linear and spherical errors                  (input)</span>
-<a name="l00508"></a>00508 <span class="comment">       *  targetCoordinatesCollection      : Converted coordinates of the target coordinate system         (output)</span>
-<a name="l00509"></a>00509 <span class="comment">       *  targetAccuracyCollection         : Target circular, linear and spherical errors                  (output)</span>
-<a name="l00510"></a>00510 <span class="comment">       */</span>
-<a name="l00511"></a>00511 
-<a name="l00512"></a>00512       <span class="keywordtype">void</span> convertCollection( <span class="keyword">const</span> std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; sourceCoordinatesCollection, <span class="keyword">const</span> std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; sourceAccuracyCollection, std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; targetCoordinatesCollection, std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; targetAccuracyCollection );
-<a name="l00513"></a>00513     };
-<a name="l00514"></a>00514   }
-<a name="l00515"></a>00515 }
-<a name="l00516"></a>00516 
-<a name="l00517"></a>00517 <span class="preprocessor">#endif</span>
-<a name="l00518"></a>00518 <span class="preprocessor"></span>
-<a name="l00519"></a>00519 
-<a name="l00520"></a>00520 <span class="comment">// CLASSIFICATION: UNCLASSIFIED</span>
+<a name="l00502"></a>00502 
+<a name="l00503"></a>00503       <span class="keywordtype">void</span> convertGeodeticToTarget( <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_source_or_target.html#a512352db8edc608108cbbde14da89628">SourceOrTarget::Enum</a> targetDirection, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">GeodeticCoordinates</a>* _shiftedGeodetic, <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a>&amp; targetCoordinates, <span class="keywordtype">char</span>* targetWarningMessage );
+<a name="l00504"></a>00504 
+<a name="l00505"></a>00505 
+<a name="l00506"></a>00506       <span class="comment">/*</span>
+<a name="l00507"></a>00507 <span class="comment">       *  The function convertCollection will convert a list of source coordinates to a list of target coordinates</span>
+<a name="l00508"></a>00508 <span class="comment">       *  in a single step.</span>
+<a name="l00509"></a>00509 <span class="comment">       *</span>
+<a name="l00510"></a>00510 <span class="comment">       *  sourceCoordinatesCollection      : Coordinates of the source coordinate system to be converted   (input)</span>
+<a name="l00511"></a>00511 <span class="comment">       *  sourceAccuracyCollection         : Source circular, linear and spherical errors                  (input)</span>
+<a name="l00512"></a>00512 <span class="comment">       *  targetCoordinatesCollection      : Converted coordinates of the target coordinate system         (output)</span>
+<a name="l00513"></a>00513 <span class="comment">       *  targetAccuracyCollection         : Target circular, linear and spherical errors                  (output)</span>
+<a name="l00514"></a>00514 <span class="comment">       */</span>
+<a name="l00515"></a>00515 
+<a name="l00516"></a>00516       <span class="keywordtype">void</span> convertCollection( <span class="keyword">const</span> std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; sourceCoordinatesCollection, <span class="keyword">const</span> std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; sourceAccuracyCollection, std::vector&lt;MSP::CCS::CoordinateTuple*&gt;&amp; targetCoordinatesCollection, std::vector&lt;MSP::CCS::Accuracy*&gt;&amp; targetAccuracyCollection );
+<a name="l00517"></a>00517     };
+<a name="l00518"></a>00518   }
+<a name="l00519"></a>00519 }
+<a name="l00520"></a>00520 
+<a name="l00521"></a>00521 <span class="preprocessor">#endif</span>
+<a name="l00522"></a>00522 <span class="preprocessor"></span>
+<a name="l00523"></a>00523 
+<a name="l00524"></a>00524 <span class="comment">// CLASSIFICATION: UNCLASSIFIED</span>
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Wed Nov 25 10:53:07 2009 for MSP GEOTRANS by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Aug 3 10:28:55 2010 for MSP GEOTRANS by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

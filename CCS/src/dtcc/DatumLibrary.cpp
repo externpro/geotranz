@@ -111,6 +111,10 @@
  *    Date              Description
  *    ----              -----------
  *    11/20/08          Original Code
+ *    05/26/10          S. Gillis, BAEts26674, Added Validate Datum API to the
+ *                      in MSP Geotrans 3.0
+ *    06/04/10          S. Gillis, BAEts26676, Fixed the error always returned 
+ *                      when calling CCS API getDatumParamters
  */
 
 
@@ -121,6 +125,8 @@
 
 #include "DatumLibrary.h"
 #include "DatumLibraryImplementation.h"
+#include "CoordinateConversionException.h"
+#include "ErrorMessages.h"
 
 /*
  *    DatumLibrary.h    - accesses datum information
@@ -289,20 +295,72 @@ void DatumLibrary::getDatumParameters( const long index, DatumType::Enum *datumT
                                        double *rotationX, double *rotationY, double *rotationZ, double *scaleFactor )
 { 
 /*
- *   The function datumErrors returns the standard errors in X,Y, & Z
- *   for the datum referenced by index.
+ *   The function getDatumParameters returns the following datum parameters 
+ *   (specified as output parameters below): datumType, deltaX, deltaY, deltaZ,
+ *   sigmaX, sigmaY, sigmaZ, westLongitude, eastLongitude, southLatitude, 
+ *   northLatitude, rotationX, rotationY, rotationZ, and scaleFactor. 
+ * 
+ *   sigmaX, sigmaY, and sigmaZ only apply to 3 parameter datum and will be
+ *   set to 0 if the datum type is a 7 parameter datum. 
+ * 
+ *   rotationX, rotationY, rotationZ, and scaleFactor only apply to 7
+ *   parameter datum and will be set to 0 if the datum type is a 3 parameter
+ *   datum. 
  *
- *    index      : The index of a given datum in the datum table   (input)
- *    sigma_X    : Standard error in X in meters                   (output)
- *    sigma_Y    : Standard error in Y in meters                   (output)
- *    sigma_Z    : Standard error in Z in meters                   (output)
+ *   If the datum type is neither a 3 parameter datum nor a 7 parameter datum,
+ *   a CoordinateConversionException will be thrown. 
+ *
+ *   index         : The index of a given datum in the datum table   (input)
+ *   datumType     : Specifies datum type                            (output)
+ *   deltaX        : X translation to WGS84 in meters                (output)
+ *   deltaY        : Y translation to WGS84 in meters                (output)
+ *   deltaZ        : Z translation to WGS84 in meters                (output)
+ *   sigmaX        : Standard error in X in meters                   (output)
+ *   sigmaY        : Standard error in Y in meters                   (output)
+ *   sigmaZ        : Standard error in Z in meters                   (output)
+ *   westLongitude : Western edge of validity rectangle in radians   (output)
+ *   eastLongitude : Eastern edge of validity rectangle in radians   (output)
+ *   southLatitude : Southern edge of validity rectangle in radians  (output)
+ *   northLatitude : Northern edge of validity rectangle in radians  (output)
+ *   rotationX     : X rotation to WGS84 in arc seconds              (output)
+ *   rotationY     : Y rotation to WGS84 in arc seconds              (output)
+ *   rotationZ     : Z rotation to WGS84 in arc seconds              (output)
+ *   scaleFactor   : Scale factor                                    (output)
  */
 
   _datumLibraryImplementation->retrieveDatumType( index, datumType );
-  _datumLibraryImplementation->datumTranslationValues( index, deltaX, deltaY, deltaZ );
-  _datumLibraryImplementation->datumStandardErrors( index, sigmaX, sigmaY, sigmaZ );
-  _datumLibraryImplementation->datumValidRectangle( index, westLongitude, eastLongitude, southLatitude, northLatitude );
-  _datumLibraryImplementation->datumSevenParameters( index, rotationX, rotationY, rotationZ, scaleFactor );
+  _datumLibraryImplementation->datumTranslationValues( 
+      index, deltaX, deltaY, deltaZ );
+  _datumLibraryImplementation->datumValidRectangle( 
+      index, westLongitude, eastLongitude, southLatitude, northLatitude );
+
+  //If DatumType is DatumType::threeParamDatum
+  if(*datumType == DatumType::threeParamDatum)
+  {
+    _datumLibraryImplementation->datumStandardErrors( 
+        index, sigmaX, sigmaY, sigmaZ );
+
+    //Initialize since they could not be set in datumSevenParameters()
+    *rotationX = 0;
+    *rotationY = 0;
+    *rotationZ = 0;  
+    *scaleFactor = 0;
+  }
+  //If DatumType is DatumType::sevenParamDatum
+  else if(*datumType == DatumType::sevenParamDatum)
+  {
+    _datumLibraryImplementation->datumSevenParameters( 
+        index, rotationX, rotationY, rotationZ, scaleFactor );
+
+    //Initialize since they could not be set in datumStandardErrors()
+    *sigmaX = 0;
+    *sigmaY = 0; 
+    *sigmaZ = 0;
+  }
+  else
+  {
+    throw CoordinateConversionException( ErrorMessages::datumType );
+  }
 } 
 
 
@@ -323,6 +381,24 @@ void DatumLibrary::getDatumValidRectangle( const long index, double *westLongitu
   _datumLibraryImplementation->datumValidRectangle( index, westLongitude, eastLongitude, southLatitude, northLatitude );
 }
 
+void DatumLibrary::validDatum( const long index, double longitude, 
+                               double latitude, long *result )
+{
+/*
+ *  The function validDatum checks whether or not the specified location 
+ *  is within the validity rectangle for the specified datum.  It returns 
+ *  zero if the specified location is NOT within the validity rectangle, 
+ *  and returns 1 otherwise.
+ *
+ *   index     : The index of a given datum in the datum table      (input)
+ *   latitude  : Latitude of the location to be checked in radians  (input)
+ *   longitude : Longitude of the location to be checked in radians (input)
+ *   result    : Indicates whether location is inside (1) or outside (0)
+ *               of the validity rectangle of the specified datum   (output)
+ */
+
+  _datumLibraryImplementation->validDatum( index, longitude, latitude, result );
+}
 
 
 // CLASSIFICATION: UNCLASSIFIED

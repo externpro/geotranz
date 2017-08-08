@@ -119,15 +119,19 @@
  *                      Added datum shift accuracy calculation (for JMTK)
  *    06/27/06          Moved data files to data directory
  *    03-14-07          Original C++ Code
+ *    05/26/10          S. Gillis, BAEts26674, Added Validate Datum to the API
+ *                      in MSP Geotrans 3.0
  */
 
 
 #include <vector>
 #include "DatumType.h"
+#include "DtccApi.h"
 
 
 namespace MSP
 {
+  class CCSThreadMutex;
   namespace CCS
   {
     class Accuracy;
@@ -137,7 +141,7 @@ namespace MSP
     class GeodeticCoordinates;
 
 
-    class DatumLibraryImplementation
+    class MSP_DTCC_API DatumLibraryImplementation
     {
     friend class DatumLibraryImplementationCleaner;
 
@@ -548,6 +552,7 @@ namespace MSP
 
     private:
 
+      static MSP::CCSThreadMutex mutex;
       static DatumLibraryImplementation* instance;
       static int instanceCount;
 

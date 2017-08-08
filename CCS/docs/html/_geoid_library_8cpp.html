@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>MSP GEOTRANS: V:/CCS/src/dtcc/GeoidLibrary.cpp File Reference</title>
+<title>MSP GEOTRANS: Y:/msp/devkits/temp_geotrans/master/geotrans3.1/CCS/src/dtcc/GeoidLibrary.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -25,13 +25,15 @@
   </div>
 </div>
 <div class="contents">
-<h1>V:/CCS/src/dtcc/GeoidLibrary.cpp File Reference</h1><code>#include &lt;string.h&gt;</code><br/>
+<h1>Y:/msp/devkits/temp_geotrans/master/geotrans3.1/CCS/src/dtcc/GeoidLibrary.cpp File Reference</h1><code>#include &lt;string.h&gt;</code><br/>
 <code>#include &lt;stdlib.h&gt;</code><br/>
 <code>#include &lt;stdio.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="_geoid_library_8h_source.html">GeoidLibrary.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="threads_8h_source.html">threads.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_coordinate_conversion_exception_8h_source.html">CoordinateConversionException.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_c_c_s_thread_mutex_8h_source.html">CCSThreadMutex.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_c_c_s_thread_lock_8h_source.html">CCSThreadLock.h</a>&quot;</code><br/>
+<code>#include &lt;vector&gt;</code><br/>
 
 <p><a href="_geoid_library_8cpp_source.html">Go to the source code of this file.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
@@ -39,7 +41,8 @@
 <tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_e_g_m96___variable___grid.html">EGM96_Variable_Grid</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geoid_library_cleaner.html">MSP::CCS::GeoidLibraryCleaner</a></td></tr>
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#ac0f3a476600c87d7296394be3c5b047d">readFloat</a> (int *numRead, FILE *file)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a7b114915125b927e278ce213af694a31">swapBytes</a> (void *buffer, size_t size, size_t count)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a86b4187eeab007da13367ff3ac238250">readBinary</a> (void *buffer, size_t size, size_t count, FILE *stream)</td></tr>
 <tr><td colspan="2"><h2>Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a952eac791b596a61bba0a133a3bb439f">PI</a> = 3.14159265358979323e0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#aa3c1d8e4403d757bf419703c040db87d">PI_OVER_2</a> = <a class="el" href="_geoid_library_8cpp.html#a952eac791b596a61bba0a133a3bb439f">PI</a> / 2.0</td></tr>
@@ -49,6 +52,8 @@
 <tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a6b9c7e7d8bf217110a863d62fd264c33">EGM96_ROWS</a> = 721</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a99ccb09f1fef806451f84d9710ba26ca">EGM84_COLS</a> = 37</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#aaeb71f36b136d1e1b54901920f01f8a0">EGM84_ROWS</a> = 19</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a580782fa058e200088161c1680921220">EGM84_30_MIN_COLS</a> = 721</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a1ea8fba0f5bc5035bc21da731b6d8799">EGM84_30_MIN_ROWS</a> = 361</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a55024ccb2a1dc0f138cd29b9cb243d79">EGM96_HEADER_ITEMS</a> = 6</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#addc030e9b571c0bb88aeb0b4434b4cdb">SCALE_FACTOR_15_MINUTES</a> = .25</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a68b1126f892291cb2f894021ba1068c4">SCALE_FACTOR_10_DEGREES</a> = 10</td></tr>
@@ -57,26 +62,39 @@
 <tr><td class="memItemLeft" align="right" valign="top">const double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a56a3075ab7678a7a4a1fc99cf8c97195">SCALE_FACTOR_2_DEGREES</a> = 2</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#a0be21fc9f3990edce742deda448ad66f">EGM96_ELEVATIONS</a> = <a class="el" href="_geoid_library_8cpp.html#ab1dcd661211cae9b1ba54b541767b65d">EGM96_COLS</a> * <a class="el" href="_geoid_library_8cpp.html#a6b9c7e7d8bf217110a863d62fd264c33">EGM96_ROWS</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#affd9297851046ceb405e6fa44c81ddb9">EGM84_ELEVATIONS</a> = <a class="el" href="_geoid_library_8cpp.html#a99ccb09f1fef806451f84d9710ba26ca">EGM84_COLS</a> * <a class="el" href="_geoid_library_8cpp.html#aaeb71f36b136d1e1b54901920f01f8a0">EGM84_ROWS</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#aa3581e7c236f1d903b4b3ccf242d1088">EGM84_30_MIN_ELEVATIONS</a> = <a class="el" href="_geoid_library_8cpp.html#a580782fa058e200088161c1680921220">EGM84_30_MIN_COLS</a> * <a class="el" href="_geoid_library_8cpp.html#a1ea8fba0f5bc5035bc21da731b6d8799">EGM84_30_MIN_ROWS</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#adc700a7cefac4f0369fb4db08cdf20a4">EGM96_INSET_AREAS</a> = 53</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_e_g_m96___variable___grid.html">EGM96_Variable_Grid</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#af4dbe9967590d5fd26163e5f66e19d3d">EGM96_Variable_Grid_Table</a> [<a class="el" href="_geoid_library_8cpp.html#adc700a7cefac4f0369fb4db08cdf20a4">EGM96_INSET_AREAS</a>]</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">class <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geoid_library_cleaner.html">MSP::CCS::GeoidLibraryCleaner</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_geoid_library_8cpp.html#ad6b9344cfa44b6798b0959c9b97929c6">geoidLibraryCleanerInstance</a></td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
-<a class="anchor" id="ac0f3a476600c87d7296394be3c5b047d"></a><!-- doxytag: member="GeoidLibrary.cpp::readFloat" ref="ac0f3a476600c87d7296394be3c5b047d" args="(int *numRead, FILE *file)" -->
+<a class="anchor" id="a86b4187eeab007da13367ff3ac238250"></a><!-- doxytag: member="GeoidLibrary.cpp::readBinary" ref="a86b4187eeab007da13367ff3ac238250" args="(void *buffer, size_t size, size_t count, FILE *stream)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float readFloat </td>
+          <td class="memname">size_t readBinary </td>
           <td>(</td>
-          <td class="paramtype">int *&nbsp;</td>
-          <td class="paramname"> <em>numRead</em>, </td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>count</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">FILE *&nbsp;</td>
-          <td class="paramname"> <em>file</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>stream</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -87,7 +105,42 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00190">190</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00224">224</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7b114915125b927e278ce213af694a31"></a><!-- doxytag: member="GeoidLibrary.cpp::swapBytes" ref="a7b114915125b927e278ce213af694a31" args="(void *buffer, size_t size, size_t count)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swapBytes </td>
+          <td>(</td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>count</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00205">205</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -103,7 +156,52 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00103">103</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00115">115</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a580782fa058e200088161c1680921220"></a><!-- doxytag: member="GeoidLibrary.cpp::EGM84_30_MIN_COLS" ref="a580782fa058e200088161c1680921220" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int <a class="el" href="_geoid_library_8cpp.html#a580782fa058e200088161c1680921220">EGM84_30_MIN_COLS</a> = 721</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00120">120</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa3581e7c236f1d903b4b3ccf242d1088"></a><!-- doxytag: member="GeoidLibrary.cpp::EGM84_30_MIN_ELEVATIONS" ref="aa3581e7c236f1d903b4b3ccf242d1088" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int <a class="el" href="_geoid_library_8cpp.html#aa3581e7c236f1d903b4b3ccf242d1088">EGM84_30_MIN_ELEVATIONS</a> = <a class="el" href="_geoid_library_8cpp.html#a580782fa058e200088161c1680921220">EGM84_30_MIN_COLS</a> * <a class="el" href="_geoid_library_8cpp.html#a1ea8fba0f5bc5035bc21da731b6d8799">EGM84_30_MIN_ROWS</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00130">130</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1ea8fba0f5bc5035bc21da731b6d8799"></a><!-- doxytag: member="GeoidLibrary.cpp::EGM84_30_MIN_ROWS" ref="a1ea8fba0f5bc5035bc21da731b6d8799" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int <a class="el" href="_geoid_library_8cpp.html#a1ea8fba0f5bc5035bc21da731b6d8799">EGM84_30_MIN_ROWS</a> = 361</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00121">121</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -118,7 +216,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00106">106</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00118">118</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -133,7 +231,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00115">115</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00129">129</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -148,7 +246,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00107">107</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00119">119</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -163,7 +261,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00104">104</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00116">116</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -178,7 +276,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00114">114</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00128">128</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -193,7 +291,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00108">108</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00122">122</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -208,7 +306,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00116">116</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00131">131</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -223,7 +321,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00105">105</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00117">117</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -238,7 +336,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00129">129</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00144">144</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -266,7 +364,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00100">100</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00112">112</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -281,7 +379,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00101">101</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00113">113</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -296,7 +394,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00110">110</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00124">124</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -311,7 +409,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00109">109</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00123">123</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -326,7 +424,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00112">112</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00126">126</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -341,7 +439,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00113">113</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00127">127</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -356,7 +454,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00111">111</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00125">125</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
@@ -371,12 +469,12 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00102">102</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_geoid_library_8cpp_source.html#l00114">114</a> of file <a class="el" href="_geoid_library_8cpp_source.html">GeoidLibrary.cpp</a>.</p>
 
 </div>
 </div>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Wed Nov 25 10:53:10 2009 for MSP GEOTRANS by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Aug 3 10:29:24 2010 for MSP GEOTRANS by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

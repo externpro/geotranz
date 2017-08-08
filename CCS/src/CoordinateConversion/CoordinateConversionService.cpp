@@ -73,6 +73,14 @@
  *    06-06-06          Added support for USNG
  *    07-17-06          Added support for GARS
  *    03-17-07          Original C++ Code
+ *    05-12-10          S. Gillis, BAEts26542, MSP TS MSL-HAE conversion 
+ *                      should use CCS 
+ *    06-11-10          S. Gillis, BAEts26724, Fixed memory error problem
+ *                      when MSPCCS_DATA is not set
+ *    07-07-10          K.Lam, BAEts27269, Replace C functions in threads.h
+ *                      with C++ methods in classes CCSThreadMutex
+ *    7/20/10           NGL BAEts27152 Updated getServiceVersion to return an int
+ *                      return 310 for MSP Geotrans 3.1
  */
 
 
@@ -149,13 +157,15 @@
 #include "USNG.h"
 #include "UTM.h"
 #include "VanDerGrinten.h"
-#include "threads.h"
 #include "CoordinateConversionException.h"
 #include "ErrorMessages.h"
 #include "WarningMessages.h"
-
+#include "CCSThreadMutex.h"
+#include "CCSThreadLock.h"
 
 using namespace MSP::CCS;
+using MSP::CCSThreadMutex;
+using MSP::CCSThreadLock;
 
 
 /***************************************************************************/
@@ -164,6 +174,7 @@ using namespace MSP::CCS;
  */
 
 const double PI = 3.14159265358979323e0;  /* PI                                  */
+CCSThreadMutex CoordinateConversionService::mutex;
 
 
 /************************************************************************/
@@ -206,12 +217,31 @@ CoordinateConversionService::CCSData::~CCSData()
  */
 
 CoordinateConversionService::CoordinateConversionService( const char* sourceDatumCode, MSP::CCS::CoordinateSystemParameters* sourceParameters, const char* targetDatumCode, MSP::CCS::CoordinateSystemParameters* targetParameters ) :
-  ellipsoidLibraryImplementation( 0 ),
-  datumLibraryImplementation( 0 ),
-  geoidLibrary( 0 ),
-  ccsData( new CCSData() ),
   WGS84_datum_index( 0 )
 {
+  //Instantiate the variables here so exceptions can be caught
+  try
+  {
+    ellipsoidLibraryImplementation = EllipsoidLibraryImplementation::getInstance();
+    datumLibraryImplementation = DatumLibraryImplementation::getInstance();
+    geoidLibrary = GeoidLibrary::getInstance();
+    ccsData = new CCSData();
+  }
+  catch(CoordinateConversionException e)
+  {
+    //Manage the memory since there could be an instance
+    EllipsoidLibraryImplementation::removeInstance();
+    ellipsoidLibraryImplementation = 0;
+
+    DatumLibraryImplementation::removeInstance();
+    datumLibraryImplementation = 0;
+
+    GeoidLibrary::removeInstance();
+    geoidLibrary = 0;
+
+    throw e;
+  }
+
   ellipsoidLibraryImplementation = ccsData->ellipsoidLibraryImplementation;
   datumLibraryImplementation = ccsData->datumLibraryImplementation;
   geoidLibrary = ccsData->geoidLibrary;
@@ -398,6 +428,8 @@ CoordinateConversionService::CoordinateConversionService( const char* sourceDatu
 CoordinateConversionService::CoordinateConversionService( const CoordinateConversionService &ccs ) :
   ccsData( ccs.ccsData )
 {
+  CCSThreadLock lock(&mutex);
+
   ++ccsData->refCount;
 
   ellipsoidLibraryImplementation = ccsData->ellipsoidLibraryImplementation;
@@ -419,13 +451,20 @@ CoordinateConversionService::CoordinateConversionService( const CoordinateConver
 
 CoordinateConversionService::~CoordinateConversionService()
 {
+  CCSThreadLock lock(&mutex);
+
   if( --ccsData->refCount == 0 )
   {
     delete ccsData;
     ccsData = 0;
 
+    EllipsoidLibraryImplementation::removeInstance();
     ellipsoidLibraryImplementation = 0;
+    
+    DatumLibraryImplementation::removeInstance();
     datumLibraryImplementation = 0;
+    
+    GeoidLibrary::removeInstance();
     geoidLibrary = 0;
   }
 
@@ -436,6 +475,8 @@ CoordinateConversionService::~CoordinateConversionService()
 
 CoordinateConversionService& CoordinateConversionService::operator=( const CoordinateConversionService &ccs )
 {
+  CCSThreadLock lock(&mutex);
+
   if( ccsData == ccs.ccsData )
 	  return *this;
 
@@ -546,13 +587,13 @@ DatumLibrary* CoordinateConversionService::getDatumLibrary()
 }
   
   
-double CoordinateConversionService::getServiceVersion() const
+int CoordinateConversionService::getServiceVersion()
 {
 /*
  * The function getServiceVersion returns current service version.
  */
 
-  return 3.0;
+  return 310;
 }
 
 
@@ -656,10 +697,7 @@ void CoordinateConversionService::initCoordinateSystemState( const SourceOrTarge
  *               source or target                                      (input)
  */
 
-  Thread_Mutex mutex;
-  long mutex_error = Threads_Create_Mutex( &mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( mutex );
+  CCSThreadLock lock(&mutex);
 
   coordinateSystemState[direction].datumIndex = 0;
   coordinateSystemState[direction].coordinateType = CoordinateType::geodetic;
@@ -681,10 +719,6 @@ void CoordinateConversionService::initCoordinateSystemState( const SourceOrTarge
   coordinateSystemState[direction].parameters.polarStereographicScaleFactorParameters = 0;
   coordinateSystemState[direction].parameters.utmParameters = 0;
 
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( mutex );
 }
 
 
@@ -721,10 +755,7 @@ void CoordinateConversionService::setDatum( const SourceOrTarget::Enum direction
  *  index      : Identifies the index of the datum to be used          (input)
  */
 
-  Thread_Mutex mutex;
-  long mutex_error = Threads_Create_Mutex( &mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( mutex );
+  CCSThreadLock lock(&mutex);
 
   if( !datumCode )
     throw CoordinateConversionException( ErrorMessages::invalidDatumCode );
@@ -735,10 +766,6 @@ void CoordinateConversionService::setDatum( const SourceOrTarget::Enum direction
   datumLibraryImplementation->datumIndex( datumCode, &datumIndex );
   coordinateSystemState[direction].datumIndex = datumIndex;
 
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( mutex );
 }
 
 
@@ -752,10 +779,7 @@ void CoordinateConversionService::setCoordinateSystem( const SourceOrTarget::Enu
  *  parameters : Coordinate system parameters to be used               (input)
  */
 
-  Thread_Mutex mutex;
-  long mutex_error = Threads_Create_Mutex( &mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( mutex );
+  CCSThreadLock lock(&mutex);
 
   coordinateSystemState[direction].coordinateSystem = 0;
 
@@ -915,10 +939,6 @@ void CoordinateConversionService::setCoordinateSystem( const SourceOrTarget::Enu
 
   setParameters( direction );
 
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( mutex );
 }
 
 
@@ -1893,10 +1913,7 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
  *  targetDirection: Indicates which set of coordinates and parameters to use as the target (input)
  */
 
-   Thread_Mutex mutex;
-  long mutex_error = Threads_Create_Mutex( &mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( mutex );
+  CCSThreadLock lock(&mutex);
 
   GeodeticCoordinates* _convertedGeodetic = 0;
   GeodeticCoordinates* _wgs84Geodetic = 0;
@@ -2225,6 +2242,7 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
               case HeightType::EGM96VariableNaturalSpline:
               case HeightType::EGM84TenDegBilinear:
               case HeightType::EGM84TenDegNaturalSpline:
+              case HeightType::EGM84ThirtyMinBiLinear:
                 _wgs84Geodetic->setHeight( _convertedGeodetic->height() );
                 break;
               case HeightType::noHeight:
@@ -2274,6 +2292,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
                 geoidLibrary->convertEGM84TenDegNaturalSplineToEllipsoidHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
                                                              _wgs84Geodetic->height(), &tempHeight );
                 break;
+              case HeightType::EGM84ThirtyMinBiLinear:
+                geoidLibrary->convertEGM84ThirtyMinBiLinearToEllipsoidHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                                                             _wgs84Geodetic->height(), &tempHeight );
+                break;
               case HeightType::ellipsoidHeight:
               default:
                 tempHeight = _wgs84Geodetic->height();
@@ -2301,6 +2323,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
                 geoidLibrary->convertEllipsoidToEGM84TenDegNaturalSplineHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
                                                              tempHeight, &correctedHeight );
                 break;
+              case HeightType::EGM84ThirtyMinBiLinear:
+                geoidLibrary->convertEllipsoidToEGM84ThirtyMinBiLinearHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                                                             tempHeight, &correctedHeight );
+                break;
               case HeightType::ellipsoidHeight:
               default:
                 correctedHeight = tempHeight;
@@ -2321,6 +2347,7 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
               case HeightType::EGM96VariableNaturalSpline:
               case HeightType::EGM84TenDegBilinear:
               case HeightType::EGM84TenDegNaturalSpline:
+              case HeightType::EGM84ThirtyMinBiLinear:
                 _shiftedGeodetic->setHeight( _wgs84Geodetic->height() );
                 break;
               case HeightType::noHeight:
@@ -2404,11 +2431,6 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
   {
     targetAccuracy.set(-1.0, -1.0, -1.0);
 
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex( mutex );
-    if( !mutex_error )
-      Threads_Destroy_Mutex( mutex );
-
     throw CoordinateConversionException(e.getMessage());        
   }
 
@@ -2416,10 +2438,6 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
   delete _shiftedGeodetic;
   delete _wgs84Geodetic;
 
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( mutex );
 }
 
 

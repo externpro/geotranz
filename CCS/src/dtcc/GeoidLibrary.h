@@ -64,274 +64,411 @@
  *    24-May-99         Original Code
  *    09-Jan-06         Added new geoid height interpolation methods
  *    03-14-07          Original C++ Code
- *
+ *    05-12-10          S. Gillis, BAEts26542, MSL-HAE for 30 minute grid added
+ *    07-21-10          Read in full file at once instead of one post at a time 
  */
 
-#include <vector>
 #include "DtccApi.h"
 
 namespace MSP
 {
-  namespace CCS
-  {
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
+   class CCSThreadMutex;
+   namespace CCS
+   {
+      class MSP_DTCC_API GeoidLibrary
+      {
+            friend class GeoidLibraryCleaner;
+            
+         public:
 
-    class MSP_DTCC_API GeoidLibrary
-    {
-    friend class GeoidLibraryCleaner;
+            /* The function getInstance returns an instance of the GeoidLibrary
+             */
 
-    public:
-
-      /* The function getInstance returns an instance of the GeoidLibrary
-       */
-
-      static GeoidLibrary* getInstance();
+            static GeoidLibrary* getInstance();
 
 
-      /*
-       * The function removeInstance removes this GeoidLibrary instance from the
-       * total number of instances. 
-       */
+            /*
+             * The function removeInstance removes this GeoidLibrary 
+             * instance from the total number of instances. 
+             */
 
-      static void removeInstance();
+            static void removeInstance();
 
 
 	    ~GeoidLibrary( void );
 
 
-      /*
-       * The function convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight converts the specified WGS84
-       * ellipsoid height at the specified geodetic coordinates to the equivalent
-       * geoid height, using the EGM96 gravity model and the bilinear interpolation method.
-       *
-       *    longitude          : Geodetic longitude in radians          (input)
-       *    latitude           : Geodetic latitude in radians           (input)
-       *    ellipsoidHeight    : Ellipsoid height, in meters            (input)
-       *    geoidHeight        : Geoid height, in meters.               (output)
-       *
-       */
+            /*
+             * The function convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight
+             * converts the specified WGS84 ellipsoid height at the specified
+             * geodetic coordinates to the equivalent
+             * geoid height, using the EGM96 gravity model and 
+             * the bilinear interpolation method.
+             *
+             *    longitude          : Geodetic longitude in radians     (input)
+             *    latitude           : Geodetic latitude in radians      (input)
+             *    ellipsoidHeight    : Ellipsoid height, in meters       (input)
+             *    geoidHeight        : Geoid height, in meters.         (output)
+             *
+             */
 
-      void convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight( double longitude, double latitude,  double ellipsoidHeight, double *geoidHeight );
-
-
-      /*
-       * The function convertEllipsoidToEGM96VariableNaturalSplineHeight converts the specified WGS84
-       * ellipsoid height at the specified geodetic coordinates to the equivalent
-       * geoid height, using the EGM96 gravity model and the natural spline interpolation method..
-       *
-       *    longitude          : Geodetic longitude in radians          (input)
-       *    latitude           : Geodetic latitude in radians           (input)
-       *    ellipsoidHeight    : Ellipsoid height, in meters            (input)
-       *    geoidHeight        : Geoid height, in meters.               (output)
-       *
-       */
-
-      void convertEllipsoidToEGM96VariableNaturalSplineHeight( double longitude, double latitude, double ellipsoidHeight, double *geoidHeight );
+            void convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight(
+               double longitude,
+               double latitude,
+               double ellipsoidHeight,
+               double *geoidHeight );
 
 
-      /*
-       * The function convertEllipsoidToEGM84TenDegBilinearHeight converts the specified WGS84
-       * ellipsoid height at the specified geodetic coordinates to the equivalent
-       * geoid height, using the EGM84 gravity model and the bilinear interpolation method..
-       *
-       *    longitude          : Geodetic longitude in radians          (input)
-       *    latitude           : Geodetic latitude in radians           (input)
-       *    ellipsoidHeight    : Ellipsoid height, in meters            (input)
-       *    geoidHeight        : Geoid height, in meters.               (output)
-       *
-       */
+            /*
+             * The function convertEllipsoidToEGM96VariableNaturalSplineHeight
+             * converts the specified WGS84 ellipsoid height at the specified
+             * geodetic coordinates to the equivalent geoid height, 
+             * using the EGM96 gravity model and 
+             * the natural spline interpolation method.
+             *
+             *    longitude          : Geodetic longitude in radians    (input)
+             *    latitude           : Geodetic latitude in radians     (input)
+             *    ellipsoidHeight    : Ellipsoid height, in meters      (input)
+             *    geoidHeight        : Geoid height, in meters.        (output)
+             *
+             */
 
-      void convertEllipsoidToEGM84TenDegBilinearHeight( double longitude, double latitude, double ellipsoidHeight, double *geoidHeight );
+            void convertEllipsoidToEGM96VariableNaturalSplineHeight(
+               double  longitude,
+               double  latitude,
+               double  ellipsoidHeight,
+               double *geoidHeight );
 
+            /*
+             * The function convertEllipsoidToEGM84TenDegBilinearHeight
+             * converts the specified WGS84 ellipsoid height at the specified
+             * geodetic coordinates to the equivalent geoid height, 
+             * using the EGM84 gravity model and
+             * the bilinear interpolation method.
+             *
+             *    longitude          : Geodetic longitude in radians     (input)
+             *    latitude           : Geodetic latitude in radians      (input)
+             *    ellipsoidHeight    : Ellipsoid height, in meters       (input)
+             *    geoidHeight        : Geoid height, in meters.         (output)
+             *
+             */
 
-      /*
-       * The function convertEllipsoidToEGM84TenDegNaturalSplineHeight converts the specified WGS84
-       * ellipsoid height at the specified geodetic coordinates to the equivalent
-       * geoid height, using the EGM84 gravity model and the natural spline interpolation method..
-       *
-       *    longitude           : Geodetic longitude in radians          (input)
-       *    latitude            : Geodetic latitude in radians           (input)
-       *    ellipsoidHeight     : Ellipsoid height, in meters            (input)
-       *    geoidHeight         : Geoid height, in meters.               (output)
-       *
-       */
+            void convertEllipsoidToEGM84TenDegBilinearHeight(
+               double longitude,
+               double latitude,
+               double ellipsoidHeight,
+               double *geoidHeight );
 
-      void convertEllipsoidToEGM84TenDegNaturalSplineHeight( double longitude, double latitude, double ellipsoidHeight, double *geoidHeight );
+            /*
+             * The function convertEllipsoidToEGM84TenDegNaturalSplineHeight
+             * converts the specified WGS84 ellipsoid height at the specified
+             * geodetic coordinates to the equivalent geoid height, 
+             * using the EGM84 gravity model and
+             * the natural splineinterpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters      (input)
+             *    geoidHeight         : Geoid height, in meters.        (output)
+             *
+             */
 
+            void convertEllipsoidToEGM84TenDegNaturalSplineHeight(
+               double longitude,
+               double latitude, 
+               double ellipsoidHeight,
+               double *geoidHeight );
 
-      /*
-       * The function convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight converts the specified WGS84
-       * geoid height at the specified geodetic coordinates to the equivalent
-       * ellipsoid height, using the EGM96 gravity model and the bilinear interpolation method.
-       *
-       *    longitude           : Geodetic longitude in radians          (input)
-       *    latitude            : Geodetic latitude in radians           (input)
-       *    geoidHeight         : Geoid height, in meters.               (input)
-       *    ellipsoidHeight     : Ellipsoid height, in meters            (output)
-       *
-       */
-
-      void convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight( double longitude, double latitude, double geoidHeight,  double *ellipsoidHeight );
-
-
-      /*
-       * The function convertEGM96VariableNaturalSplineToEllipsoidHeight converts the specified WGS84
-       * geoid height at the specified geodetic coordinates to the equivalent
-       * ellipsoid height, using the EGM96 gravity model and the natural spline interpolation method.
-       *
-       *    longitude           : Geodetic longitude in radians          (input)
-       *    latitude            : Geodetic latitude in radians           (input)
-       *    geoidHeight         : Geoid height, in meters.               (input)
-       *    ellipsoidHeight     : Ellipsoid height, in meters            (output)
-       *
-       */
-
-      void convertEGM96VariableNaturalSplineToEllipsoidHeight( double longitude, double latitude, double geoidHeight, double *ellipsoidHeight );
-
-
-      /*
-       * The function convertEGM84TenDegBilinearToEllipsoidHeight converts the specified WGS84
-       * geoid height at the specified geodetic coordinates to the equivalent
-       * ellipsoid height, using the EGM84 gravity model and the bilinear interpolation method.
-       *
-       *    longitude           : Geodetic longitude in radians          (input)
-       *    latitude            : Geodetic latitude in radians           (input)
-       *    geoidHeight         : Geoid height, in meters.               (input)
-       *    ellipsoidHeight     : Ellipsoid height, in meters            (output)
+            /*
+             * The function convertEllipsoidToEGM84ThirtyMinBiLinearHeight
+             * converts the specified WGS84 ellipsoid height at the specified
+             * geodetic coordinates to the equivalent geoid height,
+             * using the EGM84 gravity model and
+             * the bilinear interpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters      (input)
+             *    geoidHeight         : Geoid height, in meters.        (output)
        *
        */
 
-      void convertEGM84TenDegBilinearToEllipsoidHeight( double longitude, double latitude, double geoidHeight, double *ellipsoidHeight );
+            void convertEllipsoidToEGM84ThirtyMinBiLinearHeight(
+               double longitude,
+               double latitude,
+               double ellipsoidHeight,
+               double *geoidHeight );
+
+            /*
+             * The function convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight
+             * converts the specified WGS84 geoid height at the specified
+             * geodetic coordinates to the equivalent ellipsoid height,
+             * using the EGM96 gravity model and 
+             * the bilinear interpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    geoidHeight         : Geoid height, in meters.         (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters     (output)
+             *
+             */
+            
+            void convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight(
+               double longitude,
+               double latitude,
+               double geoidHeight,
+               double *ellipsoidHeight );
+            
+
+            /*
+             * The function convertEGM96VariableNaturalSplineToEllipsoidHeight
+             * converts the specified WGS84 geoid height at the specified
+             * geodetic coordinates to the equivalent ellipsoid height,
+             * using the EGM96 gravity model and
+             * the natural spline interpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    geoidHeight         : Geoid height, in meters.         (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters     (output)
+             *
+             */
+
+            void convertEGM96VariableNaturalSplineToEllipsoidHeight(
+               double longitude,
+               double latitude,
+               double geoidHeight,
+               double *ellipsoidHeight );
 
 
-      /*
-       * The function convertEGM84TenDegNaturalSplineToEllipsoidHeight converts the specified WGS84
-       * geoid height at the specified geodetic coordinates to the equivalent
-       * ellipsoid height, using the EGM84 gravity model and the natural spline interpolation method.
-       *
-       *    longitude           : Geodetic longitude in radians          (input)
-       *    latitude            : Geodetic latitude in radians           (input)
-       *    geoidHeight         : Geoid height, in meters.               (input)
-       *    ellipsoidHeight     : Ellipsoid height, in meters            (output)
-       *
-       */
+            /*
+             * The function convertEGM84TenDegBilinearToEllipsoidHeight
+             * converts the specified WGS84 geoid height at the specified
+             * geodetic coordinates to the equivalent ellipsoid height, using
+             * the EGM84 gravity model and
+             * the bilinear interpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    geoidHeight         : Geoid height, in meters.         (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters     (output)
+             *
+             */
 
-      void convertEGM84TenDegNaturalSplineToEllipsoidHeight( double longitude, double latitude, double geoidHeight, double *ellipsoidHeight );
+            void convertEGM84TenDegBilinearToEllipsoidHeight(
+               double longitude,
+               double latitude,
+               double geoidHeight,
+               double *ellipsoidHeight );
 
-    protected:
+            /*
+             * The function convertEGM84TenDegNaturalSplineToEllipsoidHeight
+             * converts the specified WGS84 geoid height at the specified 
+             * geodetic coordinates to the equivalent ellipsoid height,
+             * using the EGM84 gravity model and
+             * the natural spline interpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    geoidHeight         : Geoid height, in meters.         (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters     (output)
+             *
+             */
 
-      /*
-       * The constructor creates an empty list which is used to store the geoid separation data
-       * contained in the data files egm84.grd and egm96.grd
-       */
+            void convertEGM84TenDegNaturalSplineToEllipsoidHeight(
+               double longitude,
+               double latitude,
+               double geoidHeight,
+               double *ellipsoidHeight );
 
+            /*
+             * The function convertEGM84ThirtyMinBiLinearToEllipsoidHeight
+             * converts the specified WGS84 geoid height at the specified
+             * geodetic coordinates to the equivalent ellipsoid height, using
+             * the EGM84 gravity model and the bilinear interpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    geoidHeight         : Geoid height, in meters.         (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters     (output)
+             *
+             */
+
+            void convertEGM84ThirtyMinBiLinearToEllipsoidHeight(
+               double longitude,
+               double latitude,
+               double geoidHeight,
+               double *ellipsoidHeight );
+
+         protected:
+
+            /*
+             * The constructor creates empty lists which are used 
+             * to store the geoid separation data
+             * contained in the data files egm84.grd and egm96.grd
+             */
+            
 	    GeoidLibrary();
 
 
-      GeoidLibrary( const GeoidLibrary &gl );
+            GeoidLibrary( const GeoidLibrary &gl );
 
 
-      GeoidLibrary& operator=( const GeoidLibrary &gl );
+            GeoidLibrary& operator=( const GeoidLibrary &gl );
 
 
-    private:
+         private:
 
-      static GeoidLibrary* instance;
-      static int instanceCount;
+            static CCSThreadMutex mutex;
+            static GeoidLibrary* instance;
+            static int instanceCount;
 
-      /* List of EGM96 elevations */
-      std::vector<float> egm96GeoidList;
+            /* List of EGM96 elevations */
+            float *egm96GeoidList;
 
-      /* List of EGM84 elevations */
-      std::vector<float> egm84GeoidList;
+            /* List of EGM84 elevations */
+            float *egm84GeoidList;
 
-    
-      /*
-       * The function loadGeoids reads geoid separation data from a file in
-       * the current directory and builds the geoid separation table from it.
-       * If the separation file can not be found or accessed, an error code of
-       * GEOID_FILE_OPEN_ERROR is returned, If the separation file is incomplete
-       * or improperly formatted, an error code of GEOID_INITIALIZE_ERROR is returned,
-       * otherwise GEOID_NO_ERROR is returned. This function must be called before 
-       * any of the other functions in this component.
-       */
+            /* List of EGM84 thirty minute elevations */
+            double *egm84ThirtyMinGeoidList;
+            /*
+             * The function loadGeoids reads geoid separation data from a file
+             * in the current directory and builds the geoid separation table
+             * from it.
+             * If the separation file can not be found or accessed, an 
+             * error code of GEOID_FILE_OPEN_ERROR is returned,
+             * If the separation file is incomplete or improperly formatted,
+             * an error code of GEOID_INITIALIZE_ERROR is returned,
+             * otherwise GEOID_NO_ERROR is returned.
+             * This function must be called before 
+             * any of the other functions in this component.
+             */
+            
+            void loadGeoids();
 
-      void loadGeoids();
+            /*
+             * The function initializeEGM96Geoid reads geoid separation data
+             * from the egm96.grd file in the current directory 
+             * and builds a geoid separation table from it.
+             * If the separation file can not be found or accessed,
+             * an error code of GEOID_FILE_OPEN_ERROR is returned,
+             * If the separation file is incomplete or improperly formatted,
+             * an error code of GEOID_INITIALIZE_ERROR is returned,
+             * otherwise GEOID_NO_ERROR is returned.
+             */
 
+            void initializeEGM96Geoid();
 
-      /*
-       * The function initializeEGM96Geoid reads geoid separation data from the egm96.grd
-       *  file in the current directory and builds a geoid separation table from it.
-       * If the separation file can not be found or accessed, an error code of
-       * GEOID_FILE_OPEN_ERROR is returned, If the separation file is incomplete
-       * or improperly formatted, an error code of GEOID_INITIALIZE_ERROR is returned,
-       * otherwise GEOID_NO_ERROR is returned.
-       */
+            /*
+             * The function initializeEGM84Geoid reads geoid separation data
+             * from a file in the current directory and builds
+             * the geoid separation table from it.
+             * If the separation file can not be found or accessed,
+             * an error code of GEOID_FILE_OPEN_ERROR is returned,
+             * If the separation file is incomplete or improperly formatted,
+             * an error code of GEOID_INITIALIZE_ERROR is returned,
+             * otherwise GEOID_NO_ERROR is returned.
+             */
 
-      void initializeEGM96Geoid();
+            void initializeEGM84Geoid();
 
+            /*
+             * The function initializeEGM84ThirtyMinGeoid reads geoid 
+             * separation data from a file in the current directory and builds
+             * the geoid separation table from it.
+             * If the separation file can not be found or accessed,
+             * an error code of GEOID_FILE_OPEN_ERROR is returned,
+             * If the separation file is incomplete or improperly formatted,
+             * an error code of GEOID_INITIALIZE_ERROR is returned,
+             * otherwise GEOID_NO_ERROR is returned.
+             */
 
-      /*
-       * The function initializeEGM84Geoid reads geoid separation data from a file in
-       * the current directory and builds the geoid separation table from it.
-       * If the separation file can not be found or accessed, an error code of
-       * GEOID_FILE_OPEN_ERROR is returned, If the separation file is incomplete
-       * or improperly formatted, an error code of GEOID_INITIALIZE_ERROR is returned,
-       * otherwise GEOID_NO_ERROR is returned.
-       */
+            void initializeEGM84ThirtyMinGeoid();
 
-      void initializeEGM84Geoid();
+            /*
+             * The private function bilinearInterpolateDoubleHeights returns the
+             * height of the WGS84 geoid above or below the WGS84 ellipsoid,
+             * at the specified geodetic coordinates, 
+             * using a grid of height adjustments
+             * and the bilinear interpolation method.
+             *
+             *    longitude      : Geodetic longitude in radians         (input)
+             *    latitude       : Geodetic latitude in radians          (input)
+             *    scale_factor   : Grid scale factor                     (input)
+             *    num_cols       : Number of columns in grid             (input)
+             *    num_rows       : Number of rows in grid                (input)
+             *    height_buffer  : Grid of height adjustments, doubles   (input)
+             *    delta_height   : Height Adjustment, in meters.        (output)
+             *
+             */
 
+            void bilinearInterpolateDoubleHeights(
+               double longitude,
+               double latitude, 
+               double scale_factor,
+               int num_cols,
+               int num_rows,
+               double *height_buffer,
+               double *delta_height );
 
-      /*
-       * The private function bilinearInterpolate returns the height of the
-       * WGS84 geoid above or below the WGS84 ellipsoid, at the
-       * specified geodetic coordinates, using a grid of height adjustments
-       * and the bilinear interpolation method.
-       *
-       *    longitude           : Geodetic longitude in radians          (input)
-       *    latitude            : Geodetic latitude in radians           (input)
-       *    scale_factor        : Grid scale factor                      (input)
-       *    num_cols            : Number of columns in grid              (input)
-       *    num_rows            : Number of rows in grid                 (input)
-       *    height_buffer       : Grid of height adjustments             (input)
-       *    delta_height        : Height Adjustment, in meters.          (output)
-       *
-       */
+            /*
+             * The private function bilinearInterpolate returns the height of
+             * the WGS84 geoid above or below the WGS84 ellipsoid, at the
+             * specified geodetic coordinates, using a grid of height
+             * adjustments and the bilinear interpolation method.
+             *
+             *    longitude      : Geodetic longitude in radians         (input)
+             *    latitude       : Geodetic latitude in radians          (input)
+             *    scale_factor   : Grid scale factor                     (input)
+             *    num_cols       : Number of columns in grid             (input)
+             *    num_rows       : Number of rows in grid                (input)
+             *    height_buffer  : Grid of height adjustments, floats    (input)
+             *    delta_height   : Height Adjustment, in meters.        (output)
+             *
+             */
 
-      void bilinearInterpolate( double longitude, double latitude, double scale_factor, int num_cols, int num_rows,
-                                std::vector<float>& height_buffer,  double *delta_height );
+            void bilinearInterpolate(
+               double longitude,
+               double latitude,
+               double scale_factor,
+               int num_cols,
+               int num_rows,
+               float  *height_buffer,
+               double *delta_height );
 
+            /*
+             * The private function naturalSplineInterpolate returns the 
+             * height of the WGS84 geoid above or below the WGS84 ellipsoid,
+             * at the specified geodetic coordinates, 
+             * using a grid of height adjustments
+             * and the natural spline interpolation method.
+             *
+             *    longitude     : Geodetic longitude in radians          (input)
+             *    latitude      : Geodetic latitude in radians           (input)
+             *    scale_factor  : Grid scale factor                      (input)
+             *    num_cols      : Number of columns in grid              (input)
+             *    num_rows      : Number of rows in grid                 (input)
+             *    height_buffer : Grid of height adjustments             (input)
+             *    DeltaHeight   : Height Adjustment, in meters.         (output)
+             *
+             */
 
-      /*
-       * The private function naturalSplineInterpolate returns the height of the
-       * WGS84 geoid above or below the WGS84 ellipsoid, at the
-       * specified geodetic coordinates, using a grid of height adjustments
-       * and the natural spline interpolation method.
-       *
-       *    longitude           : Geodetic longitude in radians          (input)
-       *    latitude            : Geodetic latitude in radians           (input)
-       *    scale_factor        : Grid scale factor                      (input)
-       *    num_cols            : Number of columns in grid              (input)
-       *    num_rows            : Number of rows in grid                 (input)
-       *    height_buffer       : Grid of height adjustments             (input)
-       *    DeltaHeight         : Height Adjustment, in meters.          (output)
-       *
-       */
-
-      void naturalSplineInterpolate( double longitude, double latitude, double scale_factor, int num_cols, int num_rows,
-                                     int max_index, std::vector<float>& height_buffer, double *delta_height );
-
+            void naturalSplineInterpolate(
+               double longitude,
+               double latitude,
+               double scale_factor,
+               int num_cols,
+               int num_rows,
+               int max_index,
+               float  *height_buffer,
+               double *delta_height );
       
-      /*
-       * Delete the singleton.
-       */
+            /*
+             * Delete the singleton.
+             */
 
-      static void deleteInstance();
-    };
+            static void deleteInstance();
+      };
   }
 }
 

@@ -77,10 +77,10 @@
  *    Date              Description
  *    ----              -----------
  *    2-26-07           Original C++ Code
+ *    7/19/10   NGL     BAEts27271 Correct the test for TRANMERC_LON_WARNING in
+ *                      convertToGeodetic, by removing the multipy by cos(latitude)
  *
  */
-
-
 /***************************************************************************/
 /*
  *                               INCLUDES
@@ -630,10 +630,10 @@ MSP::CCS::GeodeticCoordinates* TransverseMercator::convertToGeodetic( MSP::CCS::
       throw CoordinateConversionException( ErrorMessages::easting );
   }
 
-  if (fabs(dlam) > (9.0 * PI / 180) * cos(latitude))
+  if (fabs(dlam) > (9.0 * PI / 180))
   { /* Distortion will result if longitude is more than 9 degrees from the Central Meridian at the equator */
     /* and decreases to 0 degrees at the poles */
-    /* As you move towards the poles, distortion will become more significant */
+    /* As you move towards the poles, distortion will become less significant */
     strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
   }
 

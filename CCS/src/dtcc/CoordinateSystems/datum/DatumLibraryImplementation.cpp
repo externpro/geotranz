@@ -117,6 +117,10 @@
  *    06/27/06          Moved data files to data directory
  *    03-14-07          Original C++ Code
  *    03-21-08          Added check for west, east longitude values > 180
+ *    06-11-10          S. Gillis, BAEts26724, Fixed memory error problem
+ *                      when MSPCCS_DATA is not set
+ *    07-07-10          K.Lam, BAEts27269, Replace C functions in threads.h
+ *                      with C++ methods in classes CCSThreadMutex
  */
 
 
@@ -135,12 +139,13 @@
 #include "ThreeParameterDatum.h"
 #include "Geocentric.h"
 #include "Datum.h"
-#include "threads.h"
 #include "CartesianCoordinates.h"
 #include "GeodeticCoordinates.h"
 #include "CoordinateConversionException.h"
 #include "ErrorMessages.h"
 #include "Accuracy.h"
+#include "CCSThreadMutex.h"
+#include "CCSThreadLock.h"
 
 /*
  *    math.h     - standard C mathematics library
@@ -150,7 +155,8 @@
  *    Geocentric.h  - used to convert between geodetic and geocentric coordinates
  *    Datum.h  - used to store individual datum information
  *    DatumLibraryImplementation.h    - for prototype error ehecking and error codes
- *    threads.h  - used for thread safety
+ *    CCSThreadMutex.h  - used for thread safety
+ *    CCSThreadLock.h  - used for thread safety
  *    CartesianCoordinates.h   - defines cartesian coordinates
  *    GeodeticCoordinates.h   - defines geodetic coordinates
  *    CoordinateConversionException.h - Exception handler
@@ -159,6 +165,8 @@
 
 
 using namespace MSP::CCS;
+using MSP::CCSThreadMutex;
+using MSP::CCSThreadLock;
 
 
 /***************************************************************************/
@@ -291,6 +299,7 @@ class MSP::CCS::DatumLibraryImplementationCleaner
 
   ~DatumLibraryImplementationCleaner()
   {
+    CCSThreadLock lock(&DatumLibraryImplementation::mutex);
     DatumLibraryImplementation::deleteInstance();
   }
 
@@ -298,12 +307,14 @@ class MSP::CCS::DatumLibraryImplementationCleaner
 
 
 // Make this class a singleton, so the data files are only initialized once
+CCSThreadMutex DatumLibraryImplementation::mutex;
 DatumLibraryImplementation* DatumLibraryImplementation::instance = 0;
 int DatumLibraryImplementation::instanceCount = 0;
 
 
 DatumLibraryImplementation* DatumLibraryImplementation::getInstance()
 {
+  CCSThreadLock lock(&mutex);
   if( instance == 0 )
     instance = new DatumLibraryImplementation;
 
@@ -319,6 +330,7 @@ void DatumLibraryImplementation::removeInstance()
  * The function removeInstance removes this DatumLibraryImplementation instance from the
  * total number of instances. 
  */
+  CCSThreadLock lock(&mutex);
   if( --instanceCount < 1 )
   {
     deleteInstance();
@@ -352,7 +364,14 @@ DatumLibraryImplementation::DatumLibraryImplementation():
 
   datumList.reserve( 2 + MAX_3PARAM + MAX_7PARAM );
 
-  loadDatums();
+  try
+  {
+    loadDatums();
+  }
+  catch(CoordinateConversionException e)
+  {
+    throw e;
+  }
 }
 
 
@@ -1910,12 +1929,9 @@ void DatumLibraryImplementation::loadDatums()
   FILE *fp_7param = NULL;
   FILE *fp_3param = NULL;
   char* FileName3 = 0;
-  const int file_name_length = 20;
+  const int file_name_length = 23;
 
-  Thread_Mutex datum_mutex;
-  long mutex_error = Threads_Create_Mutex( &datum_mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( datum_mutex );
+  CCSThreadLock lock(&mutex);
 
   /*  Check the environment for a user provided path, else current directory;   */
   /*  Build a File Name, including specified or default path:                   */
@@ -2110,11 +2126,6 @@ void DatumLibraryImplementation::loadDatums()
     }
     fclose( fp_3param );
 
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( datum_mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( datum_mutex );
-
   delete [] FileName7;
   FileName7 = 0;
   delete [] FileName3;
@@ -2134,10 +2145,7 @@ void DatumLibraryImplementation::write3ParamFile()
   char FileName[FILENAME_LENGTH];
   FILE *fp_3param = NULL;
 
-  Thread_Mutex datum_mutex;
-  long mutex_error = Threads_Create_Mutex( &datum_mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( datum_mutex );
+  CCSThreadLock lock(&mutex);
 
   /*output updated 3-parameter datum table*/
   PathName = getenv( "MSPCCS_DATA" );
@@ -2154,11 +2162,6 @@ void DatumLibraryImplementation::write3ParamFile()
 
   if ((fp_3param = fopen(FileName, "w")) == NULL)
   { /* fatal error */
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex( datum_mutex );
-    if( !mutex_error )
-      Threads_Destroy_Mutex( datum_mutex );
-
     char message[256] = "";
     strcpy( message, ErrorMessages::datumFileOpenError );
     strcat( message, ": 3_param.dat\n" );
@@ -2200,10 +2203,6 @@ void DatumLibraryImplementation::write3ParamFile()
 
   fclose( fp_3param );
 
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( datum_mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( datum_mutex );
 }
 
 
@@ -2219,10 +2218,7 @@ void DatumLibraryImplementation::write7ParamFile()
   char FileName[FILENAME_LENGTH];
   FILE *fp_7param = NULL;
 
-  Thread_Mutex datum_mutex;
-  long mutex_error = Threads_Create_Mutex( &datum_mutex );
-  if( !mutex_error )
-    mutex_error = Threads_Lock_Mutex( datum_mutex );
+  CCSThreadLock lock(&mutex);
 
   /*output updated 7-parameter datum table*/
   PathName = getenv( "MSPCCS_DATA" );
@@ -2239,11 +2235,6 @@ void DatumLibraryImplementation::write7ParamFile()
 
   if ((fp_7param = fopen(FileName, "w")) == NULL)
   { /* fatal error */
-    if( !mutex_error )
-      mutex_error = Threads_Unlock_Mutex( datum_mutex );
-    if( !mutex_error )
-      Threads_Destroy_Mutex( datum_mutex );
-
     char message[256] = "";
     strcpy( message, ErrorMessages::datumFileOpenError );
     strcat( message, ": 7_param.dat\n" );
@@ -2281,11 +2272,6 @@ void DatumLibraryImplementation::write7ParamFile()
   }
 
   fclose( fp_7param );
-
-  if( !mutex_error )
-    mutex_error = Threads_Unlock_Mutex( datum_mutex );
-  if( !mutex_error )
-    Threads_Destroy_Mutex( datum_mutex );
 }
 
 
