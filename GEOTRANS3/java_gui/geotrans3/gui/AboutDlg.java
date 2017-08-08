@@ -11,6 +11,7 @@
  *
  * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
  * 05/31/11  K. Lam      BAEts28657        Update version to 3.2
+ * 11/18/11  K. Lam      MSP_029475        Update version to 3.3
  */
 
 package geotrans3.gui;
@@ -75,7 +76,7 @@ public class AboutDlg extends javax.swing.JDialog {
     iconPanel = new javax.swing.JPanel();
     tempPanel = new javax.swing.JPanel();
 
-    setTitle("About MSP GEOTRANS 3.2");
+    setTitle("About MSP GEOTRANS 3.3");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -92,7 +93,7 @@ public class AboutDlg extends javax.swing.JDialog {
     versionPanel.setPreferredSize(new java.awt.Dimension(50, 5));
     versionPanel.setLayout(new java.awt.GridLayout(1, 1));
 
-    versionLabel.setText("MSP GEOTRANS 3.2");
+    versionLabel.setText("MSP GEOTRANS 3.3");
     versionPanel.add(versionLabel);
 
     descriptPanel.add(versionPanel);

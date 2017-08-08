@@ -137,38 +137,34 @@ Mollweide::Mollweide( double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
  * variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid						        (input)
- *    centralMeridian         : Longitude in radians at the center of     (input)
+ *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters (input)
+ *    ellipsoidFlattening     : Flattening of ellipsoid                 (input)
+ *    centralMeridian         : Longitude in radians at the center of   (input)
  *                              the projection
  *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (input)
+ *                              central meridian of the projection.     (input)
  *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (input)
+ *                              origin latitude of the projection       (input)
  */
 
   double Ra;                       /* Spherical Radius */
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
   es2 = 2 * flattening - flattening * flattening;
   es4 = es2 * es2;
@@ -288,24 +284,20 @@ MSP::CCS::MapProjectionCoordinates* Mollweide::convertFromGeodetic( MSP::CCS::Ge
   double dtp_tolerance = 4.85e-10;              /* approximately 1/1000th of
                                                  an arc second or 1/10th meter */
   int count = 60;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
   double PI_Sin_Latitude = PI * sin(latitude);
   double theta_primed = latitude;
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Moll_Origin_Long;
   if (dlam > PI)
@@ -356,24 +348,20 @@ MSP::CCS::GeodeticCoordinates* Mollweide::convertToGeodetic( MSP::CCS::MapProjec
   double two_theta;
   double i;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
-  if ((easting < (Moll_False_Easting + Moll_Min_Easting))
-      || (easting > (Moll_False_Easting + Moll_Max_Easting)))
+  if(   (easting < (Moll_False_Easting + Moll_Min_Easting))
+     || (easting > (Moll_False_Easting + Moll_Max_Easting)))
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
-  if ((northing < (Moll_False_Northing - Moll_Delta_Northing)) || 
-      (northing >(Moll_False_Northing + Moll_Delta_Northing) ))
+  if((northing < (Moll_False_Northing - Moll_Delta_Northing)) || 
+     (northing > (Moll_False_Northing + Moll_Delta_Northing) ))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Moll_False_Northing;
   dx = easting - Moll_False_Easting;

@@ -145,19 +145,19 @@ Mercator::Mercator( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, d
  * variables.  It calculates and returns the scale factor.  If any errors occur, 
  * an exception is thrown with a description of the error.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid						        (input)
- *    centralMeridian         : Longitude in radians at the center of     (input)
+ *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters (input)
+ *    ellipsoidFlattening     : Flattening of ellipsoid		 	(input)
+ *    centralMeridian         : Longitude in radians at the center of   (input)
  *                              the projection
- *    standardParallel        : Latitude in radians at which the          (input)
+ *    standardParallel        : Latitude in radians at which the        (input)
  *                              point scale factor is 1.0
  *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (input)
+ *                              central meridian of the projection.     (input)
  *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (input)
+ *                              origin latitude of the projection       (input)
  *    scaleFactor             : Multiplier which reduces distances in the 
  *                              projection to the actual distance on the
- *                              ellipsoid                                 (output)
+ *                              ellipsoid                               (output)
  */
 
   double es2;   /* Eccentricity squared of ellipsoid to the second power    */
@@ -165,37 +165,33 @@ Mercator::Mercator( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, d
   double es4;   /* Eccentricity squared of ellipsoid to the fourth power    */
   double sin_olat; /* sin(Origin_Latitude), temp variable */
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((standardParallel < -MAX_LAT) || (standardParallel > MAX_LAT))
   { /* latitude of true scale out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* central meridian out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
   Merc_Standard_Parallel = standardParallel;
   if (centralMeridian > PI)
     centralMeridian -= TWO_PI;
-  Merc_Cent_Mer = centralMeridian;
+  Merc_Cent_Mer       = centralMeridian;
   Merc_False_Northing = falseNorthing;
-  Merc_False_Easting = falseEasting;
+  Merc_False_Easting  = falseEasting;
 
   Merc_es = 2 * flattening - flattening * flattening;
   Merc_e = sqrt(Merc_es);
@@ -280,30 +276,26 @@ Mercator::Mercator( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, d
   double es4;   /* Eccentricity squared of ellipsoid to the fourth power    */
   double Merc_Scale_Factor2;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* central meridian out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
   if ((scaleFactor < MIN_SCALE_FACTOR) || (scaleFactor > MAX_SCALE_FACTOR))
   {
-    strcat( errorStatus, ErrorMessages::scaleFactor );
+    throw CoordinateConversionException( ErrorMessages::scaleFactor  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
 ///  Merc_Standard_Parallel = standardParallel;
   if (centralMeridian > PI)
@@ -475,22 +467,18 @@ MSP::CCS::MapProjectionCoordinates* Mercator::convertFromGeodetic( MSP::CCS::Geo
   double Delta_Long;    /* Difference in origin longitude and longitude    */
   double tan_temp;
   double pow_temp;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
 
   if ((latitude < -MAX_LAT) || (latitude > MAX_LAT))
   { /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   if (longitude > PI)
     longitude -= TWO_PI;
@@ -530,24 +518,20 @@ MSP::CCS::GeodeticCoordinates* Mercator::convertToGeodetic( MSP::CCS::MapProject
   double dx;     /* Delta easting - Difference in easting (easting-FE)      */
   double dy;     /* Delta northing - Difference in northing (northing-FN)   */
   double xphi;   /* Isometric latitude                                      */
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Merc_False_Easting - Merc_Delta_Easting))
       || (easting > (Merc_False_Easting + Merc_Delta_Easting)))
   { /* Easting out of range */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Merc_False_Northing - Merc_Delta_Northing))
       || (northing > (Merc_False_Northing + Merc_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Merc_False_Northing;
   dx = easting - Merc_False_Easting;

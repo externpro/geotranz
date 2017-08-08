@@ -505,26 +505,23 @@ MSP::CCS::BNGCoordinates* BritishNationalGrid::convertFromGeodetic( MSP::CCS::Ge
  */
 
   double TMEasting, TMNorthing;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
 
   if ((latitude < MIN_LAT) || (latitude > MAX_LAT))
   {  /* Latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < MIN_LON) || (longitude > MAX_LON))
   {  /* Longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+  MapProjectionCoordinates* transverseMercatorCoordinates =
+     transverseMercator->convertFromGeodetic( geodeticCoordinates );
 
-  MapProjectionCoordinates* transverseMercatorCoordinates = transverseMercator->convertFromGeodetic( geodeticCoordinates );
-
-  TMEasting = transverseMercatorCoordinates->easting();
+  TMEasting  = transverseMercatorCoordinates->easting();
   TMNorthing = transverseMercatorCoordinates->northing();
 
   if ((TMEasting < 0.0) && (TMEasting > -2.0))
@@ -532,7 +529,7 @@ MSP::CCS::BNGCoordinates* BritishNationalGrid::convertFromGeodetic( MSP::CCS::Ge
   if ((TMNorthing < 0.0) && (TMNorthing > -2.0))
     transverseMercatorCoordinates->setNorthing( 0.0 );
 
-  TMEasting = transverseMercatorCoordinates->easting();
+  TMEasting  = transverseMercatorCoordinates->easting();
   TMNorthing = transverseMercatorCoordinates->northing();
 
   if ((TMEasting < BNG_Min_Easting) || (TMEasting > BNG_Max_Easting))
@@ -644,27 +641,23 @@ MSP::CCS::BNGCoordinates* BritishNationalGrid::convertFromTransverseMercator( Ma
   long index;
   long temp_Easting, temp_Northing;
   char BNGString[21];
-  char errorStatus[50] = "";
 
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < BNG_Min_Easting) || (easting > BNG_Max_Easting))
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < BNG_Min_Northing) || (northing > BNG_Max_Northing))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
-  temp_Easting = roundBNG(easting);
+  temp_Easting  = roundBNG(easting);
   temp_Northing = roundBNG(northing);
 
-  temp_Easting += 1000000; 
+  temp_Easting  += 1000000; 
   temp_Northing += 500000;
 
   x = temp_Easting / 500000;

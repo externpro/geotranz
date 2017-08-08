@@ -147,6 +147,30 @@ JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniSetLatLongPrecision
 
 /*
  * Class:     geotrans3_jni_JNIFiomeths
+ * Method:    jniSetSeparator
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniSetSeparator
+  (JNIEnv *, jobject, jlong, jchar);
+
+/*
+ * Class:     geotrans3_jni_JNIFiomeths
+ * Method:    jniSetLonRange
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniSetLonRange
+  (JNIEnv *, jobject, jlong, jint);
+
+/*
+ * Class:     geotrans3_jni_JNIFiomeths
+ * Method:    jniShowLeadingZeros
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniShowLeadingZeros
+  (JNIEnv *, jobject, jlong, jboolean);
+
+/*
+ * Class:     geotrans3_jni_JNIFiomeths
  * Method:    jniWriteExampleCoord
  * Signature: (J)V
  */

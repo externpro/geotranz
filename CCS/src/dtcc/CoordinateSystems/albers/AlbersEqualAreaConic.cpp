@@ -38,7 +38,7 @@
  *                                     (-180 to 360 degrees)
  *       ALBERS_A_ERROR            : Semi-major axis less than or equal to zero
  *       ALBERS_INV_F_ERROR        : Inverse flattening outside of valid range
- *									                 (250 to 350)
+ *                                     (250 to 350)
  *       ALBERS_HEMISPHERE_ERROR   : Standard parallels cannot be opposite
  *                                     latitudes
  *       ALBERS_FIRST_SECOND_ERROR : The 1st & 2nd standard parallels cannot
@@ -138,7 +138,15 @@ double albersM( double clat, double oneminussqressin )
  *
  */
 
-AlbersEqualAreaConic::AlbersEqualAreaConic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double originLatitude, double standardParallel1, double standardParallel2, double falseEasting, double falseNorthing ) :
+AlbersEqualAreaConic::AlbersEqualAreaConic(
+   double ellipsoidSemiMajorAxis,
+   double ellipsoidFlattening,
+   double centralMeridian,
+   double originLatitude,
+   double standardParallel1,
+   double standardParallel2,
+   double falseEasting,
+   double falseNorthing ) :
   CoordinateSystem(),
   es( 0.08181919084262188000 ),
   es2( 0.0066943799901413800 ),
@@ -163,18 +171,18 @@ AlbersEqualAreaConic::AlbersEqualAreaConic( double ellipsoidSemiMajorAxis, doubl
  * variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid                   (input)
- *    centralMeridian         : Longitude in radians at the center of     (input)
+ *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
+ *   ellipsoidFlattening     : Flattening of ellipsoid                   (input)
+ *   centralMeridian         : Longitude in radians at the center of     (input)
  *                              the projection
- *    originLatitude          : Latitude in radians at which the          (input)
+ *   originLatitude          : Latitude in radians at which the          (input)
  *                              point scale factor is 1.0
- *    standardParallel1       : First standard parallel                   (input)
- *    standardParallel2       : Second standard parallel                  (input)
- *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (input)
- *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (input)
+ *   standardParallel1       : First standard parallel                   (input)
+ *   standardParallel2       : Second standard parallel                  (input)
+ *   falseEasting            : A coordinate value in meters assigned to the
+ *                              central meridian of the projection.      (input)
+ *   falseNorthing           : A coordinate value in meters assigned to the
+ *                              origin latitude of the projection        (input)
  */
 
   double sin_lat, sin_lat_1, cos_lat;
@@ -183,43 +191,40 @@ AlbersEqualAreaConic::AlbersEqualAreaConic( double ellipsoidSemiMajorAxis, doubl
   double es_sin, one_MINUS_SQRes_sin;
   double nq0;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
   if ((standardParallel1 < -PI_OVER_2) || (standardParallel1 > PI_OVER_2))
   { /* First Standard Parallel out of range */
-    strcat( errorStatus, ErrorMessages::standardParallel1 );
+    throw CoordinateConversionException( ErrorMessages::standardParallel1  );
   }
   if ((standardParallel2 < -PI_OVER_2) || (standardParallel2 > PI_OVER_2))
   { /* Second Standard Parallel out of range */
-    strcat( errorStatus, ErrorMessages::standardParallel2 );
+    throw CoordinateConversionException( ErrorMessages::standardParallel2  );
   }
   if ((standardParallel1 == 0.0) && (standardParallel2 == 0.0))
   { /* First & Second Standard Parallels equal 0 */
-    strcat( errorStatus, ErrorMessages::standardParallel1_2 );
+    throw CoordinateConversionException( ErrorMessages::standardParallel1_2  );
   }
   if (standardParallel1 == -standardParallel2)
   { /* Parallels are opposite latitudes */
-    strcat( errorStatus, ErrorMessages::standardParallelHemisphere );
+    throw CoordinateConversionException( ErrorMessages::standardParallelHemisphere  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -302,7 +307,8 @@ AlbersEqualAreaConic::~AlbersEqualAreaConic()
 }
 
 
-AlbersEqualAreaConic& AlbersEqualAreaConic::operator=( const AlbersEqualAreaConic &aeac )
+AlbersEqualAreaConic& AlbersEqualAreaConic::operator=(
+   const AlbersEqualAreaConic &aeac )
 {
   if( this != &aeac )
   {
@@ -336,25 +342,33 @@ MapProjection6Parameters* AlbersEqualAreaConic::getParameters() const
  * The function getParameters returns the current ellipsoid
  * parameters, and Albers projection parameters.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
- *    ellipsoidFlattening     : Flattening of ellipsoid										(output)
- *    centralMeridian         : Longitude in radians at the center of     (output)
- *                              the projection
- *    originLatitude          : Latitude in radians at which the          (output)
- *                              point scale factor is 1.0
- *    standardParallel1       : First standard parallel                   (output)
- *    standardParallel2       : Second standard parallel                  (output)
- *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (output)
- *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (output)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
+ *  ellipsoidFlattening     : Flattening of ellipsoid                   (output)
+ *  centralMeridian         : Longitude in radians at the center of     (output)
+ *                            the projection
+ *  originLatitude          : Latitude in radians at which the          (output)
+ *                            point scale factor is 1.0
+ *  standardParallel1       : First standard parallel                   (output)
+ *  standardParallel2       : Second standard parallel                  (output)
+ *  falseEasting            : A coordinate value in meters assigned to the
+ *                            central meridian of the projection.       (output)
+ *  falseNorthing           : A coordinate value in meters assigned to the
+ *                            origin latitude of the projection         (output)
  */
 
-  return new MapProjection6Parameters( CoordinateType::albersEqualAreaConic, Albers_Origin_Long, Albers_Origin_Lat, Albers_Std_Parallel_1, Albers_Std_Parallel_2, Albers_False_Easting, Albers_False_Northing );
+  return new MapProjection6Parameters(
+     CoordinateType::albersEqualAreaConic,
+     Albers_Origin_Long,
+     Albers_Origin_Lat,
+     Albers_Std_Parallel_1,
+     Albers_Std_Parallel_2,
+     Albers_False_Easting,
+     Albers_False_Northing );
 }
 
 
-MSP::CCS::MapProjectionCoordinates* AlbersEqualAreaConic::convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
+MSP::CCS::MapProjectionCoordinates* AlbersEqualAreaConic::convertFromGeodetic(
+   MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
 {
 /*
  * The function convertFromGeodetic converts geodetic (latitude and
@@ -376,22 +390,18 @@ MSP::CCS::MapProjectionCoordinates* AlbersEqualAreaConic::convertFromGeodetic( M
   double rho;
   double theta;
   double nq;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Albers_Origin_Long;
   if (dlam > PI)
@@ -418,11 +428,13 @@ MSP::CCS::MapProjectionCoordinates* AlbersEqualAreaConic::convertFromGeodetic( M
   double easting = rho * sin(theta) + Albers_False_Easting;
   double northing = rho0 - rho * cos(theta) + Albers_False_Northing;
 
-  return new MapProjectionCoordinates( CoordinateType::albersEqualAreaConic, easting, northing );
+  return new MapProjectionCoordinates(
+     CoordinateType::albersEqualAreaConic, easting, northing );
 }
 
 
-MSP::CCS::GeodeticCoordinates* AlbersEqualAreaConic::convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
+MSP::CCS::GeodeticCoordinates* AlbersEqualAreaConic::convertToGeodetic(
+   MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
 {
 /*
  * The function convertToGeodetic converts Albers projection
@@ -447,26 +459,22 @@ MSP::CCS::GeodeticCoordinates* AlbersEqualAreaConic::convertToGeodetic( MSP::CCS
   double theta = 0.0;
   int count = 60;
   double longitude, latitude;
-  double tolerance = 4.85e-10;        /* approximately 1/1000th of
-                              an arc second or 1/10th meter */
-  char errorStatus[50] = "";
+  double tolerance = 4.85e-10; /* approximately 1/1000th of
+                                  an arc second or 1/10th meter */
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
-  if ((easting < (Albers_False_Easting - Albers_Delta_Easting)) 
-      || (easting > Albers_False_Easting + Albers_Delta_Easting))
+  if(   (easting < (Albers_False_Easting - Albers_Delta_Easting)) 
+     || (easting >  Albers_False_Easting + Albers_Delta_Easting))
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
-  if ((northing < (Albers_False_Northing - Albers_Delta_Northing)) 
-      || (northing > Albers_False_Northing + Albers_Delta_Northing))
+  if(   (northing < (Albers_False_Northing - Albers_Delta_Northing)) 
+     || (northing >  Albers_False_Northing + Albers_Delta_Northing))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Albers_False_Northing;
   dx = easting - Albers_False_Easting;
@@ -476,8 +484,8 @@ MSP::CCS::GeodeticCoordinates* AlbersEqualAreaConic::convertToGeodetic( MSP::CCS
   if (n < 0)
   {
     rho *= -1.0;
-    dy *= -1.0;
-    dx *= -1.0;
+    dy  *= -1.0;
+    dx  *= -1.0;
     rho0_MINUS_dy *= -1.0;
   }
 
@@ -505,9 +513,10 @@ MSP::CCS::GeodeticCoordinates* AlbersEqualAreaConic::convertToGeodetic( MSP::CCS
           sin_phi = sin(PHI);
           es_sin = esSine( sin_phi );
           one_MINUS_SQRes_sin = oneMinusSqr( es_sin );
-          Delta_PHI = (one_MINUS_SQRes_sin * one_MINUS_SQRes_sin) / (2.0 * cos(PHI)) *
-                      (q / (one_MINUS_es2) - sin_phi / one_MINUS_SQRes_sin +
-                       (log((1.0 - es_sin) / (1.0 + es_sin)) / (two_es)));
+          Delta_PHI = 
+             (one_MINUS_SQRes_sin * one_MINUS_SQRes_sin) / (2.0 * cos(PHI)) *
+             (q / (one_MINUS_es2) - sin_phi / one_MINUS_SQRes_sin +
+                (log((1.0 - es_sin) / (1.0 + es_sin)) / (two_es)));
           PHI += Delta_PHI;
           count --;
         }
@@ -544,7 +553,8 @@ MSP::CCS::GeodeticCoordinates* AlbersEqualAreaConic::convertToGeodetic( MSP::CCS
   else if (longitude < -PI)
     longitude = -PI;
 
-  return new GeodeticCoordinates( CoordinateType::geodetic, longitude, latitude );
+  return new GeodeticCoordinates(
+     CoordinateType::geodetic, longitude, latitude );
 }
 
 
@@ -554,12 +564,11 @@ double AlbersEqualAreaConic::esSine( double sinlat )
 }
 
 
-double AlbersEqualAreaConic::albersQ( double slat, double oneminussqressin, double essin )
+double AlbersEqualAreaConic::albersQ(
+   double slat, double oneminussqressin, double essin )
 {
   return (one_MINUS_es2)*(slat / (oneminussqressin) -   
-				 (1 / (two_es)) *log((1 - essin) / (1 + essin)));
+     (1 / (two_es)) *log((1 - essin) / (1 + essin)));
 }
-
-
 
 // CLASSIFICATION: UNCLASSIFIED

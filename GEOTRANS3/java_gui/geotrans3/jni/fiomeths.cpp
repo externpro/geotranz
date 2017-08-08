@@ -67,6 +67,7 @@
  *    02-14-11          S. Gillis, BAEts26267, Fixed EGM2008
  *    03-29-11          S. Gillis, BAEts28564, Fixed Windows memory crash
  *    06-09-11          K. Lam, BAEts28972, Fixed the timer for file processing
+ *    11-30-11          K.Lam, BAEts29174, Set output format for file operation
  */
 
 
@@ -1040,6 +1041,21 @@ void Fiomeths::setLatLongPrecision(int _precision)
   Set_Lat_Long_Precision((Precision::Enum)_precision);
 }
 
+// BAEts29174
+void Fiomeths::setSeparator(char value)
+{
+  Set_Separator(value);
+}
+
+void Fiomeths::setLonRange(int value)
+{
+  Set_Long_Range((Range)value);
+}
+
+void Fiomeths::showLeadingZeros(bool value)
+{
+  Show_Leading_Zeros( value);
+}
 
 void Fiomeths::setGeodeticCoordinateOrder(bool _outputLatitudeLongitudeOrder)
 {

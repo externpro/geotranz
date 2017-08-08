@@ -87,6 +87,7 @@
  *    02/14/11          S. Gillis, BAEts26267, Add support for EGM2008 geoid heights
  *    3/23/11           N. Lundgren BAEts28583 Updated for memory leaks in convert method
  *    05/31/11          K. Lam BAEts28657  Update service version for MSP 1.1.5
+ *    11/18/11          K. Lam MSP_29475  Update service version for MSP 1.2
  */
 
 
@@ -620,7 +621,7 @@ int CoordinateConversionService::getServiceVersion()
  * The function getServiceVersion returns current service version.
  */
 
-  return 320;
+  return 330;
 }
 
 

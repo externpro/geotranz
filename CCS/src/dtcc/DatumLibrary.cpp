@@ -115,8 +115,8 @@
  *                      in MSP Geotrans 3.0
  *    06/04/10          S. Gillis, BAEts26676, Fixed the error always returned 
  *                      when calling CCS API getDatumParamters
+ *    08/13/12          S. Gillis, MSP_00029654, Added lat/lon to define7ParamDatum
  */
-
 
 /***************************************************************************/
 /*
@@ -209,7 +209,7 @@ void DatumLibrary::defineDatum( const int datumType, const char *datumCode, cons
  *   scalefactor   : Scale factor                                  (input)
  *
  */
- 
+
   if( datumType == DatumType::threeParamDatum )
   {
     _datumLibraryImplementation->define3ParamDatum( datumCode, datumName, ellipsoidCode,
@@ -220,7 +220,8 @@ void DatumLibrary::defineDatum( const int datumType, const char *datumCode, cons
   {
     _datumLibraryImplementation->define7ParamDatum( datumCode, datumName, ellipsoidCode,
                                deltaX, deltaY, deltaZ, rotationX, rotationY, rotationZ,
-                               scaleFactor );
+                               scaleFactor,westLongitude, eastLongitude, 
+                               southLatitude, northLatitude );
   }
 }
 

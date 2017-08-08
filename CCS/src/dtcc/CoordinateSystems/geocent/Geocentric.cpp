@@ -5,9 +5,9 @@
  *
  * ABSTRACT
  *
- *    This component provides conversions between Geodetic coordinates (latitude,
- *    longitude in radians and height in meters) and Geocentric coordinates
- *    (X, Y, Z) in meters.
+ *   This component provides conversions between Geodetic coordinates (latitude,
+ *   longitude in radians and height in meters) and Geocentric coordinates
+ *   (X, Y, Z) in meters.
  *
  * ERROR HANDLING
  *
@@ -23,7 +23,7 @@
  *                                 (-180 to 360 degrees)
  *      GEOCENT_A_ERROR         : Semi-major axis less than or equal to zero
  *      GEOCENT_INV_F_ERROR     : Inverse flattening outside of valid range
- *								                 (250 to 350)
+ *                                 (250 to 350)
  *
  *
  * REUSE NOTES
@@ -127,27 +127,23 @@ Geocentric::Geocentric(
  * The constructor receives the ellipsoid parameters
  * as inputs and sets the corresponding state variables.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters.       (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid.						           (input)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters. (input)
+ *  ellipsoidFlattening     : Flattening of ellipsoid.                 (input)
  */
 
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
-    strcat( errorStatus, MSP::CCS::ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages:: semiMajorAxis );
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
-  Geocent_e2 = 2 * flattening - flattening * flattening;
+  Geocent_e2  = 2 * flattening - flattening * flattening;
   Geocent_ep2 = (1 / (1 - Geocent_e2)) - 1;
 
   // Need to determine algorithm to use
@@ -158,9 +154,9 @@ Geocentric::Geocentric(
 Geocentric::Geocentric( const Geocentric &g )
 {
   semiMajorAxis = g.semiMajorAxis;
-  flattening = g.flattening;
-  Geocent_e2 = g.Geocent_e2;
-  Geocent_ep2 = g.Geocent_ep2;
+  flattening    = g.flattening;
+  Geocent_e2    = g.Geocent_e2;
+  Geocent_ep2   = g.Geocent_ep2;
 }
 
 
@@ -174,16 +170,17 @@ Geocentric& Geocentric::operator=( const Geocentric &g )
   if( this != &g )
   {
     semiMajorAxis = g.semiMajorAxis;
-    flattening = g.flattening;
-    Geocent_e2 = g.Geocent_e2;
-    Geocent_ep2 = g.Geocent_ep2;
+    flattening    = g.flattening;
+    Geocent_e2    = g.Geocent_e2;
+    Geocent_ep2   = g.Geocent_ep2;
   }
 
   return *this;
 }
 
 
-MSP::CCS::CartesianCoordinates* Geocentric::convertFromGeodetic( const MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
+MSP::CCS::CartesianCoordinates* Geocentric::convertFromGeodetic(
+   const MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
 {
 /*
  * The function convertFromGeodetic converts geodetic coordinates
@@ -203,23 +200,19 @@ MSP::CCS::CartesianCoordinates* Geocentric::convertFromGeodetic( const MSP::CCS:
   double Sin_Lat;       /*  sin(Latitude)  */
   double Sin2_Lat;      /*  Square of sin(Latitude)  */
   double Cos_Lat;       /*  cos(Latitude)  */
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
-  double height = geodeticCoordinates->height();
+  double latitude  = geodeticCoordinates->latitude();
+  double height    = geodeticCoordinates->height();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > (2*PI)))
   { /* Longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   if (longitude > PI)
     longitude -= (2*PI);

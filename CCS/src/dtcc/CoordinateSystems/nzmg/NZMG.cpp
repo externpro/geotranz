@@ -209,17 +209,12 @@ NZMG::NZMG( char* ellipsoidCode ) :
  *   ellipsoidCode : 2-letter code for ellipsoid           (input)
  */
 
-  char errorStatus[500] = "";
-
   strcpy( NZMGEllipsoidCode, "IN" );
 
   if (strcmp(ellipsoidCode, International) != 0)
   { /* Ellipsoid must be International */
-    strcat( errorStatus, ErrorMessages::nzmgEllipsoid );
+    throw CoordinateConversionException( ErrorMessages::nzmgEllipsoid  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   strcpy( NZMGEllipsoidCode, ellipsoidCode );
 }
@@ -281,22 +276,18 @@ MSP::CCS::MapProjectionCoordinates* NZMG::convertFromGeodetic( MSP::CCS::Geodeti
   int n;
   double dphi;
   double du, dlam;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
 
   if ((latitude < MIN_LAT) || (latitude > MAX_LAT))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < MIN_LON) || (longitude > MAX_LON))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dphi = (latitude * (180.0 / PI) - NZMG_Origin_Lat) * 3600.0 * 1.0e-5;
   du = A[9];
@@ -349,22 +340,18 @@ MSP::CCS::GeodeticCoordinates* NZMG::convertToGeodetic( MSP::CCS::MapProjectionC
   Complex coeff;
   Complex z, Zeta, Zeta_Numer, Zeta_Denom, Zeta_sqr;
   double dphi;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < NZMG_Min_Easting) || (easting > NZMG_Max_Easting)) 
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < NZMG_Min_Northing) || (northing > NZMG_Max_Northing))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   z.real = (northing - NZMG_False_Northing) / semiMajorAxis;
   z.imag = (easting - NZMG_False_Easting) / semiMajorAxis;

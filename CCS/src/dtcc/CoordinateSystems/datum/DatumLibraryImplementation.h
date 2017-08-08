@@ -121,6 +121,7 @@
  *    03-14-07          Original C++ Code
  *    05/26/10          S. Gillis, BAEts26674, Added Validate Datum to the API
  *                      in MSP Geotrans 3.0
+ *    08/13/12          S. Gillis, MSP_00029654, Added lat/lon to define7ParamDatum
  */
 
 
@@ -211,13 +212,18 @@ namespace MSP
        *   rotationY     : Y rotation to WGS84 in arc seconds            (input)
        *   rotationZ     : Z rotation to WGS84 in arc seconds            (input)
        *   scale         : Scale factor                                  (input)
+       *   westLongitude : Western edge of validity rectangle in radians (input)
+       *   eastLongitude : Eastern edge of validity rectangle in radians (input)
+       *   southLatitude : Southern edge of validity rectangle in radians(input)
+       *   northLatitude : Northern edge of validity rectangle in radians(input)
        */
 
       void define7ParamDatum( const char *code, const char *name, const char *ellipsoidCode, 
                               double deltaX, double deltaY, double deltaZ,
                               double rotationX, double rotationY, double rotationZ, 
-                              double scale );
-
+                              double scale, double westLongitude, 
+                              double eastLongitude, double southLatitude, 
+                              double northLatitude);
 
       /*
        * The function removeDatum deletes a local (3-parameter) datum with the

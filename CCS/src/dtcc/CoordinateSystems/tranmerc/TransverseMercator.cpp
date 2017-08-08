@@ -179,32 +179,28 @@ TransverseMercator::TransverseMercator(
   double tn5;
   double TranMerc_b; /* Semi-minor axis of ellipsoid, in meters */
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500];
-  errorStatus[0] = '\0';
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
   }
   if ((latitudeOfTrueScale < -PI_OVER_2) || (latitudeOfTrueScale > PI_OVER_2))
   { /* latitudeOfTrueScale out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude );
   }
   if ((centralMeridian < -PI) || (centralMeridian > (2*PI)))
   { /* centralMeridian out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian );
   }
   if ((scaleFactor < MIN_SCALE_FACTOR) || (scaleFactor > MAX_SCALE_FACTOR))
   {
-    strcat( errorStatus, ErrorMessages::scaleFactor );
+    throw CoordinateConversionException( ErrorMessages::scaleFactor );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -394,16 +390,15 @@ MSP::CCS::MapProjectionCoordinates* TransverseMercator::convertFromGeodetic(
   double tmdo;    /* True Meridianal distance for latitude of origin */
   double temp_Origin;
   double temp_Long;
-  char errorStatus[256];
-  errorStatus[0] = '\0';
 
   double longitude = geodeticCoordinates->longitude();
   double latitude  = geodeticCoordinates->latitude();
 
   if ((latitude < -MAX_LAT) || (latitude > MAX_LAT))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
+
   if (longitude > PI)
     longitude -= (2 * PI);
   if ((longitude < (TranMerc_Origin_Long - MAX_DELTA_LONG))
@@ -419,20 +414,20 @@ MSP::CCS::MapProjectionCoordinates* TransverseMercator::convertFromGeodetic(
       temp_Origin = TranMerc_Origin_Long;
     if ((temp_Long < (temp_Origin - MAX_DELTA_LONG))
         || (temp_Long > (temp_Origin + MAX_DELTA_LONG)))
-    strcat( errorStatus, ErrorMessages::longitude );
+       throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   /* 
    *  Delta Longitude
    */
   dlam = longitude - TranMerc_Origin_Long;
 
+
+  char warning[256];
+  warning[0] = '\0';
   if (fabs(dlam) > (9.0 * PI / 180))
   { /* Distortion results if Longitude is > 9 degrees from Central Meridian */
-    strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
+    strcat( warning, MSP::CCS::WarningMessages::longitude );
   }
 
   if (dlam > PI)
@@ -503,7 +498,7 @@ MSP::CCS::MapProjectionCoordinates* TransverseMercator::convertFromGeodetic(
      (((t9 * dlamSq + t8) * dlamSq + t7) * dlamSq + t6) * dlam;
 
   return new MapProjectionCoordinates(
-     CoordinateType::transverseMercator, errorStatus, easting, northing );
+     CoordinateType::transverseMercator, warning, easting, northing );
 }
 
 
@@ -548,8 +543,6 @@ MSP::CCS::GeodeticCoordinates* TransverseMercator::convertToGeodetic(
   double t17;     /* Term in coordinate conversion formula - GP to Y */
   double tmd;     /* True Meridianal distance                        */
   double tmdo;    /* True Meridianal distance for latitude of origin */
-  char errorStatus[256];
-  errorStatus[0] = '\0';
 
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
@@ -557,17 +550,14 @@ MSP::CCS::GeodeticCoordinates* TransverseMercator::convertToGeodetic(
   if ((easting < (TranMerc_False_Easting - TranMerc_Delta_Easting))
       ||(easting > (TranMerc_False_Easting + TranMerc_Delta_Easting)))
   { /* easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting );
   }
 
   if ((northing < (TranMerc_False_Northing - TranMerc_Delta_Northing))
       || (northing > (TranMerc_False_Northing + TranMerc_Delta_Northing)))
   { /* northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   /* True Meridianal Distances for latitude of origin */
   tmdo = sphtmd(
@@ -689,16 +679,18 @@ MSP::CCS::GeodeticCoordinates* TransverseMercator::convertToGeodetic(
         throw CoordinateConversionException( ErrorMessages::easting );
   }
 
+  char warning[256];
+  warning[0] = '\0';
   if (fabs(dlam) > (9.0 * PI / 180))
   { /* Distortion will result if longitude is more than 9 degrees from
        the Central Meridian at the equator */
     /* and decreases to 0 degrees at the poles */
     /* As you move towards the poles, distortion becomes less significant */
-     strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
+     strcat( warning, MSP::CCS::WarningMessages::longitude );
   }
 
   return new GeodeticCoordinates(
-     CoordinateType::geodetic, errorStatus, longitude, latitude );
+     CoordinateType::geodetic, warning, longitude, latitude );
 }
 
 

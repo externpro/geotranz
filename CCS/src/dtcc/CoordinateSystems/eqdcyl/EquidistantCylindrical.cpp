@@ -145,40 +145,36 @@ EquidistantCylindrical::EquidistantCylindrical( double ellipsoidSemiMajorAxis, d
  * the same area as the ellipsoid.  If any errors occur, an exception is 
  * thrown with a description of the error.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid                   (input)
- *    centralMeridian         : Longitude in radians at the center of     (input)
+ *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters  (input)
+ *    ellipsoidFlattening     : Flattening of ellipsoid                  (input)
+ *    centralMeridian         : Longitude in radians at the center of    (input)
  *                              the projection
- *    standardParallel        : Latitude in radians at which the          (input)
+ *    standardParallel        : Latitude in radians at which the         (input)
  *                              point scale factor is 1.0
  *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (input)
+ *                              central meridian of the projection.      (input)
  *    falseNorthing           : A coordinate value in meters assigned to the
- *                              standard parallel of the projection       (input)
+ *                              standard parallel of the projection      (input)
  */
 
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((standardParallel < -PI_OVER_2) || (standardParallel > PI_OVER_2))
   { /* standard parallel out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -187,7 +183,8 @@ EquidistantCylindrical::EquidistantCylindrical( double ellipsoidSemiMajorAxis, d
   es4 = es2 * es2;
   es6 = es4 * es2;
   /* spherical radius */
-  Ra = semiMajorAxis * (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 /3024.0);
+  Ra = semiMajorAxis *
+     (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 /3024.0);
   Eqcy_Std_Parallel = standardParallel;
   Cos_Eqcy_Std_Parallel = cos(Eqcy_Std_Parallel);
   Ra_Cos_Eqcy_Std_Parallel = Ra * Cos_Eqcy_Std_Parallel;
@@ -239,7 +236,8 @@ EquidistantCylindrical::EquidistantCylindrical( double ellipsoidSemiMajorAxis, d
 }
 
 
-EquidistantCylindrical::EquidistantCylindrical( const EquidistantCylindrical &ec )
+EquidistantCylindrical::EquidistantCylindrical(
+   const EquidistantCylindrical &ec )
 {
   semiMajorAxis = ec.semiMajorAxis;
   flattening = ec.flattening;
@@ -328,22 +326,18 @@ MSP::CCS::MapProjectionCoordinates* EquidistantCylindrical::convertFromGeodetic(
  */
 
   double dlam;     /* Longitude - Central Meridan */
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Eqcy_Origin_Long;
   if (dlam > PI)
@@ -380,24 +374,20 @@ MSP::CCS::GeodeticCoordinates* EquidistantCylindrical::convertToGeodetic( MSP::C
 
   double dx, dy;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Eqcy_False_Easting + Eqcy_Min_Easting))
       || (easting > (Eqcy_False_Easting + Eqcy_Max_Easting)))
   { /* Easting out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Eqcy_False_Northing - Eqcy_Delta_Northing))
       || (northing > (Eqcy_False_Northing + Eqcy_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Eqcy_False_Northing;
   dx = easting - Eqcy_False_Easting;

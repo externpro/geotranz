@@ -143,43 +143,39 @@ LocalCartesian::LocalCartesian( double ellipsoidSemiMajorAxis, double ellipsoidF
  * The constructor receives the ellipsoid parameters
  * and local origin parameters as inputs and sets the corresponding state variables.
  *
- *    ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid, in meters           (input)
- *    ellipsoidFlattening      : Flattening of ellipsoid					                 (input)
- *    originLongitude          : Longitude of the local origin, in radians         (input)
- *    originLatitude           : Latitude of the local origin, in radians          (input)
- *    originHeight             : Ellipsoid height of the local origin, in meters   (input)
- *    orientation              : Orientation angle of the local cartesian coordinate system,
- *                               in radians                                        (input)
+ *    ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters   (input)
+ *    ellipsoidFlattening    : Flattening of ellipsoid                   (input)
+ *    originLongitude        : Longitude of the local origin, in radians (input)
+ *    originLatitude         : Latitude of the local origin, in radians  (input)
+ *    originHeight   : Ellipsoid height of the local origin, in meters   (input)
+ *    orientation    : Orientation angle of the local cartesian coordinate system,
+ *                               in radians (input)
  */
 
   double N0;
   double inv_f = 1 / ellipsoidFlattening;
   double val;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((originLongitude < -PI) || (originLongitude > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::originLongitude );
+    throw CoordinateConversionException( ErrorMessages::originLongitude  );
   }
   if ((orientation < -PI) || (orientation > TWO_PI))
   { /* orientation angle out of range */
-    strcat( errorStatus, ErrorMessages::orientation );
+    throw CoordinateConversionException( ErrorMessages::orientation  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -310,42 +306,41 @@ MSP::CCS::CartesianCoordinates* LocalCartesian::convertFromGeodetic( MSP::CCS::G
  *
  */
 
-  char errorStatus[50] = "";
-
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
   double height = geodeticCoordinates->height();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* geodetic latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* geodetic longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   CartesianCoordinates* geocentricCoordinates = 0;
   CartesianCoordinates* cartesianCoordinates = 0;
-  try {
-	geocentricCoordinates = geocentric->convertFromGeodetic( geodeticCoordinates );
-    cartesianCoordinates = convertFromGeocentric( geocentricCoordinates );
-	delete geocentricCoordinates;
+  try
+  {
+     geocentricCoordinates = geocentric->convertFromGeodetic(
+        geodeticCoordinates );
+     cartesianCoordinates = convertFromGeocentric( geocentricCoordinates );
+     delete geocentricCoordinates;
   }
-  catch ( CoordinateConversionException e ) {
-    delete geocentricCoordinates;
-    delete cartesianCoordinates;
-	throw e;
+  catch ( CoordinateConversionException e )
+  {
+     delete geocentricCoordinates;
+     delete cartesianCoordinates;
+     throw e;
   }
 
   return cartesianCoordinates;
 }
 
 
-MSP::CCS::GeodeticCoordinates* LocalCartesian::convertToGeodetic( MSP::CCS::CartesianCoordinates* cartesianCoordinates )
+MSP::CCS::GeodeticCoordinates* LocalCartesian::convertToGeodetic(
+   MSP::CCS::CartesianCoordinates* cartesianCoordinates )
 {
 /*
  * The function convertToGeodetic converts local cartesian
@@ -360,34 +355,37 @@ MSP::CCS::GeodeticCoordinates* LocalCartesian::convertToGeodetic( MSP::CCS::Cart
  *    Height    : Calculated height value, in meters         (output)
  */
   CartesianCoordinates* geocentricCoordinates = 0;
-  GeodeticCoordinates* geodeticCoordinates = 0;
+  GeodeticCoordinates*  geodeticCoordinates   = 0;
   try {
-	geocentricCoordinates = convertToGeocentric( cartesianCoordinates );
-    geodeticCoordinates = geocentric->convertToGeodetic( geocentricCoordinates );
+     geocentricCoordinates = convertToGeocentric( cartesianCoordinates );
+     geodeticCoordinates   = geocentric->convertToGeodetic(
+        geocentricCoordinates );
 
-    double longitude = geodeticCoordinates->longitude();
+     double longitude = geodeticCoordinates->longitude();
 
-    if (longitude > PI)
-      geodeticCoordinates->setLongitude( longitude -= TWO_PI );
+     if (longitude > PI)
+        geodeticCoordinates->setLongitude( longitude -= TWO_PI );
 
-    longitude = geodeticCoordinates->longitude();
+     longitude = geodeticCoordinates->longitude();
 
-    if (longitude < -PI)
-      geodeticCoordinates->setLongitude( longitude += TWO_PI );
+     if (longitude < -PI)
+        geodeticCoordinates->setLongitude( longitude += TWO_PI );
 
-    delete geocentricCoordinates;
+     delete geocentricCoordinates;
   }
-  catch ( CoordinateConversionException e ) {
-    delete geocentricCoordinates;
-    delete geodeticCoordinates;
-	throw e;
+  catch ( CoordinateConversionException e )
+  {
+     delete geocentricCoordinates;
+     delete geodeticCoordinates;
+     throw e;
   }
 
   return geodeticCoordinates;
 }
 
 
-MSP::CCS::CartesianCoordinates* LocalCartesian::convertFromGeocentric( const MSP::CCS::CartesianCoordinates* cartesianCoordinates )
+MSP::CCS::CartesianCoordinates* LocalCartesian::convertFromGeocentric(
+   const MSP::CCS::CartesianCoordinates* cartesianCoordinates )
 {
 /*
  * The function convertFromGeocentric converts geocentric

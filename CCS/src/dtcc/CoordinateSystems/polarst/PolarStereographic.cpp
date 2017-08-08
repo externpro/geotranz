@@ -17,27 +17,27 @@
  *    using the bitwise or.  This combining allows multiple error codes to 
  *    be returned. The possible error codes are:
  *
- *          POLAR_NO_ERROR           : No errors occurred in function
- *          POLAR_LAT_ERROR          : Latitude outside of valid range
- *                                      (-90 to 90 degrees)
- *          POLAR_LON_ERROR          : Longitude outside of valid range
- *                                      (-180 to 360 degrees) 
- *          POLAR_ORIGIN_LAT_ERROR   : Latitude of true scale outside of valid
- *                                      range (-90 to 90 degrees)
- *          POLAR_ORIGIN_LON_ERROR   : Longitude down from pole outside of valid
- *                                      range (-180 to 360 degrees)
- *          POLAR_EASTING_ERROR      : Easting outside of valid range,
- *                                      depending on ellipsoid and
- *                                      projection parameters
- *          POLAR_NORTHING_ERROR     : Northing outside of valid range,
- *                                      depending on ellipsoid and
- *                                      projection parameters
- *          POLAR_RADIUS_ERROR       : Coordinates too far from pole,
- *                                      depending on ellipsoid and
- *                                      projection parameters
- *          POLAR_A_ERROR            : Semi-major axis less than or equal to zero
- *          POLAR_INV_F_ERROR        : Inverse flattening outside of valid range
- *								  	                  (250 to 350)
+ *          POLAR_NO_ERROR          : No errors occurred in function
+ *          POLAR_LAT_ERROR         : Latitude outside of valid range
+ *                                     (-90 to 90 degrees)
+ *          POLAR_LON_ERROR         : Longitude outside of valid range
+ *                                     (-180 to 360 degrees) 
+ *          POLAR_ORIGIN_LAT_ERROR  : Latitude of true scale outside of valid
+ *                                     range (-90 to 90 degrees)
+ *          POLAR_ORIGIN_LON_ERROR  : Longitude down from pole outside of valid
+ *                                     range (-180 to 360 degrees)
+ *          POLAR_EASTING_ERROR     : Easting outside of valid range,
+ *                                     depending on ellipsoid and
+ *                                     projection parameters
+ *          POLAR_NORTHING_ERROR    : Northing outside of valid range,
+ *                                     depending on ellipsoid and
+ *                                    projection parameters
+ *          POLAR_RADIUS_ERROR      : Coordinates too far from pole,
+ *                                     depending on ellipsoid and
+ *                                     projection parameters
+ *          POLAR_A_ERROR          : Semi-major axis less than or equal to zero
+ *          POLAR_INV_F_ERROR      : Inverse flattening outside of valid range
+ *                                     (250 to 350)
  *
  *
  * REUSE NOTES
@@ -135,7 +135,13 @@ const double TWO_PI = (2.0 * PI);
  *
  */
 
-PolarStereographic::PolarStereographic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double standardParallel, double falseEasting, double falseNorthing ) :
+PolarStereographic::PolarStereographic(
+   double ellipsoidSemiMajorAxis,
+   double ellipsoidFlattening,
+   double centralMeridian,
+   double standardParallel,
+   double falseEasting,
+   double falseNorthing ) :
   CoordinateSystem(),
   coordinateType( CoordinateType::polarStereographicStandardParallel ),
   es( 0.08181919084262188000 ),
@@ -159,12 +165,12 @@ PolarStereographic::PolarStereographic( double ellipsoidSemiMajorAxis, double el
  * sets the corresponding state variables.  If any errors occur, an 
  * exception is thrown with a description of the error.
  *
- *  ellipsoidSemiMajorAxis                : Semi-major axis of ellipsoid, in meters         (input)
- *  ellipsoidFlattening                   : Flattening of ellipsoid					                (input)
- *  centralMeridian                       : Longitude down from pole, in radians            (input)
- *  standardParallel                      : Latitude of true scale, in radians              (input)
- *  falseEasting                          : Easting (X) at center of projection, in meters  (input)
- *  falseNorthing                         : Northing (Y) at center of projection, in meters (input)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters (input)
+ *  ellipsoidFlattening     : Flattening of ellipsoid                 (input)
+ *  centralMeridian         : Longitude down from pole, in radians    (input)
+ *  standardParallel        : Latitude of true scale, in radians      (input)
+ *  falseEasting       : Easting (X) at center of projection, in meters  (input)
+ *  falseNorthing      : Northing (Y) at center of projection, in meters (input)
  */
 
   double es2;
@@ -174,27 +180,23 @@ PolarStereographic::PolarStereographic( double ellipsoidSemiMajorAxis, double el
   double one_PLUS_es_sinolat, one_MINUS_es_sinolat;
   double pow_es;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((standardParallel < -PI_OVER_2) || (standardParallel > PI_OVER_2))
   { /* Origin Latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* Origin Longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -279,16 +281,16 @@ PolarStereographic::PolarStereographic( double ellipsoidSemiMajorAxis, double el
 {
 /*  
  * The constructor receives the ellipsoid
- * parameters and Polar Stereograpic (Scale Factor) projection parameters as inputs, and
- * sets the corresponding state variables.  If any errors occur, an 
- * exception is thrown with a description of the error.
+ * parameters and Polar Stereograpic (Scale Factor) projection parameters
+ * as inputs, and sets the corresponding state variables.  If any errors occur,
+ * an exception is thrown with a description of the error.
  *
- *  ellipsoidSemiMajorAxis                : Semi-major axis of ellipsoid, in meters         (input)
- *  ellipsoidFlattening                   : Flattening of ellipsoid					                (input)
- *  centralMeridian                       : Longitude down from pole, in radians            (input)
- *  scaleFactor                           : Scale Factor              (input)
- *  falseEasting                          : Easting (X) at center of projection, in meters  (input)
- *  falseNorthing                         : Northing (Y) at center of projection, in meters (input)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters  (input)
+ *  ellipsoidFlattening     : Flattening of ellipsoid                  (input)
+ *  centralMeridian         : Longitude down from pole, in radians     (input)
+ *  scaleFactor             : Scale Factor                             (input)
+ *  falseEasting     : Easting (X) at center of projection, in meters  (input)
+ *  falseNorthing    : Northing (Y) at center of projection, in meters (input)
  */
 
   double es2;
@@ -302,40 +304,36 @@ PolarStereographic::PolarStereographic( double ellipsoidSemiMajorAxis, double el
   double tolerance = 1.0e-15;
   int count = 30;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((scaleFactor < MIN_SCALE_FACTOR) || (scaleFactor > MAX_SCALE_FACTOR))
   {
-    strcat( errorStatus, ErrorMessages::scaleFactor );
+    throw CoordinateConversionException( ErrorMessages::scaleFactor  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* Origin Longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
   if ((hemisphere != 'N') && (hemisphere != 'S'))
-    strcat( errorStatus, ErrorMessages::hemisphere );
+    throw CoordinateConversionException( ErrorMessages::hemisphere  );
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
-  semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
-  Polar_Scale_Factor = scaleFactor;
-  Polar_False_Easting = falseEasting;
+  semiMajorAxis        = ellipsoidSemiMajorAxis;
+  flattening           = ellipsoidFlattening;
+  Polar_Scale_Factor   = scaleFactor;
+  Polar_False_Easting  = falseEasting;
   Polar_False_Northing = falseNorthing;
 
   two_Polar_a = 2.0 * semiMajorAxis;
-  es2 = 2 * flattening - flattening * flattening;
-  es = sqrt(es2);
-  es_OVER_2 = es / 2.0;
+  es2         = 2 * flattening - flattening * flattening;
+  es          = sqrt(es2);
+  es_OVER_2   = es / 2.0;
 
   one_PLUS_es = 1.0 + es;
   one_MINUS_es = 1.0 - es;
@@ -522,30 +520,26 @@ MSP::CCS::MapProjectionCoordinates* PolarStereographic::convertFromGeodetic( MSP
   double rho;
   double pow_es;
   double easting, northing;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {   /* latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   else if ((latitude < 0) && (Southern_Hemisphere == 0))
   {   /* latitude and Origin Latitude in different hemispheres */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   else if ((latitude > 0) && (Southern_Hemisphere == 1))
   {   /* latitude and Origin Latitude in different hemispheres */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   if (fabs(fabs(latitude) - PI_OVER_2) < 1.0e-10)
   {
@@ -620,95 +614,93 @@ MSP::CCS::GeodeticCoordinates* PolarStereographic::convertToGeodetic( MSP::CCS::
   double pow_es;
   double delta_radius;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
-  double min_easting = Polar_False_Easting - Polar_Delta_Easting;
-  double max_easting = Polar_False_Easting + Polar_Delta_Easting;
+  double min_easting  = Polar_False_Easting  - Polar_Delta_Easting;
+  double max_easting  = Polar_False_Easting  + Polar_Delta_Easting;
   double min_northing = Polar_False_Northing - Polar_Delta_Northing;
   double max_northing = Polar_False_Northing + Polar_Delta_Northing;
 
   if (easting > max_easting || easting < min_easting)
   { /* easting out of range */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if (northing > max_northing || northing < min_northing)
   { /* northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+  dy = northing - Polar_False_Northing;
+  dx = easting - Polar_False_Easting;
 
-    dy = northing - Polar_False_Northing;
-    dx = easting - Polar_False_Easting;
-
-    /* Radius of point with origin of false easting, false northing */
-    rho = sqrt(dx * dx + dy * dy);   
+  /* Radius of point with origin of false easting, false northing */
+  rho = sqrt(dx * dx + dy * dy);   
     
-    delta_radius = sqrt(Polar_Delta_Easting * Polar_Delta_Easting + Polar_Delta_Northing * Polar_Delta_Northing);
+  delta_radius = sqrt(
+     Polar_Delta_Easting * Polar_Delta_Easting +
+     Polar_Delta_Northing * Polar_Delta_Northing);
 
-    if(rho > delta_radius)
-    { /* Point is outside of projection area */
-      throw CoordinateConversionException( ErrorMessages::radius );
-    }
+  if(rho > delta_radius)
+  { /* Point is outside of projection area */
+     throw CoordinateConversionException( ErrorMessages::radius );
+  }
 
-    if ((dy == 0.0) && (dx == 0.0))
-    {
-      latitude = PI_OVER_2;
-      longitude = Polar_Central_Meridian;
-
-    }
-    else
-    {
-      if (Southern_Hemisphere != 0)
-      {
+  if ((dy == 0.0) && (dx == 0.0))
+  {
+     latitude = PI_OVER_2;
+     longitude = Polar_Central_Meridian;
+  }
+  else
+  {
+     if (Southern_Hemisphere != 0)
+     {
         dy *= -1.0;
         dx *= -1.0;
-      }
+     }
 
-      if (fabs(fabs(Polar_Standard_Parallel) - PI_OVER_2) > 1.0e-10)
+     if (fabs(fabs(Polar_Standard_Parallel) - PI_OVER_2) > 1.0e-10)
         t = rho * Polar_tc / (Polar_a_mc);
-      else
+     else
         t = rho * Polar_k90 / (two_Polar_a);
-      PHI = PI_OVER_2 - 2.0 * atan(t);
-      while (fabs(PHI - tempPHI) > 1.0e-10)
-      {
+     PHI = PI_OVER_2 - 2.0 * atan(t);
+     while (fabs(PHI - tempPHI) > 1.0e-10)
+     {
         tempPHI = PHI;
         sin_PHI = sin(PHI);
         essin =  es * sin_PHI;
         pow_es = polarPow(essin);
         PHI = PI_OVER_2 - 2.0 * atan(t * pow_es);
-      }
-      latitude = PHI;
-      longitude = Polar_Central_Meridian + atan2(dx, -dy);
+     }
+     latitude = PHI;
+     longitude = Polar_Central_Meridian + atan2(dx, -dy);
 
-      if (longitude > PI)
+     if (longitude > PI)
         longitude -= TWO_PI;
-      else if (longitude < -PI)
+     else if (longitude < -PI)
         longitude += TWO_PI;
 
 
-      if (latitude > PI_OVER_2)  /* force distorted values to 90, -90 degrees */
+     if (latitude > PI_OVER_2)  /* force distorted values to 90, -90 degrees */
         latitude = PI_OVER_2;
-      else if (latitude < -PI_OVER_2)
+     else if (latitude < -PI_OVER_2)
         latitude = -PI_OVER_2;
 
-      if (longitude > PI)  /* force distorted values to 180, -180 degrees */
+     if (longitude > PI)  /* force distorted values to 180, -180 degrees */
         longitude = PI;
-      else if (longitude < -PI)
+     else if (longitude < -PI)
         longitude = -PI;
 
-    }
-    if (Southern_Hemisphere != 0)
-    {
-      latitude *= -1.0;
-      longitude *= -1.0;
-    }
+  }
+  if (Southern_Hemisphere != 0)
+  {
+     latitude *= -1.0;
+     longitude *= -1.0;
+  }
 
-  return new GeodeticCoordinates( CoordinateType::geodetic, longitude, latitude );
+  return new GeodeticCoordinates(
+     CoordinateType::geodetic, longitude, latitude );
 }
 
 

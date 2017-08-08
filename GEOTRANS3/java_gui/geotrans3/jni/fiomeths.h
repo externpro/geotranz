@@ -67,6 +67,7 @@ extern "C" {
  *    08-17-05          Changed Lambert_Conformal_Conic to CoordinateType::lambertConformalConic2Parallels
  *    01-18-06          Added changes for new height types
  *    04-18-07          Updated to use C++ MSPCCS
+ *    11-30-11          K.Lam, BAEts29174, Set output format for file operation
  */
 
 
@@ -120,6 +121,9 @@ public:
   void setUseMinutes(bool value);
   void setUseSeconds(bool value);
   void setLatLongPrecision(int _precision);
+  void setSeparator(char value);
+  void setLonRange(int value);
+  void showLeadingZeros(bool value);
   
   void setGeodeticCoordinateOrder(bool _outputLatitudeLongitudeOrder);
 

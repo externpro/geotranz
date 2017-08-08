@@ -1,13 +1,18 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-/*
- * coordPanel.java
- *
- * Created on April 18, 2001, 4:28 PM
- */
+/******************************************************************************
+* Filename: CoordPanel.java
+*
+* Copyright BAE Systems Inc. 2012 ALL RIGHTS RESERVED
+*
+* MODIFICATION HISTORY
+*
+* DATE      NAME        DR#          DESCRIPTION
+*
+* 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+*****************************************************************************/
 
 package geotrans3.gui;
-
 
 import geotrans3.coordinates.*;
 import geotrans3.enumerations.CoordinateType;
@@ -18,13 +23,7 @@ import geotrans3.misc.Source;
 import geotrans3.misc.StringHandler;
 import geotrans3.utility.Constants;
 import geotrans3.utility.Platform;
-
-
-/**
- *
- * @author  amyc
- * @version
- */
+ 
 public class CoordPanel extends javax.swing.JPanel
 {
   private StringHandler stringHandler;
@@ -802,8 +801,8 @@ public class CoordPanel extends javax.swing.JPanel
         case CoordinateType.GRINTEN:
         {
             MapProjectionCoordinates coordinates = new MapProjectionCoordinates(projType,
-                                                   stringHandler.stringToDouble(_2CoordFieldsTextFieldA.getText().trim(), "Invalid Easting: "),
-                                                   stringHandler.stringToDouble(_2CoordFieldsTextFieldB.getText().trim(), "Invalid Northing: "));
+                                                   stringHandler.stringToDouble(_2CoordFieldsTextFieldA.getText().trim(), "Invalid Easting"),
+                                                   stringHandler.stringToDouble(_2CoordFieldsTextFieldB.getText().trim(), "Invalid Northing"));
 
             return coordinates;
         }
@@ -853,18 +852,18 @@ public class CoordPanel extends javax.swing.JPanel
         case CoordinateType.LOCCART:
         {
             CartesianCoordinates coordinates = new CartesianCoordinates(projType, 
-                                               stringHandler.stringToDouble(_3CoordFieldsTextFieldA.getText().trim(), "Invalid X: "),
-                                               stringHandler.stringToDouble(_3CoordFieldsTextFieldB.getText().trim(), "Invalid Y: "),
-                                               stringHandler.stringToDouble(_3CoordFieldsTextFieldC.getText().trim(), "Invalid Z: "));
+                                               stringHandler.stringToDouble(_3CoordFieldsTextFieldA.getText().trim(), "Invalid X"),
+                                               stringHandler.stringToDouble(_3CoordFieldsTextFieldB.getText().trim(), "Invalid Y"),
+                                               stringHandler.stringToDouble(_3CoordFieldsTextFieldC.getText().trim(), "Invalid Z"));
 
             return coordinates;
         }
         case CoordinateType.GEODETIC:
         {
             GeodeticCoordinates coordinates = new GeodeticCoordinates(projType, 
-                                              stringHandler.stringToLongitude(_3CoordFieldsTextFieldA.getText().trim(), "Invalid Longitude: "),
-                                              stringHandler.stringToLatitude(_3CoordFieldsTextFieldB.getText().trim(), "Invalid Latitude: "),
-                                              stringHandler.stringToDouble(_3CoordFieldsTextFieldC.getText().trim(), "Invalid Height: "));
+                                              stringHandler.stringToLongitude(_3CoordFieldsTextFieldA.getText().trim(), "Invalid Longitude"),
+                                              stringHandler.stringToLatitude(_3CoordFieldsTextFieldB.getText().trim(), "Invalid Latitude"),
+                                              stringHandler.stringToDouble(_3CoordFieldsTextFieldC.getText().trim(), "Invalid Height"));
 
             return coordinates;
         }
@@ -872,8 +871,8 @@ public class CoordPanel extends javax.swing.JPanel
         {
             UPSCoordinates coordinates = new UPSCoordinates(projType,
                                          hemisphere,
-                                         stringHandler.stringToDouble(_2CoordFieldsTextFieldA.getText().trim(), "Invalid Easting: "),
-                                         stringHandler.stringToDouble(_2CoordFieldsTextFieldB.getText().trim(), "Invalid Northing: "));
+                                         stringHandler.stringToDouble(_2CoordFieldsTextFieldA.getText().trim(), "Invalid Easting"),
+                                         stringHandler.stringToDouble(_2CoordFieldsTextFieldB.getText().trim(), "Invalid Northing"));
 
             return coordinates;
         }
@@ -881,8 +880,8 @@ public class CoordPanel extends javax.swing.JPanel
         {
             UTMCoordinates coordinates = new UTMCoordinates(projType,
                                          zone, hemisphere,
-                                         stringHandler.stringToDouble(_2CoordFieldsTextFieldA.getText().trim(), "Invalid Easting: "),
-                                         stringHandler.stringToDouble(_2CoordFieldsTextFieldB.getText().trim(), "Invalid Northing: "));
+                                         stringHandler.stringToDouble(_2CoordFieldsTextFieldA.getText().trim(), "Invalid Easting"),
+                                         stringHandler.stringToDouble(_2CoordFieldsTextFieldB.getText().trim(), "Invalid Northing"));
 
             return coordinates;
         }

@@ -1,22 +1,23 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-/*
- * StringHandler.java
- *
- * Created on April 9, 2001, 4:22 PM
- *
- * MODIFICATION HISTORY:
- *
- * DATE      NAME        DR#               DESCRIPTION
- *
- * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
- * 05/31/11  K. Lam      BAEts28657        Update version to 3.2
- * 07/13/11  K. Swanson  BAEts27157        Add ability to set leading
- *                                         zeros, separator, lon range.
- */
+/******************************************************************************
+* Filename: StringHandler.java
+*
+* Copyright BAE Systems Inc. 2012 ALL RIGHTS RESERVED
+*
+* MODIFICATION HISTORY
+*
+* DATE      NAME        DR#          DESCRIPTION
+*
+* 08/13/10  S Gillis    BAEts27457   Update to GeoTrans 3.1
+* 05/31/11  K. Lam      BAEts28657   Update version to 3.2
+* 07/13/11  K. Swanson  BAEts27157   Add ability to set leading
+*                                    zeros, separator, lon range.
+* 11/18/11  K. Lam      MSP_029475   Update version to 3.3 
+* 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+*****************************************************************************/
 
 package geotrans3.misc;
-
 
 import geotrans3.misc.StringToVal;
 import geotrans3.exception.CoordinateConversionException;
@@ -24,15 +25,9 @@ import geotrans3.enumerations.CoordinateType;
 import geotrans3.enumerations.SourceOrTarget;
 import geotrans3.utility.Constants;
 
-
-/**
- *
- * @author  amyc
- * @version 
- */
 public class StringHandler extends Object 
 {
-  private final java.lang.String title = "MSP GEOTRANS 3.2";
+  private final java.lang.String title = "MSP GEOTRANS 3.3";
   
   private java.lang.String errorMsg[];
   private boolean ccsError = false;
@@ -103,14 +98,11 @@ public class StringHandler extends Object
 
     try
     {
-      if (str.equals(""))
-        throw new CoordinateConversionException(msg);
-      
       lat = stringToVal.stringToLatitude(str) * Constants.PI_OVER_180;
     }   
     catch(CoordinateConversionException e)
     {
-      errorMsg[numErrors] = msg + e.getMessage();
+      errorMsg[numErrors] = msg + ": " + e.getMessage();
       numErrors++;
       ccsError = true;
     }
@@ -118,21 +110,17 @@ public class StringHandler extends Object
     return lat;
   }
     
-  
   public double stringToLongitude(java.lang.String str, java.lang.String msg)
   {
     double lon = 0;
 
     try
     {
-      if (str.equals(""))
-        throw new CoordinateConversionException(msg);
-      
       lon = stringToVal.stringToLongitude(str) * Constants.PI_OVER_180;
     }   
     catch(CoordinateConversionException e)
     {
-      errorMsg[numErrors] = msg + e.getMessage();
+      errorMsg[numErrors] = msg + ": " + e.getMessage();
       numErrors++;
       ccsError = true;
     }
@@ -147,14 +135,11 @@ public class StringHandler extends Object
 
     try
     {
-      if (str.equals(""))
-        throw new CoordinateConversionException(msg);
-      
       num = stringToVal.stringToDouble(str);
     }   
     catch(CoordinateConversionException e)
     {
-      errorMsg[numErrors] = msg + e.getMessage();
+      errorMsg[numErrors] = msg + ": " + e.getMessage();
       numErrors++;            
       ccsError = true;
     }
@@ -169,18 +154,15 @@ public class StringHandler extends Object
 
     try
     {
-      if (str.equals(""))
-        throw new CoordinateConversionException(msg);
-      
-      num = stringToVal.stringToInt(str);
-    }   
-    catch(CoordinateConversionException e)
-    {
-      errorMsg[numErrors] = msg + e.getMessage();
-      numErrors++;            
-      ccsError = true;
+        num = stringToVal.stringToInt(str);
     }
-    
+    catch (CoordinateConversionException e)
+    {
+        errorMsg[numErrors] = msg + ": " + e.getMessage();
+        numErrors++;
+        ccsError = true;
+    }
+
     return num;
   }
     

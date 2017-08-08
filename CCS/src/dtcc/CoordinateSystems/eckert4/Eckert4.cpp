@@ -154,23 +154,19 @@ Eckert4::Eckert4( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, dou
 
   double Ra;              /* Spherical radius */
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -179,7 +175,8 @@ Eckert4::Eckert4( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, dou
   es4 = es2 * es2;
   es6 = es4 * es2;
   /* spherical radius */
-  Ra = semiMajorAxis * (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 / 3024.0);
+  Ra = semiMajorAxis *
+     (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 / 3024.0);
   Ra0 = 0.4222382 * Ra;
   Ra1 = 1.3265004 * Ra;
   if (centralMeridian > PI)
@@ -294,24 +291,20 @@ MSP::CCS::MapProjectionCoordinates* Eckert4::convertFromGeodetic( MSP::CCS::Geod
   double dt_tolerance = 4.85e-10;        /* approximately 1/1000th of
                                             an arc second or 1/10th meter */
   int count = 200;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
-  double slat = sin(latitude);
+  double latitude  = geodeticCoordinates->latitude();
+  double slat  = sin(latitude);
   double theta = latitude / 2.0;
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Eck4_Origin_Long;
   if (dlam > PI)
@@ -364,7 +357,6 @@ MSP::CCS::GeodeticCoordinates* Eckert4::convertToGeodetic( MSP::CCS::MapProjecti
   double num;
   double dx, dy;
   double i;
-  char errorStatus[50] = "";
 
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
@@ -372,16 +364,13 @@ MSP::CCS::GeodeticCoordinates* Eckert4::convertToGeodetic( MSP::CCS::MapProjecti
   if ((easting < (Eck4_False_Easting + Eck4_Min_Easting))
       || (easting > (Eck4_False_Easting + Eck4_Max_Easting)))
   { /* Easting out of range  */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Eck4_False_Northing - Eck4_Delta_Northing)) 
       || (northing > (Eck4_False_Northing + Eck4_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Eck4_False_Northing;
   dx = easting - Eck4_False_Easting;

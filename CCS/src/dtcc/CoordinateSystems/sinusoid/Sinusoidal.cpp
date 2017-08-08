@@ -31,7 +31,7 @@
  *                                      (-180 to 360 degrees)
  *          SINU_A_ERROR            : Semi-major axis less than or equal to zero
  *          SINU_INV_F_ERROR        : Inverse flattening outside of valid range
- *								  	                  (250 to 350)
+ *                                      (250 to 350)
  *
  * REUSE NOTES
  *
@@ -151,64 +151,59 @@ Sinusoidal::Sinusoidal( double ellipsoidSemiMajorAxis, double ellipsoidFlattenin
  * variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening      : Flattening of ellipsoid						       (input)
- *    centralMeridian          : Longitude in radians at the center of     (input)
+ *    ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid, in meters (input)
+ *    ellipsoidFlattening      : Flattening of ellipsoid                 (input)
+ *    centralMeridian          : Longitude in radians at the center of   (input)
  *                               the projection
  *    falseEasting             : A coordinate value in meters assigned to the
- *                               central meridian of the projection.       (input)
+ *                               central meridian of the projection.     (input)
  *    falseNorthing            : A coordinate value in meters assigned to the
- *                               origin latitude of the projection         (input)
- *    errorStatus              : Error status                              (output)
+ *                               origin latitude of the projection       (input)
  */
 
   double j;
   double One_MINUS_es2, Sqrt_One_MINUS_es2, e1, e2, e3, e4;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
   es2 = 2 * flattening - flattening * flattening;
   es4 = es2 * es2;
   es6 = es4 * es2;
-  j = 45.0 * es6 / 1024.0;
-  c0 = 1.0 - es2 / 4.0 - 3.0 * es4 / 64.0 - 5.0 * es6 / 256.0;
-  c1 = 3.0 * es2 / 8.0 + 3.0 * es4 / 32.0 + j;
-  c2 = 15.0 * es4 / 256.0 + j;
-  c3 = 35.0 * es6 / 3072.0;
+  j   = 45.0 * es6 / 1024.0;
+  c0  = 1.0 - es2 / 4.0 - 3.0 * es4 / 64.0 - 5.0 * es6 / 256.0;
+  c1  = 3.0 * es2 / 8.0 + 3.0 * es4 / 32.0 + j;
+  c2  = 15.0 * es4 / 256.0 + j;
+  c3  = 35.0 * es6 / 3072.0;
   One_MINUS_es2 = 1.0 - es2;
   Sqrt_One_MINUS_es2 = sqrt(One_MINUS_es2);
-  e1 = (1.0 - Sqrt_One_MINUS_es2) / (1.0 + Sqrt_One_MINUS_es2);
-  e2 = e1 * e1;
-  e3 = e2 * e1;
-  e4 = e3 * e1;
-  a0 = 3.0 * e1 / 2.0 - 27.0 * e3 / 32.0 ;
-  a1 = 21.0 * e2 / 16.0 - 55.0 * e4 / 32.0;
-  a2 = 151.0 * e3 / 96.0;
-  a3 = 1097.0 * e4 / 512.0;
+  e1  = (1.0 - Sqrt_One_MINUS_es2) / (1.0 + Sqrt_One_MINUS_es2);
+  e2  = e1 * e1;
+  e3  = e2 * e1;
+  e4  = e3 * e1;
+  a0  = 3.0 * e1 / 2.0 - 27.0 * e3 / 32.0 ;
+  a1  = 21.0 * e2 / 16.0 - 55.0 * e4 / 32.0;
+  a2  = 151.0 * e3 / 96.0;
+  a3  = 1097.0 * e4 / 512.0;
   if (centralMeridian > PI)
     centralMeridian -= TWO_PI;
-  Sinu_Origin_Long = centralMeridian;
+  Sinu_Origin_Long    = centralMeridian;
   Sinu_False_Northing = falseNorthing;
-  Sinu_False_Easting = falseEasting;
+  Sinu_False_Easting  = falseEasting;
 
   if (Sinu_Origin_Long > 0)
   {
@@ -262,23 +257,23 @@ Sinusoidal& Sinusoidal::operator=( const Sinusoidal &s )
   if( this != &s )
   {
     semiMajorAxis = s.semiMajorAxis;
-    flattening = s.flattening;
+    flattening    = s.flattening;
     es2 = s.es2;     
     es4 = s.es4; 
     es6 = s.es6; 
-    c0 = s.c0; 
-    c1 = s.c1; 
-    c2 = s.c2; 
-    c3 = s.c3; 
-    a0 = s.a0; 
-    a1 = s.a1; 
-    a2 = s.a2; 
-    a3 = s.a3; 
-    Sinu_Origin_Long = s.Sinu_Origin_Long; 
-    Sinu_False_Easting = s.Sinu_False_Easting; 
+    c0  = s.c0; 
+    c1  = s.c1; 
+    c2  = s.c2; 
+    c3  = s.c3; 
+    a0  = s.a0; 
+    a1  = s.a1; 
+    a2  = s.a2; 
+    a3  = s.a3; 
+    Sinu_Origin_Long    = s.Sinu_Origin_Long; 
+    Sinu_False_Easting  = s.Sinu_False_Easting; 
     Sinu_False_Northing = s.Sinu_False_Northing; 
-    Sinu_Max_Easting = s.Sinu_Max_Easting; 
-    Sinu_Min_Easting = s.Sinu_Min_Easting; 
+    Sinu_Max_Easting    = s.Sinu_Max_Easting; 
+    Sinu_Min_Easting    = s.Sinu_Min_Easting; 
     Sinu_Delta_Northing = s.Sinu_Delta_Northing; 
   }
 
@@ -292,21 +287,26 @@ MapProjection3Parameters* Sinusoidal::getParameters() const
  * The function getParameters returns the current ellipsoid
  * parameters, and Sinusoidal projection parameters.
  *
- *    ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters   (output)
- *    ellipsoidFlattening    : Flattening of ellipsoid						       (output)
- *    centralMeridian        : Longitude in radians at the center of     (output)
+ *  ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters   (output)
+ *  ellipsoidFlattening    : Flattening of ellipsoid                   (output)
+ *    centralMeridian        : Longitude in radians at the center of   (output)
  *                             the projection
  *    falseEasting           : A coordinate value in meters assigned to the
- *                             central meridian of the projection.       (output)
+ *                             central meridian of the projection.     (output)
  *    falseNorthing          : A coordinate value in meters assigned to the
- *                             origin latitude of the projection         (output)
+ *                             origin latitude of the projection       (output)
  */
 
-  return new MapProjection3Parameters( CoordinateType::sinusoidal, Sinu_Origin_Long, Sinu_False_Easting, Sinu_False_Northing );
+  return new MapProjection3Parameters(
+     CoordinateType::sinusoidal,
+     Sinu_Origin_Long,
+     Sinu_False_Easting,
+     Sinu_False_Northing );
 }
 
 
-MSP::CCS::MapProjectionCoordinates* Sinusoidal::convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
+MSP::CCS::MapProjectionCoordinates* Sinusoidal::convertFromGeodetic(
+   MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
 {
 /*
  * The function convertFromGeodetic converts geodetic (latitude and
@@ -325,23 +325,19 @@ MSP::CCS::MapProjectionCoordinates* Sinusoidal::convertFromGeodetic( MSP::CCS::G
   double dlam;                      /* Longitude - Central Meridan */
   double mm;
   double MM;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
-  double slat = sin(latitude);
+  double latitude  = geodeticCoordinates->latitude();
+  double slat      = sin(latitude);
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Sinu_Origin_Long;
   if (dlam > PI)
@@ -387,27 +383,23 @@ MSP::CCS::GeodeticCoordinates* Sinusoidal::convertToGeodetic( MSP::CCS::MapProje
   double sin2mu, sin4mu, sin6mu, sin8mu;
   double sin_lat;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Sinu_False_Easting + Sinu_Min_Easting))
       || (easting > (Sinu_False_Easting + Sinu_Max_Easting)))
   { /* Easting out of range */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Sinu_False_Northing - Sinu_Delta_Northing))
       || (northing > (Sinu_False_Northing + Sinu_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   dy = northing - Sinu_False_Northing;
-  dx = easting - Sinu_False_Easting;
+  dx = easting  - Sinu_False_Easting;
 
   mu = dy / (semiMajorAxis * c0);
   sin2mu = sinuCoeffTimesSine(a0, 2.0, mu);

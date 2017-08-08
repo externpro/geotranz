@@ -135,34 +135,30 @@ MillerCylindrical::MillerCylindrical( double ellipsoidSemiMajorAxis, double elli
  * state variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid						        (input)
- *    centralMeridian         : Longitude in radians at the center of     (input)
- *                              the projection
- *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (input)
- *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (input)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
+ *  ellipsoidFlattening     : Flattening of ellipsoid                   (input)
+ *  centralMeridian         : Longitude in radians at the center of     (input)
+ *                            the projection
+ *  falseEasting            : A coordinate value in meters assigned to the
+ *                            central meridian of the projection.       (input)
+ *  falseNorthing           : A coordinate value in meters assigned to the
+ *                            origin latitude of the projection         (input)
  */
 
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -275,23 +271,18 @@ MSP::CCS::MapProjectionCoordinates* MillerCylindrical::convertFromGeodetic( MSP:
  */
 
   double dlam;     /* Longitude - Central Meridan */
-  char errorStatus[50] = "";
-
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
   double slat = sin(0.8 * latitude);
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Mill_Origin_Long;
   if (dlam > PI)
@@ -310,7 +301,8 @@ MSP::CCS::MapProjectionCoordinates* MillerCylindrical::convertFromGeodetic( MSP:
 }
 
 
-MSP::CCS::GeodeticCoordinates* MillerCylindrical::convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
+MSP::CCS::GeodeticCoordinates* MillerCylindrical::convertToGeodetic(
+   MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
 {
 /*
  * The function convertToGeodetic converts Miller Cylindrical projection
@@ -326,7 +318,6 @@ MSP::CCS::GeodeticCoordinates* MillerCylindrical::convertToGeodetic( MSP::CCS::M
  */
 
   double dx, dy;
-  char errorStatus[50] = "";
 
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
@@ -334,19 +325,16 @@ MSP::CCS::GeodeticCoordinates* MillerCylindrical::convertToGeodetic( MSP::CCS::M
   if ((easting < (Mill_False_Easting + Mill_Min_Easting))
       || (easting > (Mill_False_Easting + Mill_Max_Easting)))
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Mill_False_Northing - Mill_Delta_Northing)) || 
       (northing > (Mill_False_Northing + Mill_Delta_Northing) ))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   dy = northing - Mill_False_Northing;
-  dx = easting - Mill_False_Easting;
+  dx = easting  - Mill_False_Easting;
   double latitude = atan(sinh(0.8 * dy / Ra)) / 0.8;
   double longitude = Mill_Origin_Long + dx / Ra;
 

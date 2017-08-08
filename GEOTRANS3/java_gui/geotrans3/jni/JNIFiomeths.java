@@ -37,6 +37,11 @@ public class JNIFiomeths extends Object
   private native void jniSetUseMinutes(long _fiomethsPtr, boolean value);
   private native void jniSetUseSeconds(long _fiomethsPtr, boolean value);
   private native void jniSetLatLongPrecision(long _fiomethsPtr, int precision);
+  // BAEts29174 - Set output format for file operation
+  private native void jniShowLeadingZeros(long _fiomethsPtr, boolean lz);
+  private native void jniSetLonRange(long _fiomethsPtr, int longRange);
+  private native void jniSetSeparator(long _fiomethsPtr, char sepChar);
+  
   private native void jniWriteExampleCoord(long _fiomethsPtr);
   private native void jniSetGeodeticCoordinateOrder(long _fiomethsPtr, boolean outputLatitudeLongitudeOrder);
 
@@ -256,6 +261,36 @@ public class JNIFiomeths extends Object
     jniSetLatLongPrecision(fiomethsPtr, _precision);
   }
 
+  // BAEts29174
+  public synchronized void setLeadingZeros(boolean leadingZeros) throws CoordinateConversionException
+  {
+    if (fiomethsPtr == 0)
+    {
+        throw new CoordinateConversionException("setLeadingZeros called with null object");
+    }
+
+    jniShowLeadingZeros(fiomethsPtr, leadingZeros);
+  }
+
+  public synchronized void setSeparator(char sepChar) throws CoordinateConversionException
+  {
+    if (fiomethsPtr == 0)
+    {
+        throw new CoordinateConversionException("setSeparator called with null object");
+    }
+
+    jniSetSeparator(fiomethsPtr, sepChar);
+  }
+
+  public synchronized void setLonRange(int lonRange) throws CoordinateConversionException
+  {
+    if (fiomethsPtr == 0)
+    {
+        throw new CoordinateConversionException("setLonRange called with null object");
+    }
+
+    jniSetLonRange(fiomethsPtr, lonRange);
+  }
 
   public synchronized void writeExampleCoord() throws CoordinateConversionException
   {

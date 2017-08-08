@@ -165,27 +165,23 @@ CylindricalEqualArea::CylindricalEqualArea( double ellipsoidSemiMajorAxis, doubl
 
   double Sin_Cyeq_Origin_Lat;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -363,7 +359,6 @@ MSP::CCS::MapProjectionCoordinates* CylindricalEqualArea::convertFromGeodetic( M
   double dlam;                      /* Longitude - Central Meridan */
   double qq;
   double x;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
@@ -371,15 +366,12 @@ MSP::CCS::MapProjectionCoordinates* CylindricalEqualArea::convertFromGeodetic( M
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Cyeq_Origin_Long;
   if (dlam > PI)
@@ -424,30 +416,26 @@ MSP::CCS::GeodeticCoordinates* CylindricalEqualArea::convertToGeodetic( MSP::CCS
   double sin_lat = sin(PI_OVER_2);
   double i;
   double x;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Cyeq_False_Easting + Cyeq_Min_Easting))
       || (easting > (Cyeq_False_Easting + Cyeq_Max_Easting)))
   { /* Easting out of range */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Cyeq_False_Northing - fabs(Cyeq_Delta_Northing)))
       || (northing > (Cyeq_False_Northing + fabs(Cyeq_Delta_Northing))))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Cyeq_False_Northing;
   dx = easting - Cyeq_False_Easting;
-  x = es * sin_lat;
+  x  = es * sin_lat;
   qp = cyleqarQ( sin_lat, x );
-  i = two_k0 * dy / (semiMajorAxis * qp);
+  i  = two_k0 * dy / (semiMajorAxis * qp);
   if (i > 1.0)
     i = 1.0;
   else if (i < -1.0)

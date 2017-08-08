@@ -32,7 +32,7 @@
  *                                   (0 to 4,000,000m)
  *         UPS_A_ERROR            : Semi-major axis less than or equal to zero
  *         UPS_INV_F_ERROR        : Inverse flattening outside of valid range
- *								  	               (250 to 350)
+ *                                   (250 to 350)
  *
  *
  * REUSE NOTES
@@ -143,27 +143,23 @@ UPS::UPS( double ellipsoidSemiMajorAxis, double ellipsoidFlattening ) :
  * the corresponding state variables. If any errors occur, an exception is 
  * thrown with a description of the error.
  *
- *   ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid in meters (input)
- *   ellipsoidFlattening        : Flattening of ellipsoid					       (input)
+ *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid in meters (input)
+ *   ellipsoidFlattening     : Flattening of ellipsoid                (input)
  */
 
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
   polarStereographicMap['N'] = new PolarStereographic(semiMajorAxis, flattening, UPS_Origin_Longitude, .994, 'N', UPS_False_Easting, UPS_False_Northing);
   polarStereographicMap['S'] = new PolarStereographic(semiMajorAxis, flattening, UPS_Origin_Longitude, .994, 'S', UPS_False_Easting, UPS_False_Northing);
@@ -226,26 +222,22 @@ MSP::CCS::UPSCoordinates* UPS::convertFromGeodetic( MSP::CCS::GeodeticCoordinate
  */
 
   char hemisphere;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
 
   if ((latitude < -MAX_LAT) || (latitude > MAX_LAT))
   {   /* latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   else if ((latitude < 0) && (latitude >= (MAX_SOUTH_LAT + EPSILON)))
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   else if ((latitude >= 0) && (latitude < (MIN_NORTH_LAT - EPSILON)))
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   if ((longitude < -PI) || (longitude > (2 * PI)))
   {  /* longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   if (latitude < 0)
   {
@@ -284,18 +276,16 @@ MSP::CCS::GeodeticCoordinates* UPS::convertToGeodetic( MSP::CCS::UPSCoordinates*
  *    longitude     : Longitude in radians                      (output)
  */
 
-  char errorStatus[50] = "";
-
   char hemisphere = upsCoordinates->hemisphere();
-  double easting = upsCoordinates->easting();
+  double easting  = upsCoordinates->easting();
   double northing = upsCoordinates->northing();
 
   if ((hemisphere != 'N') && (hemisphere != 'S'))
-    strcat( errorStatus, ErrorMessages::hemisphere );
+    throw CoordinateConversionException( ErrorMessages::hemisphere  );
   if ((easting < MIN_EAST_NORTH) || (easting > MAX_EAST_NORTH))
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   if ((northing < MIN_EAST_NORTH) || (northing > MAX_EAST_NORTH))
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
 
   if (hemisphere =='N')
   {
@@ -306,12 +296,11 @@ MSP::CCS::GeodeticCoordinates* UPS::convertToGeodetic( MSP::CCS::UPSCoordinates*
     UPS_Origin_Latitude = -MAX_ORIGIN_LAT;
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
-  MapProjectionCoordinates polarStereographicCoordinates( CoordinateType::polarStereographicStandardParallel, easting, northing );
-  PolarStereographic polarStereographic = *polarStereographicMap[hemisphere];   
-  GeodeticCoordinates* geodeticCoordinates = polarStereographic.convertToGeodetic( &polarStereographicCoordinates ); 
+  MapProjectionCoordinates polarStereographicCoordinates(
+     CoordinateType::polarStereographicStandardParallel, easting, northing );
+  PolarStereographic polarStereographic    = *polarStereographicMap[hemisphere];
+  GeodeticCoordinates* geodeticCoordinates = 
+     polarStereographic.convertToGeodetic( &polarStereographicCoordinates ); 
 
   double latitude = geodeticCoordinates->latitude();
 

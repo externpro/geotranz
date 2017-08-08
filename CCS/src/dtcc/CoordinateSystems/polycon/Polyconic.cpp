@@ -168,27 +168,23 @@ Polyconic::Polyconic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening,
   double j, three_es4;
   double lat, sin2lat, sin4lat, sin6lat;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
   }
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -347,7 +343,8 @@ MapProjection4Parameters* Polyconic::getParameters() const
 }
 
 
-MSP::CCS::MapProjectionCoordinates* Polyconic::convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
+MSP::CCS::MapProjectionCoordinates* Polyconic::convertFromGeodetic(
+   MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
 {
 /*
  * The function convertFromGeodetic converts geodetic (latitude and
@@ -369,7 +366,6 @@ MSP::CCS::MapProjectionCoordinates* Polyconic::convertFromGeodetic( MSP::CCS::Ge
   double MM;
   double EE;
   double easting, northing;
-  char errorStatus[256] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
@@ -377,20 +373,19 @@ MSP::CCS::MapProjectionCoordinates* Polyconic::convertFromGeodetic( MSP::CCS::Ge
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
+  char warning[256];
+  warning[0] = '\0';
   dlam = longitude - Poly_Origin_Long;
   if (fabs(dlam) > (PI / 2))
-  { /* Distortion will result if Longitude is more than 90 degrees from the Central Meridian */
-    strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
+  { /* Distortion results if Longitude is > 90 deg from the Central Meridian */
+    strcat( warning, MSP::CCS::WarningMessages::longitude );
   }
   if (dlam > PI)
   {
@@ -420,7 +415,8 @@ MSP::CCS::MapProjectionCoordinates* Polyconic::convertFromGeodetic( MSP::CCS::Ge
                Poly_False_Northing;
   }
 
-  return new MapProjectionCoordinates( CoordinateType::polyconic, errorStatus, easting, northing );
+  return new MapProjectionCoordinates(
+     CoordinateType::polyconic, warning, easting, northing );
 }
 
 
@@ -456,7 +452,6 @@ MSP::CCS::GeodeticCoordinates* Polyconic::convertToGeodetic( MSP::CCS::MapProjec
                                an arc second or 1/10th meter */
   double longitude, latitude;
   int count = 45000;
-  char errorStatus[50] = "";
 
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
@@ -464,16 +459,13 @@ MSP::CCS::GeodeticCoordinates* Polyconic::convertToGeodetic( MSP::CCS::MapProjec
   if ((easting < (Poly_False_Easting + Poly_Min_Easting))
       || (easting > (Poly_False_Easting + Poly_Max_Easting)))
   { /* Easting out of range */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting );
   }
   if ((northing < (Poly_False_Northing + Poly_Min_Northing))
       || (northing > (Poly_False_Northing + Poly_Max_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Poly_False_Northing;
   dx = easting - Poly_False_Easting;

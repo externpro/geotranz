@@ -175,27 +175,23 @@ Bonne::Bonne( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double 
   double clat; 
   double sin2lat, sin4lat, sin6lat, lat;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   } 
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -390,7 +386,6 @@ MSP::CCS::MapProjectionCoordinates* Bonne::convertFromGeodetic( MSP::CCS::Geodet
   double EE;
   double lat, sin2lat, sin4lat, sin6lat;
   double easting, northing;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
@@ -399,58 +394,57 @@ MSP::CCS::MapProjectionCoordinates* Bonne::convertFromGeodetic( MSP::CCS::Geodet
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   if (Bonn_Origin_Lat == 0.0)
-		return sinusoidal->convertFromGeodetic( geodeticCoordinates );
-	else
-	{
-		dlam = longitude - Bonn_Origin_Long;
-		if (dlam > PI)
-		{
-			dlam -= TWO_PI;
-		}
-		if (dlam < -PI)
-		{
-			dlam += TWO_PI;
-		}
-		if ((latitude - Bonn_Origin_Lat) == 0.0 && floatEq(fabs(latitude),PI_OVER_2,.00001))
-		{
-			easting = 0.0;
-			northing = 0.0;
-		}
-		else
-		{
-			mm = bonnm(clat, slat);
-			lat = c0 * latitude;
-			sin2lat = bonnCoeffTimesSine(c1, 2.0, latitude);
-			sin4lat = bonnCoeffTimesSine(c2, 4.0, latitude);
-			sin6lat = bonnCoeffTimesSine(c3, 6.0, latitude);
-			MM = bonnM(lat, sin2lat, sin4lat, sin6lat);         
+     return sinusoidal->convertFromGeodetic( geodeticCoordinates );
+  else
+  {
+     dlam = longitude - Bonn_Origin_Long;
+     if (dlam > PI)
+     {
+        dlam -= TWO_PI;
+     }
+     if (dlam < -PI)
+     {
+        dlam += TWO_PI;
+     }
+     if ((latitude - Bonn_Origin_Lat) == 0.0 && floatEq(fabs(latitude),PI_OVER_2,.00001))
+     {
+        easting = 0.0;
+        northing = 0.0;
+     }
+     else
+     {
+        mm = bonnm(clat, slat);
+        lat = c0 * latitude;
+        sin2lat = bonnCoeffTimesSine(c1, 2.0, latitude);
+        sin4lat = bonnCoeffTimesSine(c2, 4.0, latitude);
+        sin6lat = bonnCoeffTimesSine(c3, 6.0, latitude);
+        MM = bonnM(lat, sin2lat, sin4lat, sin6lat);         
 
-			rho = Bonn_am1sin + M1 - MM;
-			if (rho == 0)
-				EE = 0;
-			else
-				EE = semiMajorAxis * mm * dlam / rho;
-			easting = rho * sin(EE) + Bonn_False_Easting;
-			northing = Bonn_am1sin - rho * cos(EE) + Bonn_False_Northing;
-		}
-
-    return new MapProjectionCoordinates( CoordinateType::bonne, easting, northing );
+        rho = Bonn_am1sin + M1 - MM;
+        if (rho == 0)
+           EE = 0;
+        else
+           EE = semiMajorAxis * mm * dlam / rho;
+        easting  = rho * sin(EE) + Bonn_False_Easting;
+        northing = Bonn_am1sin - rho * cos(EE) + Bonn_False_Northing;
+     }
+     
+     return new MapProjectionCoordinates(
+        CoordinateType::bonne, easting, northing );
   }
 }
 
 
-MSP::CCS::GeodeticCoordinates* Bonne::convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
+MSP::CCS::GeodeticCoordinates* Bonne::convertToGeodetic(
+   MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
 {
 /*
  * The function convertToGeodetic converts Bonne projection
@@ -475,80 +469,77 @@ MSP::CCS::GeodeticCoordinates* Bonne::convertToGeodetic( MSP::CCS::MapProjection
   double sin2mu, sin4mu, sin6mu, sin8mu;
   double clat, slat;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Bonn_False_Easting + Bonn_Min_Easting))
       || (easting > (Bonn_False_Easting + Bonn_Max_Easting)))
   { /* Easting out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Bonn_False_Northing - Bonn_Delta_Northing))
       || (northing > (Bonn_False_Northing + Bonn_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   if (Bonn_Origin_Lat == 0.0)
-		return sinusoidal->convertToGeodetic( mapProjectionCoordinates );
-	else
-	{
-		dy = northing - Bonn_False_Northing;
-		dx = easting - Bonn_False_Easting;
-		am1sin_dy = Bonn_am1sin - dy;
-		rho = sqrt(dx * dx + am1sin_dy * am1sin_dy);
-		if (Bonn_Origin_Lat < 0.0)
-			rho = -rho;
-		MM = Bonn_am1sin + M1 - rho;
+     return sinusoidal->convertToGeodetic( mapProjectionCoordinates );
+  else
+  {
+     dy = northing - Bonn_False_Northing;
+     dx = easting - Bonn_False_Easting;
+     am1sin_dy = Bonn_am1sin - dy;
+     rho = sqrt(dx * dx + am1sin_dy * am1sin_dy);
+     if (Bonn_Origin_Lat < 0.0)
+        rho = -rho;
+     MM = Bonn_am1sin + M1 - rho;
+     
+     mu = MM / (semiMajorAxis * c0); 
+     sin2mu = bonnCoeffTimesSine(a0, 2.0, mu);
+     sin4mu = bonnCoeffTimesSine(a1, 4.0, mu);
+     sin6mu = bonnCoeffTimesSine(a2, 6.0, mu);
+     sin8mu = bonnCoeffTimesSine(a3, 8.0, mu);
+     latitude = mu + sin2mu + sin4mu + sin6mu + sin8mu;
 
-		mu = MM / (semiMajorAxis * c0); 
-		sin2mu = bonnCoeffTimesSine(a0, 2.0, mu);
-		sin4mu = bonnCoeffTimesSine(a1, 4.0, mu);
-		sin6mu = bonnCoeffTimesSine(a2, 6.0, mu);
-		sin8mu = bonnCoeffTimesSine(a3, 8.0, mu);
-		latitude = mu + sin2mu + sin4mu + sin6mu + sin8mu;
+     if (floatEq(fabs(latitude),PI_OVER_2,.00001))
+     {
+        longitude = Bonn_Origin_Long;
+     }
+     else
+     {
+        clat = cos(latitude);
+        slat = sin(latitude);
+        mm = bonnm(clat, slat);
 
-		if (floatEq(fabs(latitude),PI_OVER_2,.00001))
-		{
-			longitude = Bonn_Origin_Long;
-		}
-		else
-		{
-			clat = cos(latitude);
-			slat = sin(latitude);
-			mm = bonnm(clat, slat);
+        if (Bonn_Origin_Lat < 0.0)
+        {
+           dx = -dx;
+           am1sin_dy = -am1sin_dy;
+        }
+        longitude = Bonn_Origin_Long + rho * (atan2(dx, am1sin_dy)) /
+           (semiMajorAxis * mm);
+     }
 
-			if (Bonn_Origin_Lat < 0.0)
-			{
-				dx = -dx;
-				am1sin_dy = -am1sin_dy;
-			}
-			longitude = Bonn_Origin_Long + rho * (atan2(dx, am1sin_dy)) /
-									 (semiMajorAxis * mm);
-		}
+     if (latitude > PI_OVER_2)  /* force distorted values to 90, -90 degrees */
+        latitude = PI_OVER_2;
+     else if (latitude < -PI_OVER_2)
+        latitude = -PI_OVER_2;
 
-		if (latitude > PI_OVER_2)  /* force distorted values to 90, -90 degrees */
-			latitude = PI_OVER_2;
-		else if (latitude < -PI_OVER_2)
-			latitude = -PI_OVER_2;
+     if (longitude > PI)
+        longitude -= TWO_PI;
+     if (longitude < -PI)
+        longitude += TWO_PI;
 
-		if (longitude > PI)
-			longitude -= TWO_PI;
-		if (longitude < -PI)
-			longitude += TWO_PI;
+     if (longitude > PI)  /* force distorted values to 180, -180 degrees */
+        longitude = PI;
+     else if (longitude < -PI)
+        longitude = -PI;
 
-		if (longitude > PI)  /* force distorted values to 180, -180 degrees */
-			longitude = PI;
-		else if (longitude < -PI)
-			longitude = -PI;
-
-    return new GeodeticCoordinates( CoordinateType::geodetic, longitude, latitude );
-	}
+     return new GeodeticCoordinates(
+        CoordinateType::geodetic, longitude, latitude );
+  }
 }
 
 

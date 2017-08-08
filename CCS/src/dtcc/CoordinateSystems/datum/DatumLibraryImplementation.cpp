@@ -123,6 +123,9 @@
  *                      with C++ methods in classes CCSThreadMutex
  *    05/17/11          T. Thompson, BAEts27393, let user know when problem
  *                      is due to undefined MSPCCS_DATA
+ *    07/13/12          K.Lam, BAEts29544, fixed problem with create datum
+ *    07/17/12          S.Gillis,MSP_00029561,Fixed problem with deleting datum
+ *    08/13/12          S. Gillis, MSP_00029654, Added lat/lon to define7ParamDatum
  */
 
 
@@ -535,7 +538,23 @@ void DatumLibraryImplementation::define3ParamDatum(
      (eastLongitude >= 0 && eastLongitude < 180))
     throw CoordinateConversionException( ErrorMessages::datumDomain );
 
-  datumIndex( code, &index );
+  // assume the datum code is new
+  bool isNewDatumCode = true;
+  try
+  {
+    // check if datum code exists
+    datumIndex( code, &index );
+    // get here if datum code is found in current datum table
+    isNewDatumCode = false;
+  }
+  catch(CoordinateConversionException e)
+  {
+     // the datum code is new, keep going
+  }
+
+  // the datum code exists in current datum table, throw an error
+  if ( !isNewDatumCode )
+    throw CoordinateConversionException( ErrorMessages::invalidDatumCode );
 
   code_length = strlen( code );
 
@@ -578,7 +597,11 @@ void DatumLibraryImplementation::define7ParamDatum(
    double rotationX,
    double rotationY,
    double rotationZ, 
-   double scale )
+   double scale, 
+   double westLongitude,                            
+   double eastLongitude, 
+   double southLatitude, 
+   double northLatitude )
 { 
 /*
  * The function define7ParamDatum creates a new local 7-parameter datum with the
@@ -598,6 +621,10 @@ void DatumLibraryImplementation::define7ParamDatum(
  *   rotationY     : Y rotation to WGS84 in arc seconds            (input)
  *   rotationZ     : Z rotation to WGS84 in arc seconds            (input)
  *   scale         : Scale factor                                  (input)
+ *   westLongitude : Western edge of validity rectangle in radians (input)
+ *   eastLongitude : Eastern edge of validity rectangle in radians (input)
+ *   southLatitude : Southern edge of validity rectangle in radians(input)
+ *   northLatitude : Northern edge of validity rectangle in radians(input)
  */
 
   char datum_Code[DATUM_CODE_LENGTH];
@@ -620,7 +647,23 @@ void DatumLibraryImplementation::define7ParamDatum(
   if ((scale < -0.001) || (scale > 0.001))
     throw CoordinateConversionException( ErrorMessages::scaleFactor );
 
-  datumIndex( code, &index );
+  // assume the datum code is new
+  bool isNewDatumCode = true;
+  try
+  {
+    // check if datum code exists
+    datumIndex( code, &index );
+    // get here if datum code is found in current datum table
+    isNewDatumCode = false;
+  }
+  catch(CoordinateConversionException e)
+  {
+     // the datum code is new, keep going
+  }
+
+  // the datum code exists in current datum table, throw an error
+  if ( !isNewDatumCode )
+    throw CoordinateConversionException( ErrorMessages::invalidDatumCode );
 
   code_length = strlen( code );
   if( code_length > ( DATUM_CODE_LENGTH-1 ) )
@@ -643,7 +686,9 @@ void DatumLibraryImplementation::define7ParamDatum(
   datumList.insert( datumList.begin() + MAX_WGS + datum7ParamCount,
      new SevenParameterDatum( datum7ParamCount, ( char* )datum_Code,
         ( char* )ellipsoidCode, ( char* )name, DatumType::sevenParamDatum,
-        deltaX, deltaY, deltaZ, 0, 0, 0, 0, rotationX / SECONDS_PER_RADIAN,
+        deltaX, deltaY, deltaZ, 
+        westLongitude, eastLongitude, southLatitude, northLatitude,
+        rotationX / SECONDS_PER_RADIAN,
         rotationY / SECONDS_PER_RADIAN, rotationZ / SECONDS_PER_RADIAN,
         scale, true ) );
   datum7ParamCount++;
@@ -687,20 +732,7 @@ void DatumLibraryImplementation::removeDatum( const char* code )
   else
     throw CoordinateConversionException( ErrorMessages::notUserDefined );
 
-  long i = 0;
-  long count = 0;
-
-  int numDatums = datumList.size();
-  for(i = index; i < numDatums; i++)
-    datumList[i] = datumList[i+1];
-
-  if( numDatums != ( 2 + MAX_3PARAM + MAX_7PARAM ) )
-    datumList[i] = datumList[i+1];
-  else
-    datumList.erase( datumList.end() - 1 );
-
-  numDatums--;
-  datumList.resize( numDatums );
+  datumList.erase( datumList.begin() + index ); 
 
   if( !delete_3param_datum )
   {
@@ -1889,7 +1921,6 @@ void DatumLibraryImplementation::validDatum(
  *   result    : Indicates whether location is inside (1) or outside (0)
  *               of the validity rectangle of the specified datum   (output)
  */
-
   *result = 0;
 
   if( ( index < 0 ) || ( index >= datumList.size() ) )

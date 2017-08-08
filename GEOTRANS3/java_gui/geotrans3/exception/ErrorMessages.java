@@ -1,21 +1,22 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-/*
- * ErrorMessages.java
- *
- * Created on April 16, 2008, 12:05 PM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+/******************************************************************************
+* Filename: ErrorMessages.java
+*
+* Copyright BAE Systems Inc. 2012 ALL RIGHTS RESERVED
+*
+* MODIFICATION HISTORY
+*
+* DATE      NAME        DR#          DESCRIPTION
+*
+* 07/18/12  S. Gillis   MSP_00029550 Added errors
+*****************************************************************************/
 
 package geotrans3.exception;
 
 
 /**
  * Defines all error messages which may be returned by the ccs. 
- * 
- * @author comstam
  */
 public class ErrorMessages
 {  
@@ -73,6 +74,10 @@ public class ErrorMessages
   public static final String invalidIndex = "Index value outside of valid range\n";
   public static final String invalidName = "Invalid name\n";
   public static final String invalidType = "Invalid coordinate system type\n";
+
+  // Number/String errors
+  public static final String numericError = "Entry must be numeric\n";
+  public static final String noEntryError = "A value must be entered\n"; 
 }
 
 // CLASSIFICATION: UNCLASSIFIED

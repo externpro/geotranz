@@ -157,31 +157,28 @@ Neys::Neys( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double ce
 
   double epsilon = 1.0e-10;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
+
   }
   if ((originLatitude < -MAX_LAT) || (originLatitude > MAX_LAT))
   { /* Origin Latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((fabs(standardParallel - SEVENTY_ONE) > epsilon) && (fabs(standardParallel - SEVENTY_FOUR) > epsilon))
   { /* First Standard Parallel invalid */
-    strcat( errorStatus, ErrorMessages::standardParallel1 );
+    throw CoordinateConversionException( ErrorMessages::standardParallel1  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* Origin Longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages:: centralMeridian );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -288,24 +285,20 @@ MSP::CCS::MapProjectionCoordinates* Neys::convertFromGeodetic( MSP::CCS::Geodeti
  *    northing         : Northing (Y), in meters                      (output)
  */
 
-  char errorStatus[50] = "";
-
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
-  MapProjectionCoordinates* mapProjectionCoordinates = lambertConformalConic2->convertFromGeodetic( geodeticCoordinates );
+  MapProjectionCoordinates* mapProjectionCoordinates =
+     lambertConformalConic2->convertFromGeodetic( geodeticCoordinates );
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
   delete mapProjectionCoordinates;
@@ -314,7 +307,8 @@ MSP::CCS::MapProjectionCoordinates* Neys::convertFromGeodetic( MSP::CCS::Geodeti
 }
 
 
-MSP::CCS::GeodeticCoordinates* Neys::convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
+MSP::CCS::GeodeticCoordinates* Neys::convertToGeodetic(
+   MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
 {
 /*
  * The function convertToGeodetic converts Ney's (Modified Lambert Conformal
@@ -329,26 +323,22 @@ MSP::CCS::GeodeticCoordinates* Neys::convertToGeodetic( MSP::CCS::MapProjectionC
  *    latitude         : Latitude, in radians                         (output)
  */
 
-  char errorStatus[50] = "";
-
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Neys_False_Easting - Neys_Delta_Easting))
       ||(easting > (Neys_False_Easting + Neys_Delta_Easting)))
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Neys_False_Northing - Neys_Delta_Northing))
       || (northing > (Neys_False_Northing + Neys_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
-  GeodeticCoordinates* geodeticCoordinates = lambertConformalConic2->convertToGeodetic( mapProjectionCoordinates );
+  GeodeticCoordinates* geodeticCoordinates = 
+     lambertConformalConic2->convertToGeodetic( mapProjectionCoordinates );
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
   delete geodeticCoordinates;

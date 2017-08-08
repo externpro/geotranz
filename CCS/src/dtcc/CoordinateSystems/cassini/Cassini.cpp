@@ -16,28 +16,28 @@
  *    the bitwise or.  This combining allows multiple error codes to be
  *    returned. The possible error codes are:
  *
- *          CASS_NO_ERROR           : No errors occurred in function
- *          CASS_LAT_ERROR          : Latitude outside of valid range
- *                                      (-90 to 90 degrees)
- *          CASS_LON_ERROR          : Longitude outside of valid range
+ *          CASS_NO_ERROR          : No errors occurred in function
+ *          CASS_LAT_ERROR         : Latitude outside of valid range
+ *                                     (-90 to 90 degrees)
+ *          CASS_LON_ERROR         : Longitude outside of valid range
  *                                      (-180 to 360 degrees)
- *          CASS_EASTING_ERROR      : Easting outside of valid range
- *                                      (False_Easting +/- ~20,000,000 m,
- *                                       depending on ellipsoid parameters
- *                                       and Origin_Latitude)
- *          CASS_NORTHING_ERROR     : Northing outside of valid range
- *                                      (False_Northing +/- ~57,000,000 m,
- *                                       depending on ellipsoid parameters
- *                                       and Origin_Latitude)
+ *          CASS_EASTING_ERROR     : Easting outside of valid range
+ *                                     (False_Easting +/- ~20,000,000 m,
+ *                                      depending on ellipsoid parameters
+ *                                      and Origin_Latitude)
+ *          CASS_NORTHING_ERROR    : Northing outside of valid range
+ *                                     (False_Northing +/- ~57,000,000 m,
+ *                                      depending on ellipsoid parameters
+ *                                      and Origin_Latitude)
  *          CASS_ORIGIN_LAT_ERROR   : Origin latitude outside of valid range
  *                                      (-90 to 90 degrees)
  *          CASS_CENT_MER_ERROR     : Central meridian outside of valid range
  *                                      (-180 to 360 degrees)
- *          CASS_A_ERROR            : Semi-major axis less than or equal to zero
- *          CASS_INV_F_ERROR        : Inverse flattening outside of valid range
+ *          CASS_A_ERROR           : Semi-major axis less than or equal to zero
+ *          CASS_INV_F_ERROR       : Inverse flattening outside of valid range
  *                                      (250 to 350)
- *          CASS_LON_WARNING        : Distortion will result if longitude is more
- *                                      than 4 degrees from the Central Meridian
+ *          CASS_LON_WARNING       : Distortion will result if longitude is more
+ *                                     than 4 degrees from the Central Meridian
  *
  * REUSE NOTES
  *
@@ -157,46 +157,42 @@ Cassini::Cassini( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, dou
  * variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid                   (input)
- *    centralMeridian         : Longitude in radians at the center of     (input)
+ *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters  (input)
+ *    ellipsoidFlattening     : Flattening of ellipsoid                  (input)
+ *    centralMeridian         : Longitude in radians at the center of    (input)
  *                              the projection
- *    originLatitude          : Latitude in radians at which the          (input)
+ *    originLatitude          : Latitude in radians at which the         (input)
  *                              point scale factor is 1.0
  *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (input)
+ *                              central meridian of the projection.      (input)
  *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (input)
+ *                              origin latitude of the projection        (input)
  */
 
   double j,three_es4;
   double x, e1, e2, e3, e4;
   double lat, sin2lat, sin4lat, sin6lat;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
   Cass_Origin_Lat = originLatitude;
   if (centralMeridian > PI)
@@ -395,31 +391,29 @@ MSP::CCS::MapProjectionCoordinates* Cassini::convertFromGeodetic( MSP::CCS::Geod
   double AA, A2, A3, A4, A5;
   double CC;
   double MM;
-  char errorStatus[256] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
   double tlat = tan(latitude);
   double clat = cos(latitude);
   double slat = sin(latitude);
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Cass_Origin_Long;
 
+  char warning[100];
+  warning[0] = '\0';
   if (fabs(dlam) > (4.0 * PI / 180))
-  { /* Distortion will result if Longitude is more than 4 degrees from the Central Meridian */
-    strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
+  { /* Distortion results if Longitude is > 4 deg from the Central Meridian */
+    strcat( warning, MSP::CCS::WarningMessages::longitude );
   }
 
   if (dlam > PI)
@@ -450,11 +444,13 @@ MSP::CCS::MapProjectionCoordinates* Cassini::convertFromGeodetic( MSP::CCS::Geod
   double northing = MM - M0 + NN * tlat * ((A2 / 2.0) + (5.0 - TT +
                     6.0 * CC) * A4 / 24.0) + Cass_False_Northing;
 
-  return new MapProjectionCoordinates( CoordinateType::cassini, errorStatus, easting, northing );
+  return new MapProjectionCoordinates(
+     CoordinateType::cassini, warning, easting, northing );
 }
 
 
-MSP::CCS::GeodeticCoordinates* Cassini::convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
+MSP::CCS::GeodeticCoordinates* Cassini::convertToGeodetic(
+   MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
 {
 /*
  * The function convertToGeodetic converts Cassini projection
@@ -482,24 +478,20 @@ MSP::CCS::GeodeticCoordinates* Cassini::convertToGeodetic( MSP::CCS::MapProjecti
   double DD, D2, D3, D4, D5;
   const double epsilon = 1.0e-1;
   double longitude, latitude;
-  char errorStatus[256] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Cass_False_Easting + Cass_Min_Easting))
       || (easting > (Cass_False_Easting + Cass_Max_Easting)))
   { /* Easting out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Cass_False_Northing + Cass_Min_Northing - epsilon))
       || (northing > (Cass_False_Northing + Cass_Max_Northing + epsilon)))
   { /* Northing out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Cass_False_Northing;
   dx = easting - Cass_False_Easting;
@@ -556,18 +548,23 @@ MSP::CCS::GeodeticCoordinates* Cassini::convertToGeodetic( MSP::CCS::MapProjecti
     else if (longitude < -PI)
       longitude = -PI;
   }
+
+  char warning[100];
+  warning[0] = '\0';
   if (fabs(longitude - Cass_Origin_Long) > (4.0 * PI / 180))
-  { /* Distortion will result if Longitude is more than 4 degrees from the Central Meridian */
-    strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
+  { /* Distortion results if Longitude is > 4 degr from the Central Meridian */
+    strcat( warning, MSP::CCS::WarningMessages::longitude );
   }
 
-  return new GeodeticCoordinates( CoordinateType::geodetic, errorStatus, longitude, latitude );
+  return new GeodeticCoordinates(
+     CoordinateType::geodetic, warning, longitude, latitude );
 }
 
 
-double Cassini::cassM( double c0lat, double c1s2lat, double c2s4lat, double c3s6lat )
+double Cassini::cassM(
+   double c0lat, double c1s2lat, double c2s4lat, double c3s6lat )
 {
-  return semiMajorAxis*(c0lat-c1s2lat+c2s4lat-c3s6lat);
+   return semiMajorAxis*(c0lat-c1s2lat+c2s4lat-c3s6lat);
 }
 
 

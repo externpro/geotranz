@@ -246,6 +246,11 @@ public class FileDlg extends javax.swing.JDialog
               jniFiomeths.setUseMinutes(options.getUseMinutes());
               jniFiomeths.setUseSeconds(options.getUseSeconds());
               jniFiomeths.setLatLongPrecision(options.getPrecision());
+              // BAEts29174 - Set output format for file operation
+              jniFiomeths.setLeadingZeros (options.getLeadingZeros());
+              jniFiomeths.setSeparator (options.getSeparator());
+              jniFiomeths.setLonRange (options.getRange());
+
               if (lowerFilePanel.getProjectionType() == CoordinateType.GEODETIC)
                 jniFiomeths.setGeodeticCoordinateOrder(lowerFilePanel.getCoordinateOrder());
 

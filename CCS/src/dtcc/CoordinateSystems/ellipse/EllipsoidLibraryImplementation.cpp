@@ -92,6 +92,8 @@
  *                      with C++ methods in classes CCSThreadMutex
  *    05-16-11          T. Thompson, BAEts27393, Inform user when MSPCCS_DATA
  *                      is not defined.
+ *    07/17/12          S.Gillis,MSP_00029561,Fixed problem with creating and 
+ *                      deleting ellipsoid
  */
 
 
@@ -308,17 +310,27 @@ void EllipsoidLibraryImplementation::defineEllipsoid( const char* code, const ch
     throw CoordinateConversionException( ErrorMessages::ellipsoidOverflow );
   else
   {
-    try
-    {
-      ellipsoidIndex( code, &index );
-      throw CoordinateConversionException( ErrorMessages::invalidEllipsoidCode );
-    }
-    catch(CoordinateConversionException e)
-    {
-    }
+     // assume the ellipsoid code is new
+     bool isNewEllipsoidCode = true;
+     try
+     {
+       // check if ellipsoid code exists
+       ellipsoidIndex( code, &index );
+       // get here if ellipsoid code is found in current ellipsoid table
+       isNewEllipsoidCode = false;
+     }
+     catch(CoordinateConversionException e)
+     {
+        // the ellipsoid code is new, keep going
+     }
+
+     // the ellipsoid code exists in current ellipsoid table, throw an error
+     if ( !isNewEllipsoidCode )
+       throw CoordinateConversionException( ErrorMessages::invalidEllipsoidCode );
 
     code_length = strlen( code );
-    if( /*( !ellipsoidIndex( code, &index ) ) || */( code_length > ( ELLIPSOID_CODE_LENGTH - 1 ) ) )
+
+    if( ( code_length > ( ELLIPSOID_CODE_LENGTH - 1 ) ) )
       throw CoordinateConversionException( ErrorMessages::invalidEllipsoidCode );
     if( semiMajorAxis <= 0.0 )
       throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
@@ -334,7 +346,8 @@ void EllipsoidLibraryImplementation::defineEllipsoid( const char* code, const ch
 
     double semiMinorAxis = semiMajorAxis * ( 1 - flattening );
     double eccentricitySquared = 2.0 * flattening - flattening * flattening;
-    ellipsoidList.push_back( new Ellipsoid( index, ellipsoid_code, ( char* )name, semiMajorAxis, semiMinorAxis, flattening, eccentricitySquared, true ) );
+    ellipsoidList.push_back( new Ellipsoid( index, ellipsoid_code, ( char* )name, 
+       semiMajorAxis, semiMinorAxis, flattening, eccentricitySquared, true ) );
 
     numEllipsoids++;
 
@@ -410,46 +423,32 @@ void EllipsoidLibraryImplementation::removeEllipsoid( const char* code )
   else
     throw CoordinateConversionException( ErrorMessages::notUserDefined );
 
-//  if( /*ellipsoidIndex( code, &index ) ||*/ !ellipsoidList[index]->userDefined() )
-//    throw CoordinateConversionException( ErrorMessages::notUserDefined );
-//  else
-  {
-    int numEllipsoids = ellipsoidList.size();
+   ellipsoidList.erase( ellipsoidList.begin() + index ); 
 
-    int i = 0;
-    for( i = index; i < numEllipsoids; i++ )
-      ellipsoidList[i] = ellipsoidList[i+1];
+   int numEllipsoids = ellipsoidList.size();
 
-    if( numEllipsoids != MAX_ELLIPSOIDS )
-      ellipsoidList[i] = ellipsoidList[i+1];
-    else
-      ellipsoidList.erase( ellipsoidList.end() - 1 );
+   CCSThreadLock lock(&mutex);
 
-    numEllipsoids--;
-    ellipsoidList.resize( numEllipsoids );
-
-    CCSThreadLock lock(&mutex);
-
-    /*output updated ellipsoid table*/
-    PathName = getenv( "MSPCCS_DATA" );
-    if( PathName != NULL )
-    {
+   /*output updated ellipsoid table*/
+   PathName = getenv( "MSPCCS_DATA" );
+   if( PathName != NULL )
+   {
       strcpy( FileName, PathName );
       strcat( FileName, "/" );
-    }
-    else
-    {
+   }
+   else
+   {
       strcpy( FileName, "../../data/" );
-    }
-    strcat( FileName, "ellips.dat" );
-    if( ( fp = fopen( FileName, "w" ) ) == NULL )
-    { /* fatal error */
+   }
+   strcat( FileName, "ellips.dat" );
+   if( ( fp = fopen( FileName, "w" ) ) == NULL )
+   { /* fatal error */
       throw CoordinateConversionException( ErrorMessages::ellipsoidFileOpenError );
-    }
-    /* write file */
-    index = 0;
-    while( index < numEllipsoids )
-    {
+   }
+   /* write file */
+   index = 0;
+   while( index < numEllipsoids )
+   {
       if( ellipsoidList[index]->userDefined() )
         fprintf( fp, "*" );
 
@@ -460,10 +459,9 @@ void EllipsoidLibraryImplementation::removeEllipsoid( const char* code )
                  ellipsoidList[index]->semiMinorAxis(),
                  1 / ellipsoidList[index]->flattening() );
       index++;
-    }
+   }
 
-    fclose( fp );
-  }
+   fclose( fp );
 }
 
 

@@ -48,7 +48,7 @@
  *
  *    Further information on VAN DER GRINTEN can be found in the Reuse Manual.
  *
- *    VAN DER GRINTEN originated from :  U.S. Army Topographic Engineering Center
+ *    VAN DER GRINTEN originated from : U.S. Army Topographic Engineering Center
  *                                Geospatial Information Division
  *                                7701 Telegraph Road
  *                                Alexandria, VA  22310-3864
@@ -140,37 +140,33 @@ VanDerGrinten::VanDerGrinten( double ellipsoidSemiMajorAxis, double ellipsoidFla
  * variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening      : Flattening of ellipsoid                   (input)
- *    centralMeridian          : Longitude in radians at the center of     (input)
- *                               the projection
- *    falseEasting             : A coordinate value in meters assigned to the
- *                               central meridian of the projection.       (input)
- *    falseNorthing            : A coordinate value in meters assigned to the
- *                               origin latitude of the projection         (input)
+ *  ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid, in meters   (input)
+ *  ellipsoidFlattening      : Flattening of ellipsoid                   (input)
+ *  centralMeridian          : Longitude in radians at the center of     (input)
+ *                             the projection
+ *  falseEasting             : A coordinate value in meters assigned to the
+ *                             central meridian of the projection.       (input)
+ *  falseNorthing            : A coordinate value in meters assigned to the
+ *                             origin latitude of the projection         (input)
  */
 
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
   es2 = 2 * flattening - flattening * flattening;
   es4 = es2 * es2;
@@ -271,22 +267,18 @@ MSP::CCS::MapProjectionCoordinates* VanDerGrinten::convertFromGeodetic( MSP::CCS
   double sin_theta, cos_theta;
   double qq;
   double easting, northing;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Grin_Origin_Long;
   if (dlam > PI)
@@ -386,7 +378,6 @@ MSP::CCS::GeodeticCoordinates* VanDerGrinten::convertToGeodetic( MSP::CCS::MapPr
   const double epsilon = 1.0e-2;
   double delta = PI_Ra + epsilon;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
@@ -394,22 +385,19 @@ MSP::CCS::GeodeticCoordinates* VanDerGrinten::convertToGeodetic( MSP::CCS::MapPr
   if ((easting > (Grin_False_Easting + delta)) ||
       (easting < (Grin_False_Easting - delta)))
   { /* Easting out of range */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing > (Grin_False_Northing + delta)) ||
       (northing < (Grin_False_Northing - delta)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   temp = sqrt(easting * easting + northing * northing);
 
-  if ((temp > (Grin_False_Easting + PI_Ra + epsilon)) ||
+  if ((temp > (Grin_False_Easting  + PI_Ra + epsilon)) ||
       (temp > (Grin_False_Northing + PI_Ra + epsilon)) ||
-      (temp < (Grin_False_Easting - PI_Ra - epsilon)) ||
+      (temp < (Grin_False_Easting  - PI_Ra - epsilon)) ||
       (temp < (Grin_False_Northing - PI_Ra - epsilon)))
   { /* Point is outside of projection area */
       throw CoordinateConversionException( ErrorMessages::radius );

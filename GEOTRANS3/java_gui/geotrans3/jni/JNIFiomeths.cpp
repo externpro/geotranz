@@ -692,6 +692,34 @@ JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniSetLatLongPrecision(JNI
   }
 }
 
+// BAEts29174 - Set output format for file operation
+JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniSetSeparator(JNIEnv *env, jobject obj, jlong fiomethsPtr, jchar sepChar)
+{
+  Fiomeths* fiomeths = ( Fiomeths* )fiomethsPtr;
+  if( fiomeths )
+  {
+    fiomeths->setSeparator( sepChar );
+  }
+}
+
+JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniSetLonRange(JNIEnv *env, jobject obj, jlong fiomethsPtr, jint longRange)
+{
+  Fiomeths* fiomeths = ( Fiomeths* )fiomethsPtr;
+  if( fiomeths )
+  {
+    fiomeths->setLonRange( longRange );
+  }
+}
+
+JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniShowLeadingZeros(JNIEnv *env, jobject obj, jlong fiomethsPtr, jboolean lz)
+{
+  Fiomeths* fiomeths = ( Fiomeths* )fiomethsPtr;
+  if( fiomeths )
+  {
+    fiomeths->showLeadingZeros( lz );
+  }
+}
+
 
 JNIEXPORT void JNICALL Java_geotrans3_jni_JNIFiomeths_jniSetGeodeticCoordinateOrder(JNIEnv *env, jobject obj, jlong fiomethsPtr, jboolean outputLatitudeLongitudeOrder)
 {

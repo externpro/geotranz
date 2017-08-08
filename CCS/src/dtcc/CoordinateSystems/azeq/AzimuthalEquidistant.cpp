@@ -5,11 +5,11 @@
  *
  * ABSTRACT
  *
- *    This component provides conversions between Geodetic coordinates
- *    (latitude and longitude in radians) and Azimuthal Equidistant
- *    projection coordinates (easting and northing in meters).  This projection 
- *    employs a spherical Earth model.  The spherical radius used is the radius of 
- *    the sphere having the same area as the ellipsoid.
+ *   This component provides conversions between Geodetic coordinates
+ *   (latitude and longitude in radians) and Azimuthal Equidistant
+ *   projection coordinates (easting and northing in meters).  This projection 
+ *   employs a spherical Earth model. The spherical radius used is the radius of
+ *   the sphere having the same area as the ellipsoid.
  *
  * ERROR HANDLING
  *
@@ -48,10 +48,11 @@
  *
  *    Further information on AZIMUTHAL EQUIDISTANT can be found in the Reuse Manual.
  *
- *    AZIMUTHAL EQUIDISTANT originated from:     U.S. Army Topographic Engineering Center
- *                                               Geospatial Information Division
- *                                               7701 Telegraph Road
- *                                               Alexandria, VA  22310-3864
+ *    AZIMUTHAL EQUIDISTANT originated from:
+ *                U.S. Army Topographic Engineering Center
+ *                Geospatial Information Division
+ *                7701 Telegraph Road
+ *                Alexandria, VA  22310-3864
  *
  * LICENSES
  *
@@ -121,7 +122,13 @@ const double ONE = (1.0 * PI / 180);       /* 1 degree in radians */
  *
  */
 
-AzimuthalEquidistant::AzimuthalEquidistant( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double originLatitude, double falseEasting, double falseNorthing ) :
+AzimuthalEquidistant::AzimuthalEquidistant(
+   double ellipsoidSemiMajorAxis,
+   double ellipsoidFlattening,
+   double centralMeridian,
+   double originLatitude,
+   double falseEasting,
+   double falseNorthing ) :
   CoordinateSystem(),
   Ra( 6371007.1810824 ),
   Sin_Azeq_Origin_Lat( 0.0 ),
@@ -140,41 +147,37 @@ AzimuthalEquidistant::AzimuthalEquidistant( double ellipsoidSemiMajorAxis, doubl
  * variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid                   (input)
- *    centralMeridian         : Longitude in radians at the center of     (input)
- *                              the projection
- *    originLatitude          : Latitude in radians at which the          (input)
- *                              point scale factor is 1.0
- *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (input)
- *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (input)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
+ *  ellipsoidFlattening     : Flattening of ellipsoid                   (input)
+ *  centralMeridian         : Longitude in radians at the center of     (input)
+ *                            the projection
+ *  originLatitude          : Latitude in radians at which the          (input)
+ *                            point scale factor is 1.0
+ *  falseEasting            : A coordinate value in meters assigned to the
+ *                            central meridian of the projection.       (input)
+ *  falseNorthing           : A coordinate value in meters assigned to the
+ *                            origin latitude of the projection         (input)
  */
 
   double es2, es4, es6;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
   }
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -183,7 +186,8 @@ AzimuthalEquidistant::AzimuthalEquidistant( double ellipsoidSemiMajorAxis, doubl
   es4 = es2 * es2;
   es6 = es4 * es2;
   /* spherical radius */
-  Ra = semiMajorAxis * (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 / 3024.0);
+  Ra = semiMajorAxis * 
+     (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 / 3024.0);
   Azeq_Origin_Lat = originLatitude;
   Sin_Azeq_Origin_Lat = sin(Azeq_Origin_Lat);
   Cos_Azeq_Origin_Lat = cos(Azeq_Origin_Lat);
@@ -320,7 +324,6 @@ MSP::CCS::MapProjectionCoordinates* AzimuthalEquidistant::convertFromGeodetic( M
   double Ra_kprime;
   double Ra_PI_OVER_2_Lat;
   double easting, northing;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
@@ -329,15 +332,12 @@ MSP::CCS::MapProjectionCoordinates* AzimuthalEquidistant::convertFromGeodetic( M
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Azeq_Origin_Long;
   if (dlam > PI)
@@ -441,31 +441,27 @@ MSP::CCS::GeodeticCoordinates* AzimuthalEquidistant::convertToGeodetic( MSP::CCS
   double c;          /* angular distance from center */
   double sin_c, cos_c, dy_sinc;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Azeq_False_Easting - Azeq_Delta_Easting)) 
       || (easting > (Azeq_False_Easting + Azeq_Delta_Easting)))
   { /* Easting out of range  */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Azeq_False_Northing - Azeq_Delta_Northing)) 
       || (northing > (Azeq_False_Northing + Azeq_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, MSP::CCS::ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
-  dy = northing - Azeq_False_Northing;
-  dx = easting - Azeq_False_Easting;
+  dy  = northing - Azeq_False_Northing;
+  dx  = easting - Azeq_False_Easting;
   rho = sqrt(dx * dx + dy * dy);
   if (fabs(rho) <= 1.0e-10)
   {
-    latitude = Azeq_Origin_Lat;
+    latitude  = Azeq_Origin_Lat;
     longitude = Azeq_Origin_Long;
   }
   else

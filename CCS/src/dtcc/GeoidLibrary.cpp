@@ -1344,19 +1344,15 @@ void GeoidLibrary::bilinearInterpolateDoubleHeights(
   double south_lat, west_lon;
   int end_index = 0;
   int max_index = num_rows * num_cols - 1;
-  char errorStatus[50] = "";
 
   if( ( latitude < -PI_OVER_2 ) || ( latitude > PI_OVER_2 ) )
   { /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if( ( longitude < -PI ) || ( longitude > TWO_PI ) )
   { /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   latitude_dd  = latitude  * _180_OVER_PI;
   longitude_dd = longitude * _180_OVER_PI;
@@ -1441,11 +1437,11 @@ void GeoidLibrary::bilinearInterpolateDoubleHeights(
 
 
 void GeoidLibrary::bilinearInterpolate(
-   double longitude,
-   double latitude,
-   double scale_factor,
-   int num_cols,
-   int num_rows,
+   double  longitude,
+   double  latitude,
+   double  scale_factor,
+   int     num_cols,
+   int     num_rows,
    float  *height_buffer,
    double *delta_height )
 {
@@ -1476,25 +1472,20 @@ void GeoidLibrary::bilinearInterpolate(
   double south_lat, west_lon;
   int end_index = 0;
   int max_index = num_rows * num_cols - 1;
-  char errorStatus[50] = "";
 
   if( ( latitude < -PI_OVER_2 ) || ( latitude > PI_OVER_2 ) )
   { /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if( ( longitude < -PI ) || ( longitude > TWO_PI ) )
   { /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   latitude_dd  = latitude  * _180_OVER_PI;
   longitude_dd = longitude * _180_OVER_PI;
 
-  /*  Compute X and Y Offsets into Geoid Height Array:                        */
-
+  /*  Compute X and Y Offsets into Geoid Height Array:                   */
   if( longitude_dd < 0.0 )
   {
     offset_x = ( longitude_dd + 360.0 ) / scale_factor;
@@ -1614,24 +1605,20 @@ void GeoidLibrary::naturalSplineInterpolate(
   double south_lat, west_lon;
   int end_index = 0;
   double skip_factor = 1.0;
-  char errorStatus[50] = "";
 
   if( ( latitude < -PI_OVER_2 ) || ( latitude > PI_OVER_2 ) )
   { /* latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if( ( longitude < -PI ) || ( longitude > TWO_PI ) )
   { /* longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   latitude_dd  = latitude  * _180_OVER_PI;
   longitude_dd = longitude * _180_OVER_PI;
 
-  /*  Compute X and Y Offsets into Geoid Height Array:                        */
+  /*  Compute X and Y Offsets into Geoid Height Array:                     */
 
   if( longitude_dd < 0.0 )
   {

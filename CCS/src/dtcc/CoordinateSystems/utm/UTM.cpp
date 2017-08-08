@@ -107,15 +107,6 @@ using namespace MSP::CCS;
  *                              DEFINES
  */
 
-// const double PI = 3.14159265358979323e0;         /* PI                 */
-// const double PI_OVER_180 = (3.14159265358979323e0 / 180.0)  /* PI / 180 */
-// const double MIN_LAT = ( (-80.5 * PI) / 180.0 ); /* -80.5 deg in radians */
-// const double MAX_LAT = ( (84.5 * PI) / 180.0 ); /* 84.5 deg in radians  */
-// const double MIN_EASTING = 100000.0;
-// const double MAX_EASTING = 900000.0;
-// const double MIN_NORTHING = 0.0;
-// const double MAX_NORTHING = 10000000.0;
-
 #define PI           3.14159265358979323e0
 #define PI_OVER_180  (3.14159265358979323e0 / 180.0)
 #define MIN_LAT      ((-80.5 * PI) / 180.0) /* -80.5 degrees in radians */
@@ -179,28 +170,23 @@ UTM::UTM(
  *
  * ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters (input)
  * ellipsoidFlattening    : Flattening of ellipsoid                 (input)
- * override               : UTM override zone, zero indicates no override (input)
- * errorStatus            : Error status                           (output)
+ * override               : UTM override zone, 0 indicates no override (input)
  */
 
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
   }
   if ((override < 0) || (override > 60))
   {
-    strcat( errorStatus, ErrorMessages::zoneOverride );
+    throw CoordinateConversionException( ErrorMessages::zoneOverride );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -321,22 +307,18 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic(
   long temp_zone;
   char hemisphere;
   double False_Northing = 0;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
 
   if ((latitude < (MIN_LAT - EPSILON)) || (latitude >= (MAX_LAT + EPSILON)))
   { /* latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if ((longitude < -PI) || (longitude > (2*PI)))
   { /* longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   if((latitude > -1.0e-9) && (latitude < 0))
     latitude = 0.0;
@@ -455,24 +437,20 @@ MSP::CCS::GeodeticCoordinates* UTM::convertToGeodetic(
  */
 
   double False_Northing = 0;
-  char errorStatus[50] = "";
 
-  long zone = utmCoordinates->zone();
+  long zone       = utmCoordinates->zone();
   char hemisphere = utmCoordinates->hemisphere();
   double easting  = utmCoordinates->easting();
   double northing = utmCoordinates->northing();
 
   if ((zone < 1) || (zone > 60))
-    strcat( errorStatus, ErrorMessages::zone );
+    throw CoordinateConversionException( ErrorMessages::zone );
   if ((hemisphere != 'S') && (hemisphere != 'N'))
-    strcat( errorStatus, ErrorMessages::hemisphere );
+    throw CoordinateConversionException( ErrorMessages::hemisphere );
   if ((easting < MIN_EASTING) || (easting > MAX_EASTING))
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting );
   if ((northing < MIN_NORTHING) || (northing > MAX_NORTHING))
-    strcat( errorStatus, ErrorMessages::northing );
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+    throw CoordinateConversionException( ErrorMessages::northing );
 
   TransverseMercator *transverseMercator = transverseMercatorMap[zone];
 

@@ -154,27 +154,23 @@ Orthographic::Orthographic( double ellipsoidSemiMajorAxis, double ellipsoidFlatt
  */
 
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
   }
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -275,28 +271,24 @@ MSP::CCS::MapProjectionCoordinates* Orthographic::convertFromGeodetic( MSP::CCS:
  *    northing          : Northing (Y) in meters              (output)
  */
 
-  double dlam;                        /* Longitude - Central Meridan */
+  double dlam;  /* Longitude - Central Meridan */
   double clat_cdlam;
-  double cos_c;                       /* Value used to determine whether the point is beyond
-                                   viewing.  If zero or positive, the point is within view.  */
-  char errorStatus[50] = "";
+  double cos_c; /* Value used to determine whether the point is beyond
+                   viewing.  If zero or positive, the point is within view.  */
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
   double slat = sin(latitude);
   double clat = cos(latitude);
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Orth_Origin_Long;
   clat_cdlam = clat * cos(dlam);
@@ -345,34 +337,32 @@ MSP::CCS::GeodeticCoordinates* Orthographic::convertToGeodetic( MSP::CCS::MapPro
   double temp;
   double rho_OVER_Ra;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting > (Orth_False_Easting + Ra)) ||
       (easting < (Orth_False_Easting - Ra)))
   { /* Easting out of range */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting );
   }
   if ((northing > (Orth_False_Northing + Ra)) ||
       (northing < (Orth_False_Northing - Ra)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   temp = sqrt(easting * easting + northing * northing);     
 
-  if ((temp > (Orth_False_Easting + Ra)) || (temp > (Orth_False_Northing + Ra)) ||
-      (temp < (Orth_False_Easting - Ra)) || (temp < (Orth_False_Northing - Ra)))
+  if((temp > (Orth_False_Easting + Ra)) ||
+     (temp > (Orth_False_Northing + Ra)) ||
+     (temp < (Orth_False_Easting - Ra)) ||
+     (temp < (Orth_False_Northing - Ra)))
   { /* Point is outside of projection area */
     throw CoordinateConversionException( ErrorMessages::radius );
   }
 
-  dx = easting - Orth_False_Easting;
+  dx = easting  - Orth_False_Easting;
   dy = northing - Orth_False_Northing;
   rho = sqrt(dx * dx + dy * dy);
   if (rho == 0.0)

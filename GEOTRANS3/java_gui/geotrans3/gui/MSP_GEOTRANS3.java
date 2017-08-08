@@ -1,24 +1,23 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-/*
- * MSP_GEOTRANS3.java
- * Created on 2 april 2007, 16:56
- *
- * @author  amy
- * @version
- *
- * MODIFICATION HISTORY:
- *
- * DATE      NAME        DR#               DESCRIPTION
- *
- * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
- * 05/31/11  K. Lam      BAEts28657        Update version to 3.2
- * 08/09/11  K. Swanson  BAEts29073        Moved pack after setSize
- *                                         since gui didn't display
- *                                         on Solaris 8
- */
-package geotrans3.gui;
+/******************************************************************************
+* Filename: MSP_GEOTRANS3.java
+*
+* Copyright BAE Systems Inc. 2012 ALL RIGHTS RESERVED
+*
+* MODIFICATION HISTORY
+*
+* DATE      NAME        DR#          DESCRIPTION
+*
+* 08/13/10  S Gillis    BAEts27457   Update to GeoTrans 3.1
+* 05/31/11  K. Lam      BAEts28657   Update version to 3.2
+* 08/09/11  K. Swanson  BAEts29073   Moved pack after setSize
+*                                    since gui didn't display on Solaris 8
+* 11/18/11  K. Lam      MSP_029475   Update version to 3.3
+* 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+*****************************************************************************/
 
+package geotrans3.gui;
 
 import geotrans3.misc.AOI;
 import geotrans3.misc.SaveSettings;
@@ -197,7 +196,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     helpMenuSeparator = new javax.swing.JSeparator();
     aboutMenuItem = new javax.swing.JMenuItem();
 
-    setTitle("MSP GEOTRANS 3.2");
+    setTitle("MSP GEOTRANS 3.3");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -806,28 +805,31 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
       if(checkParametersChanged(SourceOrTarget.TARGET, SourceOrTarget.SOURCE))      
       {
         CoordinateTuple sourceCoordinates = lowerMasterPanel.getCoordinates();
-        Accuracy sourceAccuracy = lowerMasterPanel.getAccuracy();   
-        if(stringHandler.getError())
-          stringHandler.displayErrorMsg(this, SourceOrTarget.SOURCE, lowerMasterPanel.getProjectionType());
+        Accuracy sourceAccuracy = lowerMasterPanel.getAccuracy();
+        if (stringHandler.getError())
+        {
+            stringHandler.displayErrorMsg(this, SourceOrTarget.SOURCE, 
+                lowerMasterPanel.getProjectionType());
+        }
         else
         {
-          CoordinateTuple targetCoordinates = upperMasterPanel.initTargetCoordinates();
-          Accuracy targetAccuracy = new Accuracy();
-          
-	  // for UTM zone override calling convertSourceToTarget works over convertTargetToSource.
-          ConvertResults convertResults = jniCoordinateConversionService.convertSourceToTarget(sourceCoordinates, sourceAccuracy, targetCoordinates, targetAccuracy);
-          
-          targetCoordinates = convertResults.getCoordinateTuple();
-          targetAccuracy = convertResults.getAccuracy();
-          
-          // Display any warning messages
-          String warningMessage = targetCoordinates.getWarningMessage();
-          if(warningMessage.length() > 0)
-            stringHandler.displayWarningMsg(this, warningMessage);
-          
-          upperMasterPanel.setCoordinates(targetCoordinates);
-          
-          upperMasterPanel.setAccuracy(targetAccuracy);
+            CoordinateTuple targetCoordinates = upperMasterPanel.initTargetCoordinates();
+            Accuracy targetAccuracy = new Accuracy();
+
+            // for UTM zone override calling convertSourceToTarget works over convertTargetToSource.
+            ConvertResults convertResults = jniCoordinateConversionService.convertSourceToTarget(sourceCoordinates, sourceAccuracy, targetCoordinates, targetAccuracy);
+
+            targetCoordinates = convertResults.getCoordinateTuple();
+            targetAccuracy = convertResults.getAccuracy();
+
+            // Display any warning messages
+            String warningMessage = targetCoordinates.getWarningMessage();
+            if (warningMessage.length() > 0)
+                stringHandler.displayWarningMsg(this, warningMessage);
+
+            upperMasterPanel.setCoordinates(targetCoordinates);
+
+            upperMasterPanel.setAccuracy(targetAccuracy);
         }
       }
       ////convertTargetToSourceCollection();
@@ -839,7 +841,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
   }//GEN-LAST:event_convertUpActionPerformed
 
   /** Converts Upper Projection Coordinates to Lower Projection Coordinates. */
-  private void convertDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertDownActionPerformed
+  private void convertDownActionPerformed(java.awt.event.ActionEvent evt) {
     try
     {
       if(checkParametersChanged(SourceOrTarget.SOURCE, SourceOrTarget.TARGET))
@@ -847,14 +849,19 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
         CoordinateTuple sourceCoordinates = upperMasterPanel.getCoordinates();
         Accuracy sourceAccuracy = upperMasterPanel.getAccuracy();      
 
-        if(stringHandler.getError()){System.out.println("error");
-          stringHandler.displayErrorMsg(this, SourceOrTarget.SOURCE, upperMasterPanel.getProjectionType());}
+        if(stringHandler.getError())
+        {
+          stringHandler.displayErrorMsg(this, SourceOrTarget.SOURCE, 
+              upperMasterPanel.getProjectionType());
+        }
         else
         {
           CoordinateTuple targetCoordinates = lowerMasterPanel.initTargetCoordinates();
           Accuracy targetAccuracy = new Accuracy();
           
-          ConvertResults convertResults = jniCoordinateConversionService.convertSourceToTarget(sourceCoordinates, sourceAccuracy, targetCoordinates, targetAccuracy);
+          ConvertResults convertResults = jniCoordinateConversionService.
+              convertSourceToTarget(sourceCoordinates, sourceAccuracy, 
+              targetCoordinates, targetAccuracy);
           
           targetCoordinates = convertResults.getCoordinateTuple();
           targetAccuracy = convertResults.getAccuracy();
@@ -869,7 +876,6 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
           lowerMasterPanel.setAccuracy(targetAccuracy);
         }
       }
-   ////   convertSourceToTargetCollection();
     }
     catch(CoordinateConversionException e)
     {

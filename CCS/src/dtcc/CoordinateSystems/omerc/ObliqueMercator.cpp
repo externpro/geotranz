@@ -199,56 +199,52 @@ ObliqueMercator::ObliqueMercator( double ellipsoidSemiMajorAxis, double ellipsoi
   double E2;
   double F, G, J, P;
   double dlon;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
   }
   if ((originLatitude <= -PI_OVER_2) || (originLatitude >= PI_OVER_2))
   { /* origin latitude out of range -  can not be at a pole */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude );
   }
   if ((latitude1 <= -PI_OVER_2) || (latitude1 >= PI_OVER_2))
   { /* first latitude out of range -  can not be at a pole */
-    strcat( errorStatus, ErrorMessages::latitude1 );
+    throw CoordinateConversionException( ErrorMessages::latitude1 );
   }
   if ((latitude2 <= -PI_OVER_2) || (latitude2 >= PI_OVER_2))
   { /* second latitude out of range -  can not be at a pole */
-    strcat( errorStatus, ErrorMessages::latitude2 );
+    throw CoordinateConversionException( ErrorMessages::latitude2 );
   }
   if (latitude1 == 0.0)
   { /* first latitude can not be at the equator */
-    strcat( errorStatus, ErrorMessages::latitude1 );
+    throw CoordinateConversionException( ErrorMessages::latitude1 );
   }
   if (latitude1 == latitude2)
   { /* first and second latitudes can not be equal */
-    strcat( errorStatus, ErrorMessages::latitude2 );
+    throw CoordinateConversionException( ErrorMessages::latitude2 );
   }
   if (((latitude1 < 0.0) && (latitude2 > 0.0)) ||
       ((latitude1 > 0.0) && (latitude2 < 0.0)))
   { /*first and second points can not be in different hemispheres */
-    strcat( errorStatus, ErrorMessages::omercHemisphere );
+    throw CoordinateConversionException( ErrorMessages::omercHemisphere );
   }
   if ((longitude1 < -PI) || (longitude1 > TWO_PI))
   { /* first longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude1 );
+    throw CoordinateConversionException( ErrorMessages::longitude1 );
   }
   if ((longitude2 < -PI) || (longitude2 > TWO_PI))
   { /* first longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude2 );
+    throw CoordinateConversionException( ErrorMessages::longitude2 );
   }
   if ((scaleFactor < MIN_SCALE_FACTOR) || (scaleFactor > MAX_SCALE_FACTOR))
   { /* scale factor out of range */
-    strcat( errorStatus, ErrorMessages::scaleFactor );
+    throw CoordinateConversionException( ErrorMessages::scaleFactor );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -463,28 +459,26 @@ MSP::CCS::MapProjectionCoordinates* ObliqueMercator::convertFromGeodetic( MSP::C
   /* Natural origin*/
   double v = 0;
   double u = 0;
-  char errorStatus[256] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - OMerc_Origin_Long;
 
+  char warning[256];
+  warning[0] = '\0';
   if (fabs(dlam) >= PI_OVER_2)
   { /* Distortion will result if Longitude is 90 degrees or more from the Central Meridian */
-    strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
+    strcat( warning, MSP::CCS::WarningMessages::longitude );
   }
 
   if (dlam > PI)
@@ -544,7 +538,8 @@ MSP::CCS::MapProjectionCoordinates* ObliqueMercator::convertFromGeodetic( MSP::C
   double easting = OMerc_False_Easting + v * cos_azimuth + u * sin_azimuth;
   double northing = OMerc_False_Northing + u * cos_azimuth - v * sin_azimuth;
 
-  return new MapProjectionCoordinates( CoordinateType::obliqueMercator, errorStatus, easting, northing );
+  return new MapProjectionCoordinates(
+     CoordinateType::obliqueMercator, warning, easting, northing );
 }
 
 
@@ -576,24 +571,20 @@ MSP::CCS::GeodeticCoordinates* ObliqueMercator::convertToGeodetic( MSP::CCS::Map
   double temp_phi = 0.0;
   int count = 60;
   double longitude, latitude;
-  char errorStatus[256] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (OMerc_False_Easting - OMerc_Delta_Easting)) 
       || (easting > (OMerc_False_Easting + OMerc_Delta_Easting)))
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting );
   }
   if ((northing < (OMerc_False_Northing - OMerc_Delta_Northing)) 
       || (northing > (OMerc_False_Northing + OMerc_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - OMerc_False_Northing;
   dx = easting - OMerc_False_Easting;
@@ -653,12 +644,15 @@ MSP::CCS::GeodeticCoordinates* ObliqueMercator::convertToGeodetic( MSP::CCS::Map
   else if (longitude < -PI)
     longitude = -PI;
 
+  char warning[256];
+  warning[0] = '\0';
   if (fabs(longitude - OMerc_Origin_Long) >= PI_OVER_2)
-  { /* Distortion will result if Longitude is 90 degrees or more from the Central Meridian */
-    strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
+  { /* Distortion results if Longitude > 90 degrees from the Central Meridian */
+    strcat( warning, MSP::CCS::WarningMessages::longitude );
   }
 
-  return new GeodeticCoordinates( CoordinateType::geodetic, errorStatus, longitude, latitude );
+  return new GeodeticCoordinates(
+     CoordinateType::geodetic, warning, longitude, latitude );
 }
 
 

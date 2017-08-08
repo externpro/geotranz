@@ -1,13 +1,19 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-/*
- * _3ParamDatumPanel.java
- *
- * Created on March 27, 2008, 4:57 PM
- */
+/******************************************************************************
+* Filename        : _7ParamDatumPanel.java
+*
+*    Copyright (C) BAE Systems National Security Solutions Inc. 2012
+*                            ALL RIGHTS RESERVED
+*
+* MODIFICATION HISTORY:
+*
+* DATE      NAME        DR#          DESCRIPTION
+*
+* 08/13/12  S Gillis    
+******************************************************************************/
 
 package geotrans3.gui;
-
 
 import geotrans3.enumerations.DatumType;
 import geotrans3.enumerations.ListType;
@@ -17,13 +23,9 @@ import geotrans3.jni.JNIEllipsoidLibrary;
 import geotrans3.misc.FillList;
 import geotrans3.misc.Info;
 import geotrans3.misc.StringHandler;
+import geotrans3.utility.Constants;
 import geotrans3.utility.Platform;
 
-
-/**
- *
- * @author  comstam
- */
 public class _7ParamDatumPanel extends javax.swing.JPanel
 {
 ///  private JNICoordinateConversionService jniCoordinateConversionService;
@@ -378,11 +380,18 @@ public boolean createDatum()
     {
         try
         {
-          Info ellipsoidInfo = jniEllipsoidLibrary.getEllipsoidInfo(ellipsoidComboBox.getSelectedIndex());
-          jniDatumLibrary.defineDatum(DatumType.sevenParamDatum, datumCodeTextField.getText().trim(), datumNameTextField.getText().trim(),
-                           ellipsoidInfo.getCode(),
-                           deltaX, deltaY, deltaZ, -1.0, -1.0, -1.0, -180.0, 180.0, -90.0, 90.0,
-                           rotationX, rotationY, rotationZ, scale);
+          Info ellipsoidInfo = jniEllipsoidLibrary.getEllipsoidInfo(
+              ellipsoidComboBox.getSelectedIndex());
+          jniDatumLibrary.defineDatum(DatumType.sevenParamDatum, 
+              datumCodeTextField.getText().trim(), 
+              datumNameTextField.getText().trim(),
+              ellipsoidInfo.getCode(),
+              deltaX, deltaY, deltaZ, 
+              -1.0, -1.0, -1.0,
+              (-180.0 * Constants.PI_OVER_180), (180.0 * Constants.PI_OVER_180),
+              (-90.0 * Constants.PI_OVER_180), (90.0 * Constants.PI_OVER_180),
+              rotationX, rotationY, rotationZ, 
+              scale);
           return true;
         }
         catch(CoordinateConversionException e)

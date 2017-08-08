@@ -1,28 +1,23 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-/*
- * FilePanel.java
- *
- * Created on April 2, 2001, 3:53 PM
- *
- * MODIFICATION HISTORY:
- *
- * DATE        NAME              DR#               DESCRIPTION
- * 
- * 05/12/10    S Gillis          BAEts26542        MSP TS MSL-HAE conversion 
- *                                                 should use CCS         
- * 01/10/11    J Chelos          BAEts26267        Added EGM2008
- * 01/04/12    K Lam             BAEts29500        Remove recommend from EGM 96
- */
-
-/**
- *
- * @author  amyc
- * @version
- */
+/******************************************************************************
+* Filename: MasterPanel.java
+*
+* Copyright BAE Systems Inc. 2012 ALL RIGHTS RESERVED
+*
+* MODIFICATION HISTORY
+*
+* DATE      NAME        DR#          DESCRIPTION
+*
+* 05/12/10  S Gillis    BAEts26542   MSP TS MSL-HAE conversion 
+*                                    should use CCS         
+* 01/10/11  J Chelos    BAEts26267   Added EGM2008
+* 01/04/12  K Lam       BAEts29500   Remove recommend from EGM 96
+* 01/24/12  S Gillis    BAEts29500   Reorder EGM2008
+* 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+*****************************************************************************/
 
 package geotrans3.gui;
-
 
 import geotrans3.coordinates.Accuracy;
 import geotrans3.coordinates.CoordinateTuple;
@@ -36,7 +31,6 @@ import geotrans3.misc.StringHandler;
 import geotrans3.parameters.*;
 import geotrans3.utility.Constants;
 import geotrans3.utility.Platform;
-
 
 public class MasterPanel extends javax.swing.JPanel 
 {
@@ -147,7 +141,8 @@ public class MasterPanel extends javax.swing.JPanel
       coordinateSystemParameters = _coordinateSystemParameters;
       jniCoordinateConversionService = _jniCoordinateConversionService;
       jniDatumLibrary = new JNIDatumLibrary(_jniCoordinateConversionService.getDatumLibrary());
-      jniEllipsoidLibrary = new JNIEllipsoidLibrary(_jniCoordinateConversionService.getEllipsoidLibrary());
+      jniEllipsoidLibrary = new JNIEllipsoidLibrary(
+          _jniCoordinateConversionService.getEllipsoidLibrary());
       stringHandler = _stringHandler;
       projectionType = _coordinateSystemParameters.getCoordinateType();
       inputFileType = projectionType;
@@ -1008,18 +1003,20 @@ public class MasterPanel extends javax.swing.JPanel
 
     private void heightComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heightComboBoxActionPerformed
      heightType = heightComboBox.getSelectedIndex();
-     // Re-index the height type since MSL-EGM2008-2.5M-BCS Height
-     // is third in the list (index 2) on the GUI but is still index 7
-     // in the HeightType enum.
-     // This change is made to avoid the C++ API change in the patch release
+
+     //Reindex the height type since "MSL-EGM2008-2.5M-BCS Height"
+     //is third in the list (index 2) on the GUI but is still index 7 
+     //in the HeightType enum. It is still index 7 in the HeightType enum to
+     //prevent API changes in the C++ code for the release.
      if (heightType == 2)
      {
-        heightType = 7;
+         heightType = 7;
      }
      else if (heightType > 1)
      {
-        heightType--;
+         heightType--;
      }
+
      if( state != ConversionState.FILE )
      {
        if(heightComboBox.getSelectedIndex() == HeightType.NO_HEIGHT)
@@ -1801,9 +1798,9 @@ public class MasterPanel extends javax.swing.JPanel
          case CoordinateType.GRINTEN:
           {
               return new MapProjection3Parameters(projectionType,
-                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.AZIMUTHAL:
           case CoordinateType.BONNE:
@@ -1815,48 +1812,48 @@ public class MasterPanel extends javax.swing.JPanel
           case CoordinateType.STEREOGRAPHIC:
           {
               return new MapProjection4Parameters(projectionType,
-                                                   stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian: "),
-                                                   stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Origin Latitude: "),
-                                                   stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                   stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                   stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian"),
+                                                   stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Origin Latitude"),
+                                                   stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                   stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.LAMBERT_1:
           {
               return new MapProjection5Parameters(projectionType,
-                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Central Meridian: "),
-                                                    stringHandler.stringToLatitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Origin Latitude: "),
-                                                    stringHandler.stringToDouble(_3ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Scale Factor: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Central Meridian"),
+                                                    stringHandler.stringToLatitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Origin Latitude"),
+                                                    stringHandler.stringToDouble(_3ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Scale Factor"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.TRCYLEQA:
           case CoordinateType.TRANMERC:
           {
               return new MapProjection5Parameters(projectionType,
-                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Central Meridian: "),
-                                                    stringHandler.stringToLatitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Origin Latitude: "),
-                                                    stringHandler.stringToDouble(_3ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Scale Factor: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Central Meridian"),
+                                                    stringHandler.stringToLatitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Origin Latitude"),
+                                                    stringHandler.stringToDouble(_3ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Scale Factor"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.ALBERS:
           case CoordinateType.LAMBERT_2:
           {
               return new MapProjection6Parameters(projectionType,
-                                                   stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Central Meridian: "),
-                                                   stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Origin Latitude: "),
-                                                   stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid 1st Standard Parallel: "),
-                                                   stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldD.getText().trim(), "Invalid 2nd Standard Parallel: "),
-                                                   stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                   stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                   stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Central Meridian"),
+                                                   stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Origin Latitude"),
+                                                   stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid 1st Standard Parallel"),
+                                                   stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldD.getText().trim(), "Invalid 2nd Standard Parallel"),
+                                                   stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                   stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
          case CoordinateType.EQDCYL:
           {
               return new EquidistantCylindricalParameters(projectionType,
-                                                           stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian: "),
-                                                           stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Standard Parallel: "),
-                                                           stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                           stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                           stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian"),
+                                                           stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Standard Parallel"),
+                                                           stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                           stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.GEODETIC:
           {
@@ -1865,27 +1862,27 @@ public class MasterPanel extends javax.swing.JPanel
           case CoordinateType.LOCCART:
           {
               return new LocalCartesianParameters(projectionType,
-                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Origin Longitude: "),
-                                                    stringHandler.stringToLatitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Origin Latitude: "),
-                                                    stringHandler.stringToDouble(_3ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Origin Height: "),
-                                                    stringHandler.stringToLongitude(_3ParamFieldsRow2TextFieldB.getText().trim(), "Invalid Orientation: "));
+                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Origin Longitude"),
+                                                    stringHandler.stringToLatitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Origin Latitude"),
+                                                    stringHandler.stringToDouble(_3ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Origin Height"),
+                                                    stringHandler.stringToLongitude(_3ParamFieldsRow2TextFieldB.getText().trim(), "Invalid Orientation"));
           }
           case CoordinateType.MERCATOR_SP:
           {
               return new MercatorStandardParallelParameters(projectionType,
-                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Central Meridian: "),
-                                                    stringHandler.stringToLatitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Standard Parallel: "),
-                                                    stringHandler.stringToDouble(_3ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Scale Factor: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                    stringHandler.stringToLongitude(_3ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Central Meridian"),
+                                                    stringHandler.stringToLatitude(_3ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Standard Parallel"),
+                                                    stringHandler.stringToDouble(_3ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Scale Factor"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.MERCATOR_SF:
           {
               return new MercatorScaleFactorParameters(projectionType,
-                                                    stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Scale Factor: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                    stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Scale Factor"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                    stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.NEYS:
           {
@@ -1897,31 +1894,31 @@ public class MasterPanel extends javax.swing.JPanel
                 std_par_1 = 74.0;
 
               return new NeysParameters(projectionType,
-                                          stringHandler.stringToLongitude(centralMeridianNeysParamsTextField.getText().trim(), "Invalid Central Meridian: "),
-                                          stringHandler.stringToLatitude(originLatitudeNeysParamsTextField.getText().trim(), "Invalid Origin Latitude: "),
+                                          stringHandler.stringToLongitude(centralMeridianNeysParamsTextField.getText().trim(), "Invalid Central Meridian"),
+                                          stringHandler.stringToLatitude(originLatitudeNeysParamsTextField.getText().trim(), "Invalid Origin Latitude"),
                                           std_par_1*Constants.PI_OVER_180,
-                                          stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                          stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                          stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                          stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.OMERC:
           {
               return new ObliqueMercatorParameters(projectionType,
-                                                     stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Origin Latitude: "),
-                                                     stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Longitude 1: "),
-                                                     stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldD.getText().trim(), "Invalid Latitude 1: "),
-                                                     stringHandler.stringToLongitude(_4ParamFieldsRow2TextFieldA.getText().trim(), "Invalid Longitude 2: "),
-                                                     stringHandler.stringToLatitude(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid Latitude 2: "),
-                                                     stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Easting: "),
-                                                     stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldD.getText().trim(), "Invalid False Northing: "),
-                                                     stringHandler.stringToDouble(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Scale Factor: "));
+                                                     stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldA.getText().trim(), "Invalid Origin Latitude"),
+                                                     stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Longitude 1"),
+                                                     stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldD.getText().trim(), "Invalid Latitude 1"),
+                                                     stringHandler.stringToLongitude(_4ParamFieldsRow2TextFieldA.getText().trim(), "Invalid Longitude 2"),
+                                                     stringHandler.stringToLatitude(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid Latitude 2"),
+                                                     stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Easting"),
+                                                     stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldD.getText().trim(), "Invalid False Northing"),
+                                                     stringHandler.stringToDouble(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Scale Factor"));
           }
           case CoordinateType.POLARSTEREO_SP:
           {
               return new PolarStereographicStandardParallelParameters(projectionType,
-                                                        stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian: "),
-                                                        stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Standard Parallel: "),
-                                                        stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                        stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                        stringHandler.stringToLongitude(_4ParamFieldsRow1TextFieldB.getText().trim(), "Invalid Central Meridian"),
+                                                        stringHandler.stringToLatitude(_4ParamFieldsRow1TextFieldC.getText().trim(), "Invalid Standard Parallel"),
+                                                        stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                        stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.POLARSTEREO_SF:
           {
@@ -1932,22 +1929,22 @@ public class MasterPanel extends javax.swing.JPanel
               else if (row1SHemiRadioButton.isSelected() == true)
                 hemisphere = 'S';
               return new PolarStereographicScaleFactorParameters(projectionType,
-                                                        stringHandler.stringToLongitude(_3ParamFieldsRow1PS_SFTextFieldA.getText().trim(), "Invalid Central Meridian: "),
-                                                        stringHandler.stringToDouble(_3ParamFieldsRow1PS_SFTextFieldB.getText().trim(), "Invalid Scale Factor: "),
+                                                        stringHandler.stringToLongitude(_3ParamFieldsRow1PS_SFTextFieldA.getText().trim(), "Invalid Central Meridian"),
+                                                        stringHandler.stringToDouble(_3ParamFieldsRow1PS_SFTextFieldB.getText().trim(), "Invalid Scale Factor"),
                                                         hemisphere,
-                                                        stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting: "),
-                                                        stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing: "));
+                                                        stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldB.getText().trim(), "Invalid False Easting"),
+                                                        stringHandler.stringToDouble(_4ParamFieldsRow2TextFieldC.getText().trim(), "Invalid False Northing"));
           }
           case CoordinateType.UTM:
           {
               UTMParameters parameters;
               if(zoneRadioButton.isSelected())
               {
-                  long zone = stringHandler.stringToInt(zoneTextField.getText().trim(), "Invalid zone: ");
+                  long zone = stringHandler.stringToInt(zoneTextField.getText().trim(), "Invalid zone");
                   if ((zone < 1) || (zone > 60))
                       throw new CoordinateConversionException("Zone out of range (1-60)");
                   else
-                      return new UTMParameters(projectionType, stringHandler.stringToInt(zoneTextField.getText().trim(), "Invalid zone: "), override);
+                      return new UTMParameters(projectionType, stringHandler.stringToInt(zoneTextField.getText().trim(), "Invalid zone"), override);
               }
               else
                   return new UTMParameters(projectionType, 0, override);
@@ -2045,6 +2042,7 @@ public class MasterPanel extends javax.swing.JPanel
       if(projectionType == CoordinateType.UTM)
       {
         coordPanel.setZone((int) stringHandler.stringToInt(zoneTextField.getText().trim(), "Invalid zone"));
+
         if(nHemiRadioButton.isSelected())
         {
           coordPanel.setHemisphere('N');
@@ -2536,9 +2534,11 @@ public class MasterPanel extends javax.swing.JPanel
     {
          heightComboBox.addItem("No Height");
          heightComboBox.addItem("Ellipsoid Height");
-         // MSL-EGM2008-2.5M-BCS Height is third in the list (index 2)
-         // on the GUI but is still index 7 in the HeightType Enum.
+
+         //"MSL-EGM2008-2.5M-BCS Height" is third in the list (index 2) on the
+         //GUI but is still index 7 in the HeightType enum. 
          heightComboBox.addItem("MSL-EGM2008-2.5M-BCS Height");
+
          heightComboBox.addItem("MSL-EGM96-15M-BL Height");
          heightComboBox.addItem("MSL-EGM96-VG-NS Height");
          heightComboBox.addItem("MSL-EGM84-10D-BL Height");
@@ -3212,6 +3212,7 @@ public class MasterPanel extends javax.swing.JPanel
         {
           GeodeticParameters parameters = (GeodeticParameters)_parameters;
           heightComboBox.setSelectedIndex(parameters.getHeightType());
+
           break;
         }
         case CoordinateType.UTM:      

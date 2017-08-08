@@ -316,10 +316,26 @@ void breakMGRSString(
   long i = 0;
   long j = 0;
 
-  while (MGRSString[i] == ' ')
+  // remove any spaces from MGRS string
+  char tempMGRSString[100+1];
+  while( MGRSString[i] != '\0' || j == 100 )
+  {
+     if( MGRSString[i] != ' ' )
+     {
+        tempMGRSString[j] = MGRSString[i];
+        j++;
+     }
+     i++;
+  }
+  tempMGRSString[j] = '\0';
+
+  i = 0;
+  j = 0;
+
+  while (tempMGRSString[i] == ' ')
     i++;  /* skip any leading blanks */
   j = i;
-  while (isdigit(MGRSString[i]))
+  while (isdigit(tempMGRSString[i]))
     i++;
   num_digits = i - j;
   if (num_digits <= 2)
@@ -327,7 +343,7 @@ void breakMGRSString(
     {
       char zone_string[3];
       /* get zone */
-      strncpy (zone_string, MGRSString+j, 2);
+      strncpy (zone_string, tempMGRSString+j, 2);
       zone_string[2] = 0;
       sscanf (zone_string, "%ld", zone);
       if ((*zone < 1) || (*zone > 60))
@@ -339,26 +355,26 @@ void breakMGRSString(
     throw CoordinateConversionException( ErrorMessages::mgrsString );
   j = i;
 
-  while (isalpha(MGRSString[i]))
+  while (isalpha(tempMGRSString[i]))
     i++;
   num_letters = i - j;
   if (num_letters == 3)
   {
     /* get letters */
-    letters[0] = (toupper(MGRSString[j]) - (long)'A');
+    letters[0] = (toupper(tempMGRSString[j]) - (long)'A');
     if ((letters[0] == LETTER_I) || (letters[0] == LETTER_O))
       throw CoordinateConversionException( ErrorMessages::mgrsString );
-    letters[1] = (toupper(MGRSString[j+1]) - (long)'A');
+    letters[1] = (toupper(tempMGRSString[j+1]) - (long)'A');
     if ((letters[1] == LETTER_I) || (letters[1] == LETTER_O))
       throw CoordinateConversionException( ErrorMessages::mgrsString );
-    letters[2] = (toupper(MGRSString[j+2]) - (long)'A');
+    letters[2] = (toupper(tempMGRSString[j+2]) - (long)'A');
     if ((letters[2] == LETTER_I) || (letters[2] == LETTER_O))
       throw CoordinateConversionException( ErrorMessages::mgrsString );
   }
   else
     throw CoordinateConversionException( ErrorMessages::mgrsString );
   j = i;
-  while (isdigit(MGRSString[i]))
+  while (isdigit(tempMGRSString[i]))
     i++;
   num_digits = i - j;
   if ((num_digits <= 10) && (num_digits%2 == 0))
@@ -374,10 +390,10 @@ void breakMGRSString(
     *precision = n;
     if (n > 0)
     {
-      strncpy (east_string, MGRSString+j, n);
+      strncpy (east_string, tempMGRSString+j, n);
       east_string[n] = 0;
       sscanf (east_string, "%ld", &east);
-      strncpy (north_string, MGRSString+j+n, n);
+      strncpy (north_string, tempMGRSString+j+n, n);
       north_string[n] = 0;
       sscanf (north_string, "%ld", &north);
       multiplier = pow (10.0, 5.0 - n);

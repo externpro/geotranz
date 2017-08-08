@@ -152,39 +152,35 @@ LambertConformalConic::LambertConformalConic( double ellipsoidSemiMajorAxis, dou
 {
 /*
  * The constructor receives the ellipsoid parameters and
- * Lambert Conformal Conic (1 Standard Parallel) projection parameters as inputs, and sets the
- * corresponding state variables.  If any errors occur, an exception is thrown with a description 
- * of the error.
+ * Lambert Conformal Conic (1 Standard Parallel) projection parameters as
+ * inputs, and sets the corresponding state variables. 
+ * If any errors occur, an exception is thrown with a description of the error.
  *
- *   ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid, in meters   (input)
- *   ellipsoidFlattening        : Flattening of ellipsoid				            (input)
- *   centralMeridian            : Longitude of origin, in radians           (input)
- *   originLatitude           : Latitude of origin, in radians            (input)
- *   falseEasting               : False easting, in meters                  (input)
- *   falseNorthing              : False northing, in meters                 (input)
- *   scaleFactor                : Projection scale factor                   (input) 
+ *   ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters   (input)
+ *   ellipsoidFlattening    : Flattening of ellipsoid                   (input)
+ *   centralMeridian        : Longitude of origin, in radians           (input)
+ *   originLatitude         : Latitude of origin, in radians            (input)
+ *   falseEasting           : False easting, in meters                  (input)
+ *   falseNorthing          : False northing, in meters                 (input)
+ *   scaleFactor            : Projection scale factor                   (input)
  *
  */
 
   double es2;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* Origin Longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -198,7 +194,8 @@ LambertConformalConic::LambertConformalConic( double ellipsoidSemiMajorAxis, dou
   es = sqrt(es2);
   es_OVER_2 = es / 2.0;
 
-  CommonParameters* parameters = setCommonLambert1StandardParallelParameters(originLatitude, falseNorthing, scaleFactor);    
+  CommonParameters* parameters = setCommonLambert1StandardParallelParameters(
+     originLatitude, falseNorthing, scaleFactor);    
 
   Lambert_1_n = parameters->_lambertN;                         
   Lambert_1_rho0 = parameters->_lambertRho0;                       
@@ -279,49 +276,46 @@ LambertConformalConic::LambertConformalConic( double ellipsoidSemiMajorAxis, dou
   double m1;
   double m2;
   double m_olat;
-  double n;                                /* Ratio of angle between meridians */
+  double n;                      /* Ratio of angle between meridians */
   double const_value;
   double Lambert_lat0;
   double Lambert_k0;
   double Lambert_false_northing;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
   }
   if ((originLatitude < -MAX_LAT) || (originLatitude > MAX_LAT))
   { /* Origin Latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude );
   }
   if ((standardParallel1 < -MAX_LAT) || (standardParallel1 > MAX_LAT))
   { /* First Standard Parallel out of range */
-    strcat( errorStatus, ErrorMessages::standardParallel1 );
+    throw CoordinateConversionException( ErrorMessages::standardParallel1 );
   }
   if ((standardParallel2 < -MAX_LAT) || (standardParallel2 > MAX_LAT))
   { /* Second Standard Parallel out of range */
-    strcat( errorStatus, ErrorMessages::standardParallel2 );
+    throw CoordinateConversionException( ErrorMessages::standardParallel2 );
   }
   if ((standardParallel1 == 0) && (standardParallel2 == 0))
   { /* First & Second Standard Parallels are both 0 */
-    strcat( errorStatus, ErrorMessages::standardParallel1_2 );
+    throw CoordinateConversionException( ErrorMessages::standardParallel1_2 );
   }
   if (standardParallel1 == -standardParallel2)
   { /* Parallels are the negation of each other */
-    strcat( errorStatus, ErrorMessages::standardParallelHemisphere );
+    throw CoordinateConversionException(
+       ErrorMessages::standardParallelHemisphere );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* Central meridian out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -365,7 +359,9 @@ LambertConformalConic::LambertConformalConic( double ellipsoidSemiMajorAxis, dou
 
     const_value = ((semiMajorAxis * m2) / (n * pow(t2, n)));
     
-    Lambert_false_northing = (const_value * pow(t_olat, n)) - (const_value * pow(t0, n)) + falseNorthing;
+    Lambert_false_northing =
+       (const_value * pow(t_olat, n)) - (const_value * pow(t0, n))
+       + falseNorthing;
   }
   else
   {
@@ -374,15 +370,16 @@ LambertConformalConic::LambertConformalConic( double ellipsoidSemiMajorAxis, dou
     Lambert_false_northing = falseNorthing;
   }
 
-  CommonParameters* parameters = setCommonLambert1StandardParallelParameters(Lambert_lat0, Lambert_false_northing, Lambert_k0);
+  CommonParameters* parameters = setCommonLambert1StandardParallelParameters(
+     Lambert_lat0, Lambert_false_northing, Lambert_k0);
 
-  Lambert_1_n = parameters->_lambertN;                         
-  Lambert_1_rho0 = parameters->_lambertRho0;                       
-  Lambert_1_rho_olat = parameters->_lambertRhoOlat;
-  Lambert_1_t0 = parameters->_lambertT0;
+  Lambert_1_n             = parameters->_lambertN;                         
+  Lambert_1_rho0          = parameters->_lambertRho0;                       
+  Lambert_1_rho_olat      = parameters->_lambertRhoOlat;
+  Lambert_1_t0            = parameters->_lambertT0;
   Lambert_Origin_Latitude = parameters->_lambertOriginLatitude; 
-  Lambert_False_Northing = parameters->_lambertFalseNorthing;             
-  Lambert_Scale_Factor = parameters->_lambertScaleFactor;     
+  Lambert_False_Northing  = parameters->_lambertFalseNorthing;             
+  Lambert_Scale_Factor    = parameters->_lambertScaleFactor;     
   
   delete parameters;
   parameters = 0;
@@ -390,25 +387,25 @@ LambertConformalConic::LambertConformalConic( double ellipsoidSemiMajorAxis, dou
 
 LambertConformalConic::LambertConformalConic( const LambertConformalConic &lcc )
 {
-  coordinateType = lcc.coordinateType;
-  semiMajorAxis = lcc.semiMajorAxis;
-  flattening = lcc.flattening;
-  es = lcc.es;
-  es_OVER_2 = lcc.es_OVER_2;
-  Lambert_1_n = lcc.Lambert_1_n;
-  Lambert_1_rho0 = lcc.Lambert_1_rho0;
-  Lambert_1_rho_olat = lcc.Lambert_1_rho_olat;
-  Lambert_1_t0 = lcc.Lambert_1_t0;
-  Lambert_Origin_Long = lcc.Lambert_Origin_Long;
-  Lambert_Origin_Latitude = lcc.Lambert_Origin_Latitude;
-  Lambert_False_Easting = lcc.Lambert_False_Easting;
-  Lambert_False_Northing = lcc.Lambert_False_Northing;
-  Lambert_Scale_Factor = lcc.Lambert_Scale_Factor;
-  Lambert_2_Origin_Lat = lcc.Lambert_2_Origin_Lat;
+  coordinateType           = lcc.coordinateType;
+  semiMajorAxis            = lcc.semiMajorAxis;
+  flattening               = lcc.flattening;
+  es                       = lcc.es;
+  es_OVER_2                = lcc.es_OVER_2;
+  Lambert_1_n              = lcc.Lambert_1_n;
+  Lambert_1_rho0           = lcc.Lambert_1_rho0;
+  Lambert_1_rho_olat       = lcc.Lambert_1_rho_olat;
+  Lambert_1_t0             = lcc.Lambert_1_t0;
+  Lambert_Origin_Long      = lcc.Lambert_Origin_Long;
+  Lambert_Origin_Latitude  = lcc.Lambert_Origin_Latitude;
+  Lambert_False_Easting    = lcc.Lambert_False_Easting;
+  Lambert_False_Northing   = lcc.Lambert_False_Northing;
+  Lambert_Scale_Factor     = lcc.Lambert_Scale_Factor;
+  Lambert_2_Origin_Lat     = lcc.Lambert_2_Origin_Lat;
   Lambert_2_Std_Parallel_1 = lcc.Lambert_2_Std_Parallel_1;
   Lambert_2_Std_Parallel_2 = lcc.Lambert_2_Std_Parallel_2;
-  Lambert_Delta_Easting = lcc.Lambert_Delta_Easting;
-  Lambert_Delta_Northing = lcc.Lambert_Delta_Northing;
+  Lambert_Delta_Easting    = lcc.Lambert_Delta_Easting;
+  Lambert_Delta_Northing   = lcc.Lambert_Delta_Northing;
 }
 
 
@@ -417,29 +414,30 @@ LambertConformalConic::~LambertConformalConic()
 }
 
 
-LambertConformalConic& LambertConformalConic::operator=( const LambertConformalConic &lcc )
+LambertConformalConic& LambertConformalConic::operator=(
+   const LambertConformalConic &lcc )
 {
   if( this != &lcc )
   {
-    coordinateType = lcc.coordinateType;
-    semiMajorAxis = lcc.semiMajorAxis;
-    flattening = lcc.flattening;
-    es = lcc.es;
-    es_OVER_2 = lcc.es_OVER_2;
-    Lambert_1_n = lcc.Lambert_1_n;
-    Lambert_1_rho0 = lcc.Lambert_1_rho0;
-    Lambert_1_rho_olat = lcc.Lambert_1_rho_olat;
-    Lambert_1_t0 = lcc.Lambert_1_t0;
-    Lambert_Origin_Long = lcc.Lambert_Origin_Long;
-    Lambert_Origin_Latitude = lcc.Lambert_Origin_Latitude;
-    Lambert_False_Easting = lcc.Lambert_False_Easting;
-    Lambert_False_Northing = lcc.Lambert_False_Northing;
-    Lambert_Scale_Factor = lcc.Lambert_Scale_Factor;
-    Lambert_2_Origin_Lat = lcc.Lambert_2_Origin_Lat;
+    coordinateType           = lcc.coordinateType;
+    semiMajorAxis            = lcc.semiMajorAxis;
+    flattening               = lcc.flattening;
+    es                       = lcc.es;
+    es_OVER_2                = lcc.es_OVER_2;
+    Lambert_1_n              = lcc.Lambert_1_n;
+    Lambert_1_rho0           = lcc.Lambert_1_rho0;
+    Lambert_1_rho_olat       = lcc.Lambert_1_rho_olat;
+    Lambert_1_t0             = lcc.Lambert_1_t0;
+    Lambert_Origin_Long      = lcc.Lambert_Origin_Long;
+    Lambert_Origin_Latitude  = lcc.Lambert_Origin_Latitude;
+    Lambert_False_Easting    = lcc.Lambert_False_Easting;
+    Lambert_False_Northing   = lcc.Lambert_False_Northing;
+    Lambert_Scale_Factor     = lcc.Lambert_Scale_Factor;
+    Lambert_2_Origin_Lat     = lcc.Lambert_2_Origin_Lat;
     Lambert_2_Std_Parallel_1 = lcc.Lambert_2_Std_Parallel_1;
     Lambert_2_Std_Parallel_2 = lcc.Lambert_2_Std_Parallel_2;
-    Lambert_Delta_Easting = lcc.Lambert_Delta_Easting;
-    Lambert_Delta_Northing = lcc.Lambert_Delta_Northing;
+    Lambert_Delta_Easting    = lcc.Lambert_Delta_Easting;
+    Lambert_Delta_Northing   = lcc.Lambert_Delta_Northing;
   }
 
   return *this;
@@ -452,13 +450,13 @@ MapProjection5Parameters* LambertConformalConic::get1StandardParallelParameters(
  * The function get1StandardParallelParameters returns the current ellipsoid
  * parameters and Lambert Conformal Conic (1 Standard Parallel) projection parameters.
  *
- *   ellipsoidSemiMajorAxis    : Semi-major axis of ellipsoid, in meters   (output)
- *   ellipsoidFlattening       : Flattening of ellipsoid					         (output)
- *   centralMeridian           : Longitude of origin, in radians           (output)
- *   originLatitude            : Latitude of origin, in radians            (output)
- *   falseEasting              : False easting, in meters                  (output)
- *   falseNorthing             : False northing, in meters                 (output)
- *   scaleFactor               : Projection scale factor                   (output) 
+ *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters (output)
+ *   ellipsoidFlattening     : Flattening of ellipsoid		       (output)
+ *   centralMeridian         : Longitude of origin, in radians         (output)
+ *   originLatitude          : Latitude of origin, in radians          (output)
+ *   falseEasting            : False easting, in meters                (output)
+ *   falseNorthing           : False northing, in meters               (output)
+ *   scaleFactor             : Projection scale factor                 (output) 
  */
 
   return new MapProjection5Parameters( CoordinateType::lambertConformalConic1Parallel, Lambert_Origin_Long, Lambert_Origin_Latitude, Lambert_Scale_Factor, Lambert_False_Easting, Lambert_False_Northing );
@@ -471,28 +469,34 @@ MapProjection6Parameters* LambertConformalConic::get2StandardParallelParameters(
  * The function get2StandardParallelParameters returns the current ellipsoid
  * parameters and Lambert Conformal Conic (2 Standard Parallel) projection parameters.
  *
- *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
- *   ellipsoidFlattening     : Flattening of ellipsoid					         (output)
- *   centralMeridian         : Longitude of origin, in radians           (output)
- *   originLatitude          : Latitude of origin, in radians            (output)
- *   standardParallel1       : First standard parallel, in radians       (output)
- *   standardParallel2       : Second standard parallel, in radians      (output)
- *   falseEasting            : False easting, in meters                  (output)
- *   falseNorthing           : False northing, in meters                 (output)
+ *   ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters  (output)
+ *   ellipsoidFlattening     : Flattening of ellipsoid                  (output)
+ *   centralMeridian         : Longitude of origin, in radians          (output)
+ *   originLatitude          : Latitude of origin, in radians           (output)
+ *   standardParallel1       : First standard parallel, in radians      (output)
+ *   standardParallel2       : Second standard parallel, in radians     (output)
+ *   falseEasting            : False easting, in meters                 (output)
+ *   falseNorthing           : False northing, in meters                (output)
  */
 
-  return new MapProjection6Parameters( CoordinateType::lambertConformalConic2Parallels, Lambert_Origin_Long, Lambert_2_Origin_Lat, Lambert_2_Std_Parallel_1, Lambert_2_Std_Parallel_2, Lambert_False_Easting, Lambert_False_Northing );
+  return new MapProjection6Parameters(
+     CoordinateType::lambertConformalConic2Parallels,
+     Lambert_Origin_Long, Lambert_2_Origin_Lat,
+     Lambert_2_Std_Parallel_1, Lambert_2_Std_Parallel_2,
+     Lambert_False_Easting, Lambert_False_Northing );
 }
 
 
-MSP::CCS::MapProjectionCoordinates* LambertConformalConic::convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
+MSP::CCS::MapProjectionCoordinates* LambertConformalConic::convertFromGeodetic(
+   MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
 {
 /*
  * The function convertFromGeodetic converts Geodetic (latitude and
- * longitude) coordinates to Lambert Conformal Conic (1 or 2 Standard Parallel) projection (easting
- * and northing) coordinates, according to the current ellipsoid and
- * Lambert Conformal Conic (1 or 2 Standard Parallel) projection parameters.  If any errors 
- * occur, an exception is thrown with a description of the error.
+ * longitude) coordinates to Lambert Conformal Conic (1 or 2 Standard Parallel)
+ * projection (easting and northing) coordinates, according to the current
+ * ellipsoid and Lambert Conformal Conic (1 or 2 Standard Parallel) projection
+ * parameters.  If any errors occur, an exception is thrown with a
+ * description of the error.
  *
  *    longitude        : Longitude, in radians                        (input)
  *    latitude         : Latitude, in radians                         (input)
@@ -504,22 +508,18 @@ MSP::CCS::MapProjectionCoordinates* LambertConformalConic::convertFromGeodetic( 
   double rho;
   double dlam;
   double theta;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   if (fabs(fabs(latitude) - PI_OVER_2) > 1.0e-10)
   {
@@ -582,27 +582,23 @@ MSP::CCS::GeodeticCoordinates* LambertConformalConic::convertToGeodetic( MSP::CC
   double tolerance = 4.85e-10;
   int count = 30;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Lambert_False_Easting - Lambert_Delta_Easting))
       ||(easting > (Lambert_False_Easting + Lambert_Delta_Easting)))
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting );
   }
   if ((northing < (Lambert_False_Northing - Lambert_Delta_Northing))
       || (northing > (Lambert_False_Northing + Lambert_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
-  dy = northing - Lambert_False_Northing;
-  dx = easting - Lambert_False_Easting;
+  dy                = northing - Lambert_False_Northing;
+  dx                = easting  - Lambert_False_Easting;
   rho_olat_MINUS_dy = Lambert_1_rho_olat - dy;
   rho = sqrt(dx * dx + (rho_olat_MINUS_dy) * (rho_olat_MINUS_dy));
 
@@ -674,7 +670,9 @@ MSP::CCS::GeodeticCoordinates* LambertConformalConic::convertToGeodetic( MSP::CC
 }
 
 
-LambertConformalConic::CommonParameters* LambertConformalConic::setCommonLambert1StandardParallelParameters( double originLatitude, double falseNorthing, double scaleFactor )
+LambertConformalConic::CommonParameters*
+LambertConformalConic::setCommonLambert1StandardParallelParameters(
+   double originLatitude, double falseNorthing, double scaleFactor )
 {
 /**
  * Receives the
@@ -690,26 +688,22 @@ LambertConformalConic::CommonParameters* LambertConformalConic::setCommonLambert
 
   double _esSin;
   double m0;
-  char errorStatus[500] = "";
 
   if (((originLatitude < -MAX_LAT) || (originLatitude > MAX_LAT)) ||
        (originLatitude > -ONE_SECOND) && (originLatitude < ONE_SECOND))
   { /* Origin Latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude );
   }
   if (scaleFactor < MIN_SCALE_FACTOR)
   {
-    strcat( errorStatus, ErrorMessages::scaleFactor );
+    throw CoordinateConversionException( ErrorMessages::scaleFactor );
   }
-
-  if(strlen( errorStatus ) > 0)
-    throw CoordinateConversionException(errorStatus);
 
   CommonParameters* parameters = new CommonParameters();
   
   parameters->_lambertOriginLatitude = originLatitude;
-  parameters->_lambertFalseNorthing = falseNorthing;
-  parameters->_lambertScaleFactor = scaleFactor;
+  parameters->_lambertFalseNorthing  = falseNorthing;
+  parameters->_lambertScaleFactor    = scaleFactor;
 
   parameters->_lambertN = sin(originLatitude);
 
@@ -718,7 +712,8 @@ LambertConformalConic::CommonParameters* LambertConformalConic::setCommonLambert
   m0 = cos(originLatitude) / sqrt(1.0 - _esSin * _esSin);
   parameters->_lambertT0 = lambertT(originLatitude, _esSin);
 
-  parameters->_lambertRho0 = semiMajorAxis * scaleFactor * m0 / parameters->_lambertN;
+  parameters->_lambertRho0 =
+     semiMajorAxis * scaleFactor * m0 / parameters->_lambertN;
 
   parameters->_lambertRhoOlat = parameters->_lambertRho0;
   
@@ -726,7 +721,8 @@ LambertConformalConic::CommonParameters* LambertConformalConic::setCommonLambert
 }
 
 
-double LambertConformalConic::calculateLambert2StandardParallel(double es2, double phi, double tempPhi, double c)
+double LambertConformalConic::calculateLambert2StandardParallel(
+   double es2, double phi, double tempPhi, double c)
 {
 /*
  * Calculates the

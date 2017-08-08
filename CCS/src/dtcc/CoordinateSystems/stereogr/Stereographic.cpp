@@ -161,27 +161,23 @@ Stereographic::Stereographic( double ellipsoidSemiMajorAxis, double ellipsoidFla
   double es2, es4, es6;
   double temp = 0;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((originLatitude < -PI_OVER_2) || (originLatitude > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   semiMajorAxis = ellipsoidSemiMajorAxis;
   flattening = ellipsoidFlattening;
@@ -189,7 +185,8 @@ Stereographic::Stereographic( double ellipsoidSemiMajorAxis, double ellipsoidFla
   es2 = 2 * flattening - flattening * flattening;
   es4 = es2 * es2;
   es6 = es4 * es2;
-  Stereo_Ra = semiMajorAxis * (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 /3024.0);
+  Stereo_Ra = semiMajorAxis *
+     (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 /3024.0);
   Two_Stereo_Ra = 2.0 * Stereo_Ra;
   Stereo_Origin_Lat = originLatitude;
   Sin_Stereo_Origin_Lat = sin(Stereo_Origin_Lat);
@@ -321,7 +318,6 @@ MSP::CCS::MapProjectionCoordinates* Stereographic::convertFromGeodetic( MSP::CCS
   double dlam;                        /* Longitude - Central Meridan */
   double cos_dlam;
   double easting, northing;
-  char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
   double latitude = geodeticCoordinates->latitude();
@@ -330,15 +326,12 @@ MSP::CCS::MapProjectionCoordinates* Stereographic::convertFromGeodetic( MSP::CCS
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   {  /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   {  /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dlam = longitude - Stereo_Origin_Long;
   if (dlam > PI)
@@ -424,7 +417,6 @@ MSP::CCS::GeodeticCoordinates* Stereographic::convertToGeodetic( MSP::CCS::MapPr
   double sin_c, cos_c;
   double dy_sin_c;
   double longitude, latitude;
-  char errorStatus[50] = "";
 
   double easting = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
@@ -432,23 +424,20 @@ MSP::CCS::GeodeticCoordinates* Stereographic::convertToGeodetic( MSP::CCS::MapPr
   if ((easting < (Stereo_False_Easting - Stereo_Delta_Easting))
       ||(easting > (Stereo_False_Easting + Stereo_Delta_Easting)))
   { /* Easting out of range  */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
   if ((northing < (Stereo_False_Northing - Stereo_Delta_Northing))
       || (northing > (Stereo_False_Northing + Stereo_Delta_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Stereo_False_Northing;
   dx = easting - Stereo_False_Easting;
   rho = sqrt(dx * dx + dy * dy);
   if (fabs(rho) <= 1.0e-10)
   {
-    latitude = Stereo_Origin_Lat;
+    latitude  = Stereo_Origin_Lat;
     longitude = Stereo_Origin_Long;
   }
   else

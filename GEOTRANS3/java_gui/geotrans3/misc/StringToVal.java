@@ -1,13 +1,16 @@
 // CLASSIFICATION: UNCLASSIFIED
 
-/*
- * StringToVal.java
- *
- * Created on August 15, 2007, 2:56 PM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+/******************************************************************************
+* Filename: StringToVal.java
+*
+* Copyright BAE Systems Inc. 2012 ALL RIGHTS RESERVED
+*
+* MODIFICATION HISTORY
+*
+* DATE      NAME        DR#          DESCRIPTION
+*
+* 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+*****************************************************************************/
 
 package geotrans3.misc;
 
@@ -125,7 +128,7 @@ public class StringToVal
    * @param    useMinutes     true if longitude string should be in degrees minutes seconds or degrees minutes format
    * @param    useSeconds     true if longitude string should be in degrees minutes seconds format
    * @return   string representation of the longitude double value
-   * @throws  CoordinateConversionException      invalid longitude value
+   * @exception  CoordinateConversionException      invalid longitude value
    * @see      ccs.enumerations.Precision	      
    */
   public String longitudeToString(final double inLongitude, boolean useNSEW, boolean useMinutes, boolean useSeconds) throws CoordinateConversionException
@@ -208,7 +211,7 @@ public class StringToVal
    * @param    useMinutes     true if latitude string should be in degrees minutes seconds or degrees minutes format
    * @param    useSeconds     true if latitude string should be in degrees minutes seconds format
    * @return   string representation of the latitude double value
-   * @throws  CoordinateConversionException      invalid latitude value
+   * @exception  CoordinateConversionException      invalid latitude value
    * @see      ccs.enumerations.Precision	      
    */
   public String latitudeToString(final double in_latitude, boolean useNSEW, boolean useMinutes, boolean useSeconds) throws CoordinateConversionException
@@ -456,7 +459,7 @@ public class StringToVal
         {
           degreesString = Long.toString(integer_Degrees) + latLonSeparator;
           minutesString = Long.toString(integer_Minutes) + latLonSeparator;
-          secondsString = Double.toString(seconds);
+          secondsString = this.doubleToString(seconds, (precision-4));
         }
 
         return addFractionZeros(degreesString + minutesString + secondsString, precision-4);    
@@ -468,9 +471,9 @@ public class StringToVal
   /**
    * Converts a DMS, DM or D longitude string value to a double value. 
    *
-   * @param    str    longitude string to parse
-   * @return   double representation of the longitude string value
-   * @throws  CoordinateConversionException    invalid longitude string
+   * @param str Longitude string to parse.
+   * @return Double representation of the longitude string value.
+   * @exception CoordinateConversionException if invalid longitude string.
    */
   public double stringToLongitude(String str) throws CoordinateConversionException
   {
@@ -499,7 +502,7 @@ public class StringToVal
          H = optional hemisphere (NSEW)
          / = separator character, one of ':' , '/' , ' '
       */
-      if (str.length() > 0)
+      if (str != null && (str.length() > 0))
       {
         reference_Pointer = str.toCharArray();
 
@@ -579,10 +582,10 @@ public class StringToVal
             throw new CoordinateConversionException(ErrorMessages.longitude);
           }
 
-          /* Convert DMS to fractional degrees */
+          // Convert DMS to fractional degrees
           val = ( Math.abs(degrees) + (minutes / 60.0) + (seconds / 3600.0) ) * sign;
 
-          /* Convert longitude to be between -180 and 180 */
+          // Convert longitude to be between -180 and 180
           if (val > 180)
             val -= 360;
 
@@ -597,11 +600,15 @@ public class StringToVal
         else
           throw new CoordinateConversionException(ErrorMessages.longitude);
       }
+      else
+      {
+        throw new CoordinateConversionException(ErrorMessages.noEntryError);
+      }
       return val;
     }
     catch(Exception e)
     {
-      throw new CoordinateConversionException("Invalid longitude value: " + e.getMessage());      
+      throw new CoordinateConversionException(e.getMessage());      
     }
   }
 
@@ -609,9 +616,9 @@ public class StringToVal
   /**
    * Converts a DMS, DM or D latitude string value to a double value. 
    *
-   * @param    str    latitude string to parse
-   * @return   double representation of the latitude string value
-   * @throws  CoordinateConversionException    invalid latitude string
+   * @param str Latitude string to parse.
+   * @return Double representation of the latitude string value.
+   * @exception CoordinateConversionException if invalid latitude string.
    */
   public double stringToLatitude(String str) throws CoordinateConversionException
   {
@@ -638,7 +645,7 @@ public class StringToVal
        H = optional hemisphere (NSEW)
        / = separator character, one of / : sp
     */
-    if (str.length() > 0)
+    if (str != null && (str.length() > 0))
     {
       reference_Pointer = str.toCharArray();
       parse_String = str;
@@ -722,18 +729,22 @@ public class StringToVal
           throw new CoordinateConversionException(ErrorMessages.latitude);
         }
 
-          /* Convert DMS to fractional degrees */
+          // Convert DMS to fractional degrees
           val = (double)( Math.abs(degrees) + (minutes / 60) + (seconds / 3600) ) * sign;
       }
       else
         throw new CoordinateConversionException(ErrorMessages.latitude);
+    }
+    else
+    {
+      throw new CoordinateConversionException(ErrorMessages.noEntryError);
     }
     
     return val;
     }
     catch(Exception e)
     {
-      throw new CoordinateConversionException("Invalid latitude value: " + e.getMessage());      
+      throw new CoordinateConversionException(e.getMessage());      
     }
   }
 
@@ -789,79 +800,63 @@ public class StringToVal
   /**
    * Converts a string value to a double value. 
    *
-   * @param    str          string to convert to a double
-   * @return   double representation of the input string
-   * @throws  CoordinateConversionException    invalid string
+   * @param str string to convert to a double.
+   * @return Double representation of the input string.
+   * @exception CoordinateConversionException if invalid string.
    */
   public double stringToDouble(String str) throws CoordinateConversionException
   {
-    if (validNumber(str))
-    {
-      return Double.parseDouble(str);
-    }
-    else
-      throw new CoordinateConversionException("stringToDouble: Invalid string");      
+      double returnDouble = 0.0;
+
+      if (str != null && (str.length() > 0))
+      {
+          try
+          {
+              returnDouble = Double.parseDouble(str);
+          }
+          catch (NumberFormatException e)
+          {
+              throw new CoordinateConversionException(ErrorMessages.numericError);
+          }
+      }
+      else
+      {
+          throw new CoordinateConversionException(ErrorMessages.noEntryError);
+      }
+
+      return returnDouble; 
   }
 
 
   /**
    * Converts a string value to an integer value. 
    *
-   * @param    str          string to convert to an integer
-   * @return   integer representation of the input string
-   * @throws  CoordinateConversionException    invalid string
+   * @param str String to convert to an integer.
+   * @return Integer representation of the input string.
+   * @exception CoordinateConversionException if invalid string.
    */
   public int stringToInt(String str) throws CoordinateConversionException
   {
+    int returnInt = 0;
+
     if (str != null && (str.length() > 0))
     {
-      return Integer.parseInt(str);
+        try
+        {
+            returnInt = Integer.parseInt(str);
+        }
+        catch (NumberFormatException e)
+        {
+            throw new CoordinateConversionException(ErrorMessages.numericError);
+        }
     }
     else
-      throw new CoordinateConversionException("stringToInt: Invalid string");      
-  }
-
-
-  
-  /**
-   * Checks if the string represents a valid number string. 
-   *
-   * @param    str          string to validate
-   * @return   true if the string is valid, false if the string is invalid
-   */
-  private boolean validNumber(String str)
-  {
-    int i = 0;
-    boolean valid = true;
-    int length;
-    boolean deci = false;
-
-    if (str != null)
     {
-      length = str.length();
-      char currentChar = str.charAt(i);
-      if ((i<length) && ((currentChar == '-') || (currentChar == '+')))
-        i ++;
-      while (valid && (i < length))
-      {
-        currentChar = str.charAt(i);
-        if (!java.lang.Character.isDigit(currentChar))
-        {
-          if ((currentChar == '.') && !deci)
-          {
-            i++;
-            deci = true;
-          }
-          else
-            valid = false;
-        }
-        else
-          i++;
-      }
+        throw new CoordinateConversionException(ErrorMessages.noEntryError);
     }
-    return valid;
-  }
 
+    return returnInt; 
+  }
 
   /**
    * Checks if the string represents a valid latitude or longitude string. 
