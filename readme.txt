@@ -1,28 +1,29 @@
-GEOTRANS 2.4.2
+                                   UNCLASSIFIED
 
-The GEOTRANS 2.4.2 software was developed and tested on Windows XP, Solaris 7, Red Hat Linux Professional 9, and SuSE Linux 9.3 platforms, and should function correctly on more recent versions of those operating systems.
+MSP GEOTRANS 3.0
 
-There are eight different GEOTRANS 2.4.2 distribution files - four for Windows, in zip format, and four for UNIX/Linux, in tar/gzip format:
+The MSP GEOTRANS 3.0 software was developed and tested on Windows XP, Solaris 8, Red Hat Linux Enterprise 4, and should function correctly on more recent versions of those operating systems.
 
-win_user.zip - Windows end-user's package
-win_dev.zip - Windows developer's package
-master.zip - master copy (everything) in zip format
-mgrs.zip - MGRS & supporting projections in zip format
+There are eight different MSP GEOTRANS 3.0 distribution files - four for Windows, in zip format, and four for Solaris/Linux, in tar/gzip format:
+The Windows packages omit the Solaris/Linux-specific directories, while the Solaris/Linux packages omit the Windows-specific directories.
 
-unix_user.tgz - UNIX/Linux end-user's package
-unix_dev.tgz - UNIX/Linux developer's package
-master.tgz - master copy (everything) in tar/gzip format
-mgrs.tgz - MGRS & supporting projections in tar/gzip
+win_user.zip - Windows end-user package
+win_dev.zip - Windows developer package
+master.zip - master package (everything)
+mgrs.zip - MGRS & supporting projections package
 
-The Windows packages omit the UNIX/Linux-specific directories, while the UNIX/Linux packages omit the Windows-specific directories.
+unix_user.tgz - Solaris/Linux end-user package
+unix_dev.tgz - Solaris/Linux developer package
+master.tgz - master package (everything)
+mgrs.tgz - MGRS & supporting projections package
 
 The end-user packages contain only executables, DLLs or shared object libraries, documentation, and supporting data.
 
-The developer packages also include source code, as well as makefiles, MS Visual C++ workspace and project files, and everything else necessary to build the libraries and executables.  
+The developer packages also include source code, as well as makefiles, MS Visual C++ solution and project files, and everything else necessary to build the libraries and executables.  
 
-The master packages can be considered to be cross-platform developer packages.  They both contain the union of the Windows and UNIX/Linux developer packages.  Only their format is different.  
+The master packages can be considered to be cross-platform developer packages.  The Windows and UNIX packages contain the union of the Windows and Solaris/Linux developer packages.  Only their format is different (.zip vs .tgz).  
 
-The MGRS packages contain only the source code for the MGRS, UTM, UPS, Transverse Mercator, and Polar Stereographic conversion modules, and are intended for developers who only want to do MGRS conversions.  Their content is identical.  Only their format is different.
+The MGRS packages contain only the source code for the MGRS, UTM, UPS, Transverse Mercator, and Polar Stereographic conversion modules, and are intended for developers who only want to do MGRS conversions.  The Windows and UNIX packages are identical.  Only their format is different (.zip vs .tgz).
 
 You should only need to copy one of these packages, depending on your platform and your intended usage.
 
@@ -39,3 +40,6 @@ GEOTRANS Terms of Use:
 5. Neither NGA nor its personnel will be liable for any claims, losses, or damages arising from or connected with the use of the software. The user agrees to hold harmless the United States National Geospatial-Intelligence Agency (NGA). The user's sole and exclusive remedy is to stop using the software.
 
 6. Please be advised that pursuant to the United States Code, 10 U.S.C. 425, the name of the National Geospatial-Intelligence Agency, the initials "NGA", the seal of the National Geospatial-Intelligence Agency, or any colorable imitation thereof shall not be used to imply approval, endorsement, or authorization of a product without prior written permission from United States Secretary of Defense.  Do not create the impression that NGA, the Secretary of Defense or the Director of National Intelligence has endorsed any product derived from GEOTRANS.
+
+                                   UNCLASSIFIED
+
