@@ -586,7 +586,10 @@ public class StringToVal
           if (val > 180)
             val -= 360;
 
-          if ((val > 360) || (val < -180))
+          if (val < -180)
+            val += 360;
+
+          if ((val > 180) || (val < -180))
           {
             throw new CoordinateConversionException(ErrorMessages.degrees);
           }

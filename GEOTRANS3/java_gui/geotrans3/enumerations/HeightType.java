@@ -10,7 +10,8 @@
  * DATE        NAME              DR#               DESCRIPTION
  * 
  * 05/12/10    S Gillis          BAEts26542        MSP TS MSL-HAE conversion 
- *                                                 should use CCS         
+ *                                                 should use CCS 
+ * 01/04/11    J Chelos          BAEts26267        Added EGM2008 BiCubicSpline
  */
 
 package geotrans3.enumerations;
@@ -29,6 +30,7 @@ public class HeightType extends Object {
     public final static int MSL_EGM84_10D_BL_HEIGHT = 4;
     public final static int MSL_EGM84_10D_NS_HEIGHT = 5;
     public final static int MSL_EGM84_30M_BL_HEIGHT = 6;
+    public final static int MSL_EGM2008_TWOPOINTFIVEM_BCS_HEIGHT = 7;
 
 }
 

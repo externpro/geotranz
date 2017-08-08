@@ -29,7 +29,7 @@
  *                                    inclusive.
  *          MGRS_A_ERROR           : Semi-major axis less than or equal to zero
  *          MGRS_INV_F_ERROR       : Inverse flattening outside of valid range
- *									                  (250 to 350)
+ *			              (250 to 350)
  *          MGRS_EASTING_ERROR     : Easting outside of valid range
  *                                    (100,000 to 900,000 meters for UTM)
  *                                    (0 to 4,000,000 meters for UPS)
@@ -97,49 +97,52 @@ namespace MSP
      *                        DEFINES
      */
 
-    class MGRS : public CoordinateSystem
-    {
-    public:
+     class MSP_DTCC_API MGRS : public CoordinateSystem
+     {
+        public:
 
       /*
        * The constructor receives the ellipsoid parameters and sets
-       * the corresponding state variables. If any errors occur, an exception is thrown with a description 
-       * of the error.
+       * the corresponding state variables. If any errors occur,
+       * an exception is thrown with a description of the error.
        *
-       *   ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid in meters  (input)
-       *   ellipsoidFlattening        : Flattening of ellipsoid					        (input)
-       *   ellipsoid_Code             : 2-letter code for ellipsoid             (input)
+       *   ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid (m)    (input)
+       *   ellipsoidFlattening    : Flattening of ellipsoid             (input)
+       *   ellipsoid_Code         : 2-letter code for ellipsoid         (input)
        */
 
-      MGRS( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, char* ellipsoidCode );
+           MGRS(
+              double ellipsoidSemiMajorAxis,
+              double ellipsoidFlattening,
+              char*  ellipsoidCode );
+           
+
+           MGRS( const MGRS &m );
 
 
-      MGRS( const MGRS &m );
+           ~MGRS( void );
 
 
-	    ~MGRS( void );
-
-
-      MGRS& operator=( const MGRS &m );
+           MGRS& operator=( const MGRS &m );
 
 
       /*
        * The function getParameters returns the current ellipsoid
        * parameters.
        *
-       *  ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid, in meters (output)
-       *  ellipsoidFlattening        : Flattening of ellipsoid					       (output)
-       *  ellipsoidCode              : 2-letter code for ellipsoid             (output)
+       *  ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, (m)   (output)
+       *  ellipsoidFlattening    : Flattening of ellipsoid             (output)
+       *  ellipsoidCode          : 2-letter code for ellipsoid         (output)
        */
 
-      EllipsoidParameters* getParameters() const;
+           EllipsoidParameters* getParameters() const;
 
 
       /*
        * The function convertFromGeodetic converts Geodetic (latitude and
        * longitude) coordinates to an MGRS coordinate string, according to the 
-       * current ellipsoid parameters.  If any errors occur, an exception is thrown with a description 
-       * of the error.
+       * current ellipsoid parameters. If any errors occur,
+       * an exception is thrown with a description of the error.
        *
        *    latitude      : Latitude in radians              (input)
        *    longitude     : Longitude in radians             (input)
@@ -148,14 +151,15 @@ namespace MSP
        *  
        */
 
-      MSP::CCS::MGRSorUSNGCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates, long precision );
-
+           MSP::CCS::MGRSorUSNGCoordinates* convertFromGeodetic(
+              MSP::CCS::GeodeticCoordinates* geodeticCoordinates,
+              long precision );
 
       /*
        * The function convertToGeodetic converts an MGRS coordinate string
        * to Geodetic (latitude and longitude) coordinates 
-       * according to the current ellipsoid parameters.  If any errors occur, an exception is  
-       * thrown with a description of the error.
+       * according to the current ellipsoid parameters.  If any errors occur,
+       * an exception is thrown with a description of the error.
        *
        *    MGRS       : MGRS coordinate string           (input)
        *    latitude   : Latitude in radians              (output)
@@ -163,14 +167,15 @@ namespace MSP
        *  
        */
 
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::MGRSorUSNGCoordinates* mgrsCoordinates );
+      MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+         MSP::CCS::MGRSorUSNGCoordinates* mgrsCoordinates );
 
 
       /*
        * The function convertFromUTM converts UTM (zone, easting, and
        * northing) coordinates to an MGRS coordinate string, according to the 
-       * current ellipsoid parameters.  If any errors occur, an exception is thrown  
-       * with a description of the error.
+       * current ellipsoid parameters.  If any errors occur,
+       * an exception is thrown with a description of the error.
        *
        *    zone       : UTM zone                         (input)
        *    hemisphere : North or South hemisphere        (input)
@@ -180,14 +185,15 @@ namespace MSP
        *    MGRSString : MGRS coordinate string           (output)
        */
 
-      MSP::CCS::MGRSorUSNGCoordinates* convertFromUTM( UTMCoordinates* utmCoordinates, long precision );
+      MSP::CCS::MGRSorUSNGCoordinates* convertFromUTM(
+         UTMCoordinates* utmCoordinates, long precision );
 
 
       /*
        * The function convertToUTM converts an MGRS coordinate string
-       * to UTM projection (zone, hemisphere, easting and northing) coordinates 
-       * according to the current ellipsoid parameters.  If any errors occur, an exception is thrown  
-       * with a description of the error.
+       * to UTM projection (zone, hemisphere, easting and northing) coordinates
+       * according to the current ellipsoid parameters.  If any errors occur,
+       * an exception is thrown with a description of the error.
        *
        *    MGRSString : MGRS coordinate string           (input)
        *    zone       : UTM zone                         (output)
@@ -196,14 +202,14 @@ namespace MSP
        *    northing   : Northing (Y) in meters           (output)
        */
 
-      MSP::CCS::UTMCoordinates* convertToUTM( MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates );
-
+      MSP::CCS::UTMCoordinates* convertToUTM(
+         MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates );
 
       /*
        * The function convertFromUPS converts UPS (hemisphere, easting, 
        * and northing) coordinates to an MGRS coordinate string according to 
-       * the current ellipsoid parameters.  If any errors occur, an exception is thrown with a description 
-       * of the error.
+       * the current ellipsoid parameters.  If any errors occur,
+       * an exception is thrown with a description of the error.
        *
        *    hemisphere    : Hemisphere either 'N' or 'S'     (input)
        *    easting       : Easting/X in meters              (input)
@@ -212,14 +218,15 @@ namespace MSP
        *    MGRSString    : MGRS coordinate string           (output)
        */
 
-      MSP::CCS::MGRSorUSNGCoordinates* convertFromUPS( MSP::CCS::UPSCoordinates* upsCoordinates, long precision );
+      MSP::CCS::MGRSorUSNGCoordinates* convertFromUPS(
+         MSP::CCS::UPSCoordinates* upsCoordinates, long precision );
 
 
       /*
        * The function convertToUPS converts an MGRS coordinate string
        * to UPS (hemisphere, easting, and northing) coordinates, according 
-       * to the current ellipsoid parameters. If any errors occur, an exception is thrown with a description 
-       * of the error.
+       * to the current ellipsoid parameters. If any errors occur,
+       * an exception is thrown with a description of the error.
        *
        *    MGRSString    : MGRS coordinate string           (input)
        *    hemisphere    : Hemisphere either 'N' or 'S'     (output)
@@ -227,7 +234,8 @@ namespace MSP
        *    northing      : Northing/Y in meters             (output)
        */
 
-      MSP::CCS::UPSCoordinates* convertToUPS( MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates );
+      MSP::CCS::UPSCoordinates* convertToUPS(
+         MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates );
 
     private:
 
@@ -251,8 +259,11 @@ namespace MSP
        *    MGRSString : MGRS coordinate string  (output)
        */
 
-      MSP::CCS::MGRSorUSNGCoordinates* fromUTM( MSP::CCS::UTMCoordinates* utmCoordinates, double longitude, double latitude, long precision );
-
+      MSP::CCS::MGRSorUSNGCoordinates* fromUTM(
+         MSP::CCS::UTMCoordinates* utmCoordinates,
+         double longitude,
+         double latitude,
+         long precision );
 
       /*
        * The function toUTM converts an MGRS coordinate string
@@ -267,7 +278,12 @@ namespace MSP
        *    northing   : Northing (Y) in meters           (output)
        */
 
-      MSP::CCS::UTMCoordinates* toUTM( long zone, long letters[MGRS_LETTERS], double easting, double northing, long in_precision );
+      MSP::CCS::UTMCoordinates* toUTM(
+         long zone,
+         long letters[MGRS_LETTERS],
+         double easting,
+         double northing,
+         long in_precision );
 
 
       /*
@@ -282,7 +298,9 @@ namespace MSP
        *    MGRSString    : MGRS coordinate string           (output)
        */
 
-      MSP::CCS::MGRSorUSNGCoordinates* fromUPS( MSP::CCS::UPSCoordinates* upsCoordinates, long precision );
+      MSP::CCS::MGRSorUSNGCoordinates* fromUPS(
+         MSP::CCS::UPSCoordinates* upsCoordinates,
+         long precision );
 
       /*
        * The function toUPS converts an MGRS coordinate string
@@ -296,8 +314,9 @@ namespace MSP
        *    northing      : Northing/Y in meters             (output)
        */
 
-      MSP::CCS::UPSCoordinates* toUPS( long letters[MGRS_LETTERS], double easting, double northing );
-
+      MSP::CCS::UPSCoordinates* toUPS(
+         long letters[MGRS_LETTERS],
+         double easting, double northing );
 
       /*
        * The function getGridValues sets the letter range used for 
@@ -312,34 +331,39 @@ namespace MSP
        *    pattern_offset  : Pattern offset          (output)
        */
 
-      void getGridValues( long zone, long* ltr2_low_value, long* ltr2_high_value, double* pattern_offset );
+      void getGridValues(
+         long zone,
+         long* ltr2_low_value,
+         long* ltr2_high_value,
+         double* pattern_offset );
 
     
       /*
-       * The function getLatitudeBandMinNorthing receives a latitude band letter
-       * and uses the Latitude_Band_Table to determine the minimum northing and northing offset
-       * for that latitude band letter.
+       * The function getLatitudeBandMinNorthing receives a latitude band 
+       * letter and uses the Latitude_Band_Table to determine the 
+       * minimum northing and northing offset for that latitude band letter.
        *
-       *   letter          : Latitude band letter             (input)
+       *   letter          : Latitude band letter               (input)
        *   min_northing    : Minimum northing for that letter	(output)
        *   northing_offset : Latitude band northing offset  	(output)
        */
 
-      void getLatitudeBandMinNorthing( long letter, double* min_northing, double* northing_offset );
+      void getLatitudeBandMinNorthing(
+         long letter, double* min_northing, double* northing_offset );
 
 
       /*
-       * The function getLatitudeRange receives a latitude band letter
-       * and uses the Latitude_Band_Table to determine the latitude band 
-       * boundaries for that latitude band letter.
+       * The function inLatitudeRange receives a latitude band letter
+       * and uses the Latitude_Band_Table to determine if the latitude
+       * falls within the band boundaries for that latitude band letter.  
        *
        *   letter   : Latitude band letter                        (input)
-       *   north    : Northern latitude boundary for that letter	(output)
-       *   north    : Southern latitude boundary for that letter	(output)
+       *   latitude : Latitude to test                            (input)
+       *   border   : Border added to band in radians             (input)
        */
 
-      void getLatitudeRange( long letter, double* north, double* south );
-
+      bool inLatitudeRange( long letter, double latitude, double border );
+   
 
       /*
        * The function getLatitudeLetter receives a latitude value

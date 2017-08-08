@@ -45,50 +45,57 @@ extern "C" {
 
 JNIEXPORT jlong JNICALL Java_geotrans3_jni_JNICoordinateConversionService_jniCreate(JNIEnv *env, jobject jobj, jstring _sourceDatumCode, jobject sourceParameters, jstring _targetDatumCode, jobject targetParameters)
 {
+  //initialize the return value to null
+  jlong return_val = 0;
+  MSP::CCS::CoordinateSystemParameters* sourceCoordinateSystemParameters = 0;
+  MSP::CCS::CoordinateSystemParameters* targetCoordinateSystemParameters = 0;
+  const char* sourceDatumCode;
+  const char* targetDatumCode;
   try
   {
     // Source datum code
-    const char* sourceDatumCode = env->GetStringUTFChars( _sourceDatumCode, NULL );
+    sourceDatumCode = env->GetStringUTFChars( _sourceDatumCode, NULL );
     if( sourceDatumCode == NULL )
     {
         throwException(env, "geotrans3/exception/CoordinateConversionException", "JNI Exception: Invalid source datum code.");
-        return 0;
+        return return_val;
     }
 
-    // Source parameters
-    MSP::CCS::CoordinateSystemParameters* sourceCoordinateSystemParameters = translateFromJNIParameters( env, sourceParameters );
-
     // Target datum code
-    const char* targetDatumCode = env->GetStringUTFChars( _targetDatumCode, NULL );
+    targetDatumCode = env->GetStringUTFChars( _targetDatumCode, NULL );
     if( targetDatumCode == NULL )
     {
         throwException(env, "geotrans3/exception/CoordinateConversionException", "JNI Exception: Invalid target datum code.");
-        return 0;
+        return return_val;
     }
 
+	// Source parameters
+    sourceCoordinateSystemParameters = translateFromJNIParameters( env, sourceParameters );
+
     // Target parameters
-    MSP::CCS::CoordinateSystemParameters* targetCoordinateSystemParameters = translateFromJNIParameters( env, targetParameters );
+    targetCoordinateSystemParameters = translateFromJNIParameters( env, targetParameters );
 
-    CoordinateConversionService* coordinateConversionService = new CoordinateConversionService(sourceDatumCode, sourceCoordinateSystemParameters, targetDatumCode, targetCoordinateSystemParameters);
+    //The constructor can throw an exception, need to cleanup in exception handler
+	CoordinateConversionService* coordinateConversionService = new CoordinateConversionService(sourceDatumCode, sourceCoordinateSystemParameters, targetDatumCode, targetCoordinateSystemParameters);
 
-    env->ReleaseStringUTFChars( _sourceDatumCode, sourceDatumCode );
+	return_val = (jlong)coordinateConversionService;
 
-    delete sourceCoordinateSystemParameters;
-    sourceCoordinateSystemParameters = 0;
-
-    env->ReleaseStringUTFChars( _targetDatumCode, targetDatumCode );
-
-    delete targetCoordinateSystemParameters;
-    targetCoordinateSystemParameters = 0;
-
-    return (jlong)coordinateConversionService; 
   }
   catch( CoordinateConversionException e )
   {
     throwException(env, "geotrans3/exception/CoordinateConversionException", e.getMessage());
- }
+  }
 
-  return 0;
+  //cleanup memory before returning
+  env->ReleaseStringUTFChars( _sourceDatumCode, sourceDatumCode );
+
+  delete sourceCoordinateSystemParameters;
+
+  env->ReleaseStringUTFChars( _targetDatumCode, targetDatumCode );
+
+  delete targetCoordinateSystemParameters;
+
+  return return_val;
 }
 
 
@@ -99,14 +106,13 @@ JNIEXPORT void JNICALL Java_geotrans3_jni_JNICoordinateConversionService_jniDest
   if( coordinateConversionService )
   {
     delete coordinateConversionService;
-    coordinateConversionService = 0;
   }
 }
 
 
 JNIEXPORT jobject JNICALL Java_geotrans3_jni_JNICoordinateConversionService_jniConvertSourceToTarget(JNIEnv *env, jobject jobj, jlong coordinateConversionPtr, jobject _sourceCoordinates, jobject _sourceAccuracy, jobject _targetCoordinates, jobject _targetAccuracy)
 {
-  jobject convertResults = 0;
+  jobject convertResults = NULL;
 
   CoordinateConversionService* coordinateConversionService = ( CoordinateConversionService* )coordinateConversionPtr;
 
@@ -162,16 +168,10 @@ JNIEXPORT jobject JNICALL Java_geotrans3_jni_JNICoordinateConversionService_jniC
       throwException( env, "geotrans3/exception/CoordinateConversionException", "jniConvertSourceToTarget: Invalid coordinates\n" );
 
     delete sourceCoordinateTuple;
-    sourceCoordinateTuple = 0;
-
     delete sourceAccuracy;
-    sourceAccuracy = 0;
-
     delete targetCoordinateTuple;
-    targetCoordinateTuple = 0;
-
     delete targetAccuracy;
-    targetAccuracy = 0;
+
   }
 
   return convertResults;
@@ -180,7 +180,7 @@ JNIEXPORT jobject JNICALL Java_geotrans3_jni_JNICoordinateConversionService_jniC
 
 JNIEXPORT jobject JNICALL Java_geotrans3_jni_JNICoordinateConversionService_jniConvertTargetToSource(JNIEnv *env, jobject jobj, jlong coordinateConversionPtr, jobject _targetCoordinates, jobject _targetAccuracy, jobject _sourceCoordinates, jobject _sourceAccuracy)
 {
-  jobject convertResults = 0;
+  jobject convertResults = NULL;
 
   CoordinateConversionService* coordinateConversionService = ( CoordinateConversionService* )coordinateConversionPtr;
 
@@ -237,16 +237,10 @@ JNIEXPORT jobject JNICALL Java_geotrans3_jni_JNICoordinateConversionService_jniC
       throwException( env, "geotrans3/exception/CoordinateConversionException", "jniConvertTargetToSource: Invalid coordinates\n" );
 
     delete targetCoordinateTuple;
-    targetCoordinateTuple = 0;
-
     delete targetAccuracy;
-    targetAccuracy = 0;
-
     delete sourceCoordinateTuple;
-    sourceCoordinateTuple = 0;
-
     delete sourceAccuracy;
-    sourceAccuracy = 0;
+
   }
 
   return convertResults;

@@ -4,6 +4,8 @@
  * StartBrowser.java
  *
  * Created on June 14, 2001, 9:02 AM
+ *
+ * 08/04/2011  K Swanson  BAEts29008  Added mozilla as a browser option
  */
 
 package geotrans3.utility;
@@ -41,9 +43,27 @@ public class StartBrowser extends Object {
             } 
             else 
             { 
-                // browserCommand = 'netscape http://www.javaworld.com' 
-                browserCommand = UNIX_PATH + " " + url; 
-                Process process = Runtime.getRuntime().exec(browserCommand); 
+                try
+                {
+                    // try firefox
+                    browserCommand = "firefox " + url; 
+                    Process process = Runtime.getRuntime().exec(browserCommand);  
+                }
+                catch(java.io.IOException x) 
+                {
+                    try
+                    {
+                        // try mozilla
+                        browserCommand = "mozilla " + url;
+                        Process process = Runtime.getRuntime().exec(browserCommand); 
+                    }
+                    catch (java.io.IOException ex)
+                    {
+                        // try netscape
+                        browserCommand = "netscape " + url; 
+                        Process process = Runtime.getRuntime().exec(browserCommand);  
+                    }
+                }
             } 
         } 
         catch(java.io.IOException x) 
@@ -57,7 +77,6 @@ public class StartBrowser extends Object {
     public static boolean isWindowsPlatform() 
     { 
         String os = System.getProperty("os.name"); 
-
         if ( os != null && os.startsWith(WIN_ID)) 
             return true; 
         else 
@@ -73,9 +92,6 @@ public class StartBrowser extends Object {
     // Flag to display a url. 
     private static final String WIN_FLAG = "url.dll,FileProtocolHandler"; 
 
-    // Default browser under unix. 
-    private static final String UNIX_PATH = "netscape"; 
-   
 }
 
 // CLASSIFICATION: UNCLASSIFIED

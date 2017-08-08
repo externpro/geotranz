@@ -70,6 +70,7 @@
  *    7/18/2010   NGL   BAEts27181 Add logic for special zones over southern
  *                      Norway and Svalbard. This was removed with BAEts24468 
  *                      and we are being asked to put it back in.
+ *    5-09-11     KNL   BAEts28908, add default constructor.
  *
  */
 
@@ -90,44 +91,85 @@
 #include "ErrorMessages.h"
 
 /*
- *    UTM.h         - Defines the function prototypes for the utm module.
- *    TransverseMercator.h    - Is used to convert transverse mercator coordinates
- *    MapProjectionCoordinates.h   - defines map projection coordinates
+ *    UTM.h          - Defines the function prototypes for the utm module.
+ *    TransverseMercator.h - Is used to convert transverse mercator coordinates
+ *    MapProjectionCoordinates.h  - defines map projection coordinates
  *    UTMCoordinates.h   - defines UTM coordinates
  *    GeodeticCoordinates.h   - defines geodetic coordinates
  *    CoordinateConversionException.h - Exception handler
  *    ErrorMessages.h  - Contains exception messages
  */
 
-
 using namespace MSP::CCS;
-
 
 /***************************************************************************/
 /*
  *                              DEFINES
  */
 
-#define EPSILON 1.75e-7   /* approx 1.0e-5 degrees (~1 meter) in radians */
+// const double PI = 3.14159265358979323e0;         /* PI                 */
+// const double PI_OVER_180 = (3.14159265358979323e0 / 180.0)  /* PI / 180 */
+// const double MIN_LAT = ( (-80.5 * PI) / 180.0 ); /* -80.5 deg in radians */
+// const double MAX_LAT = ( (84.5 * PI) / 180.0 ); /* 84.5 deg in radians  */
+// const double MIN_EASTING = 100000.0;
+// const double MAX_EASTING = 900000.0;
+// const double MIN_NORTHING = 0.0;
+// const double MAX_NORTHING = 10000000.0;
 
-const double PI = 3.14159265358979323e0;         /* PI                        */
-const double PI_OVER_180 = 3.14159265358979323e0 / 180.0;         /* PI                        */
-const double MIN_LAT = ( (-80.5 * PI) / 180.0 ); /* -80.5 degrees in radians    */
-const double MAX_LAT = ( (84.5 * PI) / 180.0 );  /* 84.5 degrees in radians     */
-const double MIN_EASTING = 100000.0;
-const double MAX_EASTING = 900000.0;
-const double MIN_NORTHING = 0.0;
-const double MAX_NORTHING = 10000000.0;
+#define PI           3.14159265358979323e0
+#define PI_OVER_180  (3.14159265358979323e0 / 180.0)
+#define MIN_LAT      ((-80.5 * PI) / 180.0) /* -80.5 degrees in radians */
+#define MAX_LAT      (( 84.5 * PI) / 180.0) /*  84.5 degrees in radians */
+#define MIN_EASTING   100000.0
+#define MAX_EASTING   900000.0
+#define MIN_NORTHING  0.0
+#define MAX_NORTHING  10000000.0
 
+#define EPSILON       1.75e-7   /* approx 1.0e-5 deg (~1 meter) in radians */
 
 /************************************************************************/
 /*                              FUNCTIONS
  *
  */
 
-UTM::UTM( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, long override ) :
-  CoordinateSystem(),
-  UTM_Override( 0 )
+UTM::UTM()
+{
+/*
+ * The default constructor
+ */
+
+  double ellipsoidSemiMajorAxis = 6378137.0;
+  double ellipsoidFlattening =  1 / 298.257223563;
+  double inv_f = 1 / ellipsoidFlattening;
+
+  semiMajorAxis = ellipsoidSemiMajorAxis;
+  flattening = ellipsoidFlattening;
+  UTM_Override = 0;
+
+  double centralMeridian;
+  double originLatitude = 0;
+  double falseEasting   = 500000;
+  double falseNorthing  = 0;
+  double scale          = 0.9996;
+  
+  for(int zone = 1; zone <= 60; zone++)
+  {
+     if (zone >= 31)
+        centralMeridian = ((6 * zone - 183) * PI_OVER_180);
+     else
+        centralMeridian = ((6 * zone + 177) * PI_OVER_180);
+
+     transverseMercatorMap[zone] = new TransverseMercator(
+        semiMajorAxis, flattening, centralMeridian, originLatitude,
+        falseEasting, falseNorthing, scale);
+  }
+}
+
+UTM::UTM(
+   double ellipsoidSemiMajorAxis,
+   double ellipsoidFlattening,
+   long   override ) :
+   UTM_Override( 0 )
 {
 /*
  * The constructor receives the ellipsoid parameters and
@@ -135,10 +177,10 @@ UTM::UTM( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, long overri
  * variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis        : Semi-major axis of ellipsoid, in meters       (input)
- *    ellipsoidFlattening           : Flattening of ellipsoid                       (input)
- *    override                      : UTM override zone, zero indicates no override (input)
- *    errorStatus                   : Error status                                  (output)
+ * ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters (input)
+ * ellipsoidFlattening    : Flattening of ellipsoid                 (input)
+ * override               : UTM override zone, zero indicates no override (input)
+ * errorStatus            : Error status                           (output)
  */
 
   double inv_f = 1 / ellipsoidFlattening;
@@ -167,18 +209,20 @@ UTM::UTM( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, long overri
 
   double centralMeridian;
   double originLatitude = 0;
-  double falseEasting = 500000;
-  double falseNorthing = 0;
-  double scale = 0.9996;
+  double falseEasting   = 500000;
+  double falseNorthing  = 0;
+  double scale          = 0.9996;
   
   for(int zone = 1; zone <= 60; zone++)
   {
-    if (zone >= 31)
-      centralMeridian = ((6 * zone - 183) * PI_OVER_180);
-    else
-      centralMeridian = ((6 * zone + 177) * PI_OVER_180);
+     if (zone >= 31)
+        centralMeridian = ((6 * zone - 183) * PI_OVER_180);
+     else
+        centralMeridian = ((6 * zone + 177) * PI_OVER_180);
     
-   transverseMercatorMap[zone] = new TransverseMercator(semiMajorAxis, flattening, centralMeridian, originLatitude, falseEasting, falseNorthing, scale);
+     transverseMercatorMap[zone] = new TransverseMercator(
+        semiMajorAxis, flattening, centralMeridian, originLatitude,
+        falseEasting, falseNorthing, scale);
   }
 }
 
@@ -186,8 +230,10 @@ UTM::UTM( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, long overri
 UTM::UTM( const UTM &u )
 {
   int zone = 1;
-  std::map< int, TransverseMercator* > tempTransverseMercatorMap = u.transverseMercatorMap;
-  std::map< int, TransverseMercator* >::iterator _iterator = tempTransverseMercatorMap.begin();
+  std::map< int, TransverseMercator* > tempTransverseMercatorMap =
+     u.transverseMercatorMap;
+  std::map< int, TransverseMercator* >::iterator _iterator =
+     tempTransverseMercatorMap.begin();
   while( _iterator != tempTransverseMercatorMap.end() && zone <= 60 )
   {
     transverseMercatorMap[zone] = new TransverseMercator( *_iterator->second );
@@ -195,18 +241,18 @@ UTM::UTM( const UTM &u )
   }
 
   semiMajorAxis = u.semiMajorAxis;
-  flattening = u.flattening;
-  UTM_Override = u.UTM_Override;
+  flattening    = u.flattening;
+  UTM_Override  = u.UTM_Override;
 }
 
 
 UTM::~UTM()
 {
-	while( transverseMercatorMap.begin() != transverseMercatorMap.end() )
-	{
-		delete ( ( *transverseMercatorMap.begin() ).second );
-		transverseMercatorMap.erase( transverseMercatorMap.begin() );
-	}
+   while( transverseMercatorMap.begin() != transverseMercatorMap.end() )
+   {
+      delete ( ( *transverseMercatorMap.begin() ).second );
+      transverseMercatorMap.erase( transverseMercatorMap.begin() );
+   }
 }
 
 
@@ -214,19 +260,21 @@ UTM& UTM::operator=( const UTM &u )
 {
   if( this != &u )
   {
-    int zone = 1;
-    std::map< int, TransverseMercator* > tempTransverseMercatorMap = u.transverseMercatorMap;
-    std::map< int, TransverseMercator* >::iterator _iterator = tempTransverseMercatorMap.begin();
-    while( _iterator != tempTransverseMercatorMap.end() && zone <= 60 )
-    {
-      transverseMercatorMap[zone]->operator=( *_iterator->second );
-      zone++;
-    }
+     int zone = 1;
+     std::map< int, TransverseMercator* > tempTransverseMercatorMap =
+        u.transverseMercatorMap;
+     std::map< int, TransverseMercator* >::iterator _iterator =
+        tempTransverseMercatorMap.begin();
+     while( _iterator != tempTransverseMercatorMap.end() && zone <= 60 )
+     {
+        transverseMercatorMap[zone]->operator=( *_iterator->second );
+        zone++;
+     }
 
- ///   transverseMercator->operator=( *u.transverseMercator );
-    semiMajorAxis = u.semiMajorAxis;
-    flattening = u.flattening;
-    UTM_Override = u.UTM_Override;
+     ///   transverseMercator->operator=( *u.transverseMercator );
+     semiMajorAxis = u.semiMajorAxis;
+     flattening    = u.flattening;
+     UTM_Override  = u.UTM_Override;
   }
 
   return *this;
@@ -239,23 +287,26 @@ UTMParameters* UTM::getParameters() const
  * The function getParameters returns the current ellipsoid
  * parameters and UTM zone override parameter.
  *
- *    ellipsoidSemiMajorAxis    : Semi-major axis of ellipsoid, in meters       (output)
- *    ellipsoidFlattening       : Flattening of ellipsoid                       (output)
- *    override                  : UTM override zone, zero indicates no override (output)
+ *    ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters (output)
+ *    ellipsoidFlattening    : Flattening of ellipsoid                 (output)
+ *    override         : UTM override zone, zero indicates no override (output)
  */
 
-  return new UTMParameters( CoordinateType::universalTransverseMercator, UTM_Override );
+  return new UTMParameters(
+     CoordinateType::universalTransverseMercator, UTM_Override );
 }
 
 
-MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
+MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic(
+   MSP::CCS::GeodeticCoordinates* geodeticCoordinates,
+   int                            utmZoneOverride )
 {
 /*
  * The function convertFromGeodetic converts geodetic (latitude and
  * longitude) coordinates to UTM projection (zone, hemisphere, easting and
  * northing) coordinates according to the current ellipsoid and UTM zone
- * override parameters.  If any errors occur, an exception is thrown with a description 
- * of the error.
+ * override parameters.  If any errors occur, an exception is thrown
+ * with a description of the error.
  *
  *    longitude         : Longitude in radians                (input)
  *    latitude          : Latitude in radians                 (input)
@@ -303,15 +354,28 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic( MSP::CCS::GeodeticCoordinate
 
   if (temp_zone > 60)
     temp_zone = 1;
-  
+
   /* allow UTM zone override up to +/- one zone of the calculated zone */  
-  if (UTM_Override)
+  if( utmZoneOverride )
+  {
+    if ((temp_zone == 1) && (utmZoneOverride == 60))
+      temp_zone = utmZoneOverride;
+    else if ((temp_zone == 60) && (utmZoneOverride == 1))
+      temp_zone = utmZoneOverride;
+    else if (((temp_zone-1) <= utmZoneOverride) &&
+              (utmZoneOverride <= (temp_zone+1)))
+      temp_zone = utmZoneOverride;
+    else
+      throw CoordinateConversionException( ErrorMessages::zoneOverride );
+  }
+  else if( UTM_Override )
   {
     if ((temp_zone == 1) && (UTM_Override == 60))
       temp_zone = UTM_Override;
     else if ((temp_zone == 60) && (UTM_Override == 1))
       temp_zone = UTM_Override;
-    else if (((temp_zone-1) <= UTM_Override) && (UTM_Override <= (temp_zone+1)))
+    else if (((temp_zone-1) <= UTM_Override) &&
+              (UTM_Override <= (temp_zone+1)))
       temp_zone = UTM_Override;
     else
       throw CoordinateConversionException( ErrorMessages::zoneOverride );
@@ -335,7 +399,7 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic( MSP::CCS::GeodeticCoordinate
       temp_zone = 37;
   }
  
-  TransverseMercator transverseMercator = *transverseMercatorMap[temp_zone];
+  TransverseMercator *transverseMercator = transverseMercatorMap[temp_zone];
 
   if (latitude < 0)
   {
@@ -345,8 +409,10 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic( MSP::CCS::GeodeticCoordinate
   else
     hemisphere = 'N';
 
-  GeodeticCoordinates tempGeodeticCoordinates( CoordinateType::geodetic, longitude, latitude );
-  MapProjectionCoordinates* transverseMercatorCoordinates = transverseMercator.convertFromGeodetic( &tempGeodeticCoordinates );
+  GeodeticCoordinates tempGeodeticCoordinates(
+     CoordinateType::geodetic, longitude, latitude );
+  MapProjectionCoordinates* transverseMercatorCoordinates =
+     transverseMercator->convertFromGeodetic( &tempGeodeticCoordinates );
   double easting = transverseMercatorCoordinates->easting();
   double northing = transverseMercatorCoordinates->northing() + False_Northing;
 
@@ -364,11 +430,14 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic( MSP::CCS::GeodeticCoordinate
 
   delete transverseMercatorCoordinates;
 
-  return new UTMCoordinates( CoordinateType::universalTransverseMercator, temp_zone, hemisphere, easting, northing );
+  return new UTMCoordinates(
+     CoordinateType::universalTransverseMercator,
+     temp_zone, hemisphere, easting, northing );
 }
 
 
-MSP::CCS::GeodeticCoordinates* UTM::convertToGeodetic( MSP::CCS::UTMCoordinates* utmCoordinates )
+MSP::CCS::GeodeticCoordinates* UTM::convertToGeodetic(
+   MSP::CCS::UTMCoordinates* utmCoordinates )
 {
 /*
  * The function convertToGeodetic converts UTM projection (zone,
@@ -390,7 +459,7 @@ MSP::CCS::GeodeticCoordinates* UTM::convertToGeodetic( MSP::CCS::UTMCoordinates*
 
   long zone = utmCoordinates->zone();
   char hemisphere = utmCoordinates->hemisphere();
-  double easting = utmCoordinates->easting();
+  double easting  = utmCoordinates->easting();
   double northing = utmCoordinates->northing();
 
   if ((zone < 1) || (zone > 60))
@@ -405,13 +474,15 @@ MSP::CCS::GeodeticCoordinates* UTM::convertToGeodetic( MSP::CCS::UTMCoordinates*
   if( strlen( errorStatus ) > 0)
     throw CoordinateConversionException( errorStatus );
 
-  TransverseMercator transverseMercator = *transverseMercatorMap[zone];
+  TransverseMercator *transverseMercator = transverseMercatorMap[zone];
 
   if (hemisphere == 'S')
     False_Northing = 10000000;
 
-  MapProjectionCoordinates transverseMercatorCoordinates( CoordinateType::transverseMercator, easting, northing - False_Northing );
-  GeodeticCoordinates* geodeticCoordinates = transverseMercator.convertToGeodetic( &transverseMercatorCoordinates );
+  MapProjectionCoordinates transverseMercatorCoordinates(
+     CoordinateType::transverseMercator, easting, northing - False_Northing );
+  GeodeticCoordinates* geodeticCoordinates =
+     transverseMercator->convertToGeodetic( &transverseMercatorCoordinates );
   geodeticCoordinates->setWarningMessage("");  
 
   double latitude = geodeticCoordinates->latitude();

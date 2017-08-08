@@ -209,9 +209,9 @@ namespace MSP
       double TranMerc_Delta_Northing;
 
 
-      double sphtmd( double latitude );
-      double sphsn( double latitude );
-      double sphsr( double latitude );
+      double sphtmd( double latitude, double sinLat, double cosLat );
+      double sphsn( double sinLat );
+      double sphsr( double sinLat );
     };
   }
 }

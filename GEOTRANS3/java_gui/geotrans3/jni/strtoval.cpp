@@ -1,5 +1,15 @@
 // CLASSIFICATION: UNCLASSIFIED
 
+/******************************************************************************
+* Filename        : strtoval.cpp
+*
+* MODIFICATION HISTORY:
+*
+* DATE      NAME        DR#               DESCRIPTION
+*
+* 03/29/11  S. Gillis   BAEts28564        Fixed Windows memory crash
+******************************************************************************/
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -488,7 +498,7 @@ double Round_Meter(const double Value)
 } /* Round_Meter */
 
 
-SVC_Status Meter_to_String(const double meters, char str[15])
+SVC_Status Meter_to_String(const double meters, char str[17])
 {
   SVC_Status error_Code = SVC_Success;
 
@@ -509,7 +519,7 @@ SVC_Status Meter_to_String(const double meters, char str[15])
 }
 
 
-SVC_Status Long_Meter_to_String(const double meters, char str[15])
+SVC_Status Long_Meter_to_String(const double meters, char str[17])
 {
   SVC_Status error_Code = SVC_Success;
 
@@ -806,12 +816,12 @@ SVC_Status String_to_Longitude(const char *str, double *val)
 }/* String_to_Longitude */
 
 
-SVC_Status Longitude_to_String(const double in_longitude, char str[15],
+SVC_Status Longitude_to_String(const double in_longitude, char str[17],
                                bool use_NSEW, bool use_Minutes, bool use_Seconds)
 {/* Longitude_to_String */
   double degrees = 0.0;
   double longitude;
-  char degrees_As_String[15];
+  char degrees_As_String[17];
   long starting_Index = 0;
   long ending_Index = 13;
   SVC_Status error_Code = SVC_Success;
@@ -1211,12 +1221,12 @@ SVC_Status String_to_Latitude(const char *str, double *val)
 }
 
 
-SVC_Status Latitude_to_String(const double in_latitude, char str[14],
+SVC_Status Latitude_to_String(const double in_latitude, char str[17],
                               bool use_NSEW, bool use_Minutes, bool use_Seconds)
 {
   double degrees = fabs(in_latitude);
   double latitude;
-  char degrees_As_String[14];
+  char degrees_As_String[17];
   long starting_Index = 1;
   SVC_Status error_Code = SVC_Success;
   long ending_Index = 12;
@@ -1268,7 +1278,7 @@ SVC_Status Zone_to_String(const long zone, char str[3])
 }
 
 
-SVC_Status Ellipsoidal_Height_to_String(const double ellipsoidal_Height, char str[15])
+SVC_Status Ellipsoidal_Height_to_String(const double ellipsoidal_Height, char str[17])
 {
   return Long_Meter_to_String(ellipsoidal_Height, str);
 }

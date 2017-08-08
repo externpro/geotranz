@@ -81,6 +81,12 @@
  *                      with C++ methods in classes CCSThreadMutex
  *    7/20/10           NGL BAEts27152 Updated getServiceVersion to return an int
  *                      return 310 for MSP Geotrans 3.1
+ *    01/24/11          S. Gillis, BAEts26267, Add support for EGM2008 geoid heights
+ *    02/02/11          K.Lam, BAEts27554, Fix memory leaks caused by mgrs function calls
+ *                      such as convertToUTM, convertToUPS, convertFromUTM, convertFromUPS
+ *    02/14/11          S. Gillis, BAEts26267, Add support for EGM2008 geoid heights
+ *    3/23/11           N. Lundgren BAEts28583 Updated for memory leaks in convert method
+ *    05/31/11          K. Lam BAEts28657  Update service version for MSP 1.1.5
  */
 
 
@@ -216,8 +222,12 @@ CoordinateConversionService::CCSData::~CCSData()
  *
  */
 
-CoordinateConversionService::CoordinateConversionService( const char* sourceDatumCode, MSP::CCS::CoordinateSystemParameters* sourceParameters, const char* targetDatumCode, MSP::CCS::CoordinateSystemParameters* targetParameters ) :
-  WGS84_datum_index( 0 )
+CoordinateConversionService::CoordinateConversionService(
+   const char* sourceDatumCode,
+   MSP::CCS::CoordinateSystemParameters* sourceParameters,
+   const char* targetDatumCode,
+   MSP::CCS::CoordinateSystemParameters* targetParameters ) :
+   WGS84_datum_index( 0 )
 {
   //Instantiate the variables here so exceptions can be caught
   try
@@ -505,7 +515,11 @@ CoordinateConversionService& CoordinateConversionService::operator=( const Coord
 }
 
 
-void CoordinateConversionService::convertSourceToTarget( CoordinateTuple* sourceCoordinates, Accuracy* sourceAccuracy, CoordinateTuple& targetCoordinates, Accuracy& targetAccuracy )
+void CoordinateConversionService::convertSourceToTarget(
+   CoordinateTuple* sourceCoordinates,
+   Accuracy*        sourceAccuracy,
+   CoordinateTuple& targetCoordinates,
+   Accuracy&        targetAccuracy )
 {
 /*
  *  The function convertSourceToTarget converts the current source coordinates in the coordinate
@@ -514,11 +528,16 @@ void CoordinateConversionService::convertSourceToTarget( CoordinateTuple* source
  *  system parameters and target datum.
  */
 
-  convert( SourceOrTarget::source, SourceOrTarget::target, sourceCoordinates, sourceAccuracy, targetCoordinates, targetAccuracy );
+  convert( SourceOrTarget::source, SourceOrTarget::target,
+     sourceCoordinates, sourceAccuracy, targetCoordinates, targetAccuracy );
 }
 
 
-void CoordinateConversionService::convertTargetToSource( CoordinateTuple* targetCoordinates, Accuracy* targetAccuracy, CoordinateTuple& sourceCoordinates, Accuracy& sourceAccuracy )
+void CoordinateConversionService::convertTargetToSource(
+   CoordinateTuple* targetCoordinates,
+   Accuracy*        targetAccuracy,
+   CoordinateTuple& sourceCoordinates,
+   Accuracy&        sourceAccuracy )
 {
 /*
  *  The function convertTargetToSource converts the current target coordinates in the coordinate
@@ -531,7 +550,11 @@ void CoordinateConversionService::convertTargetToSource( CoordinateTuple* target
 }
 
 
-void CoordinateConversionService::convertSourceToTargetCollection( const std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinates, const std::vector<MSP::CCS::Accuracy*>& sourceAccuracy, std::vector<MSP::CCS::CoordinateTuple*>& targetCoordinates, std::vector<MSP::CCS::Accuracy*>& targetAccuracy )
+void CoordinateConversionService::convertSourceToTargetCollection(
+   const std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinates,
+   const std::vector<MSP::CCS::Accuracy*>&        sourceAccuracy,
+   std::vector<MSP::CCS::CoordinateTuple*>&       targetCoordinates,
+   std::vector<MSP::CCS::Accuracy*>&              targetAccuracy )
 {
 /*
  *  The function convertSourceToTargetCollection will convert a list of source coordinates to a list of target coordinates
@@ -547,7 +570,11 @@ void CoordinateConversionService::convertSourceToTargetCollection( const std::ve
 }
 
 
-void CoordinateConversionService::convertTargetToSourceCollection( const std::vector<MSP::CCS::CoordinateTuple*>& targetCoordinates, const std::vector<MSP::CCS::Accuracy*>& targetAccuracy, std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinates, std::vector<MSP::CCS::Accuracy*>& sourceAccuracy )
+void CoordinateConversionService::convertTargetToSourceCollection(
+   const std::vector<MSP::CCS::CoordinateTuple*>& targetCoordinates,
+   const std::vector<MSP::CCS::Accuracy*>&        targetAccuracy,
+   std::vector<MSP::CCS::CoordinateTuple*>&       sourceCoordinates,
+   std::vector<MSP::CCS::Accuracy*>&              sourceAccuracy )
 {
 /*
  *  The function convertTargetToSourceCollection will convert a list of target coordinates to a list of source coordinates
@@ -593,7 +620,7 @@ int CoordinateConversionService::getServiceVersion()
  * The function getServiceVersion returns current service version.
  */
 
-  return 310;
+  return 320;
 }
 
 
@@ -611,7 +638,8 @@ const char* CoordinateConversionService::getDatum( const SourceOrTarget::Enum di
 }
 
 
-MSP::CCS::CoordinateSystemParameters* CoordinateConversionService::getCoordinateSystem( const SourceOrTarget::Enum direction ) const
+MSP::CCS::CoordinateSystemParameters* CoordinateConversionService::getCoordinateSystem(
+   const SourceOrTarget::Enum direction ) const
 {
 /*
  *  The function getCoordinateSystem returns the current coordinate system
@@ -744,7 +772,9 @@ void CoordinateConversionService::setDataLibraries()
 }
 
 
-void CoordinateConversionService::setDatum( const SourceOrTarget::Enum direction, const char* datumCode )
+void CoordinateConversionService::setDatum(
+   const SourceOrTarget::Enum direction,
+   const char* datumCode )
 {
 /*
  *  The function setDatum sets the datum to the
@@ -769,7 +799,9 @@ void CoordinateConversionService::setDatum( const SourceOrTarget::Enum direction
 }
 
 
-void CoordinateConversionService::setCoordinateSystem( const SourceOrTarget::Enum direction, MSP::CCS::CoordinateSystemParameters* parameters )
+void CoordinateConversionService::setCoordinateSystem(
+   const SourceOrTarget::Enum direction,
+   MSP::CCS::CoordinateSystemParameters* parameters )
 {
 /*
  *  The function setCoordinateSystem sets the coordinate system.
@@ -787,107 +819,133 @@ void CoordinateConversionService::setCoordinateSystem( const SourceOrTarget::Enu
   {
     case CoordinateType::albersEqualAreaConic:
       coordinateSystemState[direction].coordinateType = CoordinateType::albersEqualAreaConic;
-      coordinateSystemState[direction].parameters.mapProjection6Parameters = new MapProjection6Parameters( *dynamic_cast< MapProjection6Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection6Parameters =
+         new MapProjection6Parameters( *dynamic_cast< MapProjection6Parameters* >( parameters ) );
       break;
     case CoordinateType::azimuthalEquidistant:
       coordinateSystemState[direction].coordinateType = CoordinateType::azimuthalEquidistant;
-      coordinateSystemState[direction].parameters.mapProjection4Parameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection4Parameters =
+         new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       break;
     case CoordinateType::bonne:
       coordinateSystemState[direction].coordinateType = CoordinateType::bonne;
-      coordinateSystemState[direction].parameters.mapProjection4Parameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection4Parameters =
+         new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       break;
     case CoordinateType::britishNationalGrid:
       coordinateSystemState[direction].coordinateType = CoordinateType::britishNationalGrid;
-      coordinateSystemState[direction].parameters.coordinateSystemParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.coordinateSystemParameters =
+         new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       break;
     case CoordinateType::cassini:
       coordinateSystemState[direction].coordinateType = CoordinateType::cassini;
-      coordinateSystemState[direction].parameters.mapProjection4Parameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection4Parameters =
+         new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       break;
     case CoordinateType::cylindricalEqualArea:
       coordinateSystemState[direction].coordinateType = CoordinateType::cylindricalEqualArea;
-      coordinateSystemState[direction].parameters.mapProjection4Parameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection4Parameters =
+         new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       break;
     case CoordinateType::eckert4:
       coordinateSystemState[direction].coordinateType = CoordinateType::eckert4;
-      coordinateSystemState[direction].parameters.mapProjection3Parameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection3Parameters =
+         new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       break;
     case CoordinateType::eckert6:
       coordinateSystemState[direction].coordinateType = CoordinateType::eckert6;
-      coordinateSystemState[direction].parameters.mapProjection3Parameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection3Parameters =
+         new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       break;
     case CoordinateType::equidistantCylindrical:
       coordinateSystemState[direction].coordinateType = CoordinateType::equidistantCylindrical;
-      coordinateSystemState[direction].parameters.equidistantCylindricalParameters = new EquidistantCylindricalParameters( *dynamic_cast< EquidistantCylindricalParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.equidistantCylindricalParameters =
+         new EquidistantCylindricalParameters( *dynamic_cast< EquidistantCylindricalParameters* >( parameters ) );
       break;
     case CoordinateType::geocentric:
       coordinateSystemState[direction].coordinateType = CoordinateType::geocentric;
-      coordinateSystemState[direction].parameters.coordinateSystemParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.coordinateSystemParameters =
+         new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       break;
     case CoordinateType::geodetic:
       coordinateSystemState[direction].coordinateType = CoordinateType::geodetic;
-      coordinateSystemState[direction].parameters.geodeticParameters = new GeodeticParameters( *dynamic_cast< GeodeticParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.geodeticParameters =
+         new GeodeticParameters( *dynamic_cast< GeodeticParameters* >( parameters ) );
       break;
     case CoordinateType::georef:
       coordinateSystemState[direction].coordinateType = CoordinateType::georef;
-      coordinateSystemState[direction].parameters.coordinateSystemParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.coordinateSystemParameters =
+         new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       break;
     case CoordinateType::globalAreaReferenceSystem:
       coordinateSystemState[direction].coordinateType = CoordinateType::globalAreaReferenceSystem;
-      coordinateSystemState[direction].parameters.coordinateSystemParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.coordinateSystemParameters =
+         new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       break;
     case CoordinateType::gnomonic:
       coordinateSystemState[direction].coordinateType = CoordinateType::gnomonic;
-      coordinateSystemState[direction].parameters.mapProjection4Parameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection4Parameters =
+         new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       break;
     case CoordinateType::lambertConformalConic1Parallel:
       coordinateSystemState[direction].coordinateType = CoordinateType::lambertConformalConic1Parallel;
-      coordinateSystemState[direction].parameters.mapProjection5Parameters = new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection5Parameters =
+         new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
       break;
     case CoordinateType::lambertConformalConic2Parallels:
       coordinateSystemState[direction].coordinateType = CoordinateType::lambertConformalConic2Parallels;
-      coordinateSystemState[direction].parameters.mapProjection6Parameters = new MapProjection6Parameters( *dynamic_cast< MapProjection6Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection6Parameters =
+         new MapProjection6Parameters( *dynamic_cast< MapProjection6Parameters* >( parameters ) );
       break;
     case CoordinateType::localCartesian:
       coordinateSystemState[direction].coordinateType = CoordinateType::localCartesian;
-      coordinateSystemState[direction].parameters.localCartesianParameters = new LocalCartesianParameters( *dynamic_cast< LocalCartesianParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.localCartesianParameters =
+         new LocalCartesianParameters( *dynamic_cast< LocalCartesianParameters* >( parameters ) );
       break;
     case CoordinateType::mercatorStandardParallel:
       coordinateSystemState[direction].coordinateType = CoordinateType::mercatorStandardParallel;
-      coordinateSystemState[direction].parameters.mercatorStandardParallelParameters = new MercatorStandardParallelParameters( *dynamic_cast< MercatorStandardParallelParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mercatorStandardParallelParameters =
+         new MercatorStandardParallelParameters( *dynamic_cast< MercatorStandardParallelParameters* >( parameters ) );
       break;
     case CoordinateType::mercatorScaleFactor:
       coordinateSystemState[direction].coordinateType = CoordinateType::mercatorScaleFactor;
-      coordinateSystemState[direction].parameters.mercatorScaleFactorParameters = new MercatorScaleFactorParameters( *dynamic_cast< MercatorScaleFactorParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mercatorScaleFactorParameters =
+         new MercatorScaleFactorParameters( *dynamic_cast< MercatorScaleFactorParameters* >( parameters ) );
       break;
     case CoordinateType::militaryGridReferenceSystem:
       coordinateSystemState[direction].coordinateType = CoordinateType::militaryGridReferenceSystem;
-      coordinateSystemState[direction].parameters.coordinateSystemParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.coordinateSystemParameters =
+         new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       break;
     case CoordinateType::millerCylindrical:
       coordinateSystemState[direction].coordinateType = CoordinateType::millerCylindrical;
-      coordinateSystemState[direction].parameters.mapProjection3Parameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection3Parameters =
+         new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       break;
     case CoordinateType::mollweide:
       coordinateSystemState[direction].coordinateType = CoordinateType::mollweide;
-      coordinateSystemState[direction].parameters.mapProjection3Parameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection3Parameters =
+         new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       break;
     case CoordinateType::newZealandMapGrid:
       coordinateSystemState[direction].coordinateType = CoordinateType::newZealandMapGrid;
-      coordinateSystemState[direction].parameters.coordinateSystemParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.coordinateSystemParameters =
+         new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       break;
     case CoordinateType::neys:
       coordinateSystemState[direction].coordinateType = CoordinateType::neys;
-      coordinateSystemState[direction].parameters.neysParameters = new NeysParameters( *dynamic_cast< NeysParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.neysParameters =
+         new NeysParameters( *dynamic_cast< NeysParameters* >( parameters ) );
       break;
     case CoordinateType::obliqueMercator:
       coordinateSystemState[direction].coordinateType = CoordinateType::obliqueMercator;
-      coordinateSystemState[direction].parameters.obliqueMercatorParameters = new ObliqueMercatorParameters( *dynamic_cast< ObliqueMercatorParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.obliqueMercatorParameters =
+         new ObliqueMercatorParameters( *dynamic_cast< ObliqueMercatorParameters* >( parameters ) );
       break;
     case CoordinateType::orthographic:
       coordinateSystemState[direction].coordinateType = CoordinateType::orthographic;
-      coordinateSystemState[direction].parameters.mapProjection4Parameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection4Parameters =
+         new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       break;
     case CoordinateType::polarStereographicStandardParallel:
       coordinateSystemState[direction].coordinateType = CoordinateType::polarStereographicStandardParallel;
@@ -895,43 +953,53 @@ void CoordinateConversionService::setCoordinateSystem( const SourceOrTarget::Enu
       break;
     case CoordinateType::polarStereographicScaleFactor:
       coordinateSystemState[direction].coordinateType = CoordinateType::polarStereographicScaleFactor;
-      coordinateSystemState[direction].parameters.polarStereographicScaleFactorParameters = new PolarStereographicScaleFactorParameters( *dynamic_cast< PolarStereographicScaleFactorParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.polarStereographicScaleFactorParameters =
+         new PolarStereographicScaleFactorParameters( *dynamic_cast< PolarStereographicScaleFactorParameters* >( parameters ) );
       break;
     case CoordinateType::polyconic:
       coordinateSystemState[direction].coordinateType = CoordinateType::polyconic;
-      coordinateSystemState[direction].parameters.mapProjection4Parameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection4Parameters =
+         new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       break;
     case CoordinateType::sinusoidal:
       coordinateSystemState[direction].coordinateType = CoordinateType::sinusoidal;
-      coordinateSystemState[direction].parameters.mapProjection3Parameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection3Parameters =
+         new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       break;
     case CoordinateType::stereographic:
       coordinateSystemState[direction].coordinateType = CoordinateType::stereographic;
-      coordinateSystemState[direction].parameters.mapProjection4Parameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection4Parameters =
+         new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       break;
     case CoordinateType::transverseCylindricalEqualArea:
       coordinateSystemState[direction].coordinateType = CoordinateType::transverseCylindricalEqualArea;
-      coordinateSystemState[direction].parameters.mapProjection5Parameters = new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection5Parameters =
+         new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
       break;
     case CoordinateType::transverseMercator:
       coordinateSystemState[direction].coordinateType = CoordinateType::transverseMercator;
-      coordinateSystemState[direction].parameters.mapProjection5Parameters = new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection5Parameters =
+         new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
       break;
     case CoordinateType::universalPolarStereographic:
       coordinateSystemState[direction].coordinateType = CoordinateType::universalPolarStereographic;
-      coordinateSystemState[direction].parameters.coordinateSystemParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.coordinateSystemParameters =
+         new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       break;
     case CoordinateType::universalTransverseMercator:
       coordinateSystemState[direction].coordinateType = CoordinateType::universalTransverseMercator;
-      coordinateSystemState[direction].parameters.utmParameters = new UTMParameters( *dynamic_cast< UTMParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.utmParameters =
+         new UTMParameters( *dynamic_cast< UTMParameters* >( parameters ) );
       break;
     case CoordinateType::usNationalGrid:
       coordinateSystemState[direction].coordinateType = CoordinateType::usNationalGrid;
-      coordinateSystemState[direction].parameters.coordinateSystemParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.coordinateSystemParameters =
+         new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       break;
     case CoordinateType::vanDerGrinten:
       coordinateSystemState[direction].coordinateType = CoordinateType::vanDerGrinten;
-      coordinateSystemState[direction].parameters.mapProjection3Parameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
+      coordinateSystemState[direction].parameters.mapProjection3Parameters =
+         new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       break;
     default:
       throw CoordinateConversionException(ErrorMessages::invalidType);
@@ -972,35 +1040,38 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
     {
       MapProjection6Parameters* param = row->parameters.mapProjection6Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new AlbersEqualAreaConic(semiMajorAxis, flattening,
-                                                       param->centralMeridian(),
-                                                       param->originLatitude(),
-                                                       param->standardParallel1(),
-                                                       param->standardParallel2(),
-                                                       param->falseEasting(),
-                                                       param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new AlbersEqualAreaConic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->standardParallel1(),
+         param->standardParallel2(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::azimuthalEquidistant:
     {
       MapProjection4Parameters* param = row->parameters.mapProjection4Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new AzimuthalEquidistant(semiMajorAxis, flattening,
-                                                       param->centralMeridian(),
-                                                       param->originLatitude(),
-                                                       param->falseEasting(),
-                                                       param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new AzimuthalEquidistant(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::bonne:
     {
       MapProjection4Parameters* param = row->parameters.mapProjection4Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Bonne( semiMajorAxis, flattening,
-                                        param->centralMeridian(),
-                                        param->originLatitude(),
-                                        param->falseEasting(),
-                                        param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Bonne(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::britishNationalGrid:
@@ -1013,53 +1084,58 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
     {
       MapProjection4Parameters* param = row->parameters.mapProjection4Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Cassini( semiMajorAxis, flattening,
-                                          param->centralMeridian(),
-                                          param->originLatitude(),
-                                          param->falseEasting(),
-                                          param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Cassini(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::cylindricalEqualArea:
     {
       MapProjection4Parameters* param = row->parameters.mapProjection4Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new CylindricalEqualArea( semiMajorAxis, flattening,
-                                                       param->centralMeridian(),
-                                                       param->originLatitude(),
-                                                       param->falseEasting(),
-                                                       param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new CylindricalEqualArea(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::eckert4:
     {
       MapProjection3Parameters* param = row->parameters.mapProjection3Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Eckert4( semiMajorAxis, flattening,
-                                          param->centralMeridian(),
-                                          param->falseEasting(),
-                                          param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Eckert4(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::eckert6:
     {
       MapProjection3Parameters* param = row->parameters.mapProjection3Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Eckert6( semiMajorAxis, flattening,
-                                          param->centralMeridian(),
-                                          param->falseEasting(),
-                                          param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Eckert6(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::equidistantCylindrical:
     {
       EquidistantCylindricalParameters* param = row->parameters.equidistantCylindricalParameters;
 
-      coordinateSystemState[direction].coordinateSystem = new EquidistantCylindrical( semiMajorAxis,flattening,
-                                                         param->centralMeridian(),
-                                                         param->standardParallel(),
-                                                         param->falseEasting(),
-                                                         param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new EquidistantCylindrical(
+         semiMajorAxis,flattening,
+         param->centralMeridian(),
+         param->standardParallel(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::geocentric:
@@ -1080,60 +1156,65 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
     {
       MapProjection4Parameters* param = row->parameters.mapProjection4Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Gnomonic( semiMajorAxis, flattening,
-                                           param->centralMeridian(),
-                                           param->originLatitude(),
-                                           param->falseEasting(),
-                                           param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Gnomonic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::lambertConformalConic1Parallel:
     {
       MapProjection5Parameters* param = row->parameters.mapProjection5Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new LambertConformalConic( semiMajorAxis, flattening,
-                                                         param->centralMeridian(),
-                                                         param->originLatitude(),
-                                                         param->falseEasting(),
-                                                         param->falseNorthing(),
-                                                         param->scaleFactor() );
+      coordinateSystemState[direction].coordinateSystem = new LambertConformalConic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing(),
+         param->scaleFactor() );
       break;
     }
     case CoordinateType::lambertConformalConic2Parallels:
     {
       MapProjection6Parameters* param = row->parameters.mapProjection6Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new LambertConformalConic( semiMajorAxis, flattening,
-                                                         param->centralMeridian(),
-                                                         param->originLatitude(),
-                                                         param->standardParallel1(),
-                                                         param->standardParallel2(),
-                                                         param->falseEasting(),
-                                                         param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new LambertConformalConic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->standardParallel1(),
+         param->standardParallel2(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::localCartesian:
     {
       LocalCartesianParameters* param = row->parameters.localCartesianParameters;
 
-      coordinateSystemState[direction].coordinateSystem = new LocalCartesian( semiMajorAxis, flattening,
-                                                 param->longitude(),
-                                                 param->latitude(),
-                                                 param->height(),
-                                                 param->orientation() );
+      coordinateSystemState[direction].coordinateSystem = new LocalCartesian(
+         semiMajorAxis, flattening,
+         param->longitude(),
+         param->latitude(),
+         param->height(),
+         param->orientation() );
       break;
     }
     case CoordinateType::mercatorStandardParallel:
     {
       MercatorStandardParallelParameters* param = row->parameters.mercatorStandardParallelParameters;
       double scaleFactor;
-      coordinateSystemState[direction].coordinateSystem = new Mercator( semiMajorAxis, flattening,
-                                           param->centralMeridian(),
-                                           param->standardParallel(),
-                                           param->falseEasting(),
-                                           param->falseNorthing(),
-                                           &scaleFactor );
-
+      coordinateSystemState[direction].coordinateSystem = new Mercator(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->standardParallel(),
+         param->falseEasting(),
+         param->falseNorthing(),
+         &scaleFactor );
+      
       param->setScaleFactor( scaleFactor );
 
       break;
@@ -1142,17 +1223,19 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
     {
       MercatorScaleFactorParameters* param = row->parameters.mercatorScaleFactorParameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Mercator( semiMajorAxis, flattening,
-                                           param->centralMeridian(),
-                                           param->falseEasting(),
-                                           param->falseNorthing(),
-                                           param->scaleFactor() );
+      coordinateSystemState[direction].coordinateSystem = new Mercator(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->falseEasting(),
+         param->falseNorthing(),
+         param->scaleFactor() );
 
       break;
     }
     case CoordinateType::militaryGridReferenceSystem:
     {
-      coordinateSystemState[direction].coordinateSystem = new MGRS( semiMajorAxis, flattening, ellipsoidCode );
+      coordinateSystemState[direction].coordinateSystem = new MGRS(
+         semiMajorAxis, flattening, ellipsoidCode );
 
       break;
     }
@@ -1160,20 +1243,22 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
     {
       MapProjection3Parameters* param = row->parameters.mapProjection3Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new MillerCylindrical( semiMajorAxis, flattening,
-                                                    param->centralMeridian(),
-                                                    param->falseEasting(),
-                                                    param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new MillerCylindrical(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::mollweide:
     {
       MapProjection3Parameters* param = row->parameters.mapProjection3Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Mollweide( semiMajorAxis,flattening,
-                                                                         param->centralMeridian(),
-                                                                         param->falseEasting(),
-                                                                         param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Mollweide(
+         semiMajorAxis,flattening,
+         param->centralMeridian(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::newZealandMapGrid:
@@ -1186,49 +1271,53 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
     {
       NeysParameters* param = row->parameters.neysParameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Neys( semiMajorAxis, flattening,
-                                       param->centralMeridian(),
-                                       param->originLatitude(),
-                                       param->standardParallel1(),
-                                       param->falseEasting(),
-                                       param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Neys(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->standardParallel1(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::obliqueMercator:
     {
       ObliqueMercatorParameters* param = row->parameters.obliqueMercatorParameters;
 
-      coordinateSystemState[direction].coordinateSystem = new ObliqueMercator( semiMajorAxis, flattening,
-                                                  param->originLatitude(),
-                                                  param->longitude1(),
-                                                  param->latitude1(),
-                                                  param->longitude2(),
-                                                  param->latitude2(),
-                                                  param->falseEasting(),
-                                                  param->falseNorthing(),
-                                                  param->scaleFactor() );
+      coordinateSystemState[direction].coordinateSystem = new ObliqueMercator(
+         semiMajorAxis, flattening,
+         param->originLatitude(),
+         param->longitude1(),
+         param->latitude1(),
+         param->longitude2(),
+         param->latitude2(),
+         param->falseEasting(),
+         param->falseNorthing(),
+         param->scaleFactor() );
       break;
     }
     case CoordinateType::orthographic:
     {
       MapProjection4Parameters* param = row->parameters.mapProjection4Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Orthographic( semiMajorAxis, flattening,
-                                               param->centralMeridian(),
-                                               param->originLatitude(),
-                                               param->falseEasting(),
-                                               param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Orthographic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::polarStereographicStandardParallel:
     {
       PolarStereographicStandardParallelParameters* param = row->parameters.polarStereographicStandardParallelParameters;
 
-      coordinateSystemState[direction].coordinateSystem = new PolarStereographic( semiMajorAxis, flattening,                                            
-                                            param->centralMeridian(),
-                                            param->standardParallel(),
-                                            param->falseEasting(),
-                                            param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new PolarStereographic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->standardParallel(),
+         param->falseEasting(),
+         param->falseNorthing() );
 
       break;
     }
@@ -1236,73 +1325,80 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
     {
       PolarStereographicScaleFactorParameters* param = row->parameters.polarStereographicScaleFactorParameters;
 
-      coordinateSystemState[direction].coordinateSystem = new PolarStereographic( semiMajorAxis, flattening,
-                                            param->centralMeridian(),
-                                            param->scaleFactor(),
-                                            param->hemisphere(),
-                                            param->falseEasting(),
-                                            param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new PolarStereographic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->scaleFactor(),
+         param->hemisphere(),
+         param->falseEasting(),
+         param->falseNorthing() );
      break;
     }
     case CoordinateType::polyconic:
     {
       MapProjection4Parameters* param = row->parameters.mapProjection4Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Polyconic( semiMajorAxis, flattening,
-                                            param->centralMeridian(),
-                                            param->originLatitude(),
-                                            param->falseEasting(),
-                                            param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Polyconic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::sinusoidal:
     {
       MapProjection3Parameters* param = row->parameters.mapProjection3Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Sinusoidal( semiMajorAxis, flattening,
-                                             param->centralMeridian(),
-                                             param->falseEasting(),
-                                             param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Sinusoidal(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::stereographic:
     {
       MapProjection4Parameters* param = row->parameters.mapProjection4Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new Stereographic( semiMajorAxis, flattening,
-                                                param->centralMeridian(),
-                                                param->originLatitude(),
-                                                param->falseEasting(),
-                                                param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new Stereographic(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     case CoordinateType::transverseCylindricalEqualArea:
     {
       MapProjection5Parameters* param = row->parameters.mapProjection5Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new TransverseCylindricalEqualArea( semiMajorAxis, flattening,
-                                                                 param->centralMeridian(),
-                                                                 param->originLatitude(),
-                                                                 param->falseEasting(),
-                                                                 param->falseNorthing(),
-                                                                 param->scaleFactor() );
+      coordinateSystemState[direction].coordinateSystem = new TransverseCylindricalEqualArea(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing(),
+         param->scaleFactor() );
       break;
     }
     case CoordinateType::transverseMercator:
     {
       MapProjection5Parameters* param = row->parameters.mapProjection5Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new TransverseMercator( semiMajorAxis, flattening,
-                                                     param->centralMeridian(),
-                                                     param->originLatitude(),
-                                                     param->falseEasting(),
-                                                     param->falseNorthing(),
-                                                     param->scaleFactor() );
+      coordinateSystemState[direction].coordinateSystem = new TransverseMercator(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->originLatitude(),
+         param->falseEasting(),
+         param->falseNorthing(),
+         param->scaleFactor() );
       break;
     }
     case CoordinateType::universalPolarStereographic:
     {
-      coordinateSystemState[direction].coordinateSystem = new UPS( semiMajorAxis, flattening );
+      coordinateSystemState[direction].coordinateSystem = new UPS(
+         semiMajorAxis, flattening );
 
       break;
     }
@@ -1327,7 +1423,8 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
             param->setZone( 0 );
         }*/
 
-        coordinateSystemState[direction].coordinateSystem = new UTM( semiMajorAxis, flattening, param->zone() );
+        coordinateSystemState[direction].coordinateSystem = new UTM(
+           semiMajorAxis, flattening, param->zone() );
       }
       else
         coordinateSystemState[direction].coordinateSystem = new UTM( semiMajorAxis, flattening, 0 );
@@ -1344,10 +1441,11 @@ void CoordinateConversionService::setParameters( const SourceOrTarget::Enum dire
     {
       MapProjection3Parameters* param = row->parameters.mapProjection3Parameters;
 
-      coordinateSystemState[direction].coordinateSystem = new VanDerGrinten( semiMajorAxis, flattening,
-                                                param->centralMeridian(),
-                                                param->falseEasting(),
-                                                param->falseNorthing() );
+      coordinateSystemState[direction].coordinateSystem = new VanDerGrinten(
+         semiMajorAxis, flattening,
+         param->centralMeridian(),
+         param->falseEasting(),
+         param->falseNorthing() );
       break;
     }
     default:
@@ -1812,7 +1910,10 @@ void CoordinateConversionService::deleteCoordinateSystem( const SourceOrTarget::
 }
 
 
-void CoordinateConversionService::copyParameters( SourceOrTarget::Enum direction, CoordinateType::Enum coordinateType, Parameters parameters )
+void CoordinateConversionService::copyParameters(
+   SourceOrTarget::Enum direction,
+   CoordinateType::Enum coordinateType,
+   Parameters           parameters )
 {
 /*
  *  The function copyParameters uses the input parameters to set the value of the 
@@ -1901,7 +2002,13 @@ void CoordinateConversionService::copyParameters( SourceOrTarget::Enum direction
 }
 
 
-void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection, SourceOrTarget::Enum targetDirection, CoordinateTuple* sourceCoordinates, Accuracy* sourceAccuracy, CoordinateTuple& targetCoordinates, Accuracy& targetAccuracy )
+void CoordinateConversionService::convert(
+   SourceOrTarget::Enum sourceDirection,
+   SourceOrTarget::Enum targetDirection,
+   CoordinateTuple*     sourceCoordinates,
+   Accuracy*            sourceAccuracy,
+   CoordinateTuple&     targetCoordinates,
+   Accuracy&            targetAccuracy )
 {
 /*
  *  The function convert converts the current source coordinates in the coordinate
@@ -1934,7 +2041,8 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
     /********************************************************/
     if (source->datumIndex == target->datumIndex)
     {
-      if ((source->coordinateType == CoordinateType::geocentric) && (target->coordinateType == CoordinateType::localCartesian))
+      if((source->coordinateType == CoordinateType::geocentric) &&
+         (target->coordinateType == CoordinateType::localCartesian))
       {
         try
         {
@@ -1942,14 +2050,19 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
 
           CartesianCoordinates* coordinates = dynamic_cast< CartesianCoordinates* >( sourceCoordinates );
 
-          ( dynamic_cast< CartesianCoordinates& >( targetCoordinates ) ) = *dynamic_cast< CartesianCoordinates* >( ((LocalCartesian*)(target->coordinateSystem))->convertFromGeocentric( coordinates ) );
+          CartesianCoordinates* cartesianCoordinates =
+             ((LocalCartesian*)(target->coordinateSystem))->convertFromGeocentric( coordinates );
+          (dynamic_cast< CartesianCoordinates& >( targetCoordinates ) ) =
+             *dynamic_cast< CartesianCoordinates* >( cartesianCoordinates );
+          delete cartesianCoordinates;
         }
         catch( CoordinateConversionException e )
         {
           throw CoordinateConversionException( "Input ", Coordinate_System_Table[source->coordinateType].Name, ": \n", e.getMessage() );
         }
       }
-      else if ((source->coordinateType == CoordinateType::localCartesian) && (target->coordinateType == CoordinateType::geocentric))
+      else if((source->coordinateType == CoordinateType::localCartesian) &&
+         (target->coordinateType == CoordinateType::geocentric))
       {
         try
         {
@@ -1957,7 +2070,29 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
 
           CartesianCoordinates* coordinates = dynamic_cast< CartesianCoordinates* >( sourceCoordinates );
 
-          ( dynamic_cast< CartesianCoordinates& >( targetCoordinates ) ) = *dynamic_cast< CartesianCoordinates* >( ((LocalCartesian*)(source->coordinateSystem))->convertToGeocentric( coordinates ) );
+          CartesianCoordinates* cartesianCoordinates = ((LocalCartesian*)(source->coordinateSystem))->convertToGeocentric( coordinates );
+          (dynamic_cast< CartesianCoordinates& >( targetCoordinates ) ) = *dynamic_cast< CartesianCoordinates* >( cartesianCoordinates );
+		  delete cartesianCoordinates;
+		}
+        catch( CoordinateConversionException e )
+        {
+          throw CoordinateConversionException( "Input ", Coordinate_System_Table[source->coordinateType].Name, ": \n", e.getMessage() );
+        }
+      }
+      else if ((source->coordinateType == CoordinateType::militaryGridReferenceSystem) &&
+               (target->coordinateType == CoordinateType::universalTransverseMercator) && 
+         (target->parameters.utmParameters->override() == 0))
+      {
+        try
+        {
+          special = true;
+
+          MGRSorUSNGCoordinates* coordinates = dynamic_cast< MGRSorUSNGCoordinates* >( sourceCoordinates );
+
+
+          UTMCoordinates* utmCoordinates = ((MGRS*)(source->coordinateSystem))->convertToUTM( coordinates );
+          ( dynamic_cast< UTMCoordinates& >( targetCoordinates ) ) = *dynamic_cast< UTMCoordinates* >( utmCoordinates );
+          delete utmCoordinates;
         }
         catch( CoordinateConversionException e )
         {
@@ -1965,7 +2100,7 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
         }
       }
       else if ((source->coordinateType == CoordinateType::militaryGridReferenceSystem) &&
-               (target->coordinateType == CoordinateType::universalTransverseMercator) && (target->parameters.utmParameters->override() == 0))
+               (target->coordinateType == CoordinateType::universalPolarStereographic))
       {
         try
         {
@@ -1973,29 +2108,17 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
 
           MGRSorUSNGCoordinates* coordinates = dynamic_cast< MGRSorUSNGCoordinates* >( sourceCoordinates );
 
-          ( dynamic_cast< UTMCoordinates& >( targetCoordinates ) ) = *dynamic_cast< UTMCoordinates* >( ((MGRS*)(source->coordinateSystem))->convertToUTM( coordinates ) );
+          UPSCoordinates* upsCoordinates = ((MGRS*)(source->coordinateSystem))->convertToUPS( coordinates );
+          ( dynamic_cast< UPSCoordinates& >( targetCoordinates ) ) = *dynamic_cast< UPSCoordinates* >( upsCoordinates );
+          delete upsCoordinates;
         }
         catch( CoordinateConversionException e )
         {
           throw CoordinateConversionException( "Input ", Coordinate_System_Table[source->coordinateType].Name, ": \n", e.getMessage() );
         }
       }
-      else if ((source->coordinateType == CoordinateType::militaryGridReferenceSystem) && (target->coordinateType == CoordinateType::universalPolarStereographic))
-      {
-        try
-        {
-          special = true;
-
-          MGRSorUSNGCoordinates* coordinates = dynamic_cast< MGRSorUSNGCoordinates* >( sourceCoordinates );
-
-          ( dynamic_cast< UPSCoordinates& >( targetCoordinates ) ) = *dynamic_cast< UPSCoordinates* >( ((MGRS*)(source->coordinateSystem))->convertToUPS( coordinates ) );
-        }
-        catch( CoordinateConversionException e )
-        {
-          throw CoordinateConversionException( "Input ", Coordinate_System_Table[source->coordinateType].Name, ": \n", e.getMessage() );
-        }
-      }
-      else if ((source->coordinateType == CoordinateType::universalTransverseMercator) && (target->coordinateType == CoordinateType::militaryGridReferenceSystem))
+      else if ((source->coordinateType == CoordinateType::universalTransverseMercator) &&
+               (target->coordinateType == CoordinateType::militaryGridReferenceSystem))
       {
         try
         {
@@ -2008,8 +2131,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
             temp_precision = Precision::tenthOfSecond;
 
           UTMCoordinates* coordinates = dynamic_cast< UTMCoordinates* >( sourceCoordinates );
-          ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MGRSorUSNGCoordinates* >( ((MGRS*)(target->coordinateSystem))->convertFromUTM( coordinates,
-                                                    temp_precision ) );
+
+          MGRSorUSNGCoordinates* mgrsOrUSNGCoordinates = ((MGRS*)(target->coordinateSystem))->convertFromUTM( coordinates, temp_precision );
+          ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MGRSorUSNGCoordinates* >( mgrsOrUSNGCoordinates );
+          delete mgrsOrUSNGCoordinates;
         }
         catch( CoordinateConversionException e )
         {
@@ -2029,8 +2154,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
             temp_precision = Precision::tenthOfSecond;
 
           UPSCoordinates* coordinates = dynamic_cast< UPSCoordinates* >( sourceCoordinates );
-          ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MGRSorUSNGCoordinates* >( ((MGRS*)(target->coordinateSystem))->convertFromUPS( coordinates,
-                                                    temp_precision ) );
+
+          MGRSorUSNGCoordinates* mgrsOrUSNGCoordinates = ((MGRS*)(target->coordinateSystem))->convertFromUPS( coordinates, temp_precision );
+          ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MGRSorUSNGCoordinates* >( mgrsOrUSNGCoordinates );
+          delete mgrsOrUSNGCoordinates;
 
         }
         catch( CoordinateConversionException e )
@@ -2046,7 +2173,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
           special = true;
 
           MGRSorUSNGCoordinates* coordinates = dynamic_cast< MGRSorUSNGCoordinates* >( sourceCoordinates );
-          ( dynamic_cast< UTMCoordinates& >( targetCoordinates ) ) = *dynamic_cast< UTMCoordinates* >( ((USNG*)(source->coordinateSystem))->convertToUTM( coordinates ) );
+
+          UTMCoordinates* utmCoordinates = ((USNG*)(source->coordinateSystem))->convertToUTM( coordinates );
+          ( dynamic_cast< UTMCoordinates& >( targetCoordinates ) ) = *dynamic_cast< UTMCoordinates* >( utmCoordinates );
+          delete utmCoordinates;
         }
         catch( CoordinateConversionException e )
         {
@@ -2060,7 +2190,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
           special = true;
 
           MGRSorUSNGCoordinates* coordinates = dynamic_cast< MGRSorUSNGCoordinates* >( sourceCoordinates );
-          ( dynamic_cast< UPSCoordinates& >( targetCoordinates ) ) = *dynamic_cast< UPSCoordinates* >( ((USNG*)(source->coordinateSystem))->convertToUPS( coordinates ) );
+
+          UPSCoordinates* upsCoordinates = ((USNG*)(source->coordinateSystem))->convertToUPS( coordinates );
+          ( dynamic_cast< UPSCoordinates& >( targetCoordinates ) ) = *dynamic_cast< UPSCoordinates* >( upsCoordinates );
+          delete upsCoordinates;
         }
         catch( CoordinateConversionException e )
         {
@@ -2080,8 +2213,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
             temp_precision = Precision::tenthOfSecond;
 
           UTMCoordinates* coordinates = dynamic_cast< UTMCoordinates* >( sourceCoordinates );
-          ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MGRSorUSNGCoordinates* >( ((USNG*)(target->coordinateSystem))->convertFromUTM( coordinates,
-                                            temp_precision ) );
+
+          MGRSorUSNGCoordinates* mgrsOrUSNGCoordinates = ((USNG*)(target->coordinateSystem))->convertFromUTM( coordinates, temp_precision );
+          ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MGRSorUSNGCoordinates* >( mgrsOrUSNGCoordinates );
+          delete mgrsOrUSNGCoordinates;
         }
         catch( CoordinateConversionException e )
         {
@@ -2101,23 +2236,26 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
             temp_precision = Precision::tenthOfSecond;
 
           UPSCoordinates* coordinates = dynamic_cast< UPSCoordinates* >( sourceCoordinates );
-          ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MGRSorUSNGCoordinates* >( ((USNG*)(target->coordinateSystem))->convertFromUPS( coordinates,
-                                            temp_precision ) );
+
+          MGRSorUSNGCoordinates* mgrsOrUSNGCoordinates = ((USNG*)(target->coordinateSystem))->convertFromUPS( coordinates, temp_precision );
+          ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MGRSorUSNGCoordinates* >( mgrsOrUSNGCoordinates );
+          delete mgrsOrUSNGCoordinates;
         }
         catch( CoordinateConversionException e )
         {
           throw CoordinateConversionException( "Input ", Coordinate_System_Table[source->coordinateType].Name, ": \n", e.getMessage() );
         }
       }
-      else if ((source->coordinateType == CoordinateType::transverseMercator) && (target->coordinateType == CoordinateType::britishNationalGrid))
+      else if ((source->coordinateType == CoordinateType::transverseMercator) &&
+               (target->coordinateType == CoordinateType::britishNationalGrid))
       {
         MapProjection5Parameters* param = source->parameters.mapProjection5Parameters;
 
         if ((param->centralMeridian() == -2.0 * PI / 180) &&
-            (param->originLatitude() == 49.0 * PI / 180) &&
-            (param->scaleFactor() == .9996012717) &&
-            (param->falseEasting() == 400000.0) &&
-            (param->falseNorthing() == -100000.0))
+            (param->originLatitude()  == 49.0 * PI / 180) &&
+            (param->scaleFactor()     == .9996012717) &&
+            (param->falseEasting()    == 400000.0) &&
+            (param->falseNorthing()   == -100000.0))
         {
           try
           {
@@ -2125,13 +2263,16 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
 
             Precision::Enum temp_precision = ( dynamic_cast< BNGCoordinates& >( targetCoordinates ) ).precision();///ccsPrecision;
             if (temp_precision < 0)
-              temp_precision = Precision::degree;
+               temp_precision = Precision::degree;
             if (temp_precision > 5)
-              temp_precision = Precision::tenthOfSecond;
+               temp_precision = Precision::tenthOfSecond;
 
             MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( sourceCoordinates );
-            ( dynamic_cast< BNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< BNGCoordinates* >( ((BritishNationalGrid*)(target->coordinateSystem))->convertFromTransverseMercator( coordinates,
-                                                                            temp_precision ) );
+
+            BNGCoordinates* bngCoordinates = ((BritishNationalGrid*)(target->coordinateSystem))->
+               convertFromTransverseMercator( coordinates, temp_precision );
+            ( dynamic_cast< BNGCoordinates& >( targetCoordinates ) ) = *dynamic_cast< BNGCoordinates* >( bngCoordinates );
+            delete bngCoordinates;
           }
           catch( CoordinateConversionException e )
           {
@@ -2141,7 +2282,8 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
         else
           special = false;
       }
-      else if ((source->coordinateType == CoordinateType::britishNationalGrid) && (target->coordinateType == CoordinateType::transverseMercator))
+      else if ((source->coordinateType == CoordinateType::britishNationalGrid) &&
+               (target->coordinateType == CoordinateType::transverseMercator))
       {
         MapProjection5Parameters* param = target->parameters.mapProjection5Parameters;
 
@@ -2156,7 +2298,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
             special = true;
 
             BNGCoordinates* coordinates = dynamic_cast< BNGCoordinates* >( sourceCoordinates );
-            ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MapProjectionCoordinates* >( ((BritishNationalGrid*)(source->coordinateSystem))->convertToTransverseMercator( coordinates ) );
+
+            MapProjectionCoordinates* mapProjectionCoordinates = ((BritishNationalGrid*)(source->coordinateSystem))->convertToTransverseMercator( coordinates );
+            ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ) = *dynamic_cast< MapProjectionCoordinates* >( mapProjectionCoordinates );
+			delete mapProjectionCoordinates;
           }
           catch( CoordinateConversionException e )
           {
@@ -2238,6 +2383,7 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
 
             switch(input_height_type)
             {
+              case HeightType::EGM2008TwoPtFiveMinBicubicSpline:
               case HeightType::EGM96FifteenMinBilinear:
               case HeightType::EGM96VariableNaturalSpline:
               case HeightType::EGM84TenDegBilinear:
@@ -2276,25 +2422,35 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
             /* Convert the source height value to an ellipsoid height value */
             switch(input_height_type)
             {
+              case HeightType::EGM2008TwoPtFiveMinBicubicSpline:
+                geoidLibrary->convertEGM2008GeoidHeightToEllipsoidHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   _wgs84Geodetic->height(), &tempHeight);
+                break;
               case HeightType::EGM96FifteenMinBilinear:
-                geoidLibrary->convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                  _wgs84Geodetic->height(), &tempHeight);
+                geoidLibrary->convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   _wgs84Geodetic->height(), &tempHeight);
                 break;
               case HeightType::EGM96VariableNaturalSpline:
-                geoidLibrary->convertEGM96VariableNaturalSplineToEllipsoidHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                            _wgs84Geodetic->height(), &tempHeight );
+                geoidLibrary->convertEGM96VariableNaturalSplineToEllipsoidHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   _wgs84Geodetic->height(), &tempHeight );
                 break;
               case HeightType::EGM84TenDegBilinear:
-                geoidLibrary->convertEGM84TenDegBilinearToEllipsoidHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                             _wgs84Geodetic->height(), &tempHeight );
+                geoidLibrary->convertEGM84TenDegBilinearToEllipsoidHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   _wgs84Geodetic->height(), &tempHeight );
                 break;
               case HeightType::EGM84TenDegNaturalSpline:
-                geoidLibrary->convertEGM84TenDegNaturalSplineToEllipsoidHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                             _wgs84Geodetic->height(), &tempHeight );
+                geoidLibrary->convertEGM84TenDegNaturalSplineToEllipsoidHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   _wgs84Geodetic->height(), &tempHeight );
                 break;
               case HeightType::EGM84ThirtyMinBiLinear:
-                geoidLibrary->convertEGM84ThirtyMinBiLinearToEllipsoidHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                             _wgs84Geodetic->height(), &tempHeight );
+                geoidLibrary->convertEGM84ThirtyMinBiLinearToEllipsoidHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   _wgs84Geodetic->height(), &tempHeight );
                 break;
               case HeightType::ellipsoidHeight:
               default:
@@ -2307,25 +2463,35 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
             /* Convert the ellipsoid height value to the target height value */
             switch(output_height_type)
             {
+              case HeightType::EGM2008TwoPtFiveMinBicubicSpline:
+                geoidLibrary->convertEllipsoidHeightToEGM2008GeoidHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   tempHeight, &correctedHeight );
+                break;
               case HeightType::EGM96FifteenMinBilinear:
-                geoidLibrary->convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                            tempHeight, &correctedHeight );
+                geoidLibrary->convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   tempHeight, &correctedHeight );
                 break;
               case HeightType::EGM96VariableNaturalSpline:
-                geoidLibrary->convertEllipsoidToEGM96VariableNaturalSplineHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                            tempHeight, &correctedHeight );
+                geoidLibrary->convertEllipsoidToEGM96VariableNaturalSplineHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   tempHeight, &correctedHeight );
                 break;
               case HeightType::EGM84TenDegBilinear:
-                geoidLibrary->convertEllipsoidToEGM84TenDegBilinearHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                             tempHeight, &correctedHeight );
+                geoidLibrary->convertEllipsoidToEGM84TenDegBilinearHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   tempHeight, &correctedHeight );
                 break;
               case HeightType::EGM84TenDegNaturalSpline:
-                geoidLibrary->convertEllipsoidToEGM84TenDegNaturalSplineHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                             tempHeight, &correctedHeight );
+                geoidLibrary->convertEllipsoidToEGM84TenDegNaturalSplineHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   tempHeight, &correctedHeight );
                 break;
               case HeightType::EGM84ThirtyMinBiLinear:
-                geoidLibrary->convertEllipsoidToEGM84ThirtyMinBiLinearHeight( _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                             tempHeight, &correctedHeight );
+                geoidLibrary->convertEllipsoidToEGM84ThirtyMinBiLinearHeight(
+                   _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+                   tempHeight, &correctedHeight );
                 break;
               case HeightType::ellipsoidHeight:
               default:
@@ -2343,6 +2509,7 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
 
             switch(output_height_type)
             {
+              case HeightType::EGM2008TwoPtFiveMinBicubicSpline:
               case HeightType::EGM96FifteenMinBilinear:
               case HeightType::EGM96VariableNaturalSpline:
               case HeightType::EGM84TenDegBilinear:
@@ -2361,11 +2528,12 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
             /* check target datum validity */
             long targetValid = 0;
 
-            datumLibraryImplementation->validDatum( target->datumIndex, _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
-                                                   &targetValid );
+            datumLibraryImplementation->validDatum(
+               target->datumIndex, _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(),
+               &targetValid );
             if( !targetValid )
             {
-              strcat( targetWarningMessage, MSP::CCS::WarningMessages::datum );
+               strcat( targetWarningMessage, MSP::CCS::WarningMessages::datum );
             }
           }
           else
@@ -2381,10 +2549,14 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
         targetAccuracy.set(-1.0, -1.0, -1.0);
       else
       {
-        Accuracy* _targetAccuracy = datumLibraryImplementation->datumShiftError( source->datumIndex, target->datumIndex,
-                                        _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(), sourceAccuracy );
+        Accuracy* _targetAccuracy = datumLibraryImplementation->datumShiftError(
+           source->datumIndex, target->datumIndex,
+           _wgs84Geodetic->longitude(), _wgs84Geodetic->latitude(), sourceAccuracy );
 
-        targetAccuracy.set( _targetAccuracy->circularError90(), _targetAccuracy->linearError90(), _targetAccuracy->sphericalError90() );
+        targetAccuracy.set(
+           _targetAccuracy->circularError90(),
+           _targetAccuracy->linearError90(),
+           _targetAccuracy->sphericalError90() );
 
         delete _targetAccuracy;
       }
@@ -2430,10 +2602,17 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
   catch(CoordinateConversionException e)
   {
     targetAccuracy.set(-1.0, -1.0, -1.0);
+	
+	/* since initialized to 0 at the top is safe to 
+	   cleanup memory before rethrowing the exception */
+    delete _convertedGeodetic;
+    delete _shiftedGeodetic;
+    delete _wgs84Geodetic;
 
     throw CoordinateConversionException(e.getMessage());        
   }
 
+  // cleanup memory before returning
   delete _convertedGeodetic;
   delete _shiftedGeodetic;
   delete _wgs84Geodetic;
@@ -2441,7 +2620,10 @@ void CoordinateConversionService::convert( SourceOrTarget::Enum sourceDirection,
 }
 
 
-GeodeticCoordinates* CoordinateConversionService::convertSourceToGeodetic( SourceOrTarget::Enum sourceDirection, CoordinateTuple* sourceCoordinates, char* sourceWarningMessage )
+GeodeticCoordinates* CoordinateConversionService::convertSourceToGeodetic(
+   SourceOrTarget::Enum sourceDirection,
+   CoordinateTuple* sourceCoordinates,
+   char* sourceWarningMessage )
 {
   Coordinate_State_Row* source = &coordinateSystemState[sourceDirection];
 
@@ -2952,7 +3134,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        CartesianCoordinates* coordinates = dynamic_cast< CartesianCoordinates* >( ((Geocentric*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        CartesianCoordinates* coordinates = ((Geocentric*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< CartesianCoordinates& >( targetCoordinates ) ).set( coordinates->x(), coordinates->y(), coordinates->z() );
 
@@ -2984,8 +3166,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
         if (temp_precision > 5)
           temp_precision = Precision::tenthOfSecond;
 
-        GEOREFCoordinates* coordinates = dynamic_cast< GEOREFCoordinates* >( ((GEOREF*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic,
-                                                 temp_precision ) );
+        GEOREFCoordinates* coordinates = ((GEOREF*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic, temp_precision );
 
         ( dynamic_cast< GEOREFCoordinates& >( targetCoordinates ) ).set( coordinates->GEOREFString() );
 
@@ -3002,7 +3183,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((AlbersEqualAreaConic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((AlbersEqualAreaConic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3019,7 +3200,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((AzimuthalEquidistant*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((AzimuthalEquidistant*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
         
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3042,7 +3223,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
         if (temp_precision > 5)
           temp_precision = Precision::tenthOfSecond;
 
-        BNGCoordinates* coordinates = dynamic_cast< BNGCoordinates* >( ((BritishNationalGrid*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic, temp_precision ) );
+        BNGCoordinates* coordinates = ((BritishNationalGrid*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic, temp_precision );
         
         ( dynamic_cast< BNGCoordinates& >( targetCoordinates ) ).set( coordinates->BNGString() );
         
@@ -3059,7 +3240,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Bonne*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Bonne*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
         
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
        
@@ -3076,7 +3257,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Cassini*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Cassini*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3099,7 +3280,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((CylindricalEqualArea*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((CylindricalEqualArea*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3116,7 +3297,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Eckert4*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Eckert4*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3133,7 +3314,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Eckert6*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Eckert6*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3150,7 +3331,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((EquidistantCylindrical*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((EquidistantCylindrical*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3173,8 +3354,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
         if (temp_precision > 5)
           temp_precision = Precision::tenthOfSecond;
 
-        GARSCoordinates* coordinates = dynamic_cast< GARSCoordinates* >( ((GARS*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic,
-                                               temp_precision ) );
+        GARSCoordinates* coordinates = ((GARS*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic, temp_precision );
 
         ( dynamic_cast< GARSCoordinates& >( targetCoordinates ) ).set( coordinates->GARSString() );
 
@@ -3191,7 +3371,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Gnomonic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Gnomonic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3208,7 +3388,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((LambertConformalConic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((LambertConformalConic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3225,7 +3405,8 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((LambertConformalConic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+
+        MapProjectionCoordinates* coordinates = ((LambertConformalConic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3242,7 +3423,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        CartesianCoordinates* coordinates = dynamic_cast< CartesianCoordinates* >( ((LocalCartesian*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        CartesianCoordinates* coordinates = ((LocalCartesian*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< CartesianCoordinates& >( targetCoordinates ) ).set( coordinates->x(), coordinates->y(), coordinates->z() );
 
@@ -3260,7 +3441,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Mercator*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Mercator*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3283,8 +3464,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
           temp_precision = Precision::degree;
         if (temp_precision > 5)
           temp_precision = Precision::tenthOfSecond;
-        MGRSorUSNGCoordinates* coordinates = dynamic_cast< MGRSorUSNGCoordinates* >( ((MGRS*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic,
-                                               temp_precision ) );
+        MGRSorUSNGCoordinates* coordinates = ((MGRS*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic, temp_precision );
 
         ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ).set( coordinates->MGRSString() );
 
@@ -3301,7 +3481,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((MillerCylindrical*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((MillerCylindrical*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3318,7 +3498,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Mollweide*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Mollweide*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3335,7 +3515,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Neys*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Neys*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3352,7 +3532,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((NZMG*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((NZMG*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3369,7 +3549,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((ObliqueMercator*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((ObliqueMercator*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3392,7 +3572,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Orthographic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Orthographic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3410,7 +3590,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((PolarStereographic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((PolarStereographic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3427,7 +3607,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Polyconic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Polyconic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3450,7 +3630,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Sinusoidal*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Sinusoidal*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3467,7 +3647,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((Stereographic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((Stereographic*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3484,7 +3664,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((TransverseCylindricalEqualArea*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((TransverseCylindricalEqualArea*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3507,7 +3687,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((TransverseMercator*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((TransverseMercator*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3530,7 +3710,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        UPSCoordinates* coordinates = dynamic_cast< UPSCoordinates* >( ((UPS*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        UPSCoordinates* coordinates = ((UPS*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< UPSCoordinates& >( targetCoordinates ) ).set( coordinates->hemisphere(), coordinates->easting(), coordinates->northing() );
 
@@ -3553,8 +3733,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
         if (temp_precision > 5)
           temp_precision = Precision::tenthOfSecond;
 
-        MGRSorUSNGCoordinates* coordinates = dynamic_cast< MGRSorUSNGCoordinates* >( ((USNG*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic,
-                                               temp_precision ) );
+        MGRSorUSNGCoordinates* coordinates = ((USNG*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic, temp_precision );
 
         ( dynamic_cast< MGRSorUSNGCoordinates& >( targetCoordinates ) ).set( coordinates->MGRSString() );
 
@@ -3571,7 +3750,8 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        UTMCoordinates* coordinates = dynamic_cast< UTMCoordinates* >( ((UTM*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        UTMCoordinates* coordinates = ((UTM*)(target->coordinateSystem))->convertFromGeodetic(
+           _shiftedGeodetic );
 
         ( dynamic_cast< UTMCoordinates& >( targetCoordinates ) ).set( coordinates->zone(), coordinates->hemisphere(), coordinates->easting(), coordinates->northing() );
 
@@ -3588,7 +3768,7 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
     {
       try
       {
-        MapProjectionCoordinates* coordinates = dynamic_cast< MapProjectionCoordinates* >( ((VanDerGrinten*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic ) );
+        MapProjectionCoordinates* coordinates = ((VanDerGrinten*)(target->coordinateSystem))->convertFromGeodetic( _shiftedGeodetic );
 
         ( dynamic_cast< MapProjectionCoordinates& >( targetCoordinates ) ).set( coordinates->easting(), coordinates->northing() );
 
@@ -3605,7 +3785,11 @@ void CoordinateConversionService::convertGeodeticToTarget( SourceOrTarget::Enum 
 }
 
 
-void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinatesCollection, const std::vector<MSP::CCS::Accuracy*>& sourceAccuracyCollection, std::vector<MSP::CCS::CoordinateTuple*>& targetCoordinatesCollection, std::vector<MSP::CCS::Accuracy*>& targetAccuracyCollection )
+void CoordinateConversionService::convertCollection(
+   const std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinatesCollection,
+   const std::vector<MSP::CCS::Accuracy*>&        sourceAccuracyCollection,
+   std::vector<MSP::CCS::CoordinateTuple*>&       targetCoordinatesCollection,
+   std::vector<MSP::CCS::Accuracy*>&              targetAccuracyCollection )
 {
 /*
  *  The function convertCollection will convert a list of source coordinates to a list of target coordinates
@@ -3616,7 +3800,6 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
  *  targetCoordinatesCollection      : Converted coordinates of the target coordinate system         (output)
  *  targetAccuracyCollection         : Target circular, linear and spherical errors                  (output)
  */
-
 
   int num = sourceCoordinatesCollection.size();
   int numTargetCoordinates = targetCoordinatesCollection.size();
@@ -3657,7 +3840,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3679,7 +3867,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3701,7 +3894,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3723,7 +3921,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3745,7 +3948,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3767,7 +3975,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3789,7 +4002,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3811,7 +4029,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3833,7 +4056,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3899,7 +4127,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3921,7 +4154,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3943,7 +4181,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3960,12 +4203,19 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
             _targetCoordinates = targetCoordinatesCollection[i];
           else
           {
-            _targetCoordinates = new MapProjectionCoordinates(CoordinateType::lambertConformalConic1Parallel);
+            _targetCoordinates = new MapProjectionCoordinates(
+               CoordinateType::lambertConformalConic1Parallel);
             targetCoordinateExists = false;
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates,
+               *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -3982,12 +4232,18 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
             _targetCoordinates = targetCoordinatesCollection[i];
           else
           {
-            _targetCoordinates = new MapProjectionCoordinates(CoordinateType::lambertConformalConic2Parallels);
+            _targetCoordinates = new MapProjectionCoordinates(
+               CoordinateType::lambertConformalConic2Parallels);
             targetCoordinateExists = false;
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4009,7 +4265,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4031,7 +4292,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4048,12 +4314,18 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
             _targetCoordinates = targetCoordinatesCollection[i];
           else
           {
-            _targetCoordinates = new MapProjectionCoordinates(CoordinateType::mercatorScaleFactor);
+            _targetCoordinates = new MapProjectionCoordinates(
+               CoordinateType::mercatorScaleFactor);
             targetCoordinateExists = false;
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4075,7 +4347,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4097,7 +4374,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4119,7 +4401,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4141,7 +4428,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4163,7 +4455,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4185,7 +4482,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4207,7 +4509,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4229,7 +4536,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4251,7 +4563,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4273,7 +4590,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4295,7 +4617,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4317,7 +4644,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4339,7 +4671,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4361,7 +4698,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4383,7 +4725,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, _sourceCoordinates, _sourceAccuracy, *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               _sourceCoordinates,
+               _sourceAccuracy,
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4405,7 +4752,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4427,7 +4779,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4449,7 +4806,12 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
           }
           try
           {
-            convert(SourceOrTarget::source, SourceOrTarget::target, sourceCoordinatesCollection[i], sourceAccuracyCollection[i], *_targetCoordinates, *_targetAccuracy);
+            convert(
+               SourceOrTarget::source,
+               SourceOrTarget::target,
+               sourceCoordinatesCollection[i],
+               sourceAccuracyCollection[i],
+               *_targetCoordinates, *_targetAccuracy);
           }
           catch(CoordinateConversionException e)
           {
@@ -4479,7 +4841,10 @@ void CoordinateConversionService::convertCollection( const std::vector<MSP::CCS:
         else
         {
           _targetCoordinates = targetCoordinatesCollection[i];
-          _targetCoordinates->set(_sourceCoordinates->coordinateType(), _sourceCoordinates->warningMessage(), _sourceCoordinates->errorMessage());
+          _targetCoordinates->set(
+             _sourceCoordinates->coordinateType(),
+             _sourceCoordinates->warningMessage(),
+             _sourceCoordinates->errorMessage());
         }
       }
       else

@@ -67,8 +67,10 @@
  *
  *    Date              Description
  *    ----              -----------
- *	  07-16-99			    Original Code
- *	  03-2-07			      Original C++ Code
+ *	  07-16-99			Original Code
+ *	  03-2-07			Original C++ Code
+ *    3/23/11           N. Lundgren BAEts28583 Updated for memory leaks in 
+ *                      convertFromGeodetic and convertToGeodetic
  *
  */
 
@@ -326,10 +328,18 @@ MSP::CCS::CartesianCoordinates* LocalCartesian::convertFromGeodetic( MSP::CCS::G
   if( strlen( errorStatus ) > 0)
     throw CoordinateConversionException( errorStatus );
 
-  CartesianCoordinates* geocentricCoordinates = geocentric->convertFromGeodetic( geodeticCoordinates );
-
-  CartesianCoordinates* cartesianCoordinates = convertFromGeocentric( geocentricCoordinates );
-  delete geocentricCoordinates;
+  CartesianCoordinates* geocentricCoordinates = 0;
+  CartesianCoordinates* cartesianCoordinates = 0;
+  try {
+	geocentricCoordinates = geocentric->convertFromGeodetic( geodeticCoordinates );
+    cartesianCoordinates = convertFromGeocentric( geocentricCoordinates );
+	delete geocentricCoordinates;
+  }
+  catch ( CoordinateConversionException e ) {
+    delete geocentricCoordinates;
+    delete cartesianCoordinates;
+	throw e;
+  }
 
   return cartesianCoordinates;
 }
@@ -349,19 +359,29 @@ MSP::CCS::GeodeticCoordinates* LocalCartesian::convertToGeodetic( MSP::CCS::Cart
  *    latitude  : Calculated latitude value, in radians      (output)
  *    Height    : Calculated height value, in meters         (output)
  */
+  CartesianCoordinates* geocentricCoordinates = 0;
+  GeodeticCoordinates* geodeticCoordinates = 0;
+  try {
+	geocentricCoordinates = convertToGeocentric( cartesianCoordinates );
+    geodeticCoordinates = geocentric->convertToGeodetic( geocentricCoordinates );
 
-  CartesianCoordinates* geocentricCoordinates = convertToGeocentric( cartesianCoordinates );
+    double longitude = geodeticCoordinates->longitude();
 
-  GeodeticCoordinates* geodeticCoordinates = geocentric->convertToGeodetic( geocentricCoordinates );
-  double longitude = geodeticCoordinates->longitude();
+    if (longitude > PI)
+      geodeticCoordinates->setLongitude( longitude -= TWO_PI );
 
-  if (longitude > PI)
-    geodeticCoordinates->setLongitude( longitude -= TWO_PI );
-  longitude = geodeticCoordinates->longitude();
-  if (longitude < -PI)
-    geodeticCoordinates->setLongitude( longitude += TWO_PI );
+    longitude = geodeticCoordinates->longitude();
 
-  delete geocentricCoordinates;
+    if (longitude < -PI)
+      geodeticCoordinates->setLongitude( longitude += TWO_PI );
+
+    delete geocentricCoordinates;
+  }
+  catch ( CoordinateConversionException e ) {
+    delete geocentricCoordinates;
+    delete geodeticCoordinates;
+	throw e;
+  }
 
   return geodeticCoordinates;
 }

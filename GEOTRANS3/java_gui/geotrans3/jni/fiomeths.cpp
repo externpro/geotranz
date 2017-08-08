@@ -7,8 +7,8 @@
  *
  *    This component provides file processing capability to MSPCCS.
  *
- *    This component depends on the following modules:  Coordinate Conversion Service,
- *    ERRHAND, COMPHACK, FTOVAL, STRTOVAL.
+ *    This component depends on the following modules:
+ *    Coordinate Conversion Service, ERRHAND, COMPHACK, FTOVAL, STRTOVAL.
  *
  * ERROR HANDLING
  *
@@ -55,11 +55,18 @@
  *    06-28-99          Added new DT&CC Modules
  *    09-13-00          Added new DT&CC Modules
  *    03-29-01          Improved file formatting flexibility
- *    08-17-05          Changed Lambert_Conformal_Conic to CoordinateType::lambertConformalConic2Parallels
+ *    08-17-05          Changed Lambert_Conformal_Conic to 
+                        CoordinateType::lambertConformalConic2Parallels
  *    01-18-06          Added changes for new height types
  *    04-18-07          Updated to use C++ MSPCCS
- *    05-12-10          S. Gillis, BAEts26542, MSP TS MSL-HAW conversion
+ *    05-12-10          S. Gillis, BAEts26542, MSP TS MSL-HAE conversion
  *                      should use CCS
+ *    10-25-10          S. Gillis, BAEts27155, Fix sample point Long/Lat order
+ *                      for coordinate file header
+ *    01-10-11          J. Chelos BAEts26267 Added EGM2008
+ *    02-14-11          S. Gillis, BAEts26267, Fixed EGM2008
+ *    03-29-11          S. Gillis, BAEts28564, Fixed Windows memory crash
+ *    06-09-11          K. Lam, BAEts28972, Fixed the timer for file processing
  */
 
 
@@ -104,38 +111,22 @@
 #include "Accuracy.h"
 #include "CoordinateConversionException.h"
 
+#include <iostream>
+
 
 #define PI    3.14159265358979323e0  /* PI        */
 #define PI_Over_180  PI / 180.0  /* PI        */
 
-
 using namespace MSP::CCS;
 
-
-class FileErrorMessages
-{
-
-public:
-
-  static char* fileOpenError;
-  static char* fileCreateError;
-  static char* fileHeaderWriteError;
-  static char* errorParsingFile;
-  static char* invalidSourceCoordinateSystem;
-  static char* invalidTargetCoordinateSystem;
-  static char* invalidTargetParameters;
-  static char* invalidTargetCoordinates;
-};
-
-char* FileErrorMessages::fileOpenError = "Input file: error opening file\n";
-char* FileErrorMessages::fileCreateError = "Output file: error creating file\n";
-char* FileErrorMessages::fileHeaderWriteError = "Output file: error writing header to file\n";
-char* FileErrorMessages::errorParsingFile = "Error reading input file coordinates\n";
-char* FileErrorMessages::invalidSourceCoordinateSystem = "Input file: Invalid source coordinate system\n";
-char* FileErrorMessages::invalidTargetCoordinateSystem = "Output file: Invalid target coordinate system\n";
-char* FileErrorMessages::invalidTargetParameters = "Output file: Target parameters invalid for target coordinate system type\n";
-char* FileErrorMessages::invalidTargetCoordinates = "Output file: Target coordinates invalid for target coordinate system type\n";
-
+#define FILE_OPEN_ERROR        "Input file: error opening file\n"
+#define FILE_CREATE_ERROR      "Output file: error creating file\n"
+//#define FILE_HEADER_WRITE_ERROR "Output file: error writing header to file\n"
+#define ERROR_PARSING_FILE     "Error reading input file coordinates\n"
+#define INVALID_SOURCE_CS "Input file: Invalid source coordinate system\n"
+#define INVALID_TARGET_CS "Output file: Invalid target coordinate system\n"
+#define INVALID_TARGET_PARAMETERS       "Output file: Target parameters invalid for target coordinate system type\n"
+#define INVALID_TARGET_COORDINATES      "Output file: Target coordinates invalid for target coordinate system type\n"
 
 /* Local variable definitions */
 
@@ -153,6 +144,7 @@ typedef enum File_Header_Declarations
   FHD_MSL_EGM84_10D_BL_Height,  /* MSL EGM84 10D BL Height */
   FHD_MSL_EGM84_10D_NS_Height,  /* MSL EGM84 10D NS Height */
   FHD_MSL_EGM84_30M_BL_Height,  /* MSL EGM84 30M BL Height */
+  FHD_MSL_EGM2008_TWOPOINTFIVEM_BCS_Height,/* MSL EGM2008 Bicubic Spline Height */
   FHD_Central_Meridian,         /* Central Meridian */
   FHD_Origin_Latitude,          /* Origin Latitude */
   FHD_Origin_Longitude,         /* Origin Longitude */
@@ -266,6 +258,7 @@ const char* msl_EGM96_VG_NS_Height_Header_String = "MSL-EGM96-VG-NS HEIGHT";
 const char* msl_EGM84_10D_BL_Height_Header_String = "MSL-EGM84-10D-BL HEIGHT";
 const char* msl_EGM84_10D_NS_Height_Header_String = "MSL-EGM84-10D-NS HEIGHT";
 const char* msl_EGM84_30M_BL_Height_Header_String = "MSL-EGM84-30M-BL HEIGHT";
+const char* msl_EGM2008_TWOPOINTFIVEM_BCS_Height_Header_String = "MSL-EGM2008-2.5M-BCS HEIGHT";
 const char* central_Meridian_Header_String = "CENTRAL MERIDIAN";
 const char* origin_Latitude_Header_String = "ORIGIN LATITUDE";
 const char* origin_Longitude_Header_String = "ORIGIN LONGITUDE";
@@ -301,13 +294,18 @@ const char* se90_String = "SE90";
 FVC_Status Open_File(SourceOrTarget::Enum IOValue, const char *filename, FILE **file)
 { /* Open_File */
   FVC_Status error_Code = FVC_Success;
-  char *control_String = "r";
+  char control_String[2];
+  control_String[1] = '\0';
+  control_String[0] = 'r';
   FILE *local_File = NULL;
+
   if (IOValue == SourceOrTarget::source)
-    control_String = "r";
+    control_String[0] = 'r';
   else if (IOValue == SourceOrTarget::target)
-    control_String = "w";
+    control_String[0] = 'w';
+
   local_File = fopen(filename, control_String);
+
   if (local_File)
     *file = local_File;
   else
@@ -388,6 +386,8 @@ FVC_Status Next_Header_Line(FILE *file, FHD_Value *header)
           header_Line = FHD_MSL_EGM84_10D_NS_Height;
         else if (strstr(header_Value, msl_EGM84_30M_BL_Height_Header_String))
           header_Line = FHD_MSL_EGM84_30M_BL_Height;
+        else if (strstr(header_Value, msl_EGM2008_TWOPOINTFIVEM_BCS_Height_Header_String))
+          header_Line = FHD_MSL_EGM2008_TWOPOINTFIVEM_BCS_Height;
         else if (strstr(header_Value, central_Meridian_Header_String))
           header_Line = FHD_Central_Meridian;
         else if (strstr(header_Value, lat_Of_True_Scale_Header_String))
@@ -698,7 +698,7 @@ void Fiomeths::setOutputFilename( const char *filename, const char* _targetDatum
     writeOutputFileHeader( _targetDatumCode, _targetParameters );
   }
   else
-    throw CoordinateConversionException( FileErrorMessages::fileCreateError );
+    throw CoordinateConversionException( FILE_CREATE_ERROR );
 
 }
 
@@ -706,10 +706,10 @@ void Fiomeths::setOutputFilename( const char *filename, const char* _targetDatum
 void Fiomeths::convertFile()
 {
   std::vector<MSP::CCS::CoordinateTuple*> sourceCoordinateCollection;
-  std::vector<MSP::CCS::Accuracy*> sourceAccuracyCollection;
-  std::vector<TrailingHeight> trailingHeightCollection;
-  std::vector<CoordinateTuple*> targetCoordinateCollection;
-  std::vector<Accuracy*> targetAccuracyCollection;
+  std::vector<MSP::CCS::Accuracy*>        sourceAccuracyCollection;
+  std::vector<TrailingHeight>             trailingHeightCollection;
+  std::vector<CoordinateTuple*>           targetCoordinateCollection;
+  std::vector<Accuracy*>                  targetAccuracyCollection;
 
   FIO_Status error_Code = FIO_Success;
   long tempErrorCode = 0;
@@ -720,13 +720,18 @@ void Fiomeths::convertFile()
   long position;
   long coordinate = 1;
 
+  long MAX_CONVERSIONS = 100000;
+
+  static clock_t startTime, stopTime;
+  startTime = clock();
+
   while (!feof(inputFile))
   {
     CoordinateTuple* sourceCoordinate = 0;
-    Accuracy* sourceAccuracy = 0;
+    Accuracy*        sourceAccuracy = 0;
     TrailingHeight trailingHeight;
     trailingHeight.heightPresent = false;
-    Accuracy* targetAccuracy = new Accuracy();
+    Accuracy*        targetAccuracy = new Accuracy();
 
     next_Character = (char)fgetc(inputFile);
     ungetc(next_Character, inputFile);
@@ -757,7 +762,13 @@ void Fiomeths::convertFile()
       fgets(next_Letters, 7, inputFile);
       if (strcmp(next_Letters, "HEADER") == 0)
       {
-        convert( sourceCoordinateCollection, sourceAccuracyCollection, trailingHeightCollection, targetCoordinateCollection, targetAccuracyCollection );
+        convert(
+           sourceCoordinateCollection,
+           sourceAccuracyCollection,
+           trailingHeightCollection,
+           targetCoordinateCollection,
+           targetAccuracyCollection );
+
         long errorCode = parseInputFileHeader(inputFile);
         if( errorCode )
         {
@@ -766,9 +777,16 @@ void Fiomeths::convertFile()
           closeInputFile();
           throw CoordinateConversionException( errorStr );
         }
-        CoordinateConversionService* tempCoordinateConversionService = new CoordinateConversionService( sourceDatumCode, getCoordinateSystemParameters(), targetDatumCode, targetParameters );
+        CoordinateConversionService* tempCoordinateConversionService = 
+           new CoordinateConversionService(
+              sourceDatumCode, 
+              getCoordinateSystemParameters(),
+              targetDatumCode,
+              targetParameters );
+
         if( coordinateConversionService )
           delete coordinateConversionService;
+
         coordinateConversionService = tempCoordinateConversionService;
         sourceCoordinate = new CoordinateTuple( ( CoordinateType::Enum )invalid );
         coordinate = 0;
@@ -804,7 +822,10 @@ void Fiomeths::convertFile()
         if(strstr(buf, ce90_String) && strstr(buf, le90_String) && strstr(buf, se90_String))
         {
           Accuracy* tempSourceAccuracy = readConversionErrors(buf);
-          sourceAccuracy = new Accuracy( tempSourceAccuracy->circularError90(), tempSourceAccuracy->linearError90(), tempSourceAccuracy->sphericalError90() );
+          sourceAccuracy = new Accuracy(
+             tempSourceAccuracy->circularError90(),
+             tempSourceAccuracy->linearError90(),
+             tempSourceAccuracy->sphericalError90() );
           delete tempSourceAccuracy;
           tempSourceAccuracy = 0;
         }
@@ -822,7 +843,6 @@ void Fiomeths::convertFile()
         sourceCoordinate = new CoordinateTuple( ( CoordinateType::Enum )invalid );
         sourceCoordinate->setErrorMessage( "# Error reading coordinates from input file\n");
         _numErrors ++;
-
       }
 
       _numProcessed++;
@@ -836,9 +856,28 @@ void Fiomeths::convertFile()
     trailingHeightCollection.push_back( trailingHeight );
     targetCoordinateCollection.push_back( targetCoordinate );
     targetAccuracyCollection.push_back( targetAccuracy );
+
+    if( sourceCoordinateCollection.size() == MAX_CONVERSIONS )
+    {
+       convert(
+          sourceCoordinateCollection,
+          sourceAccuracyCollection,
+          trailingHeightCollection,
+          targetCoordinateCollection,
+          targetAccuracyCollection );
+    }
   }
 
-  convert( sourceCoordinateCollection, sourceAccuracyCollection, trailingHeightCollection, targetCoordinateCollection, targetAccuracyCollection );
+  convert(
+     sourceCoordinateCollection,
+     sourceAccuracyCollection,
+     trailingHeightCollection,
+     targetCoordinateCollection,
+     targetAccuracyCollection );
+
+  stopTime = clock();
+
+  _elapsedTime = ( double )( stopTime - startTime ) / CLOCKS_PER_SEC;
 
   closeInputFile();
   closeOutputFile();
@@ -932,7 +971,7 @@ CoordinateSystemParameters* Fiomeths::getCoordinateSystemParameters() const
     case CoordinateType::universalTransverseMercator:
       return utmParameters;
     default:
-      throw CoordinateConversionException( FileErrorMessages::invalidSourceCoordinateSystem );
+      throw CoordinateConversionException( INVALID_SOURCE_CS );
   }
 }
 
@@ -1017,7 +1056,7 @@ void Fiomeths::setInputFilename( const char *filename )
 {
   FVC_Status error_Code_File = Open_File( SourceOrTarget::source, filename, &inputFile);
   if (error_Code_File)
-    throw CoordinateConversionException( FileErrorMessages::fileOpenError );
+    throw CoordinateConversionException( FILE_OPEN_ERROR );
   else
   {
     long error_Code = parseInputFileHeader(inputFile);
@@ -1270,6 +1309,11 @@ long Fiomeths::parseInputFileHeader(FILE *file)
       case FHD_MSL_EGM84_30M_BL_Height:
       {
         heightType = HeightType::EGM84ThirtyMinBiLinear;
+        break;
+      }
+      case FHD_MSL_EGM2008_TWOPOINTFIVEM_BCS_Height:
+      {
+        heightType = HeightType::EGM2008TwoPtFiveMinBicubicSpline;
         break;
       }
       case FHD_Central_Meridian:
@@ -1770,8 +1814,8 @@ long Fiomeths::parseInputFileHeader(FILE *file)
       else
         mercatorStandardParallelParameters = new MercatorStandardParallelParameters(CoordinateType::mercatorStandardParallel, centralMeridian, latitudeOfTrueScale, scaleFactor, falseEasting, falseNorthing);
      
-      GeodeticParameters geodeticParameters( CoordinateType::geodetic, HeightType::noHeight );  
-      CoordinateConversionService tempCoordinateConversionService( sourceDatumCode, mercatorStandardParallelParameters, "WGE", &geodeticParameters );
+      GeodeticParameters geodeticParametersLoc( CoordinateType::geodetic, HeightType::noHeight );  
+      CoordinateConversionService tempCoordinateConversionService( sourceDatumCode, mercatorStandardParallelParameters, "WGE", &geodeticParametersLoc );
       MercatorStandardParallelParameters tempMercatorStandardParallelParameters = *dynamic_cast< MercatorStandardParallelParameters* >( tempCoordinateConversionService.getCoordinateSystem( SourceOrTarget::source ) );
       
       mercatorStandardParallelParameters->setScaleFactor( tempMercatorStandardParallelParameters.scaleFactor() );
@@ -1889,22 +1933,24 @@ long Fiomeths::parseInputFileHeader(FILE *file)
       mapProjection3Parameters = new MapProjection3Parameters(CoordinateType::vanDerGrinten, centralMeridian, falseEasting, falseNorthing);
       break;
     default:
-      throw CoordinateConversionException( FileErrorMessages::invalidSourceCoordinateSystem );
+      throw CoordinateConversionException( INVALID_SOURCE_CS );
   }
 
   return error_Code;
 }
 
 
-void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSystemParameters* _targetParameters )
+void Fiomeths::writeOutputFileHeader(
+   const char*                  targetDatumCodeLoc,
+   CoordinateSystemParameters* _targetParameters )
 {
   char projectionName[COORD_SYS_NAME_LENGTH] = "";
   char tempCode[DATUM_CODE_LENGTH] = "";
   char tempName[DATUM_NAME_LENGTH] = "";
   char ellipsoidCode[ELLIPSOID_CODE_LENGTH] = "";
-  char latitude_str[15] = "";
-  char longitude_str[15] = "";
-  char meter_str[15] = "";
+  char latitude_str[17] = "";
+  char longitude_str[17] = "";
+  char meter_str[17] = "";
 
   CoordinateSystemParameters parameters;
   long datum_Index = 0;
@@ -1912,7 +1958,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
   targetProjectionType = _targetParameters->coordinateType();
 
   if (Projection_to_String(targetProjectionType, projectionName))
-    throw CoordinateConversionException( FileErrorMessages::invalidTargetCoordinateSystem );
+    throw CoordinateConversionException( INVALID_TARGET_CS );
 
   if ((targetProjectionType == CoordinateType::britishNationalGrid) ||
       (targetProjectionType == CoordinateType::globalAreaReferenceSystem) ||
@@ -1931,11 +1977,11 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
   fprintf(outputFile, "%s\n", projectionName);
 
   fprintf(outputFile, "%s: ", datum_Header_String);
-  fprintf(outputFile, "%s\n", targetDatumCode);
+  fprintf(outputFile, "%s\n", targetDatumCodeLoc);
 
   DatumLibrary* datumLibrary = coordinateConversionService->getDatumLibrary();
-  long datumIndex;// = datumLibrary->datumIndex(targetDatumCode);
-  datumLibrary->getDatumIndex( targetDatumCode, &datumIndex );
+  long datumIndex;// = datumLibrary->datumIndex(targetDatumCodeLoc);
+  datumLibrary->getDatumIndex( targetDatumCodeLoc, &datumIndex );
   datumLibrary->getDatumInfo( datumIndex, tempCode, tempName, ellipsoidCode );
 
   fprintf(outputFile, "# ELLIPSOID: %s\n", ellipsoidCode);
@@ -1962,6 +2008,8 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
           fprintf(outputFile, "%s", msl_EGM84_10D_NS_Height_Header_String);
         else if (params.heightType() == HeightType::EGM84ThirtyMinBiLinear)
           fprintf(outputFile, "%s", msl_EGM84_30M_BL_Height_Header_String);
+        else if (params.heightType() == HeightType::EGM2008TwoPtFiveMinBicubicSpline)
+          fprintf(outputFile, "%s", msl_EGM2008_TWOPOINTFIVEM_BCS_Height_Header_String);
         fprintf(outputFile,"\n");
 
         if(outputLatitudeLongitudeOrder)
@@ -1970,7 +2018,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
           fprintf(outputFile, "%s: %s\n", coordinate_Order_Header_String, LONGITUDE_LATITUDE);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2008,7 +2056,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2045,7 +2093,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2075,7 +2123,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }*/
@@ -2108,7 +2156,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2139,7 +2187,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2166,7 +2214,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2194,7 +2242,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2224,7 +2272,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2259,7 +2307,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2288,7 +2336,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2316,7 +2364,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2348,7 +2396,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2391,7 +2439,7 @@ void Fiomeths::writeOutputFileHeader( const char* targetDatumCode, CoordinateSys
         fprintf(outputFile, "\n");
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
 
       break;
     }
@@ -2415,226 +2463,226 @@ void Fiomeths::setCoordinateSystemParameters( MSP::CCS::CoordinateSystemParamete
       if( dynamic_cast< MapProjection6Parameters* >( parameters ) )
         targetParameters = new MapProjection6Parameters( *dynamic_cast< MapProjection6Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
      break;
     case CoordinateType::azimuthalEquidistant:
       if( dynamic_cast< MapProjection4Parameters* >( parameters ) )
         targetParameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::bonne:
       if( dynamic_cast< MapProjection4Parameters* >( parameters ) )
         targetParameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::britishNationalGrid:
       if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
         targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::cassini:
       if( dynamic_cast< MapProjection4Parameters* >( parameters ) )
         targetParameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::cylindricalEqualArea:
       if( dynamic_cast< MapProjection4Parameters* >( parameters ) )
         targetParameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::eckert4:
       if( dynamic_cast< MapProjection3Parameters* >( parameters ) )
         targetParameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::eckert6:
       if( dynamic_cast< MapProjection3Parameters* >( parameters ) )
         targetParameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::equidistantCylindrical:
       if( dynamic_cast< EquidistantCylindricalParameters* >( parameters ) )
         targetParameters = new EquidistantCylindricalParameters( *dynamic_cast< EquidistantCylindricalParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::geocentric:
       if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
         targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::geodetic:
       if( dynamic_cast< GeodeticParameters* >( parameters ) )
         targetParameters = new GeodeticParameters( *dynamic_cast< GeodeticParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::georef:
       if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
         targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::globalAreaReferenceSystem:
       if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
         targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::gnomonic:
       if( dynamic_cast< MapProjection4Parameters* >( parameters ) )
         targetParameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::lambertConformalConic1Parallel:
       if( dynamic_cast< MapProjection5Parameters* >( parameters ) )
         targetParameters = new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::lambertConformalConic2Parallels:
       if( dynamic_cast< MapProjection6Parameters* >( parameters ) )
         targetParameters = new MapProjection6Parameters( *dynamic_cast< MapProjection6Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::localCartesian:
       if( dynamic_cast< LocalCartesianParameters* >( parameters ) )
         targetParameters = new LocalCartesianParameters( *dynamic_cast< LocalCartesianParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::mercatorStandardParallel:
       if( dynamic_cast< MercatorStandardParallelParameters* >( parameters ) )
         targetParameters = new MercatorStandardParallelParameters( *dynamic_cast< MercatorStandardParallelParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::mercatorScaleFactor:
       if( dynamic_cast< MercatorScaleFactorParameters* >( parameters ) )
         targetParameters = new MercatorScaleFactorParameters( *dynamic_cast< MercatorScaleFactorParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::militaryGridReferenceSystem:
       if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
         targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::millerCylindrical:
       if( dynamic_cast< MapProjection3Parameters* >( parameters ) )
         targetParameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::mollweide:
       if( dynamic_cast< MapProjection3Parameters* >( parameters ) )
         targetParameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::newZealandMapGrid:
       if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
         targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::neys:
       if( dynamic_cast< NeysParameters* >( parameters ) )
         targetParameters = new NeysParameters( *dynamic_cast< NeysParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::obliqueMercator:
       if( dynamic_cast< ObliqueMercatorParameters* >( parameters ) )
         targetParameters = new ObliqueMercatorParameters( *dynamic_cast< ObliqueMercatorParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::orthographic:
       if( dynamic_cast< MapProjection4Parameters* >( parameters ) )
         targetParameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::polarStereographicStandardParallel:
       if( dynamic_cast< PolarStereographicStandardParallelParameters* >( parameters ) )
         targetParameters = new PolarStereographicStandardParallelParameters( *dynamic_cast< PolarStereographicStandardParallelParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::polarStereographicScaleFactor:
       if( dynamic_cast< PolarStereographicScaleFactorParameters* >( parameters ) )
         targetParameters = new PolarStereographicScaleFactorParameters( *dynamic_cast< PolarStereographicScaleFactorParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::polyconic:
       if( dynamic_cast< MapProjection4Parameters* >( parameters ) )
         targetParameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::sinusoidal:
       if( dynamic_cast< MapProjection3Parameters* >( parameters ) )
         targetParameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::stereographic:
       if( dynamic_cast< MapProjection4Parameters* >( parameters ) )
         targetParameters = new MapProjection4Parameters( *dynamic_cast< MapProjection4Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::transverseCylindricalEqualArea:
       if( dynamic_cast< MapProjection5Parameters* >( parameters ) )
         targetParameters = new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::transverseMercator:
       if( dynamic_cast< MapProjection5Parameters* >( parameters ) )
         targetParameters = new MapProjection5Parameters( *dynamic_cast< MapProjection5Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::universalPolarStereographic:
       if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
         targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::universalTransverseMercator:
       if( dynamic_cast< UTMParameters* >( parameters ) )
         targetParameters = new UTMParameters( *dynamic_cast< UTMParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::usNationalGrid:
       if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
         targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     case CoordinateType::vanDerGrinten:
       if( dynamic_cast< MapProjection3Parameters* >( parameters ) )
         targetParameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
       else
-        throw CoordinateConversionException( FileErrorMessages::invalidTargetParameters );
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
     default:
-      throw CoordinateConversionException( FileErrorMessages::invalidTargetCoordinateSystem );
+      throw CoordinateConversionException( INVALID_TARGET_CS );
   }
 }
 
@@ -2707,16 +2755,16 @@ CoordinateTuple* Fiomeths::readCoordinate()
                 return new GeodeticCoordinates(CoordinateType::geodetic, longitude, latitude, 0.0);
 
             }
-            throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+            throw CoordinateConversionException( ERROR_PARSING_FILE );
           }
           else
-            throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+            throw CoordinateConversionException( ERROR_PARSING_FILE );
         }
         else
-          throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+          throw CoordinateConversionException( ERROR_PARSING_FILE );
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::georef:
@@ -2733,7 +2781,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new GEOREFCoordinates(CoordinateType::georef, return_Parameter);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
 
       break;
     }
@@ -2755,10 +2803,10 @@ CoordinateTuple* Fiomeths::readCoordinate()
             return new CartesianCoordinates(CoordinateType::localCartesian, x, y, z);
           }
           if( tempErrorCode )
-            throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+            throw CoordinateConversionException( ERROR_PARSING_FILE );
         }
         else
-          throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+          throw CoordinateConversionException( ERROR_PARSING_FILE );
       }
     }
     case CoordinateType::geocentric:
@@ -2779,10 +2827,10 @@ CoordinateTuple* Fiomeths::readCoordinate()
             return new CartesianCoordinates(CoordinateType::geocentric, x, y, z);
           }
           if( tempErrorCode )
-            throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+            throw CoordinateConversionException( ERROR_PARSING_FILE );
         }
         else
-          throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+          throw CoordinateConversionException( ERROR_PARSING_FILE );
       }
     }
     case CoordinateType::militaryGridReferenceSystem:
@@ -2798,7 +2846,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MGRSorUSNGCoordinates(CoordinateType::militaryGridReferenceSystem, return_Parameter, Precision::tenthOfSecond);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
 
       break;
     }
@@ -2815,7 +2863,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MGRSorUSNGCoordinates(CoordinateType::usNationalGrid, return_Parameter, Precision::tenthOfSecond);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
 
       break;
     }
@@ -2839,7 +2887,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
           {
             hemisphere = (char)toupper(hemisphere);
             if ((hemisphere != 'N') && (hemisphere != 'S'))
-              throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+              throw CoordinateConversionException( ERROR_PARSING_FILE );
             else
             {
               fscanf(inputFile, "%[, \t]", buf);
@@ -2849,15 +2897,15 @@ CoordinateTuple* Fiomeths::readCoordinate()
                 return new UTMCoordinates(CoordinateType::universalTransverseMercator, zone, hemisphere, easting, northing);
               }
               else
-                throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+                throw CoordinateConversionException( ERROR_PARSING_FILE );
             }
           }
           else
-            throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+            throw CoordinateConversionException( ERROR_PARSING_FILE );
         }
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::universalPolarStereographic:
@@ -2871,7 +2919,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
       {
         hemisphere = (char)toupper(hemisphere);
         if ((hemisphere != 'N') && (hemisphere != 'S'))
-          throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+          throw CoordinateConversionException( ERROR_PARSING_FILE );
         else
         {
           fscanf(inputFile, "%[, \t]", buf);
@@ -2881,11 +2929,11 @@ CoordinateTuple* Fiomeths::readCoordinate()
             return new UPSCoordinates(CoordinateType::universalPolarStereographic, hemisphere, easting, northing);
           }
           if( tempErrorCode )
-            throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+            throw CoordinateConversionException( ERROR_PARSING_FILE );
         }
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::albersEqualAreaConic:
@@ -2899,7 +2947,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::albersEqualAreaConic, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::azimuthalEquidistant:
@@ -2913,7 +2961,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::azimuthalEquidistant, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::bonne:
@@ -2927,7 +2975,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::bonne, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::cassini:
@@ -2941,7 +2989,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::cassini, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::cylindricalEqualArea:
@@ -2955,7 +3003,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::cylindricalEqualArea, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::eckert4:
@@ -2969,7 +3017,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::eckert4, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::eckert6:
@@ -2983,7 +3031,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::eckert6, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::equidistantCylindrical:
@@ -2997,7 +3045,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::equidistantCylindrical, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::gnomonic:
@@ -3011,7 +3059,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::gnomonic, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::lambertConformalConic1Parallel:
@@ -3025,7 +3073,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::lambertConformalConic1Parallel, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::lambertConformalConic2Parallels:
@@ -3039,7 +3087,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::lambertConformalConic2Parallels, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::mercatorStandardParallel:
@@ -3053,7 +3101,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::mercatorStandardParallel, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::mercatorScaleFactor:
@@ -3067,7 +3115,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::mercatorScaleFactor, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::millerCylindrical:
@@ -3081,7 +3129,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::millerCylindrical, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::mollweide:
@@ -3095,7 +3143,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::mollweide, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::neys:
@@ -3109,7 +3157,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::neys, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::newZealandMapGrid:
@@ -3123,7 +3171,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::newZealandMapGrid, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::obliqueMercator:
@@ -3137,7 +3185,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::obliqueMercator, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::orthographic:
@@ -3151,7 +3199,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::orthographic, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::polarStereographicStandardParallel:
@@ -3165,7 +3213,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::polarStereographicStandardParallel, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::polarStereographicScaleFactor:
@@ -3179,7 +3227,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::polarStereographicScaleFactor, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::polyconic:
@@ -3193,7 +3241,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::polyconic, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::sinusoidal:
@@ -3207,7 +3255,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::sinusoidal, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::stereographic:
@@ -3221,7 +3269,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::stereographic, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::transverseCylindricalEqualArea:
@@ -3235,7 +3283,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::transverseCylindricalEqualArea, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::transverseMercator:
@@ -3249,7 +3297,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::transverseMercator, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::vanDerGrinten:
@@ -3263,7 +3311,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new MapProjectionCoordinates(CoordinateType::vanDerGrinten, easting, northing);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
       break;
     }
     case CoordinateType::britishNationalGrid:
@@ -3273,7 +3321,9 @@ CoordinateTuple* Fiomeths::readCoordinate()
       int i = 0;
 
       Eat_Noise(inputFile);
-      if (!feof(inputFile) && (fscanf(inputFile, "%255[ 1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]", return_Parameter)))
+      if (!feof(inputFile) && (fscanf(inputFile,
+         "%255[ 1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]",
+         return_Parameter)))
       {
         for (i = 0;(unsigned int)i < strlen(return_Parameter); i++)
           return_Parameter[i] = (char)toupper(return_Parameter[i]);
@@ -3281,7 +3331,7 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new BNGCoordinates(CoordinateType::britishNationalGrid, return_Parameter);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
 
       break;
     }
@@ -3292,7 +3342,9 @@ CoordinateTuple* Fiomeths::readCoordinate()
       int i = 0;
 
       Eat_Noise(inputFile);
-      if (!feof(inputFile) && (fscanf(inputFile, "%255[1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]", return_Parameter)))
+      if (!feof(inputFile) && (fscanf(inputFile,
+         "%255[1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]",
+         return_Parameter)))
       {
         for (i = 0;(unsigned int)i < strlen(return_Parameter); i++)
           return_Parameter[i] = (char)toupper(return_Parameter[i]);
@@ -3300,12 +3352,12 @@ CoordinateTuple* Fiomeths::readCoordinate()
         return new GARSCoordinates(CoordinateType::globalAreaReferenceSystem, return_Parameter);
       }
       else
-        throw CoordinateConversionException( FileErrorMessages::errorParsingFile );
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
 
       break;
     }
     default:
-      throw CoordinateConversionException( FileErrorMessages::invalidTargetCoordinateSystem );
+      throw CoordinateConversionException( INVALID_TARGET_CS );
   }
 
   return 0;
@@ -3416,7 +3468,12 @@ Accuracy* Fiomeths::readConversionErrors( char* errors )
 }
 
 
-void Fiomeths::convert( std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinateCollection, std::vector<MSP::CCS::Accuracy*>& sourceAccuracyCollection, std::vector<TrailingHeight>& trailingHeightCollection, std::vector<MSP::CCS::CoordinateTuple*>& targetCoordinateCollection, std::vector<MSP::CCS::Accuracy*>& targetAccuracyCollection )
+void Fiomeths::convert( 
+   std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinateCollection,
+   std::vector<MSP::CCS::Accuracy*>&        sourceAccuracyCollection,
+   std::vector<TrailingHeight>&             trailingHeightCollection,
+   std::vector<MSP::CCS::CoordinateTuple*>& targetCoordinateCollection,
+   std::vector<MSP::CCS::Accuracy*>&        targetAccuracyCollection )
 {
   int numSourceCoordinates = sourceCoordinateCollection.size();
 
@@ -3428,33 +3485,33 @@ void Fiomeths::convert( std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinat
 //  targetCoordinateCollection.reserve( numSourceCoordinates );
 //  targetAccuracyCollection.reserve( numSourceCoordinates );
 
-  static clock_t startTime, stopTime;
 ///  static time_t t_start, t_stop;
 
-	startTime = clock();
 ///	t_start = time( NULL );
 
-  coordinateConversionService->convertSourceToTargetCollection( sourceCoordinateCollection, sourceAccuracyCollection, targetCoordinateCollection, targetAccuracyCollection );
+  coordinateConversionService->convertSourceToTargetCollection(
+     sourceCoordinateCollection,
+     sourceAccuracyCollection,
+     targetCoordinateCollection,
+     targetAccuracyCollection );
 
-	stopTime = clock();
 ///	t_stop = time( NULL );
 
-  _elapsedTime = ( double )( stopTime - startTime ) / CLOCKS_PER_SEC;
 ///  _elapsedTime = ( double )( t_stop - t_start );
 
   // Write coordinates to output file
   int numTargetCoordinates = targetCoordinateCollection.size();
+  int numTargetAccuracies  = targetAccuracyCollection.size();
+  int numTrailingHeights   = trailingHeightCollection.size();
 
-  int numTargetAccuracies = targetAccuracyCollection.size();
-  int numTrailingHeights = trailingHeightCollection.size();
-
-  if( ( numTargetCoordinates == numTargetAccuracies ) && ( numTargetCoordinates == numTrailingHeights ) )
+  if(( numTargetCoordinates == numTargetAccuracies ) &&
+     ( numTargetCoordinates == numTrailingHeights  ) )
   {
     for( int i = 0; i < numTargetCoordinates; i++ )
     {
       CoordinateTuple* targetCoordinate = targetCoordinateCollection[i];
-      Accuracy* targetAccuracy = targetAccuracyCollection[i];
-      TrailingHeight trailingHeight = trailingHeightCollection[i];
+      Accuracy* targetAccuracy          = targetAccuracyCollection[i];
+      TrailingHeight trailingHeight     = trailingHeightCollection[i];
 
       if( targetCoordinate->coordinateType() == invalid )
       {
@@ -3523,7 +3580,8 @@ void Fiomeths::convert( std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinat
           writeTargetAccuracy( targetAccuracy );
         }
 
-        // Write out any comments on the coordinate line in the source file or end the current coordinate line
+        // Write out any comments on the coordinate line in the source file
+        // or end the current coordinate line
         CoordinateTuple* sourceCoordinate = sourceCoordinateCollection[i];
         if( strlen( sourceCoordinate->errorMessage() ) > 0 )
         {
@@ -3562,6 +3620,7 @@ void Fiomeths::convert( std::vector<MSP::CCS::CoordinateTuple*>& sourceCoordinat
     delete targetAccuracyCollection[i];
   }
   targetAccuracyCollection.clear();
+  trailingHeightCollection.clear(); // ???
 }
 
 
@@ -3644,20 +3703,20 @@ CoordinateTuple* Fiomeths::initTargetCoordinate()
     case CoordinateType::vanDerGrinten:
       return new MapProjectionCoordinates(CoordinateType::vanDerGrinten);
     default:   
-      throw CoordinateConversionException( FileErrorMessages::invalidTargetCoordinateSystem );
+      throw CoordinateConversionException( INVALID_TARGET_CS );
   }
 }
 
 
 void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
 {
-  char meter_str[15];
+  char meter_str[17];
   switch( targetProjectionType )
   {
     case CoordinateType::geodetic:
     {
-      char latitude_str[15];
-      char longitude_str[15];
+      char latitude_str[17];
+      char longitude_str[17];
       if( dynamic_cast< GeodeticParameters* >( targetParameters ) && dynamic_cast< GeodeticCoordinates* >( targetCoordinate ) )
       {
         GeodeticParameters params = ( *dynamic_cast< GeodeticParameters* >( targetParameters ) );
@@ -3688,7 +3747,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3702,7 +3761,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3720,7 +3779,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3735,7 +3794,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3753,7 +3812,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3769,7 +3828,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3809,7 +3868,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3823,7 +3882,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3837,7 +3896,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
       }
       else
       {
-        fprintf(outputFile, FileErrorMessages::invalidTargetCoordinates );
+        fprintf(outputFile, INVALID_TARGET_COORDINATES );
         _numErrors++;
       }
       break;
@@ -3848,7 +3907,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
 
 void Fiomeths::writeCoord(double easting, double northing)
 {
-  char meter_str[15];
+  char meter_str[17];
 
   Meter_to_String(easting,meter_str);
   fprintf(outputFile, "%s", meter_str);
@@ -3894,9 +3953,9 @@ void Fiomeths::writeTargetAccuracy( Accuracy* accuracy )
 
 void Fiomeths::writeExampleCoord()
 {
-  char latitude_str[15];
-  char longitude_str[15];
-  char meter_str[15];
+  char latitude_str[17];
+  char longitude_str[17];
+  char meter_str[17];
 
   switch( targetProjectionType )
   {
@@ -3908,10 +3967,20 @@ void Fiomeths::writeExampleCoord()
     case CoordinateType::geodetic:
     {
       Latitude_to_String(0, latitude_str, _useNSEW, _useMinutes, _useSeconds);
-      fprintf(outputFile, "%s", latitude_str);
-      fprintf(outputFile, ", ");
       Longitude_to_String(0, longitude_str, _useNSEW, _useMinutes, _useSeconds);
-      fprintf(outputFile, "%s", longitude_str);
+
+      if(outputLatitudeLongitudeOrder)
+      {
+        fprintf(outputFile, "%s", latitude_str);
+        fprintf(outputFile, ", ");
+        fprintf(outputFile, "%s", longitude_str);
+      }
+      else
+      {
+        fprintf(outputFile, "%s", longitude_str);
+        fprintf(outputFile, ", ");
+        fprintf(outputFile, "%s", latitude_str);
+      }
 
       GeodeticParameters params = *dynamic_cast< GeodeticParameters* >( coordinateConversionService->getCoordinateSystem( SourceOrTarget::target ) );
 
@@ -4017,7 +4086,7 @@ void Fiomeths::writeExampleCoord()
       break;
     }
     default:
-      throw CoordinateConversionException( FileErrorMessages::invalidTargetCoordinateSystem );    
+      throw CoordinateConversionException( INVALID_TARGET_CS );    
   }
 }
 

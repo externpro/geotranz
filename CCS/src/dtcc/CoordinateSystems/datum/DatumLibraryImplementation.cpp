@@ -121,6 +121,8 @@
  *                      when MSPCCS_DATA is not set
  *    07-07-10          K.Lam, BAEts27269, Replace C functions in threads.h
  *                      with C++ methods in classes CCSThreadMutex
+ *    05/17/11          T. Thompson, BAEts27393, let user know when problem
+ *                      is due to undefined MSPCCS_DATA
  */
 
 
@@ -152,9 +154,9 @@
  *    EllipsoidLibrary.h  - used to get ellipsoid parameters
  *    SevenParameterDatum.h  - creates a 7 parameter datum
  *    ThreeParameterDatum.h  - creates a 3 parameter datum
- *    Geocentric.h  - used to convert between geodetic and geocentric coordinates
- *    Datum.h  - used to store individual datum information
- *    DatumLibraryImplementation.h    - for prototype error ehecking and error codes
+ *    Geocentric.h  - converts between geodetic and geocentric coordinates
+ *    Datum.h       - used to store individual datum information
+ *    DatumLibraryImplementation.h - for error ehecking and error codes
  *    CCSThreadMutex.h  - used for thread safety
  *    CCSThreadLock.h  - used for thread safety
  *    CartesianCoordinates.h   - defines cartesian coordinates
@@ -201,13 +203,21 @@ const char *WGS72_Datum_Code = "WGC";
  *
  */
 
-GeodeticCoordinates* molodenskyShift( const double a, const double da, const double f, const double df,
-                      const double dx, const double dy, const double dz,
-                      const double sourceLongitude, const double sourceLatitude, const double sourceHeight )
-
+GeodeticCoordinates* molodenskyShift(
+   const double a,
+   const double da,
+   const double f,
+   const double df,
+   const double dx,
+   const double dy,
+   const double dz,
+   const double sourceLongitude,
+   const double sourceLatitude,
+   const double sourceHeight )
 { 
 /*
- *  The function molodenskyShift shifts geodetic coordinates using the Molodensky method.
+ *  The function molodenskyShift shifts geodetic coordinates
+ *  using the Molodensky method.
  *
  *    a               : Semi-major axis of source ellipsoid in meters  (input)
  *    da              : Destination a minus source a                   (input)
@@ -251,26 +261,26 @@ GeodeticCoordinates* molodenskyShift( const double a, const double da, const dou
   else
     tLon_in = sourceLongitude;
 
-  e2 = 2 * f - f * f;
+  e2  = 2 * f - f * f;
   ep2 = e2 / (1 - e2);
   sin_Lat = sin(sourceLatitude);
   cos_Lat = cos(sourceLatitude);
   sin_Lon = sin(tLon_in);
   cos_Lon = cos(tLon_in);
   sin2_Lat = sin_Lat * sin_Lat;
-  w2 = 1.0 - e2 * sin2_Lat;
-  w = sqrt(w2);
-  w3 = w * w2;
-  m = (a * (1.0 - e2)) / w3;
-  n = a / w;
+  w2  = 1.0 - e2 * sin2_Lat;
+  w   = sqrt(w2);
+  w3  = w * w2;
+  m   = (a * (1.0 - e2)) / w3;
+  n   = a / w;
   dp1 = cos_Lat * dz - sin_Lat * cos_Lon * dx - sin_Lat * sin_Lon * dy;
   dp2 = ((e2 * sin_Lat * cos_Lat) / w) * da;
   dp3 = sin_Lat * cos_Lat * (2.0 * n + ep2 * m * sin2_Lat) * (1.0 - f) * df;
-  dp = (dp1 + dp2 + dp3) / (m + sourceHeight);
-  dl = (-sin_Lon * dx + cos_Lon * dy) / ((n + sourceHeight) * cos_Lat);
+  dp  = (dp1 + dp2 + dp3) / (m + sourceHeight);
+  dl  = (-sin_Lon * dx + cos_Lon * dy) / ((n + sourceHeight) * cos_Lat);
   dh1 = (cos_Lat * cos_Lon * dx) + (cos_Lat * sin_Lon * dy) + (sin_Lat * dz);
   dh2 = -(w * da) + ((a * (1 - f)) / w) * sin2_Lat * df;
-  dh = dh1 + dh2;
+  dh  = dh1 + dh2;
 
   double targetLatitude = sourceLatitude + dp;
   double targetLongitude = sourceLongitude + dl;
@@ -281,7 +291,8 @@ GeodeticCoordinates* molodenskyShift( const double a, const double da, const dou
   if (targetLongitude < (- PI))
     targetLongitude += TWO_PI;
 
-  return new GeodeticCoordinates( CoordinateType::geodetic, targetLongitude, targetLatitude, targetHeight );
+  return new GeodeticCoordinates(
+     CoordinateType::geodetic, targetLongitude, targetLatitude, targetHeight );
 } 
 
 
@@ -293,18 +304,23 @@ GeodeticCoordinates* molodenskyShift( const double a, const double da, const dou
 /* This class is a safeguard to make sure the singleton gets deleted
  * when the application exits
  */
-class MSP::CCS::DatumLibraryImplementationCleaner
+namespace MSP
 {
-  public:
-
-  ~DatumLibraryImplementationCleaner()
+  namespace CCS
   {
-    CCSThreadLock lock(&DatumLibraryImplementation::mutex);
-    DatumLibraryImplementation::deleteInstance();
+     class DatumLibraryImplementationCleaner
+     {
+        public:
+
+           ~DatumLibraryImplementationCleaner()
+           {
+              CCSThreadLock lock(&DatumLibraryImplementation::mutex);
+              DatumLibraryImplementation::deleteInstance();
+           }
+           
+     } datumLibraryImplementationCleanerInstance;
   }
-
-} datumLibraryImplementationCleanerInstance;
-
+}
 
 // Make this class a singleton, so the data files are only initialized once
 CCSThreadMutex DatumLibraryImplementation::mutex;
@@ -327,8 +343,8 @@ DatumLibraryImplementation* DatumLibraryImplementation::getInstance()
 void DatumLibraryImplementation::removeInstance()
 {
 /*
- * The function removeInstance removes this DatumLibraryImplementation instance from the
- * total number of instances. 
+ * The function removeInstance removes this DatumLibraryImplementation
+ * instance from the total number of instances. 
  */
   CCSThreadLock lock(&mutex);
   if( --instanceCount < 1 )
@@ -375,23 +391,26 @@ DatumLibraryImplementation::DatumLibraryImplementation():
 }
 
 
-DatumLibraryImplementation::DatumLibraryImplementation( const DatumLibraryImplementation &dl )
+DatumLibraryImplementation::DatumLibraryImplementation(
+   const DatumLibraryImplementation &dl )
 {
   int size = dl.datumList.size();
   for( int i = 0; i < size; i++ )
   {
     switch( dl.datumList[i]->datumType() )
     {
-      case DatumType::threeParamDatum:
-        datumList.push_back( new ThreeParameterDatum( *( ( ThreeParameterDatum* )( dl.datumList[i] ) ) ) );
-        break;
-      case DatumType::sevenParamDatum:
-        datumList.push_back( new SevenParameterDatum( *( ( SevenParameterDatum* )( dl.datumList[i] ) ) ) );
-        break;
-      case DatumType::wgs84Datum:
-      case DatumType::wgs72Datum:
-        datumList.push_back( new Datum( *( dl.datumList[i] ) ) );
-        break;
+       case DatumType::threeParamDatum:
+          datumList.push_back( new ThreeParameterDatum(
+             *( ( ThreeParameterDatum* )( dl.datumList[i] ) ) ) );
+          break;
+       case DatumType::sevenParamDatum:
+          datumList.push_back( new SevenParameterDatum(
+             *( ( SevenParameterDatum* )( dl.datumList[i] ) ) ) );
+          break;
+       case DatumType::wgs84Datum:
+       case DatumType::wgs72Datum:
+          datumList.push_back( new Datum( *( dl.datumList[i] ) ) );
+          break;
     }
   }
 
@@ -415,27 +434,30 @@ DatumLibraryImplementation::~DatumLibraryImplementation()
 }
 
 
-DatumLibraryImplementation& DatumLibraryImplementation::operator=( const DatumLibraryImplementation &dl )
+DatumLibraryImplementation& DatumLibraryImplementation::operator=(
+   const DatumLibraryImplementation &dl )
 {
   if ( &dl == this )
-	  return *this;
+     return *this;
 
   int size = dl.datumList.size();
   for( int i = 0; i < size; i++ )
   {
-    switch( dl.datumList[i]->datumType() )
-    {
-      case DatumType::threeParamDatum:
-        datumList.push_back( new ThreeParameterDatum( *( ( ThreeParameterDatum* )( dl.datumList[i] ) ) ) );
-        break;
-      case DatumType::sevenParamDatum:
-        datumList.push_back( new SevenParameterDatum( *( ( SevenParameterDatum* )( dl.datumList[i] ) ) ) );
-        break;
-      case DatumType::wgs84Datum:
-      case DatumType::wgs72Datum:
-        datumList.push_back( new Datum( *( dl.datumList[i] ) ) );
-        break;
-    }
+     switch( dl.datumList[i]->datumType() )
+     {
+        case DatumType::threeParamDatum:
+           datumList.push_back( new ThreeParameterDatum(
+              *( ( ThreeParameterDatum* )( dl.datumList[i] ) ) ) );
+           break;
+        case DatumType::sevenParamDatum:
+           datumList.push_back( new SevenParameterDatum(
+              *( ( SevenParameterDatum* )( dl.datumList[i] ) ) ) );
+           break;
+        case DatumType::wgs84Datum:
+        case DatumType::wgs72Datum:
+           datumList.push_back( new Datum( *( dl.datumList[i] ) ) );
+           break;
+     }
   }
 
   _ellipsoidLibraryImplementation = dl._ellipsoidLibraryImplementation;
@@ -446,13 +468,23 @@ DatumLibraryImplementation& DatumLibraryImplementation::operator=( const DatumLi
 }
 
 
-void DatumLibraryImplementation::define3ParamDatum( const char *code, const char *name, const char *ellipsoidCode, 
-                                      double deltaX, double deltaY, double deltaZ,
-                                      double sigmaX, double sigmaY, double sigmaZ, 
-                                      double westLongitude, double eastLongitude, double southLatitude, double northLatitude )
+void DatumLibraryImplementation::define3ParamDatum(
+   const char *code,
+   const char *name,
+   const char *ellipsoidCode, 
+   double deltaX,
+   double deltaY,
+   double deltaZ,
+   double sigmaX,
+   double sigmaY,
+   double sigmaZ, 
+   double westLongitude,
+   double eastLongitude,
+   double southLatitude,
+   double northLatitude )
 { 
 /*
- * The function define3ParamDatum creates a new local (3-parameter) datum with the
+ * The function define3ParamDatum creates a new local 3-parameter datum with the
  * specified code, name, and axes.  If the datum table has not been initialized,
  * the specified code is already in use, or a new version of the 3-param.dat
  * file cannot be created, an exception is thrown.
@@ -474,59 +506,50 @@ void DatumLibraryImplementation::define3ParamDatum( const char *code, const char
  *   northLatitude : Northern edge of validity rectangle in radians(input)
  */
 
-  char datum_Code[DATUM_CODE_LENGTH];
-  long index = 0;
-  long ellipsoid_index = 0;
-  long code_length = 0;
+  char  datum_Code[DATUM_CODE_LENGTH];
+  long  index = 0;
+  long  ellipsoid_index = 0;
+  long  code_length = 0;
   char *PathName = NULL;
   FILE *fp_3param = NULL;
-  char errorStatus[256] = "";
 
   if (!(datum3ParamCount < MAX_3PARAM))
-    strcat( errorStatus, ErrorMessages::datumOverflow );
+    throw CoordinateConversionException( ErrorMessages::datumOverflow );
   if (!(((sigmaX > 0.0) || (sigmaX == -1.0)) &&
         ((sigmaY > 0.0) || (sigmaY == -1.0)) &&
         ((sigmaZ > 0.0) || (sigmaZ == -1.0))))
-    strcat( errorStatus, ErrorMessages::datumSigma );
+    throw CoordinateConversionException( ErrorMessages::datumSigma );
 
   if ((southLatitude < MIN_LAT) || (southLatitude > MAX_LAT))
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   if ((westLongitude < MIN_LON) || (westLongitude > MAX_LON))
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   if ((northLatitude < MIN_LAT) || (northLatitude > MAX_LAT))
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude );
   if ((eastLongitude < MIN_LON) || (eastLongitude > MAX_LON))
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude );
   if (southLatitude >= northLatitude)
-    strcat( errorStatus, ErrorMessages::datumDomain );
-  if ((westLongitude >= eastLongitude) && (westLongitude >= 0 && westLongitude < 180) && (eastLongitude >= 0 && eastLongitude < 180))
-    strcat( errorStatus, ErrorMessages::datumDomain );
+    throw CoordinateConversionException( ErrorMessages::datumDomain );
+  if((westLongitude >= eastLongitude) &&
+     (westLongitude >= 0 && westLongitude < 180) &&
+     (eastLongitude >= 0 && eastLongitude < 180))
+    throw CoordinateConversionException( ErrorMessages::datumDomain );
 
-  try
-  {
-    datumIndex( code, &index );
-    strcat( errorStatus, ErrorMessages::invalidDatumCode );
-  }
-  catch(CoordinateConversionException e)
-  {
-  }
+  datumIndex( code, &index );
 
   code_length = strlen( code );
 
   if( code_length > ( DATUM_CODE_LENGTH-1 ) )
-    strcat( errorStatus, ErrorMessages::invalidDatumCode );
+    throw CoordinateConversionException( ErrorMessages::invalidDatumCode );
 
   if( _ellipsoidLibraryImplementation )
   {
-    _ellipsoidLibraryImplementation->ellipsoidIndex( ellipsoidCode, &ellipsoid_index );
-  //  if( _ellipsoidLibraryImplementation->ellipsoidIndex( ellipsoidCode, &ellipsoid_index ) )
-  //    errorStatus |= DATUM_ELLIPSE_ERROR;
+    _ellipsoidLibraryImplementation->ellipsoidIndex(
+       ellipsoidCode, &ellipsoid_index );
   }
   else
-    strcat( errorStatus, ErrorMessages::ellipse );
+    throw CoordinateConversionException( ErrorMessages::ellipse );
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   strcpy( datum_Code, code );
   /* Convert code to upper case */
@@ -534,21 +557,31 @@ void DatumLibraryImplementation::define3ParamDatum( const char *code, const char
     datum_Code[i] = ( char )toupper( datum_Code[i] );
 
   int numDatums = datumList.size();
-  datumList.push_back( new ThreeParameterDatum( numDatums, ( char* )datum_Code, ( char* )ellipsoidCode, ( char* )name, DatumType::threeParamDatum, deltaX, deltaY, deltaZ, 
-                                                westLongitude, eastLongitude, southLatitude, northLatitude, sigmaX, sigmaY, sigmaZ, true ) );
+  datumList.push_back( new ThreeParameterDatum(
+     numDatums, ( char* )datum_Code, ( char* )ellipsoidCode,
+     ( char* )name, DatumType::threeParamDatum, deltaX, deltaY, deltaZ,
+     westLongitude, eastLongitude, southLatitude, northLatitude, sigmaX,
+     sigmaY, sigmaZ, true ) );
   datum3ParamCount++;
 
   write3ParamFile();
 } 
 
 
-void DatumLibraryImplementation::define7ParamDatum( const char *code, const char *name, const char *ellipsoidCode, 
-                                      double deltaX, double deltaY, double deltaZ,
-                                      double rotationX, double rotationY, double rotationZ, 
-                                      double scale )
+void DatumLibraryImplementation::define7ParamDatum(
+   const char *code,
+   const char *name,
+   const char *ellipsoidCode, 
+   double deltaX,
+   double deltaY,
+   double deltaZ,
+   double rotationX,
+   double rotationY,
+   double rotationZ, 
+   double scale )
 { 
 /*
- * The function define7ParamDatum creates a new local (7-parameter) datum with the
+ * The function define7ParamDatum creates a new local 7-parameter datum with the
  * specified code, name, and axes.  If the datum table has not been initialized,
  * the specified code is already in use, or a new version of the 7-param.dat
  * file cannot be created, an exception is thrown.
@@ -573,45 +606,33 @@ void DatumLibraryImplementation::define7ParamDatum( const char *code, const char
   long code_length = 0;
   char *PathName = NULL;
   FILE *fp_7param = NULL;
-  char errorStatus[256] = "";
 
   if (!(datum7ParamCount < MAX_7PARAM))
-    strcat( errorStatus, ErrorMessages::datumOverflow );
+    throw CoordinateConversionException( ErrorMessages::datumOverflow );
 
   if ((rotationX < -60.0) || (rotationX > 60.0))
-    strcat( errorStatus, ErrorMessages::datumRotation );
+    throw CoordinateConversionException( ErrorMessages::datumRotation );
   if ((rotationY < -60.0) || (rotationY > 60.0))
-    strcat( errorStatus, ErrorMessages::datumRotation );
+    throw CoordinateConversionException( ErrorMessages::datumRotation );
   if ((rotationZ < -60.0) || (rotationZ > 60.0))
-    strcat( errorStatus, ErrorMessages::datumRotation );
+    throw CoordinateConversionException( ErrorMessages::datumRotation );
 
   if ((scale < -0.001) || (scale > 0.001))
-    strcat( errorStatus, ErrorMessages::scaleFactor );
+    throw CoordinateConversionException( ErrorMessages::scaleFactor );
 
-  try
-  {
-    datumIndex( code, &index );
-    strcat( errorStatus, ErrorMessages::invalidDatumCode );
-  }
-  catch(CoordinateConversionException e)
-  {
-  }
+  datumIndex( code, &index );
 
   code_length = strlen( code );
   if( code_length > ( DATUM_CODE_LENGTH-1 ) )
-    strcat( errorStatus, ErrorMessages::invalidDatumCode );
+    throw CoordinateConversionException( ErrorMessages::invalidDatumCode );
 
   if( _ellipsoidLibraryImplementation )
   {
-    _ellipsoidLibraryImplementation->ellipsoidIndex( ellipsoidCode, &ellipsoid_index );
-  //  if( _ellipsoidLibraryImplementation->ellipsoidIndex( ellipsoidCode, &ellipsoid_index ) )
-  //    errorStatus |= DATUM_ELLIPSE_ERROR;
+    _ellipsoidLibraryImplementation->ellipsoidIndex(
+       ellipsoidCode, &ellipsoid_index );
   }
   else
-    strcat( errorStatus, ErrorMessages::ellipse );
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+    throw CoordinateConversionException( ErrorMessages::ellipse );
 
   long i;
   strcpy( datum_Code, code );
@@ -619,8 +640,12 @@ void DatumLibraryImplementation::define7ParamDatum( const char *code, const char
   for( i = 0; i < code_length; i++ )
     datum_Code[i] = ( char )toupper( datum_Code[i] );
 
-  datumList.insert( datumList.begin() + MAX_WGS + datum7ParamCount, new SevenParameterDatum( datum7ParamCount, ( char* )datum_Code, ( char* )ellipsoidCode, ( char* )name, DatumType::sevenParamDatum, deltaX, deltaY, deltaZ, 
-                                                0, 0, 0, 0, rotationX / SECONDS_PER_RADIAN, rotationY / SECONDS_PER_RADIAN, rotationZ / SECONDS_PER_RADIAN, scale, true ) );
+  datumList.insert( datumList.begin() + MAX_WGS + datum7ParamCount,
+     new SevenParameterDatum( datum7ParamCount, ( char* )datum_Code,
+        ( char* )ellipsoidCode, ( char* )name, DatumType::sevenParamDatum,
+        deltaX, deltaY, deltaZ, 0, 0, 0, 0, rotationX / SECONDS_PER_RADIAN,
+        rotationY / SECONDS_PER_RADIAN, rotationZ / SECONDS_PER_RADIAN,
+        scale, true ) );
   datum7ParamCount++;
 
   write7ParamFile();
@@ -799,7 +824,8 @@ void DatumLibraryImplementation::datumName( const long index, char *name )
 } 
 
 
-void DatumLibraryImplementation::datumEllipsoidCode( const long index, char *code )
+void DatumLibraryImplementation::datumEllipsoidCode(
+   const long index, char *code )
 { 
 /*
  *  The function datumEllipsoidCode returns the 2-letter ellipsoid code
@@ -817,7 +843,11 @@ void DatumLibraryImplementation::datumEllipsoidCode( const long index, char *cod
 } 
 
 
-void DatumLibraryImplementation::datumStandardErrors( const long index, double *sigmaX, double *sigmaY, double *sigmaZ )
+void DatumLibraryImplementation::datumStandardErrors(
+   const long index,
+   double *sigmaX,
+   double *sigmaY,
+   double *sigmaZ )
 { 
 /*
  *   The function datumStandardErrors returns the standard errors in X,Y, & Z
@@ -848,7 +878,12 @@ void DatumLibraryImplementation::datumStandardErrors( const long index, double *
 } 
 
 
-void DatumLibraryImplementation::datumSevenParameters( const long index, double *rotationX, double *rotationY, double *rotationZ, double *scaleFactor )
+void DatumLibraryImplementation::datumSevenParameters(
+   const long index,
+   double *rotationX,
+   double *rotationY,
+   double *rotationZ,
+   double *scaleFactor )
 { 
 /*
  *   The function datumSevenParameters returns parameter values, 
@@ -883,7 +918,11 @@ void DatumLibraryImplementation::datumSevenParameters( const long index, double 
 } 
 
 
-void DatumLibraryImplementation::datumTranslationValues( const long index, double *deltaX, double *deltaY, double *deltaZ  )
+void DatumLibraryImplementation::datumTranslationValues(
+   const long index,
+   double *deltaX,
+   double *deltaY,
+   double *deltaZ  )
 { 
 /*
  *   The function datumTranslationValues returns the translation values
@@ -908,21 +947,25 @@ void DatumLibraryImplementation::datumTranslationValues( const long index, doubl
 } 
 
 
-Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, const long targetIndex, 
-                                    double longitude, double latitude, Accuracy* sourceAccuracy )
+Accuracy* DatumLibraryImplementation::datumShiftError(
+   const long sourceIndex,
+   const long targetIndex, 
+   double longitude,
+   double latitude,
+   Accuracy* sourceAccuracy )
 {
 /*
  *  The function datumShiftError returns the 90% horizontal (circular), vertical (linear), and
  *  spherical errors for a shift from the specified source datum to the
  *  specified destination datum at the specified location.
  *
- *  sourceIndex      : Index of source datum                                      (input)
- *  targetIndex      : Index of destination datum                                 (input)
- *  latitude         : Latitude of point being converted in radians               (input)
- *  longitude        : Longitude of point being converted in radians              (input)
- *  circularError90  : Combined 90% circular horizontal error in meters           (output)
- *  linearError90    : Combined 90% linear vertical error in meters               (output)
- *  sphericalError90 : Combined 90% spherical error in meters                     (output)
+ *  sourceIndex      : Index of source datum                            (input)
+ *  targetIndex      : Index of destination datum                       (input)
+ *  latitude         : Latitude of point being converted in radians     (input)
+ *  longitude        : Longitude of point being converted in radians    (input)
+ *  circularError90  : Combined 90% circular horizontal error in meters (output)
+ *  linearError90    : Combined 90% linear vertical error in meters     (output)
+ *  sphericalError90 : Combined 90% spherical error in meters           (output)
  */
 
   double sinlat = sin( latitude );
@@ -949,7 +992,8 @@ Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, c
     throw CoordinateConversionException( ErrorMessages::invalidIndex );
   if( ( targetIndex < 0 ) || ( targetIndex >= numDatums ) )
     throw CoordinateConversionException( ErrorMessages::invalidIndex );
-  if( ( latitude < ( -90 * PI_OVER_180 ) ) || ( latitude > ( 90 * PI_OVER_180 ) ) )
+  if( ( latitude < ( -90 * PI_OVER_180 ) ) ||
+     ( latitude > ( 90 * PI_OVER_180 ) ) )
     throw CoordinateConversionException( ErrorMessages::latitude );
   if( ( longitude < ( -PI ) ) || ( longitude > TWO_PI ) )
     throw CoordinateConversionException( ErrorMessages::longitude );
@@ -979,7 +1023,9 @@ Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, c
       }
     case DatumType::threeParamDatum:
       {
-        ThreeParameterDatum* sourceThreeParameterDatum = ( ThreeParameterDatum* )sourceDatum;
+        ThreeParameterDatum* sourceThreeParameterDatum = 
+           ( ThreeParameterDatum* )sourceDatum;
+
         if( ( sourceThreeParameterDatum->sigmaX() < 0 )
             || ( sourceThreeParameterDatum->sigmaY() < 0 )
             || ( sourceThreeParameterDatum->sigmaZ() < 0 ) )
@@ -1006,7 +1052,10 @@ Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, c
 
           ce90_in = 2.146 * ( sigma_delta_lat + sigma_delta_lon ) / 2.0;
           le90_in = 1.6449 * sigma_delta_height;
-          se90_in = 2.5003 * ( sourceThreeParameterDatum->sigmaX() + sourceThreeParameterDatum->sigmaY() + sourceThreeParameterDatum->sigmaZ() ) / 3.0;
+          se90_in = 2.5003 * 
+             ( sourceThreeParameterDatum->sigmaX() +
+                sourceThreeParameterDatum->sigmaY() +
+                sourceThreeParameterDatum->sigmaZ() ) / 3.0;
         }
         break;
       }
@@ -1026,7 +1075,8 @@ Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, c
       }
     case DatumType::threeParamDatum:
       {
-        ThreeParameterDatum* targetThreeParameterDatum = ( ThreeParameterDatum* )targetDatum;
+        ThreeParameterDatum* targetThreeParameterDatum =
+           ( ThreeParameterDatum* )targetDatum;
         if ((targetThreeParameterDatum->sigmaX() < 0)
             ||(targetThreeParameterDatum->sigmaY() < 0)
             ||(targetThreeParameterDatum->sigmaZ() < 0))
@@ -1053,7 +1103,10 @@ Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, c
 
           ce90_out = 2.146 * ( sigma_delta_lat + sigma_delta_lon ) / 2.0;
           le90_out = 1.6449 * sigma_delta_height;
-          se90_out = 2.5003 * ( targetThreeParameterDatum->sigmaX() + targetThreeParameterDatum->sigmaY() + targetThreeParameterDatum->sigmaZ() ) / 3.0;
+          se90_out = 2.5003 *
+             ( targetThreeParameterDatum->sigmaX() +
+                targetThreeParameterDatum->sigmaY() +
+                targetThreeParameterDatum->sigmaZ() ) / 3.0;
         }
         break;
       }
@@ -1068,7 +1121,8 @@ Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, c
     }
     else
     {
-      circularError90 = sqrt( ( circularError90 * circularError90 ) + ( ce90_in * ce90_in ) + ( ce90_out * ce90_out ) );
+      circularError90 = sqrt( ( circularError90 * circularError90 ) +
+         ( ce90_in * ce90_in ) + ( ce90_out * ce90_out ) );
       if( circularError90 < 1.0 )
       {
         circularError90 = 1.0;
@@ -1081,17 +1135,22 @@ Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, c
       }
       else
       {
-        linearError90 = sqrt( ( linearError90 * linearError90 ) + ( le90_in * le90_in ) + ( le90_out * le90_out ) );
+        linearError90 = sqrt( ( linearError90 * linearError90 ) +
+           ( le90_in * le90_in ) + ( le90_out * le90_out ) );
         if( linearError90 < 1.0 )
         {
           linearError90 = 1.0;
         }
 
-        if( ( sphericalError90 < 0.0 ) || ( se90_in < 0.0 ) || ( se90_out < 0.0 ) )
+        if( ( sphericalError90 < 0.0 )
+           || ( se90_in < 0.0 )
+           || ( se90_out < 0.0 ) )
           sphericalError90 = -1.0;
         else
         {
-          sphericalError90 = sqrt( ( sphericalError90 * sphericalError90 ) + ( se90_in * se90_in ) + ( se90_out * se90_out ) );
+          sphericalError90 = sqrt( 
+             ( sphericalError90 * sphericalError90 ) + 
+             ( se90_in * se90_in ) + ( se90_out * se90_out ) );
           if( sphericalError90 < 1.0 )
           {
             sphericalError90 = 1.0;
@@ -1105,7 +1164,8 @@ Accuracy* DatumLibraryImplementation::datumShiftError( const long sourceIndex, c
 }
 
 
-void DatumLibraryImplementation::datumUserDefined( const long index, long *result )
+void DatumLibraryImplementation::datumUserDefined(
+   const long index, long *result )
 {
 /*
  *  The function datumUserDefined checks whether or not the specified datum is
@@ -1198,7 +1258,12 @@ bool DatumLibraryImplementation::datumUsesEllipsoid( const char *ellipsoidCode )
 } 
 
 
-void DatumLibraryImplementation::datumValidRectangle( const long index, double *westLongitude, double *eastLongitude, double *southLatitude, double *northLatitude )
+void DatumLibraryImplementation::datumValidRectangle(
+   const long index,
+   double *westLongitude,
+   double *eastLongitude,
+   double *southLatitude,
+   double *northLatitude )
 { 
 /*
  *   The function datumValidRectangle returns the edges of the validity
@@ -1224,8 +1289,12 @@ void DatumLibraryImplementation::datumValidRectangle( const long index, double *
 } 
 
 
-CartesianCoordinates* DatumLibraryImplementation::geocentricDatumShift( const long sourceIndex, const double sourceX, const double sourceY, const double sourceZ,
-                                         const long targetIndex )
+CartesianCoordinates* DatumLibraryImplementation::geocentricDatumShift(
+   const long   sourceIndex,
+   const double sourceX,
+   const double sourceY,
+   const double sourceZ,
+   const long   targetIndex )
 { 
 /*
  *  The function geocentricDatumShift shifts a geocentric coordinate (X, Y, Z in meters) relative
@@ -1243,27 +1312,26 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricDatumShift( const lo
  *
  */
 
-  char errorStatus[50] = "";
-
   int numDatums = datumList.size();
 
   if( ( sourceIndex < 0 ) || ( sourceIndex >= numDatums ) )
-    strcat( errorStatus, ErrorMessages::invalidIndex );
+    throw CoordinateConversionException( ErrorMessages::invalidIndex );
   if( ( targetIndex < 0 ) || ( targetIndex >= numDatums ) )
-    strcat( errorStatus, ErrorMessages::invalidIndex );
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+    throw CoordinateConversionException( ErrorMessages::invalidIndex );
 
   if( sourceIndex == targetIndex )
   {
-    return new CartesianCoordinates( CoordinateType::geocentric, sourceX, sourceY, sourceZ );
+    return new CartesianCoordinates(
+       CoordinateType::geocentric, sourceX, sourceY, sourceZ );
   }
   else
   {
-    CartesianCoordinates* wgs84CartesianCoordinates = geocentricShiftToWGS84( sourceIndex, sourceX, sourceY, sourceZ );
+    CartesianCoordinates* wgs84CartesianCoordinates = geocentricShiftToWGS84(
+       sourceIndex, sourceX, sourceY, sourceZ );
 
-    CartesianCoordinates* targetCartesianCoordinates = geocentricShiftFromWGS84( wgs84CartesianCoordinates->x(), wgs84CartesianCoordinates->y(), wgs84CartesianCoordinates->z(), targetIndex );
+    CartesianCoordinates* targetCartesianCoordinates = geocentricShiftFromWGS84(
+       wgs84CartesianCoordinates->x(), wgs84CartesianCoordinates->y(),
+       wgs84CartesianCoordinates->z(), targetIndex );
 
     delete wgs84CartesianCoordinates;
 
@@ -1272,7 +1340,11 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricDatumShift( const lo
 } 
 
 
-CartesianCoordinates* DatumLibraryImplementation::geocentricShiftFromWGS84( const double WGS84X, const double WGS84Y, const double WGS84Z, const long targetIndex )
+CartesianCoordinates* DatumLibraryImplementation::geocentricShiftFromWGS84(
+   const double WGS84X,
+   const double WGS84Y,
+   const double WGS84Z,
+   const long targetIndex )
 { 
 /*
  *  The function geocentricShiftFromWGS84 shifts a geocentric coordinate (X, Y, Z in meters) relative
@@ -1288,32 +1360,30 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricShiftFromWGS84( cons
  *  targetZ       : Z coordinate relative to the destination datum      (output)
  */
 
-  char errorStatus[50] = "";
-
   int numDatums = datumList.size();
 
   if( ( targetIndex < 0 ) || ( targetIndex >= numDatums ) )
-    strcat( errorStatus, ErrorMessages::invalidIndex );
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+    throw CoordinateConversionException( ErrorMessages::invalidIndex );
 
   Datum* localDatum = datumList[targetIndex];
   switch( localDatum->datumType() )
   {
     case DatumType::wgs72Datum:
     {
-      CartesianCoordinates* wgs72CartesianCoordinates = geocentricShiftWGS84ToWGS72( WGS84X, WGS84Y, WGS84Z );
+      CartesianCoordinates* wgs72CartesianCoordinates =
+         geocentricShiftWGS84ToWGS72( WGS84X, WGS84Y, WGS84Z );
 
       return wgs72CartesianCoordinates;
     }
     case DatumType::wgs84Datum:
     {
-      return new CartesianCoordinates( CoordinateType::geocentric, WGS84X, WGS84Y, WGS84Z );
+      return new CartesianCoordinates(
+         CoordinateType::geocentric, WGS84X, WGS84Y, WGS84Z );
     }
     case DatumType::sevenParamDatum:
     {
-      SevenParameterDatum* sevenParameterDatum = ( SevenParameterDatum* )localDatum;
+      SevenParameterDatum* sevenParameterDatum =
+         ( SevenParameterDatum* )localDatum;
 
       double targetX = WGS84X - sevenParameterDatum->deltaX() - sevenParameterDatum->rotationZ() * WGS84Y
                  + sevenParameterDatum->rotationY() * WGS84Z - sevenParameterDatum->scaleFactor() * WGS84X;
@@ -1342,7 +1412,11 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricShiftFromWGS84( cons
 } 
 
 
-CartesianCoordinates* DatumLibraryImplementation::geocentricShiftToWGS84( const long sourceIndex, const double sourceX, const double sourceY, const double sourceZ )
+CartesianCoordinates* DatumLibraryImplementation::geocentricShiftToWGS84(
+   const long sourceIndex,
+   const double sourceX,
+   const double sourceY,
+   const double sourceZ )
 { 
 /*
  *  The function geocentricShiftToWGS84 shifts a geocentric coordinate (X, Y, Z in meters) relative
@@ -1358,22 +1432,18 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricShiftToWGS84( const 
  *  WGS84Z      : Z coordinate relative to WGS84                (output)
  */
 
-  char errorStatus[50] = "";
-
   int numDatums = datumList.size();
 
   if( ( sourceIndex < 0 ) || (sourceIndex > numDatums ) )
-    strcat( errorStatus, ErrorMessages::invalidIndex );
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+    throw CoordinateConversionException( ErrorMessages::invalidIndex );
 
   Datum* localDatum = datumList[sourceIndex];
   switch( localDatum->datumType() )
   {
     case DatumType::wgs72Datum:
     {
-      CartesianCoordinates* wgs84CartesianCoordinates = geocentricShiftWGS72ToWGS84( sourceX, sourceY, sourceZ );
+      CartesianCoordinates* wgs84CartesianCoordinates = 
+         geocentricShiftWGS72ToWGS84( sourceX, sourceY, sourceZ );
 
       return wgs84CartesianCoordinates;
     }
@@ -1412,8 +1482,10 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricShiftToWGS84( const 
 } 
 
 
-GeodeticCoordinates* DatumLibraryImplementation::geodeticDatumShift( const long sourceIndex, const GeodeticCoordinates* sourceCoordinates,
-                                       const long targetIndex )
+GeodeticCoordinates* DatumLibraryImplementation::geodeticDatumShift(
+   const long sourceIndex,
+   const GeodeticCoordinates* sourceCoordinates,
+   const long targetIndex )
 { 
 /*
  *  The function geodeticDatumShift shifts geodetic coordinates (latitude, longitude in radians
@@ -1421,20 +1493,19 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticDatumShift( const long 
  *  (latitude, longitude in radians and height in meters) relative to the
  *  destination datum.
  *
- *  sourceIndex     : Index of source datum                               (input)
- *  sourceLongitude : Longitude in radians relative to source datum       (input)
- *  sourceLatitude  : Latitude in radians relative to source datum        (input)
- *  sourceHeight    : Height in meters relative to source datum           (input)
- *  targetIndex     : Index of destination datum                          (input)
- *  targetLongitude : Longitude in radians relative to destination datum  (output)
- *  targetLatitude  : Latitude in radians relative to destination datum   (output)
- *  targetHeight    : Height in meters relative to destination datum      (output)
+ *  sourceIndex     : Index of source datum                            (input)
+ *  sourceLongitude : Longitude in radians relative to source datum    (input)
+ *  sourceLatitude  : Latitude in radians relative to source datum     (input)
+ *  sourceHeight    : Height in meters relative to source datum        (input)
+ *  targetIndex     : Index of destination datum                       (input)
+ *  targetLongitude : Longitude in radians relative to destination datum(output)
+ *  targetLatitude  : Latitude in radians relative to destination datum (output)
+ *  targetHeight    : Height in meters relative to destination datum    (output)
  */
 
   long E_Index;
   double a;
   double f;
-  char errorStatus[50] = "";
 
   double sourceLongitude = sourceCoordinates->longitude();
   double sourceLatitude = sourceCoordinates->latitude();
@@ -1443,24 +1514,23 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticDatumShift( const long 
   int numDatums = datumList.size();
 
   if( sourceIndex < 0 || sourceIndex >= numDatums )
-    strcat( errorStatus, ErrorMessages::invalidIndex );
+    throw CoordinateConversionException( ErrorMessages::invalidIndex );
   if( targetIndex < 0 || targetIndex >= numDatums )
-    strcat( errorStatus, ErrorMessages::invalidIndex );
+    throw CoordinateConversionException( ErrorMessages::invalidIndex );
 
-  if( ( sourceLatitude < ( -90 * PI_OVER_180 ) ) || ( sourceLatitude > ( 90 * PI_OVER_180 ) ) )
-    strcat( errorStatus, ErrorMessages::latitude );
+  if(( sourceLatitude < ( -90 * PI_OVER_180 ) ) ||
+     ( sourceLatitude > (  90 * PI_OVER_180 ) ) )
+    throw CoordinateConversionException( ErrorMessages::latitude );
   if( ( sourceLongitude < ( -PI )) || ( sourceLongitude > TWO_PI ) )
-    strcat( errorStatus, ErrorMessages::longitude );
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+    throw CoordinateConversionException( ErrorMessages::longitude );
 
   Datum* sourceDatum = datumList[sourceIndex];
   Datum* targetDatum = datumList[targetIndex];
 
   if ( sourceIndex == targetIndex )
   { /* Just copy */
-    return new GeodeticCoordinates(CoordinateType::geodetic, sourceLatitude, sourceLongitude, sourceHeight);
+    return new GeodeticCoordinates(
+       CoordinateType::geodetic, sourceLatitude, sourceLongitude, sourceHeight);
   }
   else
   {
@@ -1468,83 +1538,87 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticDatumShift( const long 
     {
       if( sourceDatum->datumType() == DatumType::sevenParamDatum )
       {
-        _ellipsoidLibraryImplementation->ellipsoidIndex( sourceDatum->ellipsoidCode(), &E_Index );
+        _ellipsoidLibraryImplementation->ellipsoidIndex(
+           sourceDatum->ellipsoidCode(), &E_Index );
         _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f );
 
-      /*  if( _ellipsoidLibraryImplementation->ellipsoidIndex( sourceDatum->ellipsoidCode(), &E_Index ) )
-          errorStatus |= DATUM_ELLIPSE_ERROR;
-        if( _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f ) )
-          errorStatus |= DATUM_ELLIPSE_ERROR;*/
+        Geocentric geocentricFromGeodetic( a, f );
 
-          Geocentric geocentricFromGeodetic( a, f );
-         // geocentricErrorStatus = geocentricFromGeodetic.setParameters( a, f );
-          CartesianCoordinates* sourceCartesianCoordinates = geocentricFromGeodetic.convertFromGeodetic( sourceCoordinates );
+        CartesianCoordinates* sourceCartesianCoordinates = 
+           geocentricFromGeodetic.convertFromGeodetic( sourceCoordinates );
 
-          if( targetDatum->datumType() == DatumType::sevenParamDatum )
-          { /* Use 3-step method for both stages */
-            CartesianCoordinates* targetCartesianCoordinates = geocentricDatumShift( sourceIndex, sourceCartesianCoordinates->x(), sourceCartesianCoordinates->y(), sourceCartesianCoordinates->z(), targetIndex );
+        if( targetDatum->datumType() == DatumType::sevenParamDatum )
+        { /* Use 3-step method for both stages */
+           CartesianCoordinates* targetCartesianCoordinates = geocentricDatumShift(
+              sourceIndex, 
+              sourceCartesianCoordinates->x(),
+              sourceCartesianCoordinates->y(),
+              sourceCartesianCoordinates->z(), targetIndex );
 
-            _ellipsoidLibraryImplementation->ellipsoidIndex( targetDatum->ellipsoidCode(), &E_Index );
+            _ellipsoidLibraryImplementation->ellipsoidIndex(
+               targetDatum->ellipsoidCode(), &E_Index );
             _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f );
 
-           /* if( _ellipsoidLibraryImplementation->ellipsoidIndex( targetDatum->ellipsoidCode(), &E_Index ) )
-              errorStatus |= DATUM_ELLIPSE_ERROR;
-            if( _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f ) )
-              errorStatus |= DATUM_ELLIPSE_ERROR;*/
-
             Geocentric geocentricToGeodetic( a, f );
-         //   geocentricErrorStatus = geocentricToGeodetic.setParameters( a, f );
-            GeodeticCoordinates* targetGeodeticCoordinates = geocentricToGeodetic.convertToGeodetic( targetCartesianCoordinates );
+            GeodeticCoordinates* targetGeodeticCoordinates =
+               geocentricToGeodetic.convertToGeodetic( targetCartesianCoordinates );
 
             delete targetCartesianCoordinates;
             delete sourceCartesianCoordinates;
 
             return targetGeodeticCoordinates;
-          }
-          else
-          { /* Use 3-step method for 1st stage, Molodensky if possible for 2nd stage */
-            CartesianCoordinates* wgs84CartesianCoordinates = geocentricShiftToWGS84( sourceIndex, sourceCartesianCoordinates->x(), sourceCartesianCoordinates->y(), sourceCartesianCoordinates->z() );
+        }
+        else
+        { /* Use 3-step method for 1st stage, Molodensky if possible for 2nd stage */
+           CartesianCoordinates* wgs84CartesianCoordinates = geocentricShiftToWGS84(
+              sourceIndex, sourceCartesianCoordinates->x(),
+              sourceCartesianCoordinates->y(), sourceCartesianCoordinates->z() );
 
-            long wgs84EllipsoidIndex;
-            _ellipsoidLibraryImplementation->ellipsoidIndex( "WE", &wgs84EllipsoidIndex );
-            _ellipsoidLibraryImplementation->ellipsoidParameters( wgs84EllipsoidIndex, &a, &f );
+           long wgs84EllipsoidIndex;
+           _ellipsoidLibraryImplementation->ellipsoidIndex( "WE", &wgs84EllipsoidIndex );
+           _ellipsoidLibraryImplementation->ellipsoidParameters(
+              wgs84EllipsoidIndex, &a, &f );
 
-            Geocentric geocentricToGeodetic( a, f );
-            //geocentricErrorStatus = geocentricToGeodetic.setParameters( a, f );
-            GeodeticCoordinates* wgs84GeodeticCoordinates = geocentricToGeodetic.convertToGeodetic( wgs84CartesianCoordinates );
+           Geocentric geocentricToGeodetic( a, f );
+           GeodeticCoordinates* wgs84GeodeticCoordinates =
+              geocentricToGeodetic.convertToGeodetic( wgs84CartesianCoordinates );
 
-            GeodeticCoordinates* targetGeodeticCoordinates = geodeticShiftFromWGS84( wgs84GeodeticCoordinates, targetIndex );
+           GeodeticCoordinates* targetGeodeticCoordinates =
+              geodeticShiftFromWGS84( wgs84GeodeticCoordinates, targetIndex );
 
-            delete wgs84GeodeticCoordinates;
-            delete wgs84CartesianCoordinates;
+           delete wgs84GeodeticCoordinates;
+           delete wgs84CartesianCoordinates;
 
-            return targetGeodeticCoordinates;
-          }
+           return targetGeodeticCoordinates;
+        }
       }
       else if( targetDatum->datumType() == DatumType::sevenParamDatum )
       { /* Use Molodensky if possible for 1st stage, 3-step method for 2nd stage */
-        GeodeticCoordinates* wgs84GeodeticCoordinates = geodeticShiftToWGS84( sourceIndex, sourceCoordinates );
+         GeodeticCoordinates* wgs84GeodeticCoordinates = geodeticShiftToWGS84(
+            sourceIndex, sourceCoordinates );
 
         long wgs84EllipsoidIndex;
         _ellipsoidLibraryImplementation->ellipsoidIndex( "WE", &wgs84EllipsoidIndex );
-        _ellipsoidLibraryImplementation->ellipsoidParameters( wgs84EllipsoidIndex, &a, &f );
+        _ellipsoidLibraryImplementation->ellipsoidParameters(
+           wgs84EllipsoidIndex, &a, &f );
 
         Geocentric geocentricFromGeodetic( a, f );
-     //   geocentricErrorStatus = geocentricFromGeodetic.setParameters( a, f );
-        CartesianCoordinates* wgs84CartesianCoordinates = geocentricFromGeodetic.convertFromGeodetic( wgs84GeodeticCoordinates );
+        CartesianCoordinates* wgs84CartesianCoordinates = 
+           geocentricFromGeodetic.convertFromGeodetic( wgs84GeodeticCoordinates );
 
-        CartesianCoordinates* targetCartesianCoordinates = geocentricShiftFromWGS84( wgs84CartesianCoordinates->x(), wgs84CartesianCoordinates->y(), wgs84CartesianCoordinates->z(), targetIndex );
+        CartesianCoordinates* targetCartesianCoordinates =
+           geocentricShiftFromWGS84(
+              wgs84CartesianCoordinates->x(),
+              wgs84CartesianCoordinates->y(),
+              wgs84CartesianCoordinates->z(), targetIndex );
 
-        _ellipsoidLibraryImplementation->ellipsoidIndex( targetDatum->ellipsoidCode(), &E_Index );
+        _ellipsoidLibraryImplementation->ellipsoidIndex(
+           targetDatum->ellipsoidCode(), &E_Index );
         _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f );
-      /*  if( _ellipsoidLibraryImplementation->ellipsoidIndex( targetDatum->ellipsoidCode(), &E_Index ) )
-          errorStatus |= DATUM_ELLIPSE_ERROR;
-        if( _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f ) )
-          errorStatus |= DATUM_ELLIPSE_ERROR;*/
 
         Geocentric geocentricToGeodetic( a, f );
-      //  geocentricErrorStatus = geocentricToGeodetic.setParameters( a, f );
-        GeodeticCoordinates* targetGeodeticCoordinates = geocentricToGeodetic.convertToGeodetic( targetCartesianCoordinates );
+        GeodeticCoordinates* targetGeodeticCoordinates =
+           geocentricToGeodetic.convertToGeodetic( targetCartesianCoordinates );
 
         delete targetCartesianCoordinates;
         delete wgs84CartesianCoordinates;
@@ -1554,9 +1628,11 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticDatumShift( const long 
       }
       else
       { /* Use Molodensky if possible for both stages */
-        GeodeticCoordinates* wgs84GeodeticCoordinates = geodeticShiftToWGS84( sourceIndex, sourceCoordinates );
+        GeodeticCoordinates* wgs84GeodeticCoordinates = geodeticShiftToWGS84(
+           sourceIndex, sourceCoordinates );
 
-        GeodeticCoordinates* targetGeodeticCoordinates = geodeticShiftFromWGS84( wgs84GeodeticCoordinates, targetIndex );
+        GeodeticCoordinates* targetGeodeticCoordinates = geodeticShiftFromWGS84(
+           wgs84GeodeticCoordinates, targetIndex );
 
         delete wgs84GeodeticCoordinates;
 
@@ -1569,19 +1645,20 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticDatumShift( const long 
 } 
 
 
-GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftFromWGS84( const GeodeticCoordinates* sourceCoordinates, const long targetIndex )
+GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftFromWGS84(
+   const GeodeticCoordinates* sourceCoordinates, const long targetIndex )
 { 
 /*
  *  The function geodeticShiftFromWGS84 shifts geodetic coordinates relative to WGS84
  *  to geodetic coordinates relative to a given local datum.
  *
- *    WGS84Longitude  : Longitude in radians relative to WGS84             (input)
- *    WGS84Latitude   : Latitude in radians relative to WGS84              (input)
- *    WGS84Height     : Height in meters  relative to WGS84                (input)
- *    targetIndex     : Index of destination datum                         (input)
- *    targetLongitude : Longitude in radians relative to destination datum (output)
- *    targetLatitude  : Latitude in radians relative to destination datum  (output)
- *    targetHeight    : Height in meters relative to destination datum     (output)
+ *    WGS84Longitude  : Longitude in radians relative to WGS84           (input)
+ *    WGS84Latitude   : Latitude in radians relative to WGS84            (input)
+ *    WGS84Height     : Height in meters  relative to WGS84              (input)
+ *    targetIndex     : Index of destination datum                       (input)
+ *    targetLongitude : Longitude (rad) relative to destination datum   (output)
+ *    targetLatitude  : Latitude (rad) relative to destination datum    (output)
+ *    targetHeight    : Height in meters relative to destination datum  (output)
  *
  */
 
@@ -1595,21 +1672,18 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftFromWGS84( const G
   double dy;
   double dz;
   long E_Index;
-  char errorStatus[50] = "";
 
   double WGS84Longitude = sourceCoordinates->longitude();
   double WGS84Latitude = sourceCoordinates->latitude();
   double WGS84Height = sourceCoordinates->height();
 
   if( ( targetIndex < 0) || (targetIndex >= datumList.size() ) )
-    strcat( errorStatus, ErrorMessages::invalidIndex );
-  if( ( WGS84Latitude < ( -90 * PI_OVER_180 ) ) || ( WGS84Latitude > ( 90 * PI_OVER_180 ) ) )
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::invalidIndex );
+  if(( WGS84Latitude < ( -90 * PI_OVER_180 ) ) ||
+     ( WGS84Latitude > (  90 * PI_OVER_180 ) ) )
+    throw CoordinateConversionException( ErrorMessages::latitude );
   if( ( WGS84Longitude < ( -PI ) ) || ( WGS84Longitude > TWO_PI ) )
-    strcat( errorStatus, ErrorMessages::longitude );
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+    throw CoordinateConversionException( ErrorMessages::longitude );
 
   Datum* localDatum = datumList[targetIndex];
   switch( localDatum->datumType() )
@@ -1630,10 +1704,6 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftFromWGS84( const G
       {
         _ellipsoidLibraryImplementation->ellipsoidIndex( localDatum->ellipsoidCode(), &E_Index );
        _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f );
-  /*      if( _ellipsoidLibraryImplementation->ellipsoidIndex( localDatum->ellipsoidCode(), &E_Index ) )
-          errorStatus |= DATUM_ELLIPSE_ERROR;
-        if( _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f ) )
-          errorStatus |= DATUM_ELLIPSE_ERROR;*/
 
         long wgs84EllipsoidIndex;
         _ellipsoidLibraryImplementation->ellipsoidIndex( "WE", &wgs84EllipsoidIndex );
@@ -1644,14 +1714,12 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftFromWGS84( const G
             ( WGS84Latitude > MOLODENSKY_MAX ) )
         { /* Use 3-step method */
           Geocentric geocentricFromGeodetic( WGS84_a, WGS84_f );
-         // geocentricErrorStatus = geocentricFromGeodetic.setParameters( WGS84_a, WGS84_f );
           CartesianCoordinates* wgs84CartesianCoordinates = geocentricFromGeodetic.convertFromGeodetic( sourceCoordinates );
 
           CartesianCoordinates* localCartesianCoordinates = geocentricShiftFromWGS84( wgs84CartesianCoordinates->x(), wgs84CartesianCoordinates->y(), 
                 wgs84CartesianCoordinates->z(), targetIndex );
 
           Geocentric geocentricToGeodetic( a, f );
-         // geocentricErrorStatus = geocentricToGeodetic.setParameters( a, f );
           GeodeticCoordinates* targetGeodeticCoordinates = geocentricToGeodetic.convertToGeodetic( localCartesianCoordinates );
 
           delete localCartesianCoordinates;
@@ -1706,21 +1774,18 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84( const lon
   double dy;
   double dz;
   long E_Index;
-  char errorStatus[50] = "";
 
   double sourceLongitude = sourceCoordinates->longitude();
   double sourceLatitude = sourceCoordinates->latitude(); 
   double sourceHeight = sourceCoordinates->height();
 
   if( ( sourceIndex < 0 ) || ( sourceIndex >= datumList.size() ) )
-    strcat( errorStatus, ErrorMessages::invalidIndex );
-  if( ( sourceLatitude < ( -90 * PI_OVER_180 ) ) || ( sourceLatitude > ( 90 * PI_OVER_180 ) ) )
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::invalidIndex );
+  if(( sourceLatitude < ( -90 * PI_OVER_180 ) ) ||
+     ( sourceLatitude > (  90 * PI_OVER_180 ) ) )
+    throw CoordinateConversionException( ErrorMessages::latitude );
   if( ( sourceLongitude < ( -PI ) ) || ( sourceLongitude > TWO_PI ) )
-    strcat( errorStatus, ErrorMessages::longitude );
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
+    throw CoordinateConversionException( ErrorMessages::longitude );
 
   Datum* localDatum = datumList[sourceIndex];
   switch( localDatum->datumType() )
@@ -1730,7 +1795,7 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84( const lon
       return geodeticShiftWGS72ToWGS84( sourceLongitude, sourceLatitude, sourceHeight );
     }
     case DatumType::wgs84Datum:
-    {        /* Just copy */
+    {        /* Just  copy */
       return new GeodeticCoordinates(CoordinateType::geodetic, sourceLongitude, sourceLatitude, sourceHeight);
     }
     case DatumType::sevenParamDatum:
@@ -1741,20 +1806,13 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84( const lon
         _ellipsoidLibraryImplementation->ellipsoidIndex( localDatum->ellipsoidCode(), &E_Index );
         _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f );
 
-    /*    if( _ellipsoidLibraryImplementation->ellipsoidIndex( localDatum->ellipsoidCode(), &E_Index ) )
-          errorStatus |= DATUM_ELLIPSE_ERROR;
-        if( _ellipsoidLibraryImplementation->ellipsoidParameters( E_Index, &a, &f ) )
-          errorStatus |= DATUM_ELLIPSE_ERROR;*/
-
-//        if (!errorStatus)
-//        {
-          if( ( localDatum->datumType() == DatumType::sevenParamDatum ) ||
-              ( sourceLatitude < (-MOLODENSKY_MAX ) ) ||
-              ( sourceLatitude > MOLODENSKY_MAX ) )
-          { /* Use 3-step method */
+        if( ( localDatum->datumType() == DatumType::sevenParamDatum ) ||
+           ( sourceLatitude < (-MOLODENSKY_MAX ) ) ||
+           ( sourceLatitude > MOLODENSKY_MAX ) )
+        { /* Use 3-step method */
             Geocentric geocentricFromGeodetic( a, f );
-            //geocentricErrorStatus = geocentricFromGeodetic.setParameters( a, f );
-            CartesianCoordinates* localCartesianCoordinates = geocentricFromGeodetic.convertFromGeodetic( sourceCoordinates );
+            CartesianCoordinates* localCartesianCoordinates =
+               geocentricFromGeodetic.convertFromGeodetic( sourceCoordinates );
 
             CartesianCoordinates* wgs84CartesianCoordinates = geocentricShiftToWGS84( sourceIndex, localCartesianCoordinates->x(), localCartesianCoordinates->y(), localCartesianCoordinates->z() );
 
@@ -1763,7 +1821,6 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84( const lon
             _ellipsoidLibraryImplementation->ellipsoidParameters( wgs84EllipsoidIndex, &WGS84_a, &WGS84_f );
 
             Geocentric geocentricToGeodetic( WGS84_a, WGS84_f );
-           // geocentricErrorStatus = geocentricToGeodetic.setParameters( WGS84_a, WGS84_f );
             GeodeticCoordinates* wgs84GeodeticCoordinates = geocentricToGeodetic.convertToGeodetic( wgs84CartesianCoordinates );
 
             delete wgs84CartesianCoordinates;
@@ -1788,10 +1845,6 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84( const lon
             return wgs84GeodeticCoordinates;
           }
         }
-   //   }
-   //   else
-   //     errorStatus |= DATUM_ELLIPSE_ERROR;
-
     }
     default:
       throw CoordinateConversionException( ErrorMessages::datumType );
@@ -1799,7 +1852,9 @@ GeodeticCoordinates* DatumLibraryImplementation::geodeticShiftToWGS84( const lon
 } 
 
 
-void DatumLibraryImplementation::retrieveDatumType( const long index, DatumType::Enum *datumType )
+void DatumLibraryImplementation::retrieveDatumType(
+   const long index,
+   DatumType::Enum *datumType )
 { 
 /*
  *  The function retrieveDatumType returns the type of the datum referenced by
@@ -1817,7 +1872,11 @@ void DatumLibraryImplementation::retrieveDatumType( const long index, DatumType:
 } 
 
 
-void DatumLibraryImplementation::validDatum( const long index, double longitude, double latitude, long *result )
+void DatumLibraryImplementation::validDatum(
+   const long index,
+   double longitude,
+   double latitude,
+   long  *result )
 { 
 /*
  *  The function validDatum checks whether or not the specified location is within the
@@ -1895,13 +1954,14 @@ void DatumLibraryImplementation::validDatum( const long index, double longitude,
 } 
 
 
-void DatumLibraryImplementation::setEllipsoidLibraryImplementation( EllipsoidLibraryImplementation* __ellipsoidLibraryImplementation )
+void DatumLibraryImplementation::setEllipsoidLibraryImplementation(
+   EllipsoidLibraryImplementation* __ellipsoidLibraryImplementation )
 {
 /*
  *  The function setEllipsoidLibraryImplementation sets the ellipsoid library information
  *  which is needed to create datums and calculate datum shifts.
  *
- *   __ellipsoidLibraryImplementation  : Ellipsoid library implementation      (input)
+ *   __ellipsoidLibraryImplementation  : Ellipsoid library implementation(input)
  *
  */
 
@@ -1933,8 +1993,8 @@ void DatumLibraryImplementation::loadDatums()
 
   CCSThreadLock lock(&mutex);
 
-  /*  Check the environment for a user provided path, else current directory;   */
-  /*  Build a File Name, including specified or default path:                   */
+  /*  Check the environment for a user provided path, else current directory; */
+  /*  Build a File Name, including specified or default path:                */
 
   PathName = getenv( "MSPCCS_DATA" );
   if (PathName != NULL)
@@ -1950,7 +2010,7 @@ void DatumLibraryImplementation::loadDatums()
   }
   strcat( FileName7, "7_param.dat" );
 
-  /*  Open the File READONLY, or Return Error Condition:                        */
+  /*  Open the File READONLY, or Return Error Condition:                    */
 
   if (( fp_7param = fopen( FileName7, "r" ) ) == NULL)
   {
@@ -1958,47 +2018,34 @@ void DatumLibraryImplementation::loadDatums()
     FileName7 = 0;
 
     char message[256] = "";
-    strcpy( message, ErrorMessages::datumFileOpenError );
-    strcat( message, ": 7_param.dat\n" );
-  }
-
-  if (PathName != NULL)
-  {
-    FileName3 = new char[ strlen( PathName ) + 13 ];
-    strcpy( FileName3, PathName );
-    strcat( FileName3, "/" );
-  }
-  else
-  {
-    FileName3 = new char[ file_name_length ];
-    strcpy( FileName3, "../../data/" );
-  }
-  strcat( FileName3, "3_param.dat" );
-
-  /*  Open the File READONLY, or Return Error Condition:                        */
-
-  if (( fp_3param = fopen( FileName3, "r" ) ) == NULL)
-  {
-    delete [] FileName7;
-    FileName7 = 0;
-    delete [] FileName3;
-    FileName3 = 0;
-    
-    char message[256] = "";
-    strcpy( message, ErrorMessages::datumFileOpenError );
-    strcat( message, ": 3_param.dat\n" );
+    if (NULL == PathName)
+    {
+      strcpy( message, "Environment variable undefined: MSPCCS_DATA." );
+    }
+    else
+    {
+      strcpy( message, ErrorMessages::datumFileOpenError );
+      strcat( message, ": 7_param.dat\n" );
+    }
     throw CoordinateConversionException( message );
   }
 
+
+  /*  Open the File READONLY, or Return Error Condition:                    */
+
     /* WGS84 datum entry */
-    datumList.push_back( new Datum( index, "WGE", "WE", "World Geodetic System 1984", DatumType::wgs84Datum, 0.0, 0.0, 0.0, -PI, +PI, -PI / 2.0, +PI / 2.0, false ) );
-    index ++;
+  datumList.push_back( new Datum(
+     index, "WGE", "WE", "World Geodetic System 1984", DatumType::wgs84Datum,
+     0.0, 0.0, 0.0, -PI, +PI, -PI / 2.0, +PI / 2.0, false ) );
+  index ++;
 
 
     /* WGS72 datum entry */
-    datumList.push_back( new Datum( index, "WGC", "WD", "World Geodetic System 1972", DatumType::wgs72Datum, 0.0, 0.0, 0.0, -PI, +PI, -PI / 2.0, +PI / 2.0, false ) );
+  datumList.push_back( new Datum(
+     index, "WGC", "WD", "World Geodetic System 1972", DatumType::wgs72Datum,
+     0.0, 0.0, 0.0, -PI, +PI, -PI / 2.0, +PI / 2.0, false ) );
 
-    index ++;
+  index ++;
 
     datum7ParamCount = 0;
     /* build 7-parameter datum table entries */
@@ -2011,7 +2058,10 @@ void DatumLibraryImplementation::loadDatums()
         bool userDefined = false;
 
         if (fscanf(fp_7param, "%s ", code) <= 0)
+        {
+           fclose( fp_7param );
           throw CoordinateConversionException( ErrorMessages::datumFileParseError );
+        }
         else
         {
           if( code[0] == '*' )
@@ -2036,9 +2086,11 @@ void DatumLibraryImplementation::loadDatums()
         double scaleFactor;
 
         if( fscanf( fp_7param, " %s %lf %lf %lf %lf %lf %lf %lf ",
-                    ellipsoidCode,  &deltaX, &deltaY, &deltaZ, &rotationX, &rotationY, &rotationZ,  &scaleFactor ) <= 0 )
+           ellipsoidCode,  &deltaX, &deltaY, &deltaZ,
+           &rotationX, &rotationY, &rotationZ,  &scaleFactor ) <= 0 )
         {
-          throw CoordinateConversionException( ErrorMessages::datumFileParseError );
+           fclose( fp_7param );
+           throw CoordinateConversionException( ErrorMessages::datumFileParseError );
         }
         else
         { /* convert from degrees to radians */
@@ -2047,8 +2099,10 @@ void DatumLibraryImplementation::loadDatums()
           rotationY /= SECONDS_PER_RADIAN;
           rotationZ /= SECONDS_PER_RADIAN;
           
-          datumList.push_back( new SevenParameterDatum( index, code, ellipsoidCode, name, DatumType::sevenParamDatum, deltaX, deltaY, deltaZ, -PI, +PI, -PI / 2.0, +PI / 2.0,
-                                                        rotationX, rotationY, rotationZ, scaleFactor, userDefined ) );
+          datumList.push_back( new SevenParameterDatum(
+             index, code, ellipsoidCode, name, DatumType::sevenParamDatum,
+             deltaX, deltaY, deltaZ, -PI, +PI, -PI / 2.0, +PI / 2.0,
+             rotationX, rotationY, rotationZ, scaleFactor, userDefined ) );
         }
         index++;
         datum7ParamCount++;
@@ -2059,6 +2113,33 @@ void DatumLibraryImplementation::loadDatums()
       }
     }
     fclose( fp_7param );
+
+
+    if (PathName != NULL)
+    {
+       FileName3 = new char[ strlen( PathName ) + 13 ];
+       strcpy( FileName3, PathName );
+       strcat( FileName3, "/" );
+    }
+    else
+    {
+       FileName3 = new char[ file_name_length ];
+       strcpy( FileName3, "../../data/" );
+    }
+    strcat( FileName3, "3_param.dat" );
+
+    if (( fp_3param = fopen( FileName3, "r" ) ) == NULL)
+    {
+       delete [] FileName7;
+       FileName7 = 0;
+       delete [] FileName3;
+       FileName3 = 0;
+       
+       char message[256] = "";
+       strcpy( message, ErrorMessages::datumFileOpenError );
+       strcat( message, ": 3_param.dat\n" );
+       throw CoordinateConversionException( message );
+    }
 
     datum3ParamCount = 0;
 
@@ -2072,7 +2153,10 @@ void DatumLibraryImplementation::loadDatums()
         bool userDefined = false;
 
         if( fscanf( fp_3param, "%s ", code ) <= 0 )
-          throw CoordinateConversionException( ErrorMessages::datumFileParseError );
+        {
+           fclose( fp_3param );
+           throw CoordinateConversionException( ErrorMessages::datumFileParseError );
+        }
         else
         {
           if( code[0] == '*' )
@@ -2100,10 +2184,11 @@ void DatumLibraryImplementation::loadDatums()
         double southLatitude;
 
         if( fscanf( fp_3param, " %s %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf ",
-                    ellipsoidCode, &deltaX, &sigmaX, &deltaY, &sigmaY, &deltaZ, &sigmaZ, 
-                    &southLatitude, &northLatitude, &westLongitude, &eastLongitude ) <= 0 )
+           ellipsoidCode, &deltaX, &sigmaX, &deltaY, &sigmaY, &deltaZ, &sigmaZ, 
+           &southLatitude, &northLatitude, &westLongitude, &eastLongitude ) <= 0 )
         {
-          throw CoordinateConversionException( ErrorMessages::datumFileParseError );
+           fclose( fp_3param );
+           throw CoordinateConversionException( ErrorMessages::datumFileParseError );
         }
         else
         {
@@ -2112,8 +2197,11 @@ void DatumLibraryImplementation::loadDatums()
           westLongitude *= PI_OVER_180;
           eastLongitude *= PI_OVER_180;
 
-          datumList.push_back( new ThreeParameterDatum( index, code, ellipsoidCode, name, DatumType::threeParamDatum, deltaX, deltaY, deltaZ, 
-                                                        westLongitude, eastLongitude, southLatitude, northLatitude, sigmaX, sigmaY, sigmaZ, userDefined ) );
+          datumList.push_back( new ThreeParameterDatum(
+             index, code, ellipsoidCode, name, DatumType::threeParamDatum,
+             deltaX, deltaY, deltaZ, westLongitude, eastLongitude,
+             southLatitude, northLatitude, sigmaX, sigmaY, sigmaZ,
+             userDefined ) );
         }
 
         index++;
@@ -2163,8 +2251,15 @@ void DatumLibraryImplementation::write3ParamFile()
   if ((fp_3param = fopen(FileName, "w")) == NULL)
   { /* fatal error */
     char message[256] = "";
-    strcpy( message, ErrorMessages::datumFileOpenError );
-    strcat( message, ": 3_param.dat\n" );
+    if (NULL == PathName)
+    {
+      strcpy( message, "Environment variable undefined: MSPCCS_DATA." );
+    }
+    else
+    {
+      strcpy( message, ErrorMessages::datumFileOpenError );
+      strcat( message, ": 3_param.dat\n" );
+    }
     throw CoordinateConversionException( message );
   }
 
@@ -2236,8 +2331,15 @@ void DatumLibraryImplementation::write7ParamFile()
   if ((fp_7param = fopen(FileName, "w")) == NULL)
   { /* fatal error */
     char message[256] = "";
-    strcpy( message, ErrorMessages::datumFileOpenError );
-    strcat( message, ": 7_param.dat\n" );
+    if (NULL == PathName)
+    {
+      strcpy( message, "Environment variable undefined: MSPCCS_DATA." );
+    }
+    else
+    {
+      strcpy( message, ErrorMessages::datumFileOpenError );
+      strcat( message, ": 7_param.dat\n" );
+    }
     throw CoordinateConversionException( message );
   }
 
@@ -2431,7 +2533,6 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricShiftWGS84ToWGS72( c
   _ellipsoidLibraryImplementation->ellipsoidParameters( wgs84EllipsoidIndex, &a_84, &f_84 );
 
   Geocentric geocentric84( a_84, f_84 );
- // geocentricErrorStatus = geocentric84.setParameters( a_84, f_84 );
 
   GeodeticCoordinates* wgs84GeodeticCoordinates = geocentric84.convertToGeodetic( new CartesianCoordinates( CoordinateType::geocentric, X_WGS84, Y_WGS84, Z_WGS84 ) );
 
@@ -2443,7 +2544,6 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricShiftWGS84ToWGS72( c
   _ellipsoidLibraryImplementation->ellipsoidParameters( wgs72EllipsoidIndex, &a_72, &f_72 );
 
   Geocentric geocentric72( a_72, f_72 );
-  //geocentricErrorStatus = geocentric72.setParameters( a_72, f_72 );
 
   CartesianCoordinates* wgs72GeocentricCoordinates = geocentric72.convertFromGeodetic( wgs72GeodeticCoordinates );
 
@@ -2479,7 +2579,6 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricShiftWGS72ToWGS84( c
   _ellipsoidLibraryImplementation->ellipsoidParameters( wgs72EllipsoidIndex, &a_72, &f_72 );
 
   Geocentric geocentric72( a_72, f_72 );
- // geocentricErrorStatus = geocentric72.setParameters( a_72, f_72 );
   GeodeticCoordinates* wgs72GeodeticCoordinates = geocentric72.convertToGeodetic( new CartesianCoordinates( CoordinateType::geocentric, X, Y, Z ) );
 
   GeodeticCoordinates* wgs84GeodeticCoordinates = geodeticShiftWGS72ToWGS84( wgs72GeodeticCoordinates->longitude(), wgs72GeodeticCoordinates->latitude(), wgs72GeodeticCoordinates->height() );
@@ -2490,7 +2589,6 @@ CartesianCoordinates* DatumLibraryImplementation::geocentricShiftWGS72ToWGS84( c
   _ellipsoidLibraryImplementation->ellipsoidParameters( wgs84EllipsoidIndex, &a_84, &f_84 );
 
   Geocentric geocentric84( a_84, f_84 );
-  //geocentricErrorStatus = geocentric84.setParameters( a_84, f_84 );
   CartesianCoordinates* wgs84GeocentricCoordinates = geocentric84.convertFromGeodetic( wgs84GeodeticCoordinates );
 
   delete wgs84GeodeticCoordinates;

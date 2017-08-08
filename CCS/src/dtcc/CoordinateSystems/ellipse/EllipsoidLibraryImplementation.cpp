@@ -90,6 +90,8 @@
  *                      when MSPCCS_DATA is not set
  *    07-07-10          K.Lam, BAEts27269, Replace C functions in threads.h
  *                      with C++ methods in classes CCSThreadMutex
+ *    05-16-11          T. Thompson, BAEts27393, Inform user when MSPCCS_DATA
+ *                      is not defined.
  */
 
 
@@ -152,7 +154,11 @@ const char *WGS72_Ellipsoid_Code = "WD";
 /* This class is a safeguard to make sure the singleton gets deleted
  * when the application exits
  */
-class MSP::CCS::EllipsoidLibraryImplementationCleaner
+namespace MSP
+{
+  namespace CCS
+  {
+class EllipsoidLibraryImplementationCleaner
 {
   public:
 
@@ -163,7 +169,8 @@ class MSP::CCS::EllipsoidLibraryImplementationCleaner
   }
 
 } ellipsoidLibraryImplementationCleanerInstance;
-
+  }
+}
 
 // Make this class a singleton, so the data file is only initialized once
 CCSThreadMutex EllipsoidLibraryImplementation::mutex;
@@ -690,7 +697,14 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
     delete [] FileName;
     FileName = 0;
 
-    throw CoordinateConversionException( ErrorMessages::ellipsoidFileOpenError );
+    if (NULL == PathName)
+    {
+      throw CoordinateConversionException( "Environment variable undefined: MSPCCS_DATA." );
+    }
+    else
+    {
+      throw CoordinateConversionException( ErrorMessages::ellipsoidFileOpenError );
+    }
   }
 
   /* read file */

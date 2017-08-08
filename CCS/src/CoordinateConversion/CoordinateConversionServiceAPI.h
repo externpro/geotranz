@@ -1,42 +1,4 @@
-
-/******************************************************************************
-* Filename        : CoordinateConversionServiceApi.h
-* CSCI            : 
-* CSC             : 
-* SW Category     : 
-*
-* Classification  : UNCLASSIFIED
-*
-* Date            : 12 April 2007
-* Author          : Kevin Lam
-*
-* Narrative       : Windows DLL API Definitions
-*
-* Copyright (c) 2007, BAE SYSTEMS. All rights reserved.
-*
-*------------------------------------------------------------------------------
-*
-* Inspection Summary
-* -------------------------------
-*
-* Inspection Date : 
-*
-* Attendees       : 
-*
-*
-*------------------------------------------------------------------------------
-*
-*
-* Revision History
-* ---------------------------------------------
-*
-* Author            : 
-* Date              : 
-* DR Number - Title : 
-* Description       : 
-*
-*
-******************************************************************************/
+// CLASSIFICATION: UNCLASSIFIED
 
 #ifndef _MSP_COORDINATE_CONVERSION_API_H
 #define _MSP_COORDINATE_CONVERSION_API_H

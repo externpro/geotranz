@@ -36,6 +36,7 @@ History
 7-12-2000
 01-06-2009 - updated to work with thread safe msp ccs
 06-16-2010 - S. Gillis, BAEts26660, spreadsheet tester has incorrect datum string
+02-25-2010 - K. Lam, BAEts26267, add EGM 2008 support
  
 */
 
@@ -415,6 +416,14 @@ SpreadsheetTester::SpreadsheetTester( const char* input_file_name, const char* o
       mutex_error = Threads_Lock_Mutex( geoid_96_mutex );*/
 
   showWarnings = _showWarnings;
+  testEGM2008  = false;
+
+  char* envEGM2008 = getenv( "EGM2008_TEST" );
+  if (envEGM2008)
+  {
+      if ( strcmp( envEGM2008, "YES" ) == 0 )
+         testEGM2008 = true;
+  }
 
   if( Open_Test_File( SourceOrTarget::source, input_file_name, &input_file ) )
   {
@@ -1844,7 +1853,11 @@ void SpreadsheetTester::Read_Parameters( SourceOrTarget::Enum direction, Coordin
     case CoordinateType::geodetic:
     {
       coordinateSystemState[direction].parameters.geodeticParameters = new MSP::CCS::GeodeticParameters( projection_type );
-      coordinateSystemState[direction].parameters.geodeticParameters->setHeightType( HeightType::ellipsoidHeight );
+      // set height to EGM2008 if environment variable is set
+      if (testEGM2008)
+         coordinateSystemState[direction].parameters.geodeticParameters->setHeightType( HeightType::EGM2008TwoPtFiveMinBicubicSpline );
+      else
+         coordinateSystemState[direction].parameters.geodeticParameters->setHeightType( HeightType::ellipsoidHeight );
       break;
     }
     case CoordinateType::localCartesian:

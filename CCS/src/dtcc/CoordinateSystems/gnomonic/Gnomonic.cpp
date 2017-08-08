@@ -73,6 +73,7 @@
  *    ----              -----------
  *    05-22-00          Original Code
  *    03-05-07          Original C++ Code
+ *    05-31-11          Fixed dicsontinuitty at south pole. DR 27958
  *    
  *
  */
@@ -92,24 +93,22 @@
 #include "ErrorMessages.h"
 
 /*
- *    math.h       - Standard C math library
- *    Gnomonic.h   - Is for prototype error checking
- *    MapProjectionCoordinates.h   - defines map projection coordinates
- *    GeodeticCoordinates.h   - defines geodetic coordinates
+ *    math.h                          - Standard C math library
+ *    Gnomonic.h                      - Is for prototype error checking
+ *    MapProjectionCoordinates.h      - defines map projection coordinates
+ *    GeodeticCoordinates.h           - defines geodetic coordinates
  *    CoordinateConversionException.h - Exception handler
- *    ErrorMessages.h  - Contains exception messages
+ *    ErrorMessages.h                 - Contains exception messages
  */
 
-
 using namespace MSP::CCS;
-
 
 /***************************************************************************/
 /*                               DEFINES 
  *
  */
 
-const double PI = 3.14159265358979323e0;  /* PI             */
+const double PI = 3.14159265358979323e0;  /* PI */
 const double PI_OVER_2 = ( PI / 2.0);                 
 const double TWO_PI = ( 2.0 * PI);                 
 
@@ -119,7 +118,13 @@ const double TWO_PI = ( 2.0 * PI);
  *
  */
 
-Gnomonic::Gnomonic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double originLatitude, double falseEasting, double falseNorthing ) :
+Gnomonic::Gnomonic(
+   double ellipsoidSemiMajorAxis,
+   double ellipsoidFlattening,
+   double centralMeridian,
+   double originLatitude,
+   double falseEasting,
+   double falseNorthing ) :
   CoordinateSystem(),
   Ra( 6371007.1810824 ),
   Sin_Gnom_Origin_Lat( 0.0 ),
@@ -138,16 +143,16 @@ Gnomonic::Gnomonic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, d
  * variables.  If any errors occur, an exception is thrown with a description 
  * of the error.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening     : Flattening of ellipsoid						        (input)
- *    centralMeridian         : Longitude in radians at the center of     (input)
- *                              the projection
- *    originLatitude          : Latitude in radians at which the          (input)
- *                              point scale factor is 1.0
- *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (input)
- *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (input)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (input)
+ *  ellipsoidFlattening     : Flattening of ellipsoid                   (input)
+ *  centralMeridian         : Longitude in radians at the center of     (input)
+ *                            the projection
+ *  originLatitude          : Latitude in radians at which the          (input)
+ *                            point scale factor is 1.0
+ *  falseEasting            : A coordinate value in meters assigned to the
+ *                            central meridian of the projection.       (input)
+ *  falseNorthing           : A coordinate value in meters assigned to the
+ *                            origin latitude of the projection         (input)
  */
 
   double es2, es4, es6;
@@ -181,7 +186,8 @@ Gnomonic::Gnomonic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, d
   es4 = es2 * es2;
   es6 = es4 * es2;
   /* spherical radius */
-  Ra = semiMajorAxis * (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 / 3024.0);
+  Ra = semiMajorAxis *
+     (1.0 - es2 / 6.0 - 17.0 * es4 / 360.0 - 67.0 * es6 / 3024.0);
   Gnom_Origin_Lat = originLatitude;
   Sin_Gnom_Origin_Lat = sin(Gnom_Origin_Lat);
   Cos_Gnom_Origin_Lat = cos(Gnom_Origin_Lat);
@@ -197,17 +203,17 @@ Gnomonic::Gnomonic( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, d
 Gnomonic::Gnomonic( const Gnomonic &g )
 {
   semiMajorAxis = g.semiMajorAxis;
-  flattening = g.flattening;
-  Ra = g.Ra;
+  flattening    = g.flattening;
+  Ra            = g.Ra;
   Sin_Gnom_Origin_Lat = g.Sin_Gnom_Origin_Lat;
   Cos_Gnom_Origin_Lat = g.Cos_Gnom_Origin_Lat;
-  Gnom_Origin_Long = g.Gnom_Origin_Long;
-  Gnom_Origin_Lat = g.Gnom_Origin_Lat;
-  Gnom_False_Easting = g.Gnom_False_Easting;
+  Gnom_Origin_Long    = g.Gnom_Origin_Long;
+  Gnom_Origin_Lat     = g.Gnom_Origin_Lat;
+  Gnom_False_Easting  = g.Gnom_False_Easting;
   Gnom_False_Northing = g.Gnom_False_Northing;
   abs_Gnom_Origin_Lat = g.abs_Gnom_Origin_Lat;
   Gnom_Delta_Northing = g.Gnom_Delta_Northing;
-  Gnom_Delta_Easting = g.Gnom_Delta_Easting;
+  Gnom_Delta_Easting  = g.Gnom_Delta_Easting;
 }
 
 
@@ -221,17 +227,17 @@ Gnomonic& Gnomonic::operator=( const Gnomonic &g )
   if( this != &g )
   {
     semiMajorAxis = g.semiMajorAxis;
-    flattening = g.flattening;
-    Ra = g.Ra;
+    flattening    = g.flattening;
+    Ra            = g.Ra;
     Sin_Gnom_Origin_Lat = g.Sin_Gnom_Origin_Lat;
     Cos_Gnom_Origin_Lat = g.Cos_Gnom_Origin_Lat;
-    Gnom_Origin_Long = g.Gnom_Origin_Long;
-    Gnom_Origin_Lat = g.Gnom_Origin_Lat;
-    Gnom_False_Easting = g.Gnom_False_Easting;
+    Gnom_Origin_Long    = g.Gnom_Origin_Long;
+    Gnom_Origin_Lat     = g.Gnom_Origin_Lat;
+    Gnom_False_Easting  = g.Gnom_False_Easting;
     Gnom_False_Northing = g.Gnom_False_Northing;
     abs_Gnom_Origin_Lat = g.abs_Gnom_Origin_Lat;
     Gnom_Delta_Northing = g.Gnom_Delta_Northing;
-    Gnom_Delta_Easting = g.Gnom_Delta_Easting;
+    Gnom_Delta_Easting  = g.Gnom_Delta_Easting;
   }
 
   return *this;
@@ -244,23 +250,26 @@ MapProjection4Parameters* Gnomonic::getParameters() const
  * The function getParameters returns the current ellipsoid
  * parameters and Gnomonic projection parameters.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
- *    ellipsoidFlattening     : Flattening of ellipsoid						        (output)
- *    centralMeridian         : Longitude in radians at the center of     (output)
- *                              the projection
- *    originLatitude          : Latitude in radians at which the          (output)
- *                              point scale factor is 1.0
- *    falseEasting            : A coordinate value in meters assigned to the
- *                              central meridian of the projection.       (output)
- *    falseNorthing           : A coordinate value in meters assigned to the
- *                              origin latitude of the projection         (output)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
+ *  ellipsoidFlattening     : Flattening of ellipsoid		        (output)
+ *  centralMeridian         : Longitude in radians at the center of     (output)
+ *                            the projection
+ *  originLatitude          : Latitude in radians at which the          (output)
+ *                            point scale factor is 1.0
+ *  falseEasting            : A coordinate value in meters assigned to the
+ *                            central meridian of the projection.       (output)
+ *  falseNorthing           : A coordinate value in meters assigned to the
+ *                              origin latitude of the projection       (output)
  */
 
-  return new MapProjection4Parameters( CoordinateType::gnomonic, Gnom_Origin_Long, Gnom_Origin_Lat, Gnom_False_Easting, Gnom_False_Northing );
+  return new MapProjection4Parameters(
+     CoordinateType::gnomonic, Gnom_Origin_Long, Gnom_Origin_Lat,
+     Gnom_False_Easting, Gnom_False_Northing );
 }
 
 
-MSP::CCS::MapProjectionCoordinates* Gnomonic::convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
+MSP::CCS::MapProjectionCoordinates* Gnomonic::convertFromGeodetic(
+   MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
 {
 /*
  * The function convertFromGeodetic converts geodetic (latitude and
@@ -286,7 +295,7 @@ MSP::CCS::MapProjectionCoordinates* Gnomonic::convertFromGeodetic( MSP::CCS::Geo
   char errorStatus[50] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
   double slat = sin(latitude);
   double clat = cos(latitude);
 
@@ -319,6 +328,7 @@ MSP::CCS::MapProjectionCoordinates* Gnomonic::convertFromGeodetic( MSP::CCS::Geo
   {
     dlam += TWO_PI;
   }
+
   if (fabs(abs_Gnom_Origin_Lat - PI_OVER_2) < 1.0e-10)
   {
     Ra_cotlat = Ra * (clat / slat);
@@ -326,33 +336,37 @@ MSP::CCS::MapProjectionCoordinates* Gnomonic::convertFromGeodetic( MSP::CCS::Geo
     temp_Northing = Ra_cotlat * cos_dlam;
     if (Gnom_Origin_Lat >= 0.0)
     {
-      easting = temp_Easting + Gnom_False_Easting;
+      easting  = temp_Easting + Gnom_False_Easting;
       northing = -1.0 * temp_Northing + Gnom_False_Northing;
     }
     else
     {
-      easting = -1.0 * temp_Easting + Gnom_False_Easting;
-      northing = temp_Northing + Gnom_False_Northing;
+      easting  = -1.0 * temp_Easting + Gnom_False_Easting;
+      northing = -1.0 * temp_Northing + Gnom_False_Northing;
     }
   }
   else if (abs_Gnom_Origin_Lat <= 1.0e-10)
   {
-    easting = Ra * tan(dlam) + Gnom_False_Easting;
+    easting  = Ra * tan(dlam) + Gnom_False_Easting;
     northing = Ra * tan(latitude) / cos_dlam + Gnom_False_Northing;
   }
   else
   {
     k_prime = 1 / cos_c;
     Ra_kprime = Ra * k_prime;
-    easting = Ra_kprime * clat * sin_dlam + Gnom_False_Easting;
-    northing = Ra_kprime * (Cos_Gnom_Origin_Lat * slat - Sin_Gnom_Origin_Lat * clat * cos_dlam) + Gnom_False_Northing;
+    easting  = Ra_kprime * clat * sin_dlam + Gnom_False_Easting;
+    northing = Ra_kprime * 
+       (Cos_Gnom_Origin_Lat * slat - Sin_Gnom_Origin_Lat * clat * cos_dlam)
+       + Gnom_False_Northing;
   }
 
-  return new MapProjectionCoordinates( CoordinateType::gnomonic, easting, northing );
+  return new MapProjectionCoordinates(
+     CoordinateType::gnomonic, easting, northing );
 }
 
 
-MSP::CCS::GeodeticCoordinates* Gnomonic::convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
+MSP::CCS::GeodeticCoordinates* Gnomonic::convertToGeodetic(
+   MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
 {
 /*
  * The function convertToGeodetic converts Gnomonic projection
@@ -375,7 +389,7 @@ MSP::CCS::GeodeticCoordinates* Gnomonic::convertToGeodetic( MSP::CCS::MapProject
   double longitude, latitude;
   char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Gnom_False_Easting - Gnom_Delta_Easting)) 
@@ -397,7 +411,7 @@ MSP::CCS::GeodeticCoordinates* Gnomonic::convertToGeodetic( MSP::CCS::MapProject
   rho = sqrt(dx * dx + dy * dy);
   if (fabs(rho) <= 1.0e-10)
   {
-    latitude = Gnom_Origin_Lat;
+    latitude  = Gnom_Origin_Lat;
     longitude = Gnom_Origin_Long;
   }
   else
@@ -406,7 +420,9 @@ MSP::CCS::GeodeticCoordinates* Gnomonic::convertToGeodetic( MSP::CCS::MapProject
     sin_c = sin(c);
     cos_c = cos(c);
     dy_sinc = dy * sin_c;
-    latitude = asin((cos_c * Sin_Gnom_Origin_Lat) + ((dy_sinc * Cos_Gnom_Origin_Lat) / rho));
+    latitude = asin((cos_c * Sin_Gnom_Origin_Lat)
+       + ((dy_sinc * Cos_Gnom_Origin_Lat) / rho));
+
     if (fabs(abs_Gnom_Origin_Lat - PI_OVER_2) < 1.0e-10)
     {
       if (Gnom_Origin_Lat >= 0.0)
@@ -415,7 +431,9 @@ MSP::CCS::GeodeticCoordinates* Gnomonic::convertToGeodetic( MSP::CCS::MapProject
         longitude = Gnom_Origin_Long + atan2(dx, dy);
     }
     else
-      longitude = Gnom_Origin_Long + atan2((dx * sin_c), (rho * Cos_Gnom_Origin_Lat * cos_c - dy_sinc * Sin_Gnom_Origin_Lat));
+      longitude = Gnom_Origin_Long
+         + atan2((dx * sin_c),
+            (rho * Cos_Gnom_Origin_Lat * cos_c - dy_sinc *Sin_Gnom_Origin_Lat));
   }
   if (latitude > PI_OVER_2)  /* force distorted values to 90, -90 degrees */
     latitude = PI_OVER_2;
@@ -430,7 +448,8 @@ MSP::CCS::GeodeticCoordinates* Gnomonic::convertToGeodetic( MSP::CCS::MapProject
   else if (longitude < -PI)
     longitude = -PI;
 
-  return new GeodeticCoordinates( CoordinateType::geodetic, longitude, latitude );
+  return new GeodeticCoordinates(
+     CoordinateType::geodetic, longitude, latitude );
 }
 
 

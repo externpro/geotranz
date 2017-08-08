@@ -145,7 +145,7 @@ namespace MSP
        *                              ellipsoid                                 (input)
        */
 
-      Mercator::Mercator( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double falseEasting, double falseNorthing, double scaleFactor );
+      Mercator( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double falseEasting, double falseNorthing, double scaleFactor );
 
 
       Mercator( const Mercator &m );

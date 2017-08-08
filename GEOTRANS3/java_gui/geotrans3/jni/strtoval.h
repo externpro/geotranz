@@ -1,5 +1,15 @@
 // CLASSIFICATION: UNCLASSIFIED
 
+/******************************************************************************
+* Filename        : strtoval.h
+*
+* MODIFICATION HISTORY:
+*
+* DATE      NAME        DR#               DESCRIPTION
+*
+* 03/29/11  S. Gillis   BAEts28564        Fixed Windows memory crash
+******************************************************************************/
+
 #ifndef __strtoval_h__
 #define __strtoval_h__
 
@@ -107,25 +117,25 @@ SVC_Status String_to_Double(const char *str, double *val);
 
 long Valid_Number(const char *str);
 
-SVC_Status Meter_to_String(const double meters, char str[15]);
+SVC_Status Meter_to_String(const double meters, char str[17]);
 
-SVC_Status Long_Meter_to_String(const double meters, char str[15]);
+SVC_Status Long_Meter_to_String(const double meters, char str[17]);
 
 SVC_Status String_to_Long(const char *str, long *val);
 
 SVC_Status String_to_Longitude(const char *str, double *longitude);
 
 /* Force usage of fixed length strings to alleviate checkless C. */
-SVC_Status Longitude_to_String(const double longitude, char str[15], bool use_NSEW,  
+SVC_Status Longitude_to_String(const double longitude, char str[17], bool use_NSEW,  
                          bool use_Minutes, bool use_Seconds);
 
 SVC_Status String_to_Latitude(const char *str, double *latitude);
-SVC_Status Latitude_to_String(const double latitude, char str[14], bool use_NSEW, 
+SVC_Status Latitude_to_String(const double latitude, char str[17], bool use_NSEW, 
                         bool use_Minutes, bool use_Seconds);
 
 SVC_Status Zone_to_String(const long zone, char str[3]);
 
-SVC_Status Ellipsoidal_Height_to_String(const double ellipsoidal_Height, char str[15]);
+SVC_Status Ellipsoidal_Height_to_String(const double ellipsoidal_Height, char str[17]);
 
 SVC_Status Scale_Factor_to_String(const double scale_Factor, char str[8]);
 

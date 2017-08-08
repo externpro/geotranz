@@ -265,7 +265,7 @@ namespace MSP
        *    northing   : Northing (Y) in meters           (output)
        */
 
-      MSP::CCS::UTMCoordinates* USNG::toUTM( long zone, long letters[USNG_LETTERS], double easting, double northing, long in_precision );
+      UTMCoordinates* toUTM( long zone, long letters[USNG_LETTERS], double easting, double northing, long in_precision );
 
 
       /*

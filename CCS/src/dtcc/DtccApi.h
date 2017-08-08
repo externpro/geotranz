@@ -1,41 +1,7 @@
 
 /******************************************************************************
 * Filename        : DtccApi.h
-* CSCI            : 
-* CSC             : 
-* SW Category     : 
-*
 * Classification  : UNCLASSIFIED
-*
-* Date            : 10 October, 2000
-* Author          : Kyle Harcos
-*
-* Narrative       : Windows DLL API Definitions
-*
-* Copyright (c) 2000, BAE SYSTEMS. All rights reserved.
-*
-*------------------------------------------------------------------------------
-*
-* Inspection Summary
-* -------------------------------
-*
-* Inspection Date : 
-*
-* Attendees       : 
-*
-*
-*------------------------------------------------------------------------------
-*
-*
-* Revision History
-* ---------------------------------------------
-*
-* Author            : 
-* Date              : 
-* DR Number - Title : 
-* Description       : 
-*
-*
 ******************************************************************************/
 
 #ifndef _MSP_DTCC_API_H

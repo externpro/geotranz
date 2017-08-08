@@ -45,6 +45,7 @@ private:
   long output_height;
   long zone;
   bool showWarnings;
+  bool testEGM2008;
 
   long error_count;
   long warning_different_count;

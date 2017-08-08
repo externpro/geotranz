@@ -3,10 +3,6 @@
 /****************************************************************************
 * FILE:           HeightType.h
 *  
-*           (C) Copyright 2010, BAE SYSTEMS
-*                  ALL RIGHTS RESERVED
-*           THIS NOTICE DOES NOT IMPLY PUBLICATION
-*
 *
 * DESCRIPTION:  This file contains an enum with height types.
 *
@@ -19,6 +15,7 @@
 * DATE        NAME              DR#               DESCRIPTION
 * 
 * 04/19/10    S Gillis          BAEts26542        Added EGM84ThirtyMinBiLinear          
+* 12/16/10    RD Craig          BAEts26267        Additions for EGM2008
 * 
 *****************************************************************************/
 
@@ -42,7 +39,8 @@ namespace MSP
         EGM96VariableNaturalSpline,
         EGM84TenDegBilinear,
         EGM84TenDegNaturalSpline,
-        EGM84ThirtyMinBiLinear
+        EGM84ThirtyMinBiLinear,
+        EGM2008TwoPtFiveMinBicubicSpline
       };
     };
   }

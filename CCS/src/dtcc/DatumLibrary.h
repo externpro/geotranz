@@ -138,7 +138,7 @@ namespace MSP
 
       /*
        * The constructor creates an empty list to store the datum information
-       *  contained in two external files, 3_param.dat and 7_param.dat.  
+       * contained in two external files, 3_param.dat and 7_param.dat.  
        */
 
 	    DatumLibrary( DatumLibraryImplementation* __datumLibraryImplementation );

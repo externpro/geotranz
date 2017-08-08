@@ -23,11 +23,11 @@ xmlns="http://www.w3.org/TR/REC-html40">
  <o:DocumentProperties>
   <o:Author>Kevin C Trott</o:Author>
   <o:Template>Normal</o:Template>
-  <o:LastAuthor>TROTTKE</o:LastAuthor>
-  <o:Revision>156</o:Revision>
+  <o:LastAuthor>swanson</o:LastAuthor>
+  <o:Revision>157</o:Revision>
   <o:TotalTime>1037</o:TotalTime>
   <o:Created>2001-06-03T17:43:00Z</o:Created>
-  <o:LastSaved>2009-06-18T20:40:00Z</o:LastSaved>
+  <o:LastSaved>2011-06-30T00:02:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
   <o:Words>10326</o:Words>
   <o:Characters>58864</o:Characters>
@@ -35,10 +35,13 @@ xmlns="http://www.w3.org/TR/REC-html40">
   <o:Lines>490</o:Lines>
   <o:Paragraphs>138</o:Paragraphs>
   <o:CharactersWithSpaces>69052</o:CharactersWithSpaces>
-  <o:Version>11.9999</o:Version>
+  <o:Version>11.6568</o:Version>
  </o:DocumentProperties>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <w:WordDocument>
+  <w:Zoom>75</w:Zoom>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
   <w:ValidateAgainstSchemas/>
   <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
   <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
@@ -100,6 +103,9 @@ p
 	font-size:12.0pt;
 	font-family:"Times New Roman";
 	mso-fareast-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
 @page Section1
 	{size:8.5in 11.0in;
 	margin:1.0in 1.25in 1.0in 1.25in;
@@ -375,7 +381,7 @@ ul
 <meta name=Keywords content="">
 <meta name=Template content="C:\Program Files\Microsoft Office\Office\html.dot">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="16386"/>
+ <o:shapedefaults v:ext="edit" spidmax="17410"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -398,10 +404,10 @@ File Format<o:p></o:p></span></b></p>
 margin-bottom:.0001pt;text-align:justify'>A GEOTRANS coordinate file consists
 of multiple sections.<span style='mso-spacerun:yes'>  </span>Each section
 consists of a header that specifies the coordinate system type and datum of the
-input coordinates, along with any required parameter values, followed by a sequence
-of input coordinate lines, with one set of coordinate values per line, with the
-individual coordinate values separated by commas, each followed by at least one
-space.</p>
+input coordinates, along with any required parameter values, followed by a
+sequence of input coordinate lines, with one set of coordinate values per line,
+with the individual coordinate values separated by commas, each followed by at
+least one space.</p>
 
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
 margin-bottom:.0001pt;text-align:justify'><a href="#coordFileHeader">Coordinate
@@ -442,8 +448,8 @@ margin-bottom:.0001pt;text-align:justify'>The coordinate system type for the
 input coordinates in the file is specified using either of the keywords
 COORDINATES or PROJECTION.<span style='mso-spacerun:yes'>  </span>The datum for
 the input coordinates in the file is specified using the keyword DATUM.<span
-style='mso-spacerun:yes'>  </span>Additional header lines are used to specify
-any additional required parameter values.<span style='mso-spacerun:yes'> 
+style='mso-spacerun:yes'>  </span>Additional header lines are used to specify any
+additional required parameter values.<span style='mso-spacerun:yes'> 
 </span>The order of the header lines is arbitrary, but parameters are
 interpreted with respect to the most recent previously specified coordinate
 system type.<span style='mso-spacerun:yes'>  </span>If the same parameter
@@ -554,7 +560,7 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 tab-stops:list 1.0in'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]>Azimuthal Equidistant</p>
+</span></span></span><![endif]><span class=SpellE>Azimuthal</span> Equidistant</p>
 
 <p class=MsoNormal style='margin-left:1.0in;text-indent:-.25in;mso-list:l3 level2 lfo2;
 tab-stops:list 1.0in'><![if !supportLists]><span style='font-family:Symbol;
@@ -632,7 +638,7 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 tab-stops:list 1.0in'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]>Mollweide</p>
+</span></span></span><![endif]><span class=SpellE>Mollweide</span></p>
 
 <p class=MsoNormal style='margin-left:1.0in;text-indent:-.25in;mso-list:l0 level2 lfo3;
 tab-stops:list 1.0in'><![if !supportLists]><span style='font-family:Symbol;
@@ -669,7 +675,7 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 tab-stops:list 1.0in'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]>Polyconic</p>
+</span></span></span><![endif]><span class=SpellE>Polyconic</span></p>
 
 <p class=MsoNormal style='margin-left:1.0in;text-indent:-.25in;mso-list:l0 level2 lfo3;
 tab-stops:list 1.0in'><![if !supportLists]><span style='font-family:Symbol;
@@ -699,7 +705,8 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 tab-stops:list 1.0in'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]>Van der Grinten</p>
+</span></span></span><![endif]>Van <span class=SpellE>der</span> <span
+class=SpellE>Grinten</span></p>
 
 <ul style='margin-top:0in' type=disc>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
@@ -715,8 +722,8 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
      The value consists of a standard 2-letter ellipsoid code (e.g. WE, IN,
      etc.).</li>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
-     tab-stops:list .5in'>COORDINATE ORDER – This line specifies the ordering
-     of the geodetic coordinates in the file. The value is either
+     tab-stops:list .5in'>COORDINATE ORDER – This line specifies the ordering of
+     the geodetic coordinates in the file. The value is either
      LATITUDE-LONGITUDE or LONGITUDE-LATITUDE. The default is
      LATITUDE-LONGITUDE.</li>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
@@ -730,21 +737,23 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
      tab-stops:list .5in'>MSL-EGM96-15M-BL HEIGHT or GEOID/MSL HEIGHT – This
      line specifies that any height values in Geodetic input coordinates are
-     measured relative to the EGM96 geoid model (if the corresponding datum is
-     WGS84) or mean sea level (MSL) surface (otherwise), using a 15-minute grid
-     and bilinear interpolation. This model is recommended for most purposes,
-     as it is the most accurate.<span style='mso-spacerun:yes'>  </span>A line
-     with this key word must be included in the GEOTRANS input file header if
-     MSL-EGM96-15M-BL height values are to be input. If it is not included, all
-     geodetic height values default to ellipsoid heights. The GEOTRANS output
-     file header will contain this line if the MSL-EGM96-15M-BL Height type has
-     been specified with Geodetic coordinates.</li>
+     measured relative to the EGM96 <span class=SpellE>geoid</span> model (if
+     the corresponding datum is WGS84) or mean sea level (MSL) surface
+     (otherwise), using a 15-minute grid and bilinear interpolation. This model
+     is recommended for most purposes, as it is the most accurate.<span
+     style='mso-spacerun:yes'>  </span>A line with this key word must be included
+     in the GEOTRANS input file header if MSL-EGM96-15M-BL height values are to
+     be input. If it is not included, all geodetic height values default to
+     ellipsoid heights. The GEOTRANS output file header will contain this line
+     if the MSL-EGM96-15M-BL Height type has been specified with Geodetic
+     coordinates.</li>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
      tab-stops:list .5in'>MSL-EGM96-VG-NS HEIGHT – This line specifies that any
      height values in Geodetic input coordinates are measured relative to the
-     EGM96 geoid model (if the corresponding datum is WGS84) or mean sea level
-     (MSL) surface (otherwise), using a variable resolution grid and natural
-     spline interpolation. This model is included for compatibility with older
+     EGM96 <span class=SpellE>geoid</span> model (if the corresponding datum is
+     WGS84) or mean sea level (MSL) surface (otherwise), using a variable
+     resolution grid and natural <span class=SpellE>spline</span>
+     interpolation. This model is included for compatibility with older
      systems.<span style='mso-spacerun:yes'>  </span>A line with this key word
      must be included in the GEOTRANS input file header if MSL-EGM96-VG-NS
      height values are to be input. If it is not included, all geodetic height
@@ -754,27 +763,28 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
      tab-stops:list .5in'>MSL-EGM84-10D-BL HEIGHT – This line specifies that
      any height values in Geodetic input coordinates are measured relative to
-     the EGM84 geoid model (if the corresponding datum is WGS84) or mean sea
-     level (MSL) surface (otherwise), using a 10-degree grid and bilinear
-     interpolation. This model is included for compatibility with older
-     systems.<span style='mso-spacerun:yes'>  </span>A line with this key word
-     must be included in the GEOTRANS input file header if MSL-EGM84-10D-BL
-     height values are to be input. If it is not included, all geodetic height
-     values default to ellipsoid heights. The GEOTRANS output file header will
-     contain this line if the MSL-EGM84-10D-BL Height type has been specified
-     with Geodetic coordinates.</li>
+     the EGM84 <span class=SpellE>geoid</span> model (if the corresponding
+     datum is WGS84) or mean sea level (MSL) surface (otherwise), using a
+     10-degree grid and bilinear interpolation. This model is included for
+     compatibility with older systems.<span style='mso-spacerun:yes'>  </span>A
+     line with this key word must be included in the GEOTRANS input file header
+     if MSL-EGM84-10D-BL height values are to be input. If it is not included,
+     all geodetic height values default to ellipsoid heights. The GEOTRANS
+     output file header will contain this line if the MSL-EGM84-10D-BL Height
+     type has been specified with Geodetic coordinates.</li>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
      tab-stops:list .5in'>MSL-EGM84-10D-NS HEIGHT – This line specifies that
      any height values in Geodetic input coordinates are measured relative to
-     the EGM84 geoid model (if the corresponding datum is WGS84) or mean sea
-     level (MSL) surface (otherwise), using a 10-degree grid and natural spline
-     interpolation. This model is included for compatibility with older
-     systems.<span style='mso-spacerun:yes'>  </span>A line with this key word
-     must be included in the GEOTRANS input file header if MSL-EGM84-10D-NS
-     height values are to be input. If it is not included, all geodetic height
-     values default to ellipsoid heights. The GEOTRANS output file header will
-     contain this line if the MSL-EGM84-10D-NS Height type has been specified
-     with Geodetic coordinates.</li>
+     the EGM84 <span class=SpellE>geoid</span> model (if the corresponding
+     datum is WGS84) or mean sea level (MSL) surface (otherwise), using a
+     10-degree grid and natural <span class=SpellE>spline</span> interpolation.
+     This model is included for compatibility with older systems.<span
+     style='mso-spacerun:yes'>  </span>A line with this key word must be
+     included in the GEOTRANS input file header if MSL-EGM84-10D-NS height
+     values are to be input. If it is not included, all geodetic height values
+     default to ellipsoid heights. The GEOTRANS output file header will contain
+     this line if the MSL-EGM84-10D-NS Height type has been specified with
+     Geodetic coordinates.</li>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
      tab-stops:list .5in'>NO HEIGHT – This line specifies that no height values
      are included with input Geodetic coordinates. A line with this key word
@@ -787,29 +797,30 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
      tab-stops:list .5in'>CENTRAL MERIDIAN – This line specifies the value of a
      <st1:place w:st="on">Central Meridian</st1:place> parameter, which defines
      the horizontal center of a map projection. It is used by all of the map
-     projections (Albers Equal Area Conic, Azimuthal Equidistant, Bonne,
-     Cassini, Cylindrical Equal Area, Eckert IV, Eckert VI, Equidistant
-     Cylindrical, Gnomonic, Lambert Conformal Conic (1 Standard Parallel),
-     Lambert Conformal Conic (2 Standard Parallel), Mercator, Miller
-     Cylindrical, Mollweide, Ney's (Modified Lambert Conformal Conic),
-     Orthographic, Polyconic, Sinusoidal, Stereographic, Transverse Cylindrical
-     Equal Area, Transverse Mercator, and Van der Grinten) except British
-     National Grid, New Zealand Map Grid, Polar Stereographic and Oblique
-     Mercator. The associated value is a longitude value in degrees,
-     degrees/minutes, or degrees/minutes/seconds, and defaults to 0°E.</li>
+     projections (Albers Equal Area Conic, <span class=SpellE>Azimuthal</span>
+     Equidistant, Bonne, Cassini, Cylindrical Equal Area, Eckert IV, Eckert VI,
+     Equidistant Cylindrical, Gnomonic, Lambert Conformal Conic (1 Standard
+     Parallel), Lambert Conformal Conic (2 Standard Parallel), Mercator, Miller
+     Cylindrical, <span class=SpellE>Mollweide</span>, Ney's (Modified Lambert
+     Conformal Conic), Orthographic, <span class=SpellE>Polyconic</span>,
+     Sinusoidal, Stereographic, Transverse Cylindrical Equal Area, Transverse
+     Mercator, and Van <span class=SpellE>der</span> <span class=SpellE>Grinten</span>)
+     except British National Grid, New Zealand Map Grid, Polar Stereographic
+     and Oblique Mercator. The associated value is a longitude value in
+     degrees, degrees/minutes, or degrees/minutes/seconds, and defaults to 0°E.</li>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
      tab-stops:list .5in'>ORIGIN LATITUDE – This line specifies the value of an
      Origin Latitude parameter, which defines the vertical center of a map
      projection. It is used by most of the map projections (Albers Equal Area
-     Conic, Azimuthal Equidistant, Bonne, Cassini, Cylindrical Equal Area,
-     Gnomonic, Lambert Conformal Conic (1 Standard Parallel), Lambert Conformal
-     Conic (2 parallel), Ney's (Modified Lambert Conformal Conic), Oblique
-     Mercator, Orthographic, Polyconic, Stereographic, Transverse Cylindrical
-     Equal Area, and Transverse Mercator). It is also used, along with the
-     Origin Longitude, and Origin Height parameters, to specify the location of
-     the origin of a Local Cartesian coordinate system. The associated value is
-     a latitude value in degrees, degrees/minutes, or degrees/minutes/seconds,
-     and defaults to 0°N.</li>
+     Conic, <span class=SpellE>Azimuthal</span> Equidistant, Bonne, Cassini,
+     Cylindrical Equal Area, Gnomonic, Lambert Conformal Conic (1 Standard
+     Parallel), Lambert Conformal Conic (2 parallel), Ney's (Modified Lambert
+     Conformal Conic), Oblique Mercator, Orthographic, <span class=SpellE>Polyconic</span>,
+     Stereographic, Transverse Cylindrical Equal Area, and Transverse
+     Mercator). It is also used, along with the Origin Longitude, and Origin
+     Height parameters, to specify the location of the origin of a Local
+     Cartesian coordinate system. The associated value is a latitude value in
+     degrees, degrees/minutes, or degrees/minutes/seconds, and defaults to 0°N.</li>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
      tab-stops:list .5in'>STANDARD PARALLEL- This line specifies the value of a
      Standard Parallel parameter, which defines a parallel along which the
@@ -886,7 +897,7 @@ style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
      an Origin Longitude parameter, which, with the Origin Latitude and Origin
      Height parameters, specifies the location of the origin of a Local
      Cartesian coordinate system. The associated value is a longitude value in
-     degrees, degrees/minutes, or degrees/minutes/seconds, and defaults to 0°N.</li>
+     degrees, degrees/minutes, or degrees/minutes/seconds, and defaults to 0°E.</li>
  <li class=MsoNormal style='margin-top:6.0pt;text-align:justify;mso-list:l2 level1 lfo4;
      tab-stops:list .5in'>ORIGIN HEIGHT – This line specifies the value of an
      Origin Height parameter, which, with the Origin Latitude and Origin
@@ -927,9 +938,9 @@ File Body<o:p></o:p></b></p>
 margin-bottom:.0001pt;text-align:justify'>Following the header, the body of a
 GEOTRANS coordinate file consists of one or more coordinate lines, with each
 line containing a single set of coordinate values.<span
-style='mso-spacerun:yes'>  </span>A coordinate line consists of individual
-coordinate values separated by commas, each followed by at least one
-space.<span style='mso-spacerun:yes'>  </span>Additional spaces may be used for
+style='mso-spacerun:yes'>  </span>A coordinate line consists of individual coordinate
+values separated by commas, each followed by at least one space.<span
+style='mso-spacerun:yes'>  </span>Additional spaces may be used for
 readability, such as to align columns of coordinate values.<span
 style='mso-spacerun:yes'>  </span>Input coordinates can take on several
 different forms, depending on the nature of the coordinate system or map
@@ -972,8 +983,7 @@ is included with a pair of map projection coordinates in an input coordinate
 file, it will be passed through unchanged to the output coordinate file.</p>
 
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
-margin-bottom:.0001pt'><a name=commentsAndBlanks></a><b>Comments and Blank
-Lines<o:p></o:p></b></p>
+margin-bottom:.0001pt'><a name=commentsAndBlanks></a><b>Comments and Blank Lines<o:p></o:p></b></p>
 
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
 margin-bottom:.0001pt;text-align:justify'>Comments can be included in a
@@ -1126,13 +1136,14 @@ line-break'>
 
 <p class=MsoBodyText><o:p>&nbsp;</o:p></p>
 
-<p class=MsoBodyText>The example above shows a GEOTRANS coordinate input file containing
-Geodetic coordinates and its resulting output file containing Geodetic
-coordinates. The input file header defines the coordinate type, datum and
-height type, which may be NO HEIGHT, ELLIPSOID HEIGHT, MSL-EGM96-15M-BL HEIGHT,
-MSL-EGM96-VG-NS HEIGHT, MSL-EGM84-10D-BL HEIGHT or MSL-EGM84-10D-NS HEIGHT. The
-input file lists the height type as ELLIPSOID HEIGHT and displays height values
-while the output file uses NO HEIGHT and does not display height values.</p>
+<p class=MsoBodyText>The example above shows a GEOTRANS coordinate input file
+containing Geodetic coordinates and its resulting output file containing
+Geodetic coordinates. The input file header defines the coordinate type, datum
+and height type, which may be NO HEIGHT, ELLIPSOID HEIGHT, MSL-EGM96-15M-BL
+HEIGHT, MSL-EGM96-VG-NS HEIGHT, MSL-EGM84-10D-BL HEIGHT or MSL-EGM84-10D-NS
+HEIGHT. The input file lists the height type as ELLIPSOID HEIGHT and displays
+height values while the output file uses NO HEIGHT and does not display height
+values.</p>
 
 <p><a name=georef></a><b>GEOREF<o:p></o:p></b></p>
 
@@ -1219,9 +1230,9 @@ font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:10.0pt;
 font-family:"Courier New"'><o:p>&nbsp;</o:p></span></p>
 
-<p style='margin:0in;margin-bottom:.0001pt;text-align:justify'>The example above
-shows a GEOTRANS coordinate input file containing GEOREF coordinates and its
-resulting output file<span style='mso-bidi-font-size:10.0pt'> containing
+<p style='margin:0in;margin-bottom:.0001pt;text-align:justify'>The example
+above shows a GEOTRANS coordinate input file containing GEOREF coordinates and
+its resulting output file<span style='mso-bidi-font-size:10.0pt'> containing
 Geodetic coordinates</span>. The input file header defines the coordinate type
 and datum.</p>
 
@@ -1330,8 +1341,8 @@ and datum.</p>
 <p class=MsoBodyText><span lang=IT style='mso-ansi-language:IT'>3215429,
 5060738, -2167697 # CE90: 50, LE90: 20, SE90: 50<o:p></o:p></span></p>
 
-<p class=MsoBodyText><span lang=IT style='mso-ansi-language:IT'>3208040,
-5065425, -2167697 # CE90: 50, LE90: 20, SE90: 50<o:p></o:p></span></p>
+<p class=MsoBodyText><span lang=IT style='mso-ansi-language:IT'>3208040, 5065425,
+-2167697 # CE90: 50, LE90: 20, SE90: 50<o:p></o:p></span></p>
 
 <p class=MsoBodyText><span lang=IT style='mso-ansi-language:IT'>3190724,
 5063135, -2198184 # CE90: 50, LE90: 20, SE90: 50<o:p></o:p></span></p>
@@ -1405,8 +1416,8 @@ style='font-size:10.0pt;font-family:"Courier New"'><o:p>&nbsp;</o:p></span></p>
 
 <p style='text-align:justify'>The example above shows a GEOTRANS coordinate
 input file containing Geocentric coordinates and its resulting output file<span
-style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
-input file header defines the coordinate type and datum. The above example also
+style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The input
+file header defines the coordinate type and datum. The above example also
 illustrates the use of circular, linear and spherical errors. The values in the
 input file indicate the accuracy of the input coordinates. The values in the
 output file indicate the accuracy of the output coordinates.</p>
@@ -1501,8 +1512,8 @@ font-family:"Courier New"'>-20.46666, 57.29555, 0<o:p></o:p></span></p>
 <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:10.0pt;
 font-family:"Courier New"'>-20.00000, 57.54222, 1<o:p></o:p></span></p>
 
-<p style='text-align:justify'>The example above shows a GEOTRANS coordinate input
-file containing Local Cartesian coordinates and its resulting output file<span
+<p style='text-align:justify'>The example above shows a GEOTRANS coordinate
+input file containing Local Cartesian coordinates and its resulting output file<span
 style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
 input file header defines the coordinate type, datum and parameters, which for
 Local Cartesian include the Origin Latitude, Origin Longitude, Origin Height,
@@ -1735,8 +1746,8 @@ font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 <p style='text-align:justify'>The example above shows a GEOTRANS coordinate
 input file containing Universal Transverse Mercator coordinates and its
 resulting output file<span style='mso-bidi-font-size:10.0pt'> containing
-Geodetic coordinates</span>. The input file header defines the coordinate type
-and datum. </p>
+Geodetic coordinates</span>. The input file header defines the coordinate type and
+datum. </p>
 
 <p><a name=ups></a><b>Universal Polar Stereographic (UPS)<o:p></o:p></b></p>
 
@@ -1829,11 +1840,11 @@ font-family:"Courier New"'>83.60584, -32.99997<o:p></o:p></span></p>
 <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:10.0pt;
 font-family:"Courier New"'>83.60583, -31.99996<o:p></o:p></span></p>
 
-<p style='text-align:justify'>The example above shows a GEOTRANS coordinate
-input file containing Universal Polar Stereographic coordinates and its
-resulting output file<span style='mso-bidi-font-size:10.0pt'> containing
-Geodetic coordinates</span>. The input file header defines the coordinate type
-and datum. </p>
+<p style='text-align:justify'>The example above shows a GEOTRANS coordinate input
+file containing Universal Polar Stereographic coordinates and its resulting
+output file<span style='mso-bidi-font-size:10.0pt'> containing Geodetic
+coordinates</span>. The input file header defines the coordinate type and
+datum. </p>
 
 <p><a name=albers></a><b>Albers Equal Area Conic<o:p></o:p></b></p>
 
@@ -1952,9 +1963,9 @@ style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:IT'>788,
 29982 # CE90: Unk, LE90: Unk, SE90: Unk<o:p></o:p></span></p>
 
 <p style='margin:0in;margin-bottom:.0001pt;text-align:justify'><span
-style='font-size:10.0pt;font-family:"Courier New"'># Warning: Input Geodetic Coordinates:<span
-style='mso-spacerun:yes'>  </span>Location is not within valid domain for
-current datum <o:p></o:p></span></p>
+style='font-size:10.0pt;font-family:"Courier New"'># Warning: Input Geodetic
+Coordinates:<span style='mso-spacerun:yes'>  </span>Location is not within
+valid domain for current datum <o:p></o:p></span></p>
 
 <p style='margin:0in;margin-bottom:.0001pt;text-align:justify'><span lang=IT
 style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:IT'>1398,
@@ -1971,8 +1982,8 @@ style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:IT'>3637,
 
 <p style='margin:0in;margin-bottom:.0001pt;text-align:justify'><span
 style='font-size:10.0pt;font-family:"Courier New"'># Warning: Input Geodetic
-Coordinates:<span style='mso-spacerun:yes'>  </span>Location is not within
-valid domain for current datum <o:p></o:p></span></p>
+Coordinates:<span style='mso-spacerun:yes'>  </span>Location is not within valid
+domain for current datum <o:p></o:p></span></p>
 
 <p style='margin:0in;margin-bottom:.0001pt;text-align:justify'><span lang=IT
 style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:IT'>12387,
@@ -1984,8 +1995,8 @@ Coordinates:<span style='mso-spacerun:yes'>  </span>Location is not within
 valid domain for current datum <o:p></o:p></span></p>
 
 <p style='margin:0in;margin-bottom:.0001pt;text-align:justify'><span lang=IT
-style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:IT'>25768, -2510
-# CE90: Unk, LE90: Unk, SE90: Unk<o:p></o:p></span></p>
+style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:IT'>25768,
+-2510 # CE90: Unk, LE90: Unk, SE90: Unk<o:p></o:p></span></p>
 
 <p style='margin:0in;margin-bottom:.0001pt;text-align:justify'><span
 style='font-size:10.0pt;font-family:"Courier New"'># Warning: Input Geodetic
@@ -2170,9 +2181,9 @@ Coordinates:<span style='mso-spacerun:yes'>  </span>Location is not within
 valid domain for current datum <o:p></o:p></span></p>
 
 <p style='margin:0in;margin-bottom:.0001pt;text-align:justify'><span
-style='font-size:10.0pt;font-family:"Courier New"'># Warning: Output Geodetic Coordinates:<span
-style='mso-spacerun:yes'>  </span>Location is not within valid domain for
-current datum <o:p></o:p></span></p>
+style='font-size:10.0pt;font-family:"Courier New"'># Warning: Output Geodetic
+Coordinates:<span style='mso-spacerun:yes'>  </span>Location is not within
+valid domain for current datum <o:p></o:p></span></p>
 
 <p style='margin:0in;margin-bottom:.0001pt;text-align:justify'><span lang=IT
 style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:IT'>-20.00000,
@@ -2256,18 +2267,19 @@ back to<span style='mso-bidi-font-size:10.0pt'> Geodetic coordinates defined
 relative to the TOY-B1 (TOKYO, South Korea) local datum</span>. The input file
 header defines the projection type, datum and projection parameters, which for
 Albers Equal Area Conic include the <st1:place w:st="on">Central Meridian</st1:place>,
-Origin Latitude, Standard Parallel One, Standard Parallel Two, False Easting,
-and False Northing. Warnings encountered when converting coordinates are listed
-in the output file as comments in the line above the converted coordinate. Comments
-in the input file body, including the warning messages from the previous
-example, are copied to the output file. </p>
+Origin Latitude, Standard Parallel One, Standard Parallel Two, False Easting, and
+False Northing. Warnings encountered when converting coordinates are listed in
+the output file as comments in the line above the converted coordinate.
+Comments in the input file body, including the warning messages from the
+previous example, are copied to the output file. </p>
 
-<p><a name=azeq></a><b>Azimuthal Equidistant<o:p></o:p></b></p>
+<p><a name=azeq></a><span class=SpellE><b>Azimuthal</b></span><b> Equidistant<o:p></o:p></b></p>
 
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;margin-left:
 0in'>Input File:</p>
 
-<p class=MsoBodyText>PROJECTION: Azimuthal Equidistant</p>
+<p class=MsoBodyText>PROJECTION: <span class=SpellE>Azimuthal</span>
+Equidistant</p>
 
 <p class=MsoBodyText>DATUM: WGE</p>
 
@@ -2354,12 +2366,12 @@ font-family:"Courier New"'>-20.46666, 57.29555<o:p></o:p></span></p>
 font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 
 <p style='text-align:justify'>The example above shows a GEOTRANS coordinate
-input file containing Azimuthal Equidistant coordinates and its resulting
-output file<span style='mso-bidi-font-size:10.0pt'> containing Geodetic
-coordinates</span>. The input file header defines the projection type, datum
-and projection parameters, which for Azimuthal Equidistant include the <st1:place
-w:st="on">Central Meridian</st1:place>, Origin Latitude, False Easting, and
-False Northing.</p>
+input file containing <span class=SpellE>Azimuthal</span> Equidistant
+coordinates and its resulting output file<span style='mso-bidi-font-size:10.0pt'>
+containing Geodetic coordinates</span>. The input file header defines the
+projection type, datum and projection parameters, which for <span class=SpellE>Azimuthal</span>
+Equidistant include the <st1:place w:st="on">Central Meridian</st1:place>,
+Origin Latitude, False Easting, and False Northing.</p>
 
 <p><a name=bonne></a><b>Bonne<o:p></o:p></b></p>
 
@@ -2628,8 +2640,8 @@ font-family:"Courier New"'>-20.46666, 57.29555<o:p></o:p></span></p>
 <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:10.0pt;
 font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 
-<p style='text-align:justify'>The example above shows a GEOTRANS coordinate input
-file containing Cassini coordinates and its resulting output file<span
+<p style='text-align:justify'>The example above shows a GEOTRANS coordinate
+input file containing Cassini coordinates and its resulting output file<span
 style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
 input file header defines the projection type, datum and projection parameters,
 which for Cassini include the <st1:place w:st="on">Central Meridian</st1:place>,
@@ -2646,8 +2658,7 @@ Origin Latitude, False Easting, and False Northing. </p>
 
 <p class=MsoBodyText># ELLIPSOID: WE</p>
 
-<p class=MsoBodyText><st1:place w:st="on">CENTRAL MERIDIAN</st1:place>:
-57.53847</p>
+<p class=MsoBodyText><st1:place w:st="on">CENTRAL MERIDIAN</st1:place>: 57.53847</p>
 
 <p class=MsoBodyText>ORIGIN LATITUDE: -20.26430</p>
 
@@ -3011,8 +3022,8 @@ input file containing Equidistant Cylindrical coordinates and its resulting
 output file<span style='mso-bidi-font-size:10.0pt'> containing Geodetic
 coordinates</span>. The input file header defines the projection type, datum
 and projection parameters, which for Equidistant Cylindrical include the <st1:place
-w:st="on">Central Meridian</st1:place>, Standard Parallel, False Easting, and
-False Northing. </p>
+w:st="on">Central Meridian</st1:place>, Standard Parallel, False Easting, and False
+Northing. </p>
 
 <p><a name=gnomonic></a><b>Gnomonic<o:p></o:p></b></p>
 
@@ -3105,8 +3116,8 @@ font-family:"Courier New"'>-20.46667, 57.29556<o:p></o:p></span></p>
 <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:10.0pt;
 font-family:"Courier New"'>-19.99999, 57.54222<o:p></o:p></span></p>
 
-<p style='text-align:justify'>The example above shows a GEOTRANS coordinate input
-file containing Gnomonic coordinates and its resulting output file<span
+<p style='text-align:justify'>The example above shows a GEOTRANS coordinate
+input file containing Gnomonic coordinates and its resulting output file<span
 style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
 input file header defines the projection type, datum and projection parameters,
 which for Gnomonic include the <st1:place w:st="on">Central Meridian</st1:place>,
@@ -3458,8 +3469,8 @@ font-family:"Courier New"'>-20.46667, 57.29555<o:p></o:p></span></p>
 <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:10.0pt;
 font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 
-<p style='text-align:justify'>The example above shows a GEOTRANS coordinate
-input file containing Mercator coordinates and its resulting output file<span
+<p style='text-align:justify'>The example above shows a GEOTRANS coordinate input
+file containing Mercator coordinates and its resulting output file<span
 style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
 input file header defines the projection type, datum and projection parameters,
 which for Mercator include the Central Meridian, Latitude of True Scale, Scale
@@ -3561,12 +3572,12 @@ The input file header defines the projection type, datum and projection
 parameters, which for Miller Cylindrical include the <st1:place w:st="on">Central
  Meridian</st1:place>, False Easting, and False Northing. </p>
 
-<p><a name=mollweid></a><b>Mollweide<o:p></o:p></b></p>
+<p><a name=mollweid></a><span class=SpellE><b>Mollweide</b></span><b><o:p></o:p></b></p>
 
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;margin-left:
 0in'>Input File:</p>
 
-<p class=MsoBodyText>PROJECTION: Mollweide</p>
+<p class=MsoBodyText>PROJECTION: <span class=SpellE>Mollweide</span></p>
 
 <p class=MsoBodyText>DATUM: WGE</p>
 
@@ -3651,11 +3662,12 @@ font-family:"Courier New"'>-20.46667, 57.29555<o:p></o:p></span></p>
 font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 
 <p style='text-align:justify'>The example above shows a GEOTRANS coordinate
-input file containing Mollweide coordinates and its resulting output file<span
-style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
-input file header defines the projection type, datum and projection parameters,
-which for Mollweide include the <st1:place w:st="on">Central Meridian</st1:place>,
-False Easting, and False Northing. </p>
+input file containing <span class=SpellE>Mollweide</span> coordinates and its
+resulting output file<span style='mso-bidi-font-size:10.0pt'> containing
+Geodetic coordinates</span>. The input file header defines the projection type,
+datum and projection parameters, which for <span class=SpellE>Mollweide</span>
+include the <st1:place w:st="on">Central Meridian</st1:place>, False Easting,
+and False Northing. </p>
 
 <p><a name=nzmg></a><st1:country-region w:st="on"><st1:place w:st="on"><b>New
   Zealand</b></st1:place></st1:country-region><b> Map Grid (NZMG)<o:p></o:p></b></p>
@@ -3927,13 +3939,12 @@ False Easting, and False Northing. </p>
 
 <p class=MsoBodyText>-20.00000, 57.54223</p>
 
-<p style='text-align:justify'>The example above shows a GEOTRANS coordinate
-input file containing Oblique Mercator coordinates and its resulting output
-file<span style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>.
-The input file header defines the projection type, datum and projection
-parameters, which for Oblique Mercator include the Origin Latitude, Latitude 1,
-Longitude 1, Latitude 2, Longitude 2, Scale Factor, False Easting, and False
-Northing.</p>
+<p style='text-align:justify'>The example above shows a GEOTRANS coordinate input
+file containing Oblique Mercator coordinates and its resulting output file<span
+style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
+input file header defines the projection type, datum and projection parameters,
+which for Oblique Mercator include the Origin Latitude, Latitude 1, Longitude
+1, Latitude 2, Longitude 2, Scale Factor, False Easting, and False Northing.</p>
 
 <p><a name=orthogr></a><b>Orthographic<o:p></o:p></b></p>
 
@@ -4026,8 +4037,8 @@ font-family:"Courier New"'>-20.46666, 57.29555<o:p></o:p></span></p>
 <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:10.0pt;
 font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 
-<p style='text-align:justify'>The example above shows a GEOTRANS coordinate input
-file containing Orthographic coordinates and its resulting output file<span
+<p style='text-align:justify'>The example above shows a GEOTRANS coordinate
+input file containing Orthographic coordinates and its resulting output file<span
 style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
 input file header defines the projection type, datum and projection parameters,
 which for Orthographic include the <st1:place w:st="on">Central Meridian</st1:place>,
@@ -4144,12 +4155,12 @@ The input file header defines the projection type, datum and projection
 parameters, which for Polar Stereographic include the Longitude Down From Pole,
 Latitude of True Scale, False Easting, and False Northing. </p>
 
-<p><a name=polycon></a><b>Polyconic<o:p></o:p></b></p>
+<p><a name=polycon></a><span class=SpellE><b>Polyconic</b></span><b><o:p></o:p></b></p>
 
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;margin-left:
 0in'>Input File:</p>
 
-<p class=MsoBodyText>PROJECTION: Polyconic</p>
+<p class=MsoBodyText>PROJECTION: <span class=SpellE>Polyconic</span></p>
 
 <p class=MsoBodyText>DATUM: WGE</p>
 
@@ -4236,11 +4247,12 @@ font-family:"Courier New"'>-20.46666, 57.29555<o:p></o:p></span></p>
 font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 
 <p style='text-align:justify'>The example above shows a GEOTRANS coordinate
-input file containing Polyconic coordinates and its resulting output file<span
-style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
-input file header defines the projection type, datum and projection parameters,
-which for Polyconic include the <st1:place w:st="on">Central Meridian</st1:place>,
-Origin Latitude, False Easting, and False Northing. </p>
+input file containing <span class=SpellE>Polyconic</span> coordinates and its
+resulting output file<span style='mso-bidi-font-size:10.0pt'> containing
+Geodetic coordinates</span>. The input file header defines the projection type,
+datum and projection parameters, which for <span class=SpellE>Polyconic</span>
+include the <st1:place w:st="on">Central Meridian</st1:place>, Origin Latitude,
+False Easting, and False Northing. </p>
 
 <p><a name=sinusoid></a><b>Sinusoidal<o:p></o:p></b></p>
 
@@ -4333,9 +4345,9 @@ font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 
 <p style='text-align:justify'>The example above shows a GEOTRANS coordinate
 input file containing Sinusoidal coordinates and its resulting output file<span
-style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The input
-file header defines the projection type, datum and projection parameters, which
-for Sinusoidal include the <st1:place w:st="on">Central Meridian</st1:place>,
+style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
+input file header defines the projection type, datum and projection parameters,
+which for Sinusoidal include the <st1:place w:st="on">Central Meridian</st1:place>,
 False Easting, and False Northing. </p>
 
 <p><a name=stereogr></a><b>Stereographic<o:p></o:p></b></p>
@@ -4529,13 +4541,13 @@ font-family:"Courier New"'>-20.46666, 57.29555<o:p></o:p></span></p>
 <p style='margin:0in;margin-bottom:.0001pt'><span style='font-size:10.0pt;
 font-family:"Courier New"'>-20.00000, 57.54222<o:p></o:p></span></p>
 
-<p style='text-align:justify'>The example above shows a GEOTRANS coordinate input
-file containing Transverse Cylindrical Equal Area coordinates and its resulting
-output file<span style='mso-bidi-font-size:10.0pt'> containing Geodetic
-coordinates</span>. The input file header defines the projection type, datum
-and projection parameters, which for Transverse Cylindrical Equal Area include
-the <st1:place w:st="on">Central Meridian</st1:place>, Origin Latitude, Scale
-Factor, False Easting, and False Northing.</p>
+<p style='text-align:justify'>The example above shows a GEOTRANS coordinate
+input file containing Transverse Cylindrical Equal Area coordinates and its
+resulting output file<span style='mso-bidi-font-size:10.0pt'> containing
+Geodetic coordinates</span>. The input file header defines the projection type,
+datum and projection parameters, which for Transverse Cylindrical Equal Area
+include the <st1:place w:st="on">Central Meridian</st1:place>, Origin Latitude,
+Scale Factor, False Easting, and False Northing.</p>
 
 <p><a name=tranmerc></a><b>Transverse Mercator<o:p></o:p></b></p>
 
@@ -4717,11 +4729,12 @@ WGE<o:p></o:p></span></p>
 <p class=MsoBodyText>-20.00000, 57.54222</p>
 
 <p style='text-align:justify'>The example above shows a GEOTRANS coordinate
-input file containing Van der Grinten coordinates and its resulting output file<span
-style='mso-bidi-font-size:10.0pt'> containing Geodetic coordinates</span>. The
-input file header defines the projection type, datum and projection parameters,
-which for Van der Grinten include the <st1:place w:st="on">Central Meridian</st1:place>,
-False Easting, and False Northing.</p>
+input file containing Van <span class=SpellE>der</span> <span class=SpellE>Grinten</span>
+coordinates and its resulting output file<span style='mso-bidi-font-size:10.0pt'>
+containing Geodetic coordinates</span>. The input file header defines the
+projection type, datum and projection parameters, which for Van <span
+class=SpellE>der</span> <span class=SpellE>Grinten</span> include the <st1:place
+w:st="on">Central Meridian</st1:place>, False Easting, and False Northing.</p>
 
 <p style='text-align:justify'><a name=formatOptions></a><b>Degrees/Minutes/Seconds:<o:p></o:p></b></p>
 
@@ -4817,7 +4830,7 @@ Units – Degrees/Minutes/Seconds, Geodetic Separator – DD/MM/SS, Sign /
 Hemisphere – N/S, E/W, Longitude Range {-180, 180}, and Precision – 1m 0.1
 Second.<span style='mso-bidi-font-size:10.0pt'><o:p></o:p></span></p>
 
-<p style='text-align:justify'><b>Degrees:Minutes:<o:p></o:p></b></p>
+<p style='text-align:justify'><span class=SpellE><b>Degrees:Minutes</b></span><b>:<o:p></o:p></b></p>
 
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;margin-left:
 0in'><span style='mso-bidi-font-size:10.0pt'>Input File:<o:p></o:p></span></p>
@@ -4996,8 +5009,8 @@ font-family:"Courier New"'>20 28 0.0S, 57 17 44.0E, 0<o:p></o:p></span></p>
 font-family:"Courier New"'>20 0 0.0S, 57 32 32.0E, 0<o:p></o:p></span></p>
 
 <p style='text-align:justify'><span style='mso-bidi-font-size:10.0pt'>The
-example above shows a GEOTRANS coordinate input file and its resulting output
-file containing Geodetic coordinates formatted with the following options: </span>Geodetic
+example above shows a GEOTRANS coordinate input file and its resulting output file
+containing Geodetic coordinates formatted with the following options: </span>Geodetic
 Units – Degrees/Minutes/Seconds, Geodetic Separator – DD MM SS, Sign /
 Hemisphere – N/S, E/W, Longitude Range {-180, 180}, and Precision – 1m 0.1
 Second.</p>
@@ -5284,8 +5297,8 @@ font-family:"Courier New"'>20.00S, 57.54E, 0<o:p></o:p></span></p>
 
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;
 margin-bottom:.0001pt;text-align:justify'><span style='mso-bidi-font-size:10.0pt'>The
-example above shows a GEOTRANS coordinate input file and its resulting output file
-containing Geodetic coordinates formatted with the following options: </span>Geodetic
+example above shows a GEOTRANS coordinate input file and its resulting output
+file containing Geodetic coordinates formatted with the following options: </span>Geodetic
 Units – Degrees, Geodetic Separator – DD MM SS, Sign / Hemisphere – N/S, E/W,
 Longitude Range {-180, 180}, and Precision – 1,000m 1 Minute.<span
 style='mso-bidi-font-size:10.0pt'><o:p></o:p></span></p>

@@ -203,7 +203,7 @@ AzimuthalEquidistant::AzimuthalEquidistant( double ellipsoidSemiMajorAxis, doubl
   {
     if (Azeq_Origin_Long > 0.0)
     {
-      GeodeticCoordinates gcDelta( CoordinateType::geodetic, Azeq_Origin_Long - PI - ONE, -Azeq_Origin_Lat );
+      GeodeticCoordinates gcDelta( CoordinateType::geodetic, Azeq_Origin_Long - PI + ONE, -Azeq_Origin_Lat );
       MapProjectionCoordinates* tempCoordinates = convertFromGeodetic( &gcDelta );
       Azeq_Delta_Easting = tempCoordinates->easting();
       delete tempCoordinates;

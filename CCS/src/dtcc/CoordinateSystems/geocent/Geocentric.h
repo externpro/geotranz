@@ -69,6 +69,8 @@
  *    ----              -----------
  *    25-02-97          Original Code
  *    3-02-07           Original C++ Code
+ *    01/24/11          I. Krinsky    BAEts28121   
+ *                      Terrain Service rearchitecture
  *
  */
 
@@ -79,81 +81,94 @@
 
 namespace MSP
 {
-  namespace CCS
-  {
-    class CartesianCoordinates;
-    class GeodeticCoordinates;
+   namespace CCS
+   {
+      class CartesianCoordinates;
+      class GeodeticCoordinates;
 
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
-
-    class MSP_DTCC_API Geocentric : public CoordinateSystem
-    {
-    public:
-
+      /***************************************************************************/
       /*
-       * The constructor receives the ellipsoid parameters
-       * as inputs and sets the corresponding state variables.
-       *
-       *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters.       (input)
-       *    ellipsoidFlattening     : Flattening of ellipsoid.						           (input)
+       *                              DEFINES
        */
+
+      class MSP_DTCC_API Geocentric : public CoordinateSystem
+      {
+         public:
+
+            /*
+             * The constructor receives the ellipsoid parameters
+             * as inputs and sets the corresponding state variables.
+             *
+             *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters.       (input)
+             *    ellipsoidFlattening     : Flattening of ellipsoid.						           (input)
+             */
 
 	    Geocentric( double ellipsoidSemiMajorAxis, double ellipsoidFlattening );
 
 
-      Geocentric( const Geocentric &g );
+            Geocentric( const Geocentric &g );
 
 
 	    ~Geocentric( void );
 
 
-      Geocentric& operator=( const Geocentric &g );
+            Geocentric& operator=( const Geocentric &g );
 
 
-      /*
-       * The function convertFromGeodetic converts geodetic coordinates
-       * (latitude, longitude, and height) to geocentric coordinates (X, Y, Z),
-       * according to the current ellipsoid parameters.
-       *
-       *    longitude : Geodetic longitude in radians                    (input)
-       *    latitude  : Geodetic latitude in radians                     (input)
-       *    height    : Geodetic height, in meters                       (input)
-       *    X         : Calculated Geocentric X coordinate, in meters    (output)
-       *    Y         : Calculated Geocentric Y coordinate, in meters    (output)
-       *    Z         : Calculated Geocentric Z coordinate, in meters    (output)
-       *
-       */
+            /*
+             * The function convertFromGeodetic converts geodetic coordinates
+             * (latitude, longitude, and height) to geocentric coordinates (X, Y, Z),
+             * according to the current ellipsoid parameters.
+             *
+             *   longitude : Geodetic longitude in radians                   (input)
+             *   latitude  : Geodetic latitude in radians                    (input)
+             *   height    : Geodetic height, in meters                      (input)
+             *   X         : Calculated Geocentric X coordinate, in meters   (output)
+             *   Y         : Calculated Geocentric Y coordinate, in meters   (output)
+             *   Z         : Calculated Geocentric Z coordinate, in meters   (output)
+             *
+             */
 
-      MSP::CCS::CartesianCoordinates* convertFromGeodetic( const MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
+            MSP::CCS::CartesianCoordinates* convertFromGeodetic(
+               const MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
 
 
-      /*
-       * The function convertToGeodetic converts geocentric
-       * coordinates (X, Y, Z) to geodetic coordinates (latitude, longitude, 
-       * and height), according to the current ellipsoid parameters.
-       *
-       *    X         : Geocentric X coordinate, in meters.         (input)
-       *    Y         : Geocentric Y coordinate, in meters.         (input)
-       *    Z         : Geocentric Z coordinate, in meters.         (input)
-       *    longitude : Calculated longitude value in radians.      (output)
-       *    latitude  : Calculated latitude value in radians.       (output)
-       *    height    : Calculated height value, in meters.         (output)
-       *
-       */
+            /*
+             * The function convertToGeodetic converts geocentric
+             * coordinates (X, Y, Z) to geodetic coordinates (latitude, longitude, 
+             * and height), according to the current ellipsoid parameters.
+             *
+             *    X         : Geocentric X coordinate, in meters.         (input)
+             *    Y         : Geocentric Y coordinate, in meters.         (input)
+             *    Z         : Geocentric Z coordinate, in meters.         (input)
+             *    longitude : Calculated longitude value in radians.      (output)
+             *    latitude  : Calculated latitude value in radians.       (output)
+             *    height    : Calculated height value, in meters.         (output)
+             *
+             */
 
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::CartesianCoordinates* cartesianCoordinates );
+            MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+               MSP::CCS::CartesianCoordinates* cartesianCoordinates );
 
-    private:
+         private:
     
-      /* Ellipsoid parameters, default to WGS 84 */
-      double Geocent_e2;   /* Eccentricity squared  */
-      double Geocent_ep2;  /* 2nd eccentricity squared */
-    };
-  }
+            void geocentricToGeodetic(
+               const double x,
+               const double y,
+               const double z,
+               double      &lat,
+               double      &lon,
+               double      &ht );
+
+            /* Ellipsoid parameters, default to WGS 84 */
+            double Geocent_e2;   /* Eccentricity squared  */
+            double Geocent_ep2;  /* 2nd eccentricity squared */
+
+            enum AlgEnum { UNDEFINED, ITERATIVE, GEOTRANS };
+            AlgEnum    Geocent_algorithm; 
+      };
+   }
 }
 
 #endif 

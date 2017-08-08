@@ -26,17 +26,46 @@
  *
  * REUSE NOTES
  *
- *    Geoid is intended for reuse by any application that requires conversion
- *    between WGS84 ellipsoid heights and WGS84 geoid heights.
+ *    GeoidLibrary is intended for reuse by any application that requires conversion
+ *    between WGS84 ellipsoid heights and WGS84, EGM96, or EGM2008 orthometric heights.
+ *
+ *    Environment variable EGM2008_GRID_USAGE should be set to either
+ *    "FULL" or "AOI" before using this software to compute EGM2008 geoid
+ *    separations.  If the environment variable is set to "FULL", then the
+ *    EGM2008 geoid separation interpolator uses its FULL-GRID software, which 
+ *    first loads NGA's worldwide EGM2008 grid before beginning any interpolations: 
+ *    the FULL-GRID algorithm draws all local interpolation windows' post points directly 
+ *    from this worldwide grid.  On the other hand, if the environment variable is set to 
+ *    "AOI", then the EGM2008 geoid height interpolator uses its AOI-GRID sofware, which 
+ *    loads Area of Interst subregions from NGA's EGM2008 worldwide grid.  Area of Interest
+ *    support grids cover user-selected regions having N/S and E/W extents of about 125 
+ *    nautical miles.  The AOI-grid interpolator draws local interpolation windows' support 
+ *    points from this intermediate grid.  The worldwide grid resides only on disk, and the
+ *    AOI-GRID algorithm never loads the entire worldwide grid into memory at any one time.  
+ *    The AOI-GRID algorithm allows small-system users to interpolate geoid separations without 
+ *    populating large amounts of high-speed computer memory with geoid separations having no 
+ *    immediate use.  The AOI-GRID algorithm automatically repopulates these intermediate 
+ *    support grids when users' Areas of Interest shift from the 125 nm -by- 125 nm region 
+ *    currently loaded into their computer system's high speed memory.
+ *
+ *    If environment variable EGM2008_GRID_USAGE is not set, or if it 
+ *    is set to something other that "FULL" or "AOI", then GeoidLibrary will 
+ *    interpolate EGM2008 geoid separations using its Area of Interest algorithm.  
+ *    This algorithm may not be fast enough for users needing to quickly compute 
+ *    very large numbers of geoid separations at widely dispersed horizontal locations.
+ *    The AOI-GRID algorithm is intended for users needing to interpolate
+ *    many geoid separations in fairly-localized (125 nm -by- 125 nm) areas.
  *
  * REFERENCES
  *
- *    Further information on Geoid can be found in the Reuse Manual.
+ *    The Geoid software originated from: 
  *
- *    Geoid originated from :  U.S. Army Topographic Engineering Center
+ *                             U.S. Army Topographic Engineering Center
  *                             Geospatial Information Division
  *                             7701 Telegraph Road
  *                             Alexandria, VA  22310-3864
+ *
+ *    Further information on Geoid can be found in the Reuse Manual.
  *
  * LICENSES
  *
@@ -69,6 +98,11 @@
  *                      when MSPCCS_DATA is not set
  *    07-07-10          K.Lam, BAEts27269, Replace C functions in threads.h
  *                      with C++ methods in classes CCSThreadMutex
+ *    12-17-10          RD Craig modified function loadGeoids() 
+ *                      to handle the EGM2008 geoid (BAEts26267).
+ *    05-17-11          T. Thompson, BAEts27393, inform user if problem is
+ *                      due to undefined MSPCCS_DATA
+ *                      
  */
 
 
@@ -85,6 +119,10 @@
 #include "ErrorMessages.h"
 #include "CCSThreadMutex.h"
 #include "CCSThreadLock.h"
+
+#include "egm2008_geoid_grid.h"
+#include "egm2008_aoi_grid_package.h"
+#include "egm2008_full_grid_package.h"
 
 #include <vector>
 
@@ -251,17 +289,23 @@ size_t readBinary(
 /* This class is a safeguard to make sure the singleton gets deleted
  * when the application exits
  */
-class MSP::CCS::GeoidLibraryCleaner
+namespace MSP
 {
-  public:
-
-  ~GeoidLibraryCleaner()
+  namespace CCS
   {
-    CCSThreadLock lock(&GeoidLibrary::mutex);
-    GeoidLibrary::deleteInstance();
-  }
+    class GeoidLibraryCleaner
+    {
+      public:
 
-} geoidLibraryCleanerInstance;
+      ~GeoidLibraryCleaner()
+      {
+        CCSThreadLock lock(&GeoidLibrary::mutex);
+        GeoidLibrary::deleteInstance();
+      }
+
+    } geoidLibraryCleanerInstance;
+  }
+}
 
 
 // Make this class a singleton, so the data files are only initialized once
@@ -318,7 +362,7 @@ GeoidLibrary::GeoidLibrary()
 
 GeoidLibrary::GeoidLibrary( const GeoidLibrary &gl )
 {
-   *this = gl;
+   *this = gl;   // OK only if new object is re-initialized before use, RDC
 }
 
 
@@ -327,6 +371,8 @@ GeoidLibrary::~GeoidLibrary()
   delete [] egm96GeoidList;
   delete [] egm84GeoidList;
   delete [] egm84ThirtyMinGeoidList;
+
+  delete    egm2008Geoid;
 }
 
 
@@ -354,6 +400,8 @@ GeoidLibrary& GeoidLibrary::operator=( const GeoidLibrary &gl )
      egm84ThirtyMinGeoidList[k] = gl.egm84ThirtyMinGeoidList[k];
   }
 
+  *( this->egm2008Geoid ) = *( gl.egm2008Geoid );  // Assign EGM 2008 object
+
   return *this;
 }
 
@@ -368,12 +416,67 @@ void GeoidLibrary::loadGeoids()
  * or improperly formatted, an error code of GEOID_INITIALIZE_ERROR is returned,
  * otherwise GEOID_NO_ERROR is returned. This function must be called before 
  * any of the other functions in this component.
+ *
+ * If one or more geoids can be initialized, the function returns successfully.
  */
 
-   initializeEGM96Geoid();
-   initializeEGM84Geoid();
-   initializeEGM84ThirtyMinGeoid();
-}
+   egm96GeoidList          = NULL;
+   egm84GeoidList          = NULL;
+   egm84ThirtyMinGeoidList = NULL;
+   egm2008Geoid            = NULL;
+
+   // Legacy geoids .....
+
+   try
+   {
+      initializeEGM96Geoid();
+   }
+   catch (MSP::CCS::CoordinateConversionException& cce)
+   {
+      delete egm96GeoidList;
+      egm96GeoidList = NULL;
+   }
+   try
+   {
+      initializeEGM84Geoid();
+   }
+   catch (MSP::CCS::CoordinateConversionException& cce)
+   {
+      delete egm84GeoidList;
+      egm84GeoidList = NULL;
+   }
+   try
+   {
+      initializeEGM84ThirtyMinGeoid();
+   }
+   catch (MSP::CCS::CoordinateConversionException& cce)
+   {
+      delete egm84ThirtyMinGeoidList;
+      egm84ThirtyMinGeoidList = NULL;
+   }
+
+   // EGM2008 geoid .....
+
+   try
+   {
+      initializeEGM2008Geoid();
+   }
+   catch (MSP::CCS::CoordinateConversionException& cce)
+   {
+      delete egm2008Geoid;
+      egm2008Geoid = NULL;
+
+      // if nothing worked, throw an exception
+      if (egm96GeoidList          == NULL &&
+          egm84GeoidList          == NULL &&
+          egm84ThirtyMinGeoidList == NULL)
+      {
+         throw CoordinateConversionException(
+            "Error: GeoidLibrary::LoadGeoids: All geoid height buffer initialization failed.");
+      }
+   }
+
+}  // End of function loadGeoids()
 
 
 void GeoidLibrary::convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight(
@@ -393,6 +496,12 @@ void GeoidLibrary::convertEllipsoidToEGM96FifteenMinBilinearGeoidHeight(
  *    geoidHeight        : Geoid height, in meters.               (output)
  *
  */
+
+  if (egm96GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM96 Geoid height buffer is NULL");
+  }
 
   double  delta_height;
 
@@ -422,6 +531,12 @@ void GeoidLibrary::convertEllipsoidToEGM96VariableNaturalSplineHeight(
  *    geoidHeight        : Geoid height, in meters.               (output)
  *
  */
+
+  if (egm96GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM96 Geoid height buffer is NULL");
+  }
 
   int i = 0;
   int num_cols = EGM96_COLS;
@@ -494,6 +609,12 @@ void GeoidLibrary::convertEllipsoidToEGM84TenDegBilinearHeight(
  *
  */
 
+   if (egm84GeoidList == NULL)
+   {
+      throw CoordinateConversionException(
+         "Error: EGM84 Geoid height buffer is NULL");
+   }
+
    double delta_height;
 
    bilinearInterpolate(
@@ -523,6 +644,12 @@ void GeoidLibrary::convertEllipsoidToEGM84TenDegNaturalSplineHeight(
  *
  */
 
+  if (egm84GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM84 Geoid height buffer is NULL");
+  }
+
   double delta_height;
 
   naturalSplineInterpolate(
@@ -551,6 +678,12 @@ void GeoidLibrary::convertEllipsoidToEGM84ThirtyMinBiLinearHeight(
  *
  */
 
+  if (egm84GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM84 Geoid height buffer is NULL");
+  }
+
   double delta_height;
 
   bilinearInterpolateDoubleHeights(
@@ -560,6 +693,63 @@ void GeoidLibrary::convertEllipsoidToEGM84ThirtyMinBiLinearHeight(
 
   *geoidHeight = ellipsoidHeight - delta_height;
 }
+
+
+void GeoidLibrary::convertEllipsoidHeightToEGM2008GeoidHeight(
+   double longitude,
+   double latitude,
+   double ellipsoidHeight,
+   double *geoidHeight )
+{
+/*
+ * The function convertEllipsoidHeightToEGM2008GeoidHeight 
+ * converts the specified WGS84 ellipsoid height at the specified 
+ * geodetic coordinates to the equivalent height above the geoid. This
+ * function uses the EGM2008 gravity model, plus bicubic spline interpolation.
+ *
+ *    longitude          : Geodetic longitude in radians          (input)
+ *    latitude           : Geodetic latitude in radians           (input)
+ *    ellipsoidHeight    : Height above the ellipsoid, meters.    (input)
+ *    geoidHeight        : Height above the geoid, meters.       (output)
+ */
+
+   // Both the Egm2008FullGrid and Egm2008AoiGrid interpolators
+   // have functions named "geoidHeight", and both of these functions
+   // interpolate a geoid separation from surrounding geoid-separation posts.
+   // These two functions have identical software signatures, so there is no need
+   // for two EGM2008 GeoidLibrary ellisoid-height -to- height-above-geoid functions.
+
+   if (this->egm2008Geoid == NULL)
+   {
+      throw CoordinateConversionException(
+         "Error: EGM2008 geoid buffer is NULL" );
+   }
+
+   try
+   {
+      const int  WSIZE = 6;  // Always use local 6x6 interpolation window
+
+      int        error;
+
+      double     geoidSeparation;
+
+      error       = 
+         this->egm2008Geoid->geoidHeight
+            ( WSIZE, latitude, longitude, geoidSeparation );
+
+      if ( error != 0 )                                    throw;
+
+      *geoidHeight = ellipsoidHeight - geoidSeparation;
+
+   }  // End of exceptions' try block
+
+   catch( ... ) 
+   {
+      throw CoordinateConversionException(
+         "Error: Could not convert ellipsoid height to EGM2008 geoid height" );
+   }
+
+}  // End of function convertEGM2008GeoidHeightToEllipsoidHeight()
 
 
 void GeoidLibrary::convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight( double longitude, double latitude, double geoidHeight,  double *ellipsoidHeight )
@@ -575,6 +765,12 @@ void GeoidLibrary::convertEGM96FifteenMinBilinearGeoidToEllipsoidHeight( double 
  *    ellipsoidHeight     : Ellipsoid height, in meters            (output)
  *
  */
+
+  if (egm96GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM96 Geoid height buffer is NULL");
+  }
 
   double  delta_height;
 
@@ -604,6 +800,12 @@ void GeoidLibrary::convertEGM96VariableNaturalSplineToEllipsoidHeight(
  *    ellipsoidHeight     : Ellipsoid height, in meters            (output)
  *
  */
+
+  if (egm96GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM96 Geoid height buffer is NULL");
+  }
 
   int i = 0;
   int num_cols = EGM96_COLS;
@@ -672,6 +874,12 @@ void GeoidLibrary::convertEGM84TenDegBilinearToEllipsoidHeight( double longitude
  *
  */
 
+  if (egm84GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM84 Geoid height buffer is NULL");
+  }
+
   double  delta_height;
 
   bilinearInterpolate(
@@ -701,6 +909,12 @@ void GeoidLibrary::convertEGM84TenDegNaturalSplineToEllipsoidHeight(
  *
  */
 
+  if (egm84GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM84 Geoid height buffer is NULL");
+  }
+
   double  delta_height;
 
   naturalSplineInterpolate(
@@ -729,6 +943,12 @@ void GeoidLibrary::convertEGM84ThirtyMinBiLinearToEllipsoidHeight(
  *
  */
 
+  if (egm84GeoidList == NULL)
+  {
+    throw CoordinateConversionException(
+      "Error: EGM84 Geoid height buffer is NULL");
+  }
+
   double  delta_height;
 
   bilinearInterpolateDoubleHeights( longitude, latitude, SCALE_FACTOR_30_MINUTES, 
@@ -736,6 +956,63 @@ void GeoidLibrary::convertEGM84ThirtyMinBiLinearToEllipsoidHeight(
       &delta_height );
   *ellipsoidHeight = geoidHeight + delta_height;
 }
+
+
+void GeoidLibrary::convertEGM2008GeoidHeightToEllipsoidHeight (
+   double longitude,
+   double latitude,
+   double geoidHeight,
+   double *ellipsoidHeight )
+{
+/*
+ * The function convertEGM2008GeoidHeightToEllipsoidHeight 
+ * converts the specified EGM2008 height above the geoid at the specified
+ * geodetic coordinates to the equivalent height above the earth ellipsoid.
+ * This function uses the EGM2008 gravity model, plus bicubic spline interpolation.
+ *
+ *    longitude          : Geodetic longitude in radians          (input)
+ *    latitude           : Geodetic latitude in radians           (input)
+ *    geoidHeight        : Height above the geoid, meters.        (input)
+ *    ellipsoidHeight    : Height above the ellipsoid, meters.   (output)
+ */
+
+   // Both the Egm2008FullGrid and Egm2008AoiGrid interpolators
+   // have functions named "geoidHeight", and both of these functions
+   // interpolate a geoid separation from surrounding geoid-separation posts.
+   // These two functions have identical software signatures, so there is no need
+   // for two EGM2008 GeoidLibrary height-above-geoid -to- ellipsoid_height functions.
+
+   if (this->egm2008Geoid == NULL)
+   {
+      throw CoordinateConversionException(
+         "Error: EGM2008 geoid buffer is NULL");
+   }
+
+   try
+   {
+      const int  WSIZE = 6;  // Always use local 6x6 interpolation window
+
+      int        error;
+
+      double     geoidSeparation;
+
+      error            = 
+         this->egm2008Geoid->geoidHeight
+            ( WSIZE, latitude, longitude, geoidSeparation );
+
+      if ( error != 0 )                                    throw;
+
+      *ellipsoidHeight = geoidHeight + geoidSeparation;
+
+   }  // End of exceptions' try block
+
+   catch( ... ) 
+   {
+      throw CoordinateConversionException(
+         "Error: Could not convert EGM2008 geoid height to ellipsoid height" );
+   }
+
+}  // End of function convertEGM2008GeoidHeightToEllipsoidHeight()
 
 
 /************************************************************************/
@@ -788,8 +1065,15 @@ void GeoidLibrary::initializeEGM96Geoid()
     file_name = 0;
 
     char message[256] = "";
-    strcpy( message, ErrorMessages::geoidFileOpenError );
-    strcat( message, ": egm96.grd\n" );
+    if (NULL == path_name)
+    {
+      strcpy( message, "Environment variable undefined: MSPCCS_DATA." );
+    }
+    else
+    {
+      strcpy( message, ErrorMessages::geoidFileOpenError );
+      strcat( message, ": egm96.grd\n" );
+    }
     throw CoordinateConversionException( message );
   }
 
@@ -876,8 +1160,15 @@ void GeoidLibrary::initializeEGM84Geoid()
     file_name = 0;
 
     char message[256] = "";
-    strcpy( message, ErrorMessages::geoidFileOpenError );
-    strcat( message, ": egm84.grd\n" );
+    if (NULL == path_name)
+    {
+      strcpy( message, "Environment variable undefined: MSPCCS_DATA." );
+    }
+    else
+    {
+      strcpy( message, ErrorMessages::geoidFileOpenError );
+      strcat( message, ": egm84.grd\n" );
+    }
     throw CoordinateConversionException( message );
   }
 
@@ -937,8 +1228,15 @@ void GeoidLibrary::initializeEGM84ThirtyMinGeoid()
     file_name = 0;
 
     char message[256] = "";
-    strcpy( message, ErrorMessages::geoidFileOpenError );
-    strcat( message, ": wwgrid.bin\n" );
+    if (NULL == path_name)
+    {
+      strcpy( message, "Environment variable undefined: MSPCCS_DATA." );
+    }
+    else
+    {
+      strcpy( message, ErrorMessages::geoidFileOpenError );
+      strcat( message, ": wwgrid.bin\n" );
+    }
     throw CoordinateConversionException( message );
   }
 
@@ -954,6 +1252,61 @@ void GeoidLibrary::initializeEGM84ThirtyMinGeoid()
   delete [] file_name;
   file_name = 0;
 }
+
+
+void GeoidLibrary::initializeEGM2008Geoid( void )
+{
+   // December 17, 2010
+
+   // This function initializes one of two
+   // EGM2008 geoid separation interpolators.
+
+   // The FULL_GRID interpolator reads the entire EGM2008
+   // geoid-separation grid into memory upon its instantiation.
+   // The AOI_GRID interpolator only reads the grid file's
+   // header into memory upon instantiation.  Area of Interest
+   // grids are read into memory later as needed for interpolation.
+
+   // Most EGM2008 initialization functionality resides
+   // in the Egm2008FullGrid and Egm2008AoiGrid classes. 
+   // Based on an environment variable, the following
+   // logic instantiates the appropriate grid interpolator)
+
+   char   message[256] = "";
+   char*  gridUsage    = NULL;
+
+   gridUsage = getenv( "EGM2008_GRID_USAGE" );
+
+   if ( NULL == gridUsage ) 
+   {
+      // Environment variable not defined, so
+      // instantiate the Egm2008AoiGrid interpolator;
+      // object's constructor only reads grid file header here .....
+
+      this->egm2008Geoid = new Egm2008AoiGrid;
+   }
+   else
+   {
+      if ( strcmp( gridUsage, "FULL" ) == 0 )
+      {
+         // Environment variable set to "FULL", so
+         // instantiate the Egm2008FullGrid interpolator;
+         // object's constructor reads the full grid file here .....
+
+         this->egm2008Geoid = new Egm2008FullGrid;
+      }
+      else
+      {
+         // Environment variable set, but not to "FULL",
+         // so instantiate the Egm2008AoiGrid interpolator;
+         // object's constructor only reads grid file header here .....
+
+         this->egm2008Geoid = new Egm2008AoiGrid;
+      }
+   }
+
+}  // End of function initializeEGM2008Geoid()
+
 
 void GeoidLibrary::bilinearInterpolateDoubleHeights(
    double longitude,

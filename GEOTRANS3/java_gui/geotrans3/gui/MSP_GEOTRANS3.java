@@ -12,6 +12,10 @@
  * DATE      NAME        DR#               DESCRIPTION
  *
  * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
+ * 05/31/11  K. Lam      BAEts28657        Update version to 3.2
+ * 08/09/11  K. Swanson  BAEts29073        Moved pack after setSize
+ *                                         since gui didn't display
+ *                                         on Solaris 8
  */
 package geotrans3.gui;
 
@@ -84,11 +88,8 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
 
     Utility.setIcon(this, "/geotrans3/gui/icons/NGA.gif");
 
-    pack();
     if (Platform.isUnix)
         setSize(new java.awt.Dimension(484, 679));
-    
-    Utility.center(null, this);
     
     try
     {
@@ -127,6 +128,14 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
       stringHandler.displayErrorMsg(this, e.getMessage());
       defaultSettings = null;
     }
+
+    // do pack at end; after gui is setup and size is set
+    pack();
+
+    // center needs to come after pack so the gui comes 
+    // up in the center when using Windows
+    Utility.center(null, this);
+
   }
 
   static 
@@ -188,7 +197,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     helpMenuSeparator = new javax.swing.JSeparator();
     aboutMenuItem = new javax.swing.JMenuItem();
 
-    setTitle("MSP GEOTRANS 3.1");
+    setTitle("MSP GEOTRANS 3.2");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -615,7 +624,6 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
 
     setJMenuBar(menuBar);
 
-    pack();
   }// </editor-fold>//GEN-END:initComponents
 
   private void loadSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadSettingsActionPerformed
@@ -806,7 +814,8 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
           CoordinateTuple targetCoordinates = upperMasterPanel.initTargetCoordinates();
           Accuracy targetAccuracy = new Accuracy();
           
-          ConvertResults convertResults = jniCoordinateConversionService.convertTargetToSource(sourceCoordinates, sourceAccuracy, targetCoordinates, targetAccuracy);
+	  // for UTM zone override calling convertSourceToTarget works over convertTargetToSource.
+          ConvertResults convertResults = jniCoordinateConversionService.convertSourceToTarget(sourceCoordinates, sourceAccuracy, targetCoordinates, targetAccuracy);
           
           targetCoordinates = convertResults.getCoordinateTuple();
           targetAccuracy = convertResults.getAccuracy();
@@ -972,8 +981,10 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
  //   new MSP_GEOTRANS3().show ();
  //   return;
     java.awt.EventQueue.invokeLater(new Runnable() {
-      public void run() {
-        new MSP_GEOTRANS3().setVisible(true);
+      public void run() 
+      {
+	  MSP_GEOTRANS3 geoTrans =  new MSP_GEOTRANS3();
+          geoTrans.setVisible(true);
       }
     });
   }
@@ -1183,19 +1194,45 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
   {
     try
     {
-      String sourceDatum = upperMasterPanel.getDatumCode();
-      String targetDatum = lowerMasterPanel.getDatumCode();
-      CoordinateSystemParameters sourceParameters = upperMasterPanel.getParameters();
-      if(stringHandler.getError())
-        stringHandler.displayErrorMsg(this, sourceDirection, upperMasterPanel.getProjectionType());
-      CoordinateSystemParameters targetParameters = lowerMasterPanel.getParameters();
-      if(stringHandler.getError())
-      {
-        stringHandler.displayErrorMsg(this, targetDirection, lowerMasterPanel.getProjectionType());
-        return false;
-      }
-      else
-      {
+       String sourceDatum;
+       String targetDatum;
+       CoordinateSystemParameters sourceParameters;
+       CoordinateSystemParameters targetParameters;
+
+       // Need to set the source and target correctly.  They depend upon if you're converting
+       // from lower to upper (up) or upper to lower (down)
+       if ( sourceDirection == SourceOrTarget.SOURCE )
+       {
+	  // direction is upper to lower
+          sourceDatum = upperMasterPanel.getDatumCode();
+          targetDatum = lowerMasterPanel.getDatumCode();
+          sourceParameters = upperMasterPanel.getParameters();
+          if(stringHandler.getError())
+             stringHandler.displayErrorMsg(this, sourceDirection, upperMasterPanel.getProjectionType());
+          targetParameters = lowerMasterPanel.getParameters();
+          if(stringHandler.getError())
+          {
+             stringHandler.displayErrorMsg(this, targetDirection, lowerMasterPanel.getProjectionType());
+             return false;
+          }
+       }
+       else
+       {
+	  // direction is lower to upper
+          sourceDatum = lowerMasterPanel.getDatumCode();
+          targetDatum = upperMasterPanel.getDatumCode();
+          sourceParameters = lowerMasterPanel.getParameters();
+          if(stringHandler.getError())
+             stringHandler.displayErrorMsg(this, sourceDirection, lowerMasterPanel.getProjectionType());
+          targetParameters = upperMasterPanel.getParameters();
+          if(stringHandler.getError())
+          {
+             stringHandler.displayErrorMsg(this, targetDirection, upperMasterPanel.getProjectionType());
+             return false;
+          }
+       }
+
+
         boolean parametersChanged = false;
 
         if(!currentDatum[SourceOrTarget.SOURCE].equalsIgnoreCase(sourceDatum) || !currentDatum[SourceOrTarget.TARGET].equalsIgnoreCase(targetDatum) ||
@@ -1214,10 +1251,8 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
 
         if(parametersChanged)
         {
-          String sourceDatumCode = upperMasterPanel.getDatumCode();
-          String targetDatumCode = lowerMasterPanel.getDatumCode();
           
-          JNICoordinateConversionService tempJNICoordinateConversionService = new JNICoordinateConversionService(sourceDatumCode, sourceParameters, targetDatumCode, targetParameters);
+          JNICoordinateConversionService tempJNICoordinateConversionService = new JNICoordinateConversionService(sourceDatum, sourceParameters, targetDatum, targetParameters);
           if(jniCoordinateConversionService != null)
             jniCoordinateConversionService.destroy();
           jniCoordinateConversionService = tempJNICoordinateConversionService;
@@ -1232,7 +1267,6 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
         }
         
         return true;
-      }
     }
     catch(Exception e)
     {

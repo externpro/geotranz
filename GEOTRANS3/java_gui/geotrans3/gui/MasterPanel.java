@@ -11,7 +11,8 @@
  * 
  * 05/12/10    S Gillis          BAEts26542        MSP TS MSL-HAE conversion 
  *                                                 should use CCS         
- * 
+ * 01/10/11    J Chelos          BAEts26267        Added EGM2008
+ * 01/04/12    K Lam             BAEts29500        Remove recommend from EGM 96
  */
 
 /**
@@ -1007,6 +1008,18 @@ public class MasterPanel extends javax.swing.JPanel
 
     private void heightComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heightComboBoxActionPerformed
      heightType = heightComboBox.getSelectedIndex();
+     // Re-index the height type since MSL-EGM2008-2.5M-BCS Height
+     // is third in the list (index 2) on the GUI but is still index 7
+     // in the HeightType enum.
+     // This change is made to avoid the C++ API change in the patch release
+     if (heightType == 2)
+     {
+        heightType = 7;
+     }
+     else if (heightType > 1)
+     {
+        heightType--;
+     }
      if( state != ConversionState.FILE )
      {
        if(heightComboBox.getSelectedIndex() == HeightType.NO_HEIGHT)
@@ -1308,6 +1321,8 @@ public class MasterPanel extends javax.swing.JPanel
                         heightLabel.setText("MSL-EGM84-10D-NS Height");
                     else if (height_Type == HeightType.MSL_EGM84_30M_BL_HEIGHT)
                         heightLabel.setText("MSL-EGM84-30M-BL Height");
+                    else if (height_Type == HeightType.MSL_EGM2008_TWOPOINTFIVEM_BCS_HEIGHT)
+                        heightLabel.setText("MSL-EGM2008-2.5M-BCS Height");
                     else if (height_Type == HeightType.NO_HEIGHT)
                         heightLabel.setText("No Height");
                     else
@@ -2521,7 +2536,10 @@ public class MasterPanel extends javax.swing.JPanel
     {
          heightComboBox.addItem("No Height");
          heightComboBox.addItem("Ellipsoid Height");
-         heightComboBox.addItem("MSL-EGM96-15M-BL Height (recommended)");
+         // MSL-EGM2008-2.5M-BCS Height is third in the list (index 2)
+         // on the GUI but is still index 7 in the HeightType Enum.
+         heightComboBox.addItem("MSL-EGM2008-2.5M-BCS Height");
+         heightComboBox.addItem("MSL-EGM96-15M-BL Height");
          heightComboBox.addItem("MSL-EGM96-VG-NS Height");
          heightComboBox.addItem("MSL-EGM84-10D-BL Height");
          heightComboBox.addItem("MSL-EGM84-10D-NS Height");

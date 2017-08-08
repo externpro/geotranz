@@ -69,6 +69,8 @@
  *    ----              -----------
  *    09-06-00          Original Code
  *    03-02-07          Original C++ Code
+ *    3/23/2011 NGL     BAEts28583 Updated for memory leaks in convertToGeodetic 
+ *                      and convertFromGeodetic. 
  *
  *
  */
@@ -543,9 +545,16 @@ MSP::CCS::BNGCoordinates* BritishNationalGrid::convertFromGeodetic( MSP::CCS::Ge
     delete transverseMercatorCoordinates;
     throw CoordinateConversionException( ErrorMessages::invalidArea );
   }
-  
-  BNGCoordinates* bngCoordinates = convertFromTransverseMercator( transverseMercatorCoordinates, precision );
-  delete transverseMercatorCoordinates;
+
+  BNGCoordinates* bngCoordinates = 0;
+  try {
+	bngCoordinates = convertFromTransverseMercator( transverseMercatorCoordinates, precision );
+	delete transverseMercatorCoordinates;
+  }
+  catch ( CoordinateConversionException e ){
+    delete transverseMercatorCoordinates;
+    throw e;
+  }
 
   return bngCoordinates;
 }
@@ -587,10 +596,19 @@ MSP::CCS::GeodeticCoordinates* BritishNationalGrid::convertToGeodetic( MSP::CCS:
     throw CoordinateConversionException( ErrorMessages::invalidArea );
   }
 
-  GeodeticCoordinates* geodeticCoordinates = transverseMercator->convertToGeodetic( transverseMercatorCoordinates );
-  double latitude = geodeticCoordinates->latitude();
-  double longitude = geodeticCoordinates->longitude();
-  delete transverseMercatorCoordinates;
+  GeodeticCoordinates* geodeticCoordinates = 0;
+  double latitude;
+  double longitude;
+  try {
+	geodeticCoordinates = transverseMercator->convertToGeodetic( transverseMercatorCoordinates );
+    latitude = geodeticCoordinates->latitude();
+    longitude = geodeticCoordinates->longitude();
+    delete transverseMercatorCoordinates;
+  }
+  catch ( CoordinateConversionException e ){
+    delete transverseMercatorCoordinates;
+    throw e;
+  }
 
   if ((latitude < MIN_LAT) || (latitude > MAX_LAT))
   {

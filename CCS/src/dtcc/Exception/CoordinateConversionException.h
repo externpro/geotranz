@@ -31,13 +31,17 @@ namespace MSP
        */
       public:
       
-        CoordinateConversionException( char* __message )
+        CoordinateConversionException( const char* __message )
         {
           strcpy( _message, __message );
           _message[strlen( __message )] = '\0';
         }
 
-        CoordinateConversionException( char* __directionStr, char* __coordinateSystemName, char* __separatorStr, char* __message )
+        CoordinateConversionException( 
+           const char* __directionStr,
+           const char* __coordinateSystemName,
+           const char* __separatorStr,
+           const char* __message )
         {
           strcpy( _message, __directionStr );
           strcat( _message, __coordinateSystemName );

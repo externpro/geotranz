@@ -34,7 +34,7 @@
  *                                    (1 to 60) and within 1 of 'natural' zone
  *          UTM_A_ERROR            : Semi-major axis less than or equal to zero
  *          UTM_INV_F_ERROR        : Inverse flattening outside of valid range
- *								  	                (250 to 350)
+ *                                    (250 to 350)
  *
  * REUSE NOTES
  *
@@ -67,10 +67,13 @@
  *
  * MODIFICATIONS
  *
- *    Date              Description
- *    ----              -----------
- *    2-27-07          Original C++ Code
- *
+ *    Date        Description
+ *    ----        -----------
+ *    2-27-07     Original C++ Code
+ *    5-02-11     DR 28872, interface added to allow setting zone override
+ *                for each fromGeodetic call.  The override in the call has
+ *                precedence over what is set in the class constructor.
+ *    5-09-11     DR 28908, add default constructor
  */
 
 
@@ -80,100 +83,109 @@
 
 namespace MSP
 {
-  namespace CCS
-  {
-    class UTMParameters;
-    class TransverseMercator;
-    class UTMCoordinates;
-    class GeodeticCoordinates;
+   namespace CCS
+   {
+      class UTMParameters;
+      class TransverseMercator;
+      class UTMCoordinates;
+      class GeodeticCoordinates;
 
 
-    /***************************************************************************/
-    /*
-     *                              DEFINES
-     */
-
-    class UTM : public CoordinateSystem
-    {
-    public:
-
+      /***********************************************************************/
       /*
-       * The constructor receives the ellipsoid parameters and
-       * UTM zone override parameter as inputs, and sets the corresponding state
-       * variables.  If any errors occur, an exception is thrown with a description 
-       * of the error.
-       *
-       *    ellipsoidSemiMajorAxis        : Semi-major axis of ellipsoid, in meters       (input)
-       *    ellipsoidFlattening           : Flattening of ellipsoid						            (input)
-       *    override                      : UTM override zone, zero indicates no override (input)
+       *                              DEFINES
        */
 
-      UTM( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, long override );
+      class MSP_DTCC_API UTM : public CoordinateSystem
+      {
+         public:
+
+            /*
+             * The constructor receives the ellipsoid parameters and
+             * UTM zone override parameter as inputs, and sets the
+             * corresponding state variables.  If any errors occur,
+             * an exception is thrown with a description of the error.
+             *
+             *    ellipsoidSemiMajorAxis : Semi-major axis in meters (input)
+             *    ellipsoidFlattening  : Flattening of ellipsoid     (input)
+             *    override  : UTM override zone, 0 indicates no override (input)
+             */
+
+            UTM();
+
+            UTM(
+               double ellipsoidSemiMajorAxis,
+               double ellipsoidFlattening,
+               long   override = 0 );
 
 
-      UTM( const UTM &u );
+            UTM( const UTM &u );
 
 
 	    ~UTM( void );
 
 
-      UTM& operator=( const UTM &u );
+            UTM& operator=( const UTM &u );
 
 
-      /*
-       * The function getParameters returns the current ellipsoid
-       * parameters and UTM zone override parameter.
-       *
-       *    ellipsoidSemiMajorAxis    : Semi-major axis of ellipsoid, in meters       (output)
-       *    ellipsoidFlattening       : Flattening of ellipsoid						            (output)
-       *    override                  : UTM override zone, zero indicates no override (output)
-       */
+            /*
+             * The function getParameters returns the current ellipsoid
+             * parameters and UTM zone override parameter.
+             *
+             * ellipsoidSemiMajorAxis : Semi-major axis    (meters) (output)
+             * ellipsoidFlattening    : Flattening of ellipsoid	    (output)
+             * override : UTM override zone, zero indicates no override (output)
+             */
 
-      UTMParameters* getParameters() const;
-
-
-      /*
-       * The function convertFromGeodetic converts geodetic (latitude and
-       * longitude) coordinates to UTM projection (zone, hemisphere, easting and
-       * northing) coordinates according to the current ellipsoid and UTM zone
-       * override parameters.  If any errors occur, an exception is thrown 
-       * with a description of the error.
-       *
-       *    longitude         : Longitude in radians                (input)
-       *    latitude          : Latitude in radians                 (input)
-       *    zone              : UTM zone                            (output)
-       *    hemisphere        : North or South hemisphere           (output)
-       *    easting           : Easting (X) in meters               (output)
-       *    northing          : Northing (Y) in meters              (output)
-       */
-
-      MSP::CCS::UTMCoordinates* convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates );
+            UTMParameters* getParameters() const;
 
 
-      /*
-       * The function convertToGeodetic converts UTM projection (zone, 
-       * hemisphere, easting and northing) coordinates to geodetic(latitude
-       * and  longitude) coordinates, according to the current ellipsoid
-       * parameters.  If any errors occur, an exception is thrown 
-       * with a description of the error.
-       *
-       *    zone              : UTM zone                               (input)
-       *    hemisphere        : North or South hemisphere              (input)
-       *    easting           : Easting (X) in meters                  (input)
-       *    northing          : Northing (Y) in meters                 (input)
-       *    longitude         : Longitude in radians                   (output)
-       *    latitude          : Latitude in radians                    (output)
-       */
+            /*
+             * The function convertFromGeodetic converts geodetic (latitude and
+             * longitude) coordinates to UTM projection (zone, hemisphere,
+             * easting and northing) coordinates according to the current
+             * ellipsoid and UTM zone override parameters.  If any errors occur,
+             * an exception is thrown with a description of the error.
+             *
+             *    longitude       : Longitude in radians              (input)
+             *    latitude        : Latitude in radians               (input)
+             *    utmZoneOverride : zone override                     (input)
+             *    zone            : UTM zone                          (output)
+             *    hemisphere      : North or South hemisphere         (output)
+             *    easting         : Easting (X) in meters             (output)
+             *    northing        : Northing (Y) in meters            (output)
+             */
 
-      MSP::CCS::GeodeticCoordinates* convertToGeodetic( MSP::CCS::UTMCoordinates* utmCoordinates );
+            MSP::CCS::UTMCoordinates* convertFromGeodetic(
+               MSP::CCS::GeodeticCoordinates* geodeticCoordinates,
+               int                            utmZoneOverride = 0 );
 
-    private:
 
-      std::map< int, TransverseMercator* > transverseMercatorMap;
+            /*
+             * The function convertToGeodetic converts UTM projection (zone, 
+             * hemisphere, easting and northing) coordinates to geodetic
+             * (latitude and  longitude) coordinates, according to the 
+             * current ellipsoid parameters.  If any errors occur,
+             * an exception is thrown with a description of the error.
+             *
+             *    zone          : UTM zone                             (input)
+             *    hemisphere    : North or South hemisphere            (input)
+             *    easting       : Easting (X) in meters                (input)
+             *    northing      : Northing (Y) in meters               (input)
+             *    longitude     : Longitude in radians                 (output)
+             *    latitude      : Latitude in radians                  (output)
+             */
 
-      long UTM_Override;          /* Zone override flag */
-    };
-  }
+            MSP::CCS::GeodeticCoordinates* convertToGeodetic(
+               MSP::CCS::UTMCoordinates* utmCoordinates );
+
+         private:
+
+            std::map< int, TransverseMercator* > transverseMercatorMap;
+
+            long UTM_Override;          /* Zone override flag */
+      };
+   }
 }
 	
 #endif 

@@ -83,7 +83,7 @@
  *    ----              -----------
  *    06-07-00          Original Code
  *    03-02-07          Original C++ Code
- *    
+ *    05-11-11          BAEts28017 - Fix Oblique Mercator near poles
  *
  */
 
@@ -516,6 +516,15 @@ MSP::CCS::MapProjectionCoordinates* ObliqueMercator::convertFromGeodetic( MSP::C
       cos_B_dlam = cos(B_dlam);
       if (fabs(cos_B_dlam) < 1.0e-10)
         u = OMerc_A * B_dlam;
+      // Check for longitude span > 90 degrees
+      else if (fabs(B_dlam) > PI_OVER_2)
+      {
+        double temp = atan(((S * cos_gamma) + (V * sin_gamma)) / cos_B_dlam);
+        if (temp < 0.0)
+          u = A_over_B * (temp + PI);
+        else
+          u = A_over_B * (temp - PI);
+      }
       else
         u = A_over_B * atan(((S * cos_gamma) + (V * sin_gamma)) / cos_B_dlam);
     }

@@ -38,8 +38,8 @@
  *                                      (250 to 350)
  *          TCEA_SCALE_FACTOR_ERROR : Scale factor outside of valid
  *                                      range (0.3 to 3.0)
- *          TCEA_LON_WARNING        : Distortion will result if longitude is more
- *                                     than 90 degrees from the Central Meridian
+ *          TCEA_LON_WARNING       : Distortion will result if longitude is more
+ *                                    than 90 degrees from the Central Meridian
  *
  * REUSE NOTES
  *
@@ -125,7 +125,14 @@ const double MAX_SCALE_FACTOR = 3.0;
  *
  */
 
-TransverseCylindricalEqualArea::TransverseCylindricalEqualArea( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double latitudeOfTrueScale, double falseEasting, double falseNorthing, double scaleFactor ) :
+TransverseCylindricalEqualArea::TransverseCylindricalEqualArea(
+   double ellipsoidSemiMajorAxis,
+   double ellipsoidFlattening,
+   double centralMeridian,
+   double latitudeOfTrueScale,
+   double falseEasting,
+   double falseNorthing,
+   double scaleFactor ) :
   CoordinateSystem(),
   es2( 0.0066943799901413800 ),      
   es4( 4.4814723452405e-005 ),        
@@ -158,23 +165,23 @@ TransverseCylindricalEqualArea::TransverseCylindricalEqualArea( double ellipsoid
 {
 /*
  * The constructor receives the ellipsoid parameters and
- * Transverse Cylindrical Equal Area projection parameters as inputs, and sets the
- * corresponding state variables.  If any errors occur, an exception is thrown with a description 
- * of the error.
+ * Transverse Cylindrical Equal Area projection parameters as inputs,
+ * and sets the corresponding state variables.
+ * If any errors occur, an exception is thrown with a description of the error.
  *
- *    ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid, in meters   (input)
- *    ellipsoidFlattening        : Flattening of ellipsoid                   (input)
- *    centralMeridian            : Longitude in radians at the center of     (input)
- *                                 the projection
- *    latitudeOfTrueScale        : Latitude in radians at which the          (input)
- *                                 point scale factor is 1.0
- *    falseEasting               : A coordinate value in meters assigned to the
- *                                 central meridian of the projection.       (input)
- *    falseNorthing              : A coordinate value in meters assigned to the
- *                                 origin latitude of the projection         (input)
- *    scaleFactor                : Multiplier which reduces distances in the
- *                                 projection to the actual distance on the
- *                                 ellipsoid                                 (input)
+ *    ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters   (input)
+ *    ellipsoidFlattening    : Flattening of ellipsoid                   (input)
+ *    centralMeridian        : Longitude in radians at the center of     (input)
+ *                             the projection
+ *    latitudeOfTrueScale    : Latitude in radians at which the          (input)
+ *                             point scale factor is 1.0
+ *    falseEasting           : A coordinate value in meters assigned to the
+ *                             central meridian of the projection.       (input)
+ *    falseNorthing          : A coordinate value in meters assigned to the
+ *                             origin latitude of the projection         (input)
+ *    scaleFactor            : Multiplier which reduces distances in the
+ *                             projection to the actual distance on the
+ *                             ellipsoid                                 (input)
  */
 
   double sin_lat_90 = sin(PI_OVER_2);
@@ -184,34 +191,30 @@ TransverseCylindricalEqualArea::TransverseCylindricalEqualArea( double ellipsoid
   double lat, sin2lat, sin4lat, sin6lat;
   double temp, temp_northing;
   double inv_f = 1 / ellipsoidFlattening;
-  char errorStatus[500] = "";
 
   if (ellipsoidSemiMajorAxis <= 0.0)
   { /* Semi-major axis must be greater than zero */
-    strcat( errorStatus, ErrorMessages::semiMajorAxis );
+    throw CoordinateConversionException( ErrorMessages::semiMajorAxis  );
   }
   if ((inv_f < 250) || (inv_f > 350))
   { /* Inverse flattening must be between 250 and 350 */
-    strcat( errorStatus, ErrorMessages::ellipsoidFlattening );
+    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening  );
   }
   if ((latitudeOfTrueScale < -PI_OVER_2) || (latitudeOfTrueScale > PI_OVER_2))
   { /* origin latitude out of range */
-    strcat( errorStatus, ErrorMessages::originLatitude );
+    throw CoordinateConversionException( ErrorMessages::originLatitude  );
   }
   if ((centralMeridian < -PI) || (centralMeridian > TWO_PI))
   { /* origin longitude out of range */
-    strcat( errorStatus, ErrorMessages::centralMeridian );
+    throw CoordinateConversionException( ErrorMessages::centralMeridian  );
   }
   if ((scaleFactor < MIN_SCALE_FACTOR) || (scaleFactor > MAX_SCALE_FACTOR))
   {
-    strcat( errorStatus, ErrorMessages::scaleFactor );
+    throw CoordinateConversionException( ErrorMessages::scaleFactor  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+  flattening    = ellipsoidFlattening;
 
   Tcea_Origin_Lat = latitudeOfTrueScale;
   if (centralMeridian > PI)
@@ -287,7 +290,8 @@ TransverseCylindricalEqualArea::TransverseCylindricalEqualArea( double ellipsoid
 }
 
 
-TransverseCylindricalEqualArea::TransverseCylindricalEqualArea( const TransverseCylindricalEqualArea &tcea )
+TransverseCylindricalEqualArea::TransverseCylindricalEqualArea(
+   const TransverseCylindricalEqualArea &tcea )
 {
   semiMajorAxis = tcea.semiMajorAxis;
   flattening = tcea.flattening;
@@ -373,19 +377,19 @@ MapProjection5Parameters* TransverseCylindricalEqualArea::getParameters() const
  * The function getParameters returns the current ellipsoid
  * parameters, Transverse Cylindrical Equal Area projection parameters, and scale factor.
  *
- *    ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
- *    ellipsoidFlattening     : Flattening of ellipsoid                   (output)
- *    centralMeridian         : Longitude in radians at the center of     (output)
+ *  ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters   (output)
+ *  ellipsoidFlattening     : Flattening of ellipsoid                   (output)
+ *  centralMeridian         : Longitude in radians at the center of     (output)
  *                            the projection
- *    latitudeOfTrueScale     : Latitude in radians at which the          (output)
+ *  latitudeOfTrueScale     : Latitude in radians at which the          (output)
  *                            point scale factor is 1.0
- *    falseEasting            : A coordinate value in meters assigned to the
- *                            central meridian of the projection.         (output)
- *    falseNorthing           : A coordinate value in meters assigned to the
- *                            origin latitude of the projection           (output)
- *    scaleFactor             : Multiplier which reduces distances in the
+ *  falseEasting            : A coordinate value in meters assigned to the
+ *                            central meridian of the projection.       (output)
+ *  falseNorthing           : A coordinate value in meters assigned to the
+ *                            origin latitude of the projection         (output)
+ *  scaleFactor             : Multiplier which reduces distances in the
  *                            projection to the actual distance on the
- *                            ellipsoid                                   (output)
+ *                            ellipsoid                                 (output)
  */
 
   return new MapProjection5Parameters( CoordinateType::transverseCylindricalEqualArea, Tcea_Origin_Long, Tcea_Origin_Lat, Tcea_Scale_Factor, Tcea_False_Easting, Tcea_False_Northing );
@@ -416,28 +420,27 @@ MSP::CCS::MapProjectionCoordinates* TransverseCylindricalEqualArea::convertFromG
   double phi, sin2phi, sin4phi, sin6phi;
   double sinPHIc;
   double Mc;
-  char errorStatus[256] = "";
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
-  double sin_lat = sin(latitude);
+  double latitude  = geodeticCoordinates->latitude();
+  double sin_lat   = sin(latitude);
 
   if ((latitude < -PI_OVER_2) || (latitude > PI_OVER_2))
   { /* Latitude out of range */
-    strcat( errorStatus, ErrorMessages::latitude );
+    throw CoordinateConversionException( ErrorMessages::latitude  );
   }
   if ((longitude < -PI) || (longitude > TWO_PI))
   { /* Longitude out of range */
-    strcat( errorStatus, ErrorMessages::longitude );
+    throw CoordinateConversionException( ErrorMessages::longitude  );
   }
 
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
-
   dlam = longitude - Tcea_Origin_Long;
+
+  char warning[100];
+  warning[0] = '\0';
   if (fabs(dlam) >= (PI / 2))
-  { /* Distortion will result if Longitude is more than 90 degrees from the Central Meridian */
-    strcat( errorStatus, MSP::CCS::WarningMessages::longitude );
+  { /* Distortion resultsif Longitude is > 90 deg from the Central Meridian */
+    strcat( warning, MSP::CCS::WarningMessages::longitude );
   }
 
   if (dlam > PI)
@@ -481,8 +484,8 @@ MSP::CCS::MapProjectionCoordinates* TransverseCylindricalEqualArea::convertFromG
 
   sinPHIc = sin(PHIc);
   double easting = semiMajorAxis * cos(beta) * cos(PHIc) * sin(dlam) /
-             (Tcea_Scale_Factor * cos(betac) * sqrt(1.0 - es2 *
-                                                    sinPHIc * sinPHIc)) + Tcea_False_Easting;
+     (Tcea_Scale_Factor * cos(betac) * sqrt(1.0 - es2 *
+        sinPHIc * sinPHIc)) + Tcea_False_Easting;
 
   phi = c0 * PHIc;
   sin2phi = TCEA_COEFF_TIMES_SIN(c1, 2.0, PHIc);
@@ -492,11 +495,14 @@ MSP::CCS::MapProjectionCoordinates* TransverseCylindricalEqualArea::convertFromG
 
   double northing = Tcea_Scale_Factor * (Mc - M0) + Tcea_False_Northing;
 
-  return new MapProjectionCoordinates( CoordinateType::transverseCylindricalEqualArea, errorStatus, easting, northing );
+  return new MapProjectionCoordinates(
+     CoordinateType::transverseCylindricalEqualArea,
+     warning, easting, northing );
 }
 
 
-MSP::CCS::GeodeticCoordinates* TransverseCylindricalEqualArea::convertToGeodetic( MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
+MSP::CCS::GeodeticCoordinates* TransverseCylindricalEqualArea::convertToGeodetic(
+   MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
 {
 /*
  * The function convertToGeodetic converts Transverse
@@ -526,24 +532,20 @@ MSP::CCS::GeodeticCoordinates* TransverseCylindricalEqualArea::convertToGeodetic
   double cosbetac;
   double Qc_OVER_qp;
   double temp;
-  char errorStatus[50] = "";
 
-  double easting = mapProjectionCoordinates->easting();
+  double easting  = mapProjectionCoordinates->easting();
   double northing = mapProjectionCoordinates->northing();
 
   if ((easting < (Tcea_False_Easting + Tcea_Min_Easting))
       || (easting > (Tcea_False_Easting + Tcea_Max_Easting)))
   { /* Easting out of range */
-    strcat( errorStatus, ErrorMessages::easting );
+    throw CoordinateConversionException( ErrorMessages::easting  );
   }
-  if ((northing < (Tcea_False_Northing + Tcea_Min_Northing))
-      || (northing > (Tcea_False_Northing + Tcea_Max_Northing)))
+  if(   (northing < (Tcea_False_Northing + Tcea_Min_Northing))
+     || (northing > (Tcea_False_Northing + Tcea_Max_Northing)))
   { /* Northing out of range */
-    strcat( errorStatus, ErrorMessages::northing );
+    throw CoordinateConversionException( ErrorMessages::northing  );
   }
-
-  if( strlen( errorStatus ) > 0)
-    throw CoordinateConversionException( errorStatus );
 
   dy = northing - Tcea_False_Northing;
   dx = easting - Tcea_False_Easting;
@@ -569,7 +571,7 @@ MSP::CCS::GeodeticCoordinates* TransverseCylindricalEqualArea::convertToGeodetic
   betac = asin(Qc_OVER_qp);
   cosbetac = cos(betac);
   temp = Tcea_Scale_Factor * dx * cosbetac * sqrt(1.0 -
-                                                  es2 * sin_lat * sin_lat) / (semiMajorAxis * cos(PHIc));
+     es2 * sin_lat * sin_lat) / (semiMajorAxis * cos(PHIc));
   if (temp > 1.0)
     temp = 1.0;
   else if (temp < -1.0)
@@ -599,7 +601,8 @@ MSP::CCS::GeodeticCoordinates* TransverseCylindricalEqualArea::convertToGeodetic
   else if (longitude < -PI)
     longitude = -PI;
 
-  return new GeodeticCoordinates( CoordinateType::geodetic, longitude, latitude );
+  return new GeodeticCoordinates(
+     CoordinateType::geodetic, longitude, latitude );
 }
 
 
@@ -609,19 +612,22 @@ double TransverseCylindricalEqualArea::TCEA_Q( double sinlat, double x )
 }
 
 
-double TransverseCylindricalEqualArea::TCEA_COEFF_TIMES_SIN( double coeff, double x, double latit )         
+double TransverseCylindricalEqualArea::TCEA_COEFF_TIMES_SIN(
+   double coeff, double x, double latit )         
 {
   return coeff * sin(x*latit);
 }
 
 
-double TransverseCylindricalEqualArea::TCEA_M( double c0lat, double c1lat, double c2lat, double c3lat )             
+double TransverseCylindricalEqualArea::TCEA_M(
+   double c0lat, double c1lat, double c2lat, double c3lat )             
 {
   return semiMajorAxis * (c0lat - c1lat + c2lat - c3lat);
 }
 
 
-double TransverseCylindricalEqualArea::TCEA_L( double Beta, double c0lat, double c1lat, double c2lat )              
+double TransverseCylindricalEqualArea::TCEA_L(
+   double Beta, double c0lat, double c1lat, double c2lat )              
 {
   return Beta + c0lat + c1lat + c2lat;
 }

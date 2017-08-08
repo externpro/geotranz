@@ -4,6 +4,15 @@
  * FormatOptionsDlg.java
  *
  * Created on August 31, 2000, 11:34 AM
+ *
+ * Revision History
+ * Date          Person      DR          Description
+ * --------------------------------------------------------------
+ * 13 July 2011  K Swanson   BAEts27157  Handle Separator, Lon range
+ *                                       Leading zeros, precision changes
+ *                                       so they are reflected in the new 
+ *                                       string
+ * --------------------------------------------------------------
  */
 
 package geotrans3.gui;
@@ -12,6 +21,7 @@ package geotrans3.gui;
 import geotrans3.exception.CoordinateConversionException;
 import geotrans3.misc.FormatOptions;
 import geotrans3.misc.StringHandler;
+import geotrans3.misc.StringToVal;
 import geotrans3.utility.Utility;
 import geotrans3.utility.Platform;
 
@@ -704,6 +714,14 @@ public class FormatOptionsDlg extends javax.swing.JDialog
     {
         try
         {
+	     // Set the options for leading zeros, separator, lon range, and precision
+	     // in StringHandler so StringToVal has the right options and
+	     // the format will reflect them.
+	     stringHandler.setPrecision (options.getPrecision());
+	     stringHandler.setLeadingZeros (options.getLeadingZeros());
+             stringHandler.setSeparator (options.getSeparator());
+	     stringHandler.setLonRange (options.getRange());
+
              java.lang.String new_test_Str;
              new_test_Str = stringHandler.longitudeToString(260.50555555555553, options.getUseNSEW(), options.getUseMinutes(), options.getUseSeconds());
              textField.setText(new_test_Str);

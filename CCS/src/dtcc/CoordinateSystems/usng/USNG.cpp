@@ -66,11 +66,11 @@
  *
  * MODIFICATIONS
  *
- *    Date              Description
- *    ----              -----------
- *    3-1-07          Original Code (cloned from MGRS)
+ * Date     Description
+ * ----     -----------
+ * 3-1-07   Original Code (cloned from MGRS)
+ * 3/23/11  N. Lundgren BAEts28583 Updated for memory leaks in convert methods
  */
-
 
 /***************************************************************************/
 /*
@@ -109,9 +109,7 @@
  *      WarningMessages.h  - Contains warning messages
  */
 
-
 using namespace MSP::CCS;
-
 
 /************************************************************************/
 /*                               DEFINES
@@ -146,11 +144,9 @@ const int LETTER_W = 22;   /* ARRAY INDEX FOR LETTER W               */
 const int LETTER_X = 23;   /* ARRAY INDEX FOR LETTER X               */
 const int LETTER_Y = 24;   /* ARRAY INDEX FOR LETTER Y               */
 const int LETTER_Z = 25;   /* ARRAY INDEX FOR LETTER Z               */
-const double ONEHT = 100000.e0;      /* ONE HUNDRED THOUSAND                  */
-const double TWOMIL = 2000000.e0;    /* TWO MILLION                           */
-const int TRUE = 1;  /* CONSTANT VALUE FOR TRUE VALUE  */
-const int FALSE = 0;  /* CONSTANT VALUE FOR FALSE VALUE */
-const double PI = 3.14159265358979323e0;  /* PI                             */
+const double ONEHT = 100000.e0;    /* ONE HUNDRED THOUSAND           */
+const double TWOMIL = 2000000.e0;  /* TWO MILLION                    */
+const double PI = 3.14159265358979323e0;  /* PI                      */
 const double PI_OVER_2 = (PI / 2.0e0);
 const double PI_OVER_180 = (PI / 180.0e0);
 
@@ -228,27 +224,13 @@ const UPS_Constant UPS_Constant_Table[4] =
  *
  */
 
-long roundUSNG( double value )
-{ 
-/*
- * The function roundUSNG rounds the input value to the 
- * nearest integer, using the standard engineering rule.
- * The rounded integer value is then returned.
- *
- *   value           : Value to be rounded  (input)
- */
-
-  double ivalue;
-  long ival;
-  double fraction = modf (value, &ivalue);
-  ival = (long)(ivalue);
-  if ((fraction > 0.5) || ((fraction == 0.5) && (ival%2 == 1)))
-    ival++;
-  return (ival);
-} 
-
-
-void makeUSNGString( char* USNGString, long zone, int letters[USNG_LETTERS], double easting, double northing, long precision )
+void makeUSNGString(
+   char*  USNGString,
+   long   zone,
+   int    letters[USNG_LETTERS],
+   double easting,
+   double northing,
+   long   precision )
 {
 /*
  * The function makeUSNGString constructs an USNG string
@@ -291,7 +273,13 @@ void makeUSNGString( char* USNGString, long zone, int letters[USNG_LETTERS], dou
 }
 
 
-void breakUSNGString( char* USNGString, long* zone, long letters[USNG_LETTERS], double* easting, double* northing, long* precision )
+void breakUSNGString(
+   char*   USNGString,
+   long*   zone,
+   long    letters[USNG_LETTERS],
+   double* easting,
+   double* northing,
+   long*   precision )
 {
 /*
  * The function breakUSNGString breaks down an USNG
@@ -401,12 +389,12 @@ USNG::USNG( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, char* ell
 {
 /*
  * The constructor receives the ellipsoid parameters and sets
- * the corresponding state variables. If any errors occur, an exception is thrown with a description
- * of the error.
+ * the corresponding state variables. 
+ * If any errors occur, an exception is thrown with a description of the error.
  *
- *   ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid in meters  (input)
- *   ellipsoidFlattening        : Flattening of ellipsoid                 (input)
- *   ellipsoid_Code             : 2-letter code for ellipsoid             (input)
+ *   ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid in meters  (input)
+ *   ellipsoidFlattening      : Flattening of ellipsoid                 (input)
+ *   ellipsoid_Code           : 2-letter code for ellipsoid             (input)
  */
 
   double inv_f = 1 / ellipsoidFlattening;
@@ -479,22 +467,25 @@ EllipsoidParameters* USNG::getParameters() const
  * The function getParameters returns the current ellipsoid
  * parameters.
  *
- *  ellipsoidSemiMajorAxis     : Semi-major axis of ellipsoid, in meters (output)
- *  ellipsoidFlattening        : Flattening of ellipsoid                 (output)
- *  ellipsoidCode              : 2-letter code for ellipsoid             (output)
+ *  ellipsoidSemiMajorAxis   : Semi-major axis of ellipsoid, in meters (output)
+ *  ellipsoidFlattening      : Flattening of ellipsoid                 (output)
+ *  ellipsoidCode            : 2-letter code for ellipsoid             (output)
  */
 
-  return new EllipsoidParameters( semiMajorAxis, flattening, (char*)USNGEllipsoidCode );
+  return new EllipsoidParameters(
+     semiMajorAxis, flattening, (char*)USNGEllipsoidCode );
 }
 
 
-MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromGeodetic( MSP::CCS::GeodeticCoordinates* geodeticCoordinates, long precision )
+MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromGeodetic(
+   MSP::CCS::GeodeticCoordinates* geodeticCoordinates,
+   long precision )
 {
 /*
  * The function convertFromGeodetic converts Geodetic (latitude and
  * longitude) coordinates to an USNG coordinate string, according to the
- * current ellipsoid parameters.  If any errors occur, an exception is thrown with a description
- * of the error.
+ * current ellipsoid parameters.
+ * If any errors occur, an exception is thrown with a description of the error.
  *
  *    latitude      : Latitude in radians              (input)
  *    longitude     : Longitude in radians             (input)
@@ -504,6 +495,9 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromGeodetic( MSP::CCS::GeodeticCo
  */
 
   MGRSorUSNGCoordinates* mgrsorUSNGCoordinates = 0;
+  UTMCoordinates* utmCoordinates = 0;
+  UPSCoordinates* upsCoordinates = 0;
+
   char errorStatus[50] = "";
 
   double latitude = geodeticCoordinates->latitude();
@@ -524,33 +518,43 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromGeodetic( MSP::CCS::GeodeticCo
     throw CoordinateConversionException( errorStatus );
 
   // If the latitude is within the valid usng non polar range [-80, 84),
-  // convert to usng using the utm path, otherwise convert to usng using the ups path
-  if ((latitude >= MIN_USNG_NON_POLAR_LAT) && (latitude < MAX_USNG_NON_POLAR_LAT))
+  // convert to usng using the utm path,
+  // otherwise convert to usng using the ups path
+  try 
   {
-    UTMCoordinates* utmCoordinates = utm->convertFromGeodetic( geodeticCoordinates );
-    mgrsorUSNGCoordinates = fromUTM( utmCoordinates, longitude, latitude, precision );
-    delete utmCoordinates;
-    utmCoordinates = 0;
+     if((latitude >= MIN_USNG_NON_POLAR_LAT) &&
+        (latitude < MAX_USNG_NON_POLAR_LAT))
+     {
+        utmCoordinates = utm->convertFromGeodetic( geodeticCoordinates );
+        mgrsorUSNGCoordinates = fromUTM(
+           utmCoordinates, longitude, latitude, precision );
+        delete utmCoordinates;
+     }
+     else
+     {
+        upsCoordinates = ups->convertFromGeodetic( geodeticCoordinates );
+        mgrsorUSNGCoordinates = fromUPS( upsCoordinates, precision );
+        delete upsCoordinates;
+     }
   }
-  else
-  {
-    UPSCoordinates* upsCoordinates = ups->convertFromGeodetic( geodeticCoordinates );
-    mgrsorUSNGCoordinates = fromUPS( upsCoordinates, precision );
-    delete upsCoordinates;
-    upsCoordinates = 0;
+  catch ( CoordinateConversionException e ) {
+     delete utmCoordinates;
+     delete upsCoordinates;
+     throw e;
   }
 
   return mgrsorUSNGCoordinates;
 }
 
 
-MSP::CCS::GeodeticCoordinates* USNG::convertToGeodetic( MSP::CCS::MGRSorUSNGCoordinates* usngCoordinates )
+MSP::CCS::GeodeticCoordinates* USNG::convertToGeodetic(
+   MSP::CCS::MGRSorUSNGCoordinates* usngCoordinates )
 {
 /*
  * The function convertToGeodetic converts an USNG coordinate string
  * to Geodetic (latitude and longitude) coordinates
- * according to the current ellipsoid parameters.  If any errors occur, an exception is thrown with a description
- * of the error.
+ * according to the current ellipsoid parameters.
+ * If any errors occur, an exception is thrown with a description of the error.
  *
  *    USNG       : USNG coordinate string           (input)
  *    latitude   : Latitude in radians              (output)
@@ -564,35 +568,48 @@ MSP::CCS::GeodeticCoordinates* USNG::convertToGeodetic( MSP::CCS::MGRSorUSNGCoor
   double usng_northing;
   long precision;
   GeodeticCoordinates* geodeticCoordinates = 0;
+  UTMCoordinates* utmCoordinates = 0;
+  UPSCoordinates* upsCoordinates = 0;
 
-  breakUSNGString( usngCoordinates->MGRSString(), &zone, letters, &usng_easting, &usng_northing, &precision );
+  breakUSNGString(
+     usngCoordinates->MGRSString(),
+     &zone, letters, &usng_easting, &usng_northing, &precision );
 
-  if( zone )
+  try 
   {
-    UTMCoordinates* utmCoordinates = toUTM( zone, letters, usng_easting, usng_northing, precision );
-    geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
-    delete utmCoordinates;
-    utmCoordinates = 0;
+     if( zone )
+     {
+        utmCoordinates = toUTM(
+           zone, letters, usng_easting, usng_northing, precision );
+        geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
+        delete utmCoordinates;
+     }
+     else
+     {
+        upsCoordinates = toUPS( letters, usng_easting, usng_northing );
+        geodeticCoordinates = ups->convertToGeodetic( upsCoordinates );
+        delete upsCoordinates;
+     }
   }
-  else
+  catch ( CoordinateConversionException e )
   {
-    UPSCoordinates* upsCoordinates = toUPS( letters, usng_easting, usng_northing );
-    geodeticCoordinates = ups->convertToGeodetic( upsCoordinates );
-    delete upsCoordinates;
-    upsCoordinates = 0;
+     delete utmCoordinates;
+     delete upsCoordinates;
+     throw e;
   }
 
   return geodeticCoordinates;
 }
 
 
-MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromUTM ( UTMCoordinates* utmCoordinates, long precision )
+MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromUTM (
+   UTMCoordinates* utmCoordinates, long precision )
 {
 /*
  * The function convertFromUTM converts UTM (zone, easting, and
  * northing) coordinates to an USNG coordinate string, according to the
- * current ellipsoid parameters.  If any errors occur, an exception is thrown with a description
- * of the error.
+ * current ellipsoid parameters.
+ * If any errors occur, an exception is thrown with a description of the error.
  *
  *    zone       : UTM zone                         (input)
  *    hemisphere : North or South hemisphere        (input)
@@ -623,31 +640,45 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromUTM ( UTMCoordinates* utmCoord
   if( strlen( errorStatus ) > 0)
     throw CoordinateConversionException( errorStatus );
 
-  GeodeticCoordinates* geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
+  GeodeticCoordinates* geodeticCoordinates = utm->convertToGeodetic(
+     utmCoordinates );
 
   // If the latitude is within the valid mgrs non polar range [-80, 84),
-  // convert to mgrs using the utm path, otherwise convert to mgrs using the ups path
+  // convert to mgrs using the utm path,
+  // otherwise convert to mgrs using the ups path
   MGRSorUSNGCoordinates* mgrsorUSNGCoordinates = 0;
+  UPSCoordinates* upsCoordinates = 0;
   double latitude = geodeticCoordinates->latitude();
 
-  if ((latitude >= (MIN_USNG_NON_POLAR_LAT - EPSILON)) && (latitude < (MAX_USNG_NON_POLAR_LAT + EPSILON)))
-    mgrsorUSNGCoordinates = fromUTM( utmCoordinates, geodeticCoordinates->longitude(), latitude, precision );
-  else
+  try
   {
-    UPSCoordinates* upsCoordinates = ups->convertFromGeodetic( geodeticCoordinates );
-    mgrsorUSNGCoordinates = fromUPS( upsCoordinates, precision );
-    delete upsCoordinates;
-    upsCoordinates = 0;
+     if((latitude >= (MIN_USNG_NON_POLAR_LAT - EPSILON)) &&
+        (latitude < (MAX_USNG_NON_POLAR_LAT + EPSILON)))
+        mgrsorUSNGCoordinates = fromUTM(
+           utmCoordinates, geodeticCoordinates->longitude(),
+           latitude, precision );
+     else
+     {
+        upsCoordinates = ups->convertFromGeodetic( geodeticCoordinates );
+        mgrsorUSNGCoordinates = fromUPS( upsCoordinates, precision );
+     }
+  }
+  catch ( CoordinateConversionException e )
+  {
+     delete geodeticCoordinates;
+     delete upsCoordinates;
+     throw e;
   }
 
   delete geodeticCoordinates;
-  geodeticCoordinates = 0;
+  delete upsCoordinates;
 
   return mgrsorUSNGCoordinates;
 }
 
 
-MSP::CCS::UTMCoordinates* USNG::convertToUTM( MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates )
+MSP::CCS::UTMCoordinates* USNG::convertToUTM(
+   MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates )
 {
 /*
  * The function convertToUTM converts an USNG coordinate string
@@ -668,32 +699,45 @@ MSP::CCS::UTMCoordinates* USNG::convertToUTM( MSP::CCS::MGRSorUSNGCoordinates* m
   long precision;
   UTMCoordinates* utmCoordinates = 0;
   GeodeticCoordinates* geodeticCoordinates = 0;
+  UPSCoordinates* upsCoordinates = 0;
   char errorStatus[50] = "";
 
-  breakUSNGString( mgrsorUSNGCoordinates->MGRSString(), &zone, letters, &usng_easting, &usng_northing, &precision );
-  if (zone)
+  breakUSNGString( mgrsorUSNGCoordinates->MGRSString(),
+     &zone, letters, &usng_easting, &usng_northing, &precision );
+  try
   {
-    utmCoordinates = toUTM( zone, letters, usng_easting, usng_northing, precision );
-    // Convert to geodetic to make sure the coordinates are in the valid utm range 
-    geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
+     if (zone)
+     {
+        utmCoordinates = toUTM(
+           zone, letters, usng_easting, usng_northing, precision );
+        // Convert to geodetic to make sure the coordinates are in the valid utm range 
+        geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
+     }
+     else
+     {
+        upsCoordinates = toUPS( letters, usng_easting, usng_northing );
+        geodeticCoordinates = ups->convertToGeodetic( upsCoordinates );
+        utmCoordinates = utm->convertFromGeodetic( geodeticCoordinates );
+     }
   }
-  else
+  catch ( CoordinateConversionException e )
   {
-    UPSCoordinates* upsCoordinates = toUPS( letters, usng_easting, usng_northing );
-    geodeticCoordinates = ups->convertToGeodetic( upsCoordinates );
-    delete upsCoordinates;
-    upsCoordinates = 0;
-    utmCoordinates = utm->convertFromGeodetic( geodeticCoordinates );
+     delete utmCoordinates;
+     delete geodeticCoordinates;
+     delete upsCoordinates;
+     throw e;
   }
 
   delete geodeticCoordinates;
-  geodeticCoordinates = 0;
+  delete upsCoordinates;
 
   return utmCoordinates;
 }
 
 
-MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromUPS( MSP::CCS::UPSCoordinates* upsCoordinates, long precision )
+MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromUPS(
+   MSP::CCS::UPSCoordinates* upsCoordinates,
+   long precision )
 {
 /*
  * The function convertFromUPS converts UPS (hemisphere, easting,
@@ -727,33 +771,45 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::convertFromUPS( MSP::CCS::UPSCoordinates*
   if( strlen( errorStatus ) > 0)
     throw CoordinateConversionException( errorStatus );
 
-  GeodeticCoordinates* geodeticCoordinates = ups->convertToGeodetic( upsCoordinates );
+  GeodeticCoordinates* geodeticCoordinates = ups->convertToGeodetic(
+     upsCoordinates );
 
-  // If the latitude is within the valid mgrs polar range [-90, -80) or [84, 90],
-  // convert to mgrs using the ups path, otherwise convert to mgrs using the utm path
+  // If the latitude is within valid mgrs polar range [-90, -80) or [84, 90],
+  // convert to mgrs using the ups path,
+  // otherwise convert to mgrs using the utm path
   MGRSorUSNGCoordinates* mgrsorUSNGCoordinates = 0;
+  UTMCoordinates* utmCoordinates = 0;
   double latitude = geodeticCoordinates->latitude();
 
-  if ((latitude < (MIN_USNG_NON_POLAR_LAT + EPSILON)) || (latitude >= (MAX_USNG_NON_POLAR_LAT - EPSILON)))
-    mgrsorUSNGCoordinates = fromUPS( upsCoordinates, precision );
-  else
+  try
   {
-    UTMCoordinates* utmCoordinates = utm->convertFromGeodetic( geodeticCoordinates );
-
-    double longitude = geodeticCoordinates->longitude();
-    mgrsorUSNGCoordinates = fromUTM( utmCoordinates, longitude, latitude, precision );
-    delete utmCoordinates;
-    utmCoordinates = 0;
+     if((latitude < (MIN_USNG_NON_POLAR_LAT + EPSILON)) ||
+        (latitude >= (MAX_USNG_NON_POLAR_LAT - EPSILON)))
+        mgrsorUSNGCoordinates = fromUPS( upsCoordinates, precision );
+     else
+     {
+        utmCoordinates = utm->convertFromGeodetic( geodeticCoordinates );
+        double longitude = geodeticCoordinates->longitude();
+        mgrsorUSNGCoordinates = fromUTM(
+           utmCoordinates, longitude, latitude, precision );
+     }
+  }
+  catch ( CoordinateConversionException e )
+  {
+     delete geodeticCoordinates;
+     delete utmCoordinates;
+     throw e;
   }
 
   delete geodeticCoordinates;
-  geodeticCoordinates = 0;
+  delete utmCoordinates;
 
   return mgrsorUSNGCoordinates;
 }
 
 
-MSP::CCS::UPSCoordinates* USNG::convertToUPS( MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates )
+MSP::CCS::UPSCoordinates* USNG::convertToUPS(
+   MSP::CCS::MGRSorUSNGCoordinates* mgrsorUSNGCoordinates )
 {
 /*
  * The function convertToUPS converts an USNG coordinate string
@@ -775,30 +831,46 @@ MSP::CCS::UPSCoordinates* USNG::convertToUPS( MSP::CCS::MGRSorUSNGCoordinates* m
   int index = 0;
   UPSCoordinates* upsCoordinates = 0;
   GeodeticCoordinates* geodeticCoordinates = 0;
+  UTMCoordinates* utmCoordinates = 0;
 
-  breakUSNGString( mgrsorUSNGCoordinates->MGRSString(), &zone, letters, &usng_easting, &usng_northing, &precision );
-  if( !zone )
+  breakUSNGString( mgrsorUSNGCoordinates->MGRSString(),
+     &zone, letters, &usng_easting, &usng_northing, &precision );
+  try
   {
-    upsCoordinates = toUPS( letters, usng_easting, usng_northing );
-    geodeticCoordinates = ups->convertToGeodetic( upsCoordinates );
+     if( !zone )
+     {
+        upsCoordinates = toUPS( letters, usng_easting, usng_northing );
+        // Convert to geodetic to ensure coordinates are in the valid ups range 
+        geodeticCoordinates = ups->convertToGeodetic( upsCoordinates );
+     }
+     else
+     {
+        utmCoordinates = toUTM(
+           zone, letters, usng_easting, usng_northing, precision );
+        geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
+        upsCoordinates = ups->convertFromGeodetic( geodeticCoordinates );
+     }
   }
-  else
+  catch ( CoordinateConversionException e )
   {
-    UTMCoordinates* utmCoordinates = toUTM( zone, letters, usng_easting, usng_northing, precision );
-    geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
-    delete utmCoordinates;
-    utmCoordinates = 0;
-    upsCoordinates = ups->convertFromGeodetic( geodeticCoordinates );
+     delete geodeticCoordinates;
+     delete utmCoordinates;
+     delete upsCoordinates;
+     throw e;
   }
 
   delete geodeticCoordinates;
-  geodeticCoordinates = 0;
+  delete utmCoordinates;
 
   return upsCoordinates;
 }
 
 
-MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM( MSP::CCS::UTMCoordinates* utmCoordinates, double longitude, double latitude, long precision )
+MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM(
+   MSP::CCS::UTMCoordinates* utmCoordinates,
+   double longitude,
+   double latitude,
+   long precision )
 {
 /*
  * The function fromUTM calculates an USNG coordinate string
@@ -828,8 +900,6 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM( MSP::CCS::UTMCoordinates* utmCoo
 
   getLatitudeLetter( latitude, &letters[0] );
 
-  easting = roundUSNG(easting);
-
   // Check if the point is within it's natural zone
   // If it is not, put it there
   if (longitude < PI)
@@ -839,22 +909,23 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM( MSP::CCS::UTMCoordinates* utmCoo
 
   if (natural_zone > 60)
       natural_zone = 1;
+
   if (zone != natural_zone) 
   { // reconvert to override zone
     UTM utmOverride( semiMajorAxis, flattening, natural_zone );
-    GeodeticCoordinates geodeticCoordinates( CoordinateType::geodetic, longitude, latitude );
-    UTMCoordinates* utmCoordinatesOverride = utmOverride.convertFromGeodetic( &geodeticCoordinates );
+    GeodeticCoordinates geodeticCoordinates(
+       CoordinateType::geodetic, longitude, latitude );
+    UTMCoordinates* utmCoordinatesOverride = utmOverride.convertFromGeodetic(
+       &geodeticCoordinates );
 
-    zone = utmCoordinatesOverride->zone();
+    zone       = utmCoordinatesOverride->zone();
     hemisphere = utmCoordinatesOverride->hemisphere();
-    easting = utmCoordinatesOverride->easting();
-    northing = utmCoordinatesOverride->northing();
+    easting    = utmCoordinatesOverride->easting();
+    northing   = utmCoordinatesOverride->northing();
 
     delete utmCoordinatesOverride;
     utmCoordinatesOverride = 0;
   }
-
-  easting = roundUSNG(easting);
 
   /* UTM special cases */
   if (letters[0] == LETTER_V) // V latitude band
@@ -864,39 +935,39 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM( MSP::CCS::UTMCoordinates* utmCoo
   }
   else if (letters[0] == LETTER_X)
   {
-    if ((zone == 32) && (easting < _500000)) // extension of zone 31X
-      override = 31;  
-    else if (((zone == 32) && (easting >= _500000)) || // western extension of zone 33X
-             ((zone == 34) && (easting < _500000))) // eastern extension of zone 33X
-      override = 33;  
-    else if (((zone == 34) && (easting >= _500000)) || // western extension of zone 35X
-             ((zone == 36) && (easting < _500000))) // eastern extension of zone 35X
-      override = 35;  
-    else if ((zone == 36) && (easting >= _500000)) // western extension of zone 37X
-      override = 37;  
+     if ((zone == 32) && (easting < _500000)) // extension of zone 31X
+        override = 31;  
+     else if (((zone == 32) && (easting >= _500000)) || // western extension of zone 33X
+        ((zone == 34) && (easting < _500000))) // eastern extension of zone 33X
+        override = 33;  
+     else if (((zone == 34) && (easting >= _500000)) || // western extension of zone 35X
+        ((zone == 36) && (easting < _500000))) // eastern extension of zone 35X
+        override = 35;  
+     else if ((zone == 36) && (easting >= _500000)) // western extension of zone 37X
+        override = 37;  
   }
 
   if (override) 
   { // reconvert to override zone
-    UTM utmOverride( semiMajorAxis, flattening, override );
-    GeodeticCoordinates geodeticCoordinates( CoordinateType::geodetic, longitude, latitude );
-    UTMCoordinates* utmCoordinatesOverride = utmOverride.convertFromGeodetic( &geodeticCoordinates );
+     UTM utmOverride( semiMajorAxis, flattening, override );
+     GeodeticCoordinates geodeticCoordinates(
+        CoordinateType::geodetic, longitude, latitude );
+     UTMCoordinates* utmCoordinatesOverride = 
+        utmOverride.convertFromGeodetic( &geodeticCoordinates );
 
-    zone = utmCoordinatesOverride->zone();
-    hemisphere = utmCoordinatesOverride->hemisphere();
-    easting = utmCoordinatesOverride->easting();
-    northing = utmCoordinatesOverride->northing();
+     zone       = utmCoordinatesOverride->zone();
+     hemisphere = utmCoordinatesOverride->hemisphere();
+     easting    = utmCoordinatesOverride->easting();
+     northing   = utmCoordinatesOverride->northing();
 
-    delete utmCoordinatesOverride;
-    utmCoordinatesOverride = 0;
+     delete utmCoordinatesOverride;
+     utmCoordinatesOverride = 0;
   }
 
-  easting = roundUSNG(easting);
-  northing = roundUSNG(northing);
   /* Truncate easting and northing values */
   double divisor = pow (10.0, (5.0 - precision));
-  easting = (long)(easting/divisor) * divisor;
-  northing = (long)(northing/divisor) * divisor;
+  easting        = (long)(easting/divisor) * divisor;
+  northing       = (long)(northing/divisor) * divisor;
 
   if( latitude <= 0.0 && northing == 1.0e7)
   {
@@ -929,11 +1000,16 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM( MSP::CCS::UTMCoordinates* utmCoo
 
   makeUSNGString( USNGString, zone, letters, easting, northing, precision );
 
-  return new MGRSorUSNGCoordinates( CoordinateType::usNationalGrid, USNGString );
+  return new MGRSorUSNGCoordinates( CoordinateType::usNationalGrid, USNGString);
 }
 
 
-MSP::CCS::UTMCoordinates* USNG::toUTM( long zone, long letters[USNG_LETTERS], double easting, double northing, long precision )
+MSP::CCS::UTMCoordinates* USNG::toUTM(
+   long   zone,
+   long   letters[USNG_LETTERS],
+   double easting,
+   double northing,
+   long   precision )
 {
 /*
  * The function toUTM converts an USNG coordinate string
@@ -966,75 +1042,90 @@ MSP::CCS::UTMCoordinates* USNG::toUTM( long zone, long letters[USNG_LETTERS], do
   UTMCoordinates* utmCoordinates = 0;
   char errorStatus[50] = "";
 
-  if ((letters[0] == LETTER_X) && ((zone == 32) || (zone == 34) || (zone == 36)))
-    throw CoordinateConversionException( ErrorMessages::usngString );
+  if((letters[0] == LETTER_X) && ((zone == 32) || (zone == 34) || (zone == 36)))
+     throw CoordinateConversionException( ErrorMessages::usngString );
   else if ((letters[0] == LETTER_V) && (zone == 31) && (letters[1] > LETTER_D))
-    throw CoordinateConversionException( ErrorMessages::usngString );
+     throw CoordinateConversionException( ErrorMessages::usngString );
   else
   {
-    if (letters[0] < LETTER_N)
-      hemisphere = 'S';
-    else
-      hemisphere = 'N';
+     if (letters[0] < LETTER_N)
+        hemisphere = 'S';
+     else
+        hemisphere = 'N';
 
-    getGridValues(zone, &ltr2_low_value, &ltr2_high_value, &pattern_offset);
+     getGridValues(zone, &ltr2_low_value, &ltr2_high_value, &pattern_offset);
 
     /* Check that the second letter of the USNG string is within
      * the range of valid second letter values
      * Also check that the third letter is valid */
-    if ((letters[1] < ltr2_low_value) || (letters[1] > ltr2_high_value) || (letters[2] > LETTER_V))
-      throw CoordinateConversionException( ErrorMessages::usngString );
+     if((letters[1] < ltr2_low_value) ||
+        (letters[1] > ltr2_high_value) ||
+        (letters[2] > LETTER_V))
+        throw CoordinateConversionException( ErrorMessages::usngString );
 
-    grid_easting = (double)((letters[1]) - ltr2_low_value + 1) * ONEHT;
-    if ((ltr2_low_value == LETTER_J) && (letters[1] > LETTER_O))
-      grid_easting = grid_easting - ONEHT;
+     grid_easting = (double)((letters[1]) - ltr2_low_value + 1) * ONEHT;
+     if ((ltr2_low_value == LETTER_J) && (letters[1] > LETTER_O))
+        grid_easting = grid_easting - ONEHT;
 
-    double row_letter_northing = (double)(letters[2]) * ONEHT;
-    if (letters[2] > LETTER_O)
-      row_letter_northing = row_letter_northing - ONEHT;
+     double row_letter_northing = (double)(letters[2]) * ONEHT;
+     if (letters[2] > LETTER_O)
+        row_letter_northing = row_letter_northing - ONEHT;
 
-    if (letters[2] > LETTER_I)
-      row_letter_northing = row_letter_northing - ONEHT;
+     if (letters[2] > LETTER_I)
+        row_letter_northing = row_letter_northing - ONEHT;
 
-    if (row_letter_northing >= TWOMIL)
-      row_letter_northing = row_letter_northing - TWOMIL;
+     if (row_letter_northing >= TWOMIL)
+        row_letter_northing = row_letter_northing - TWOMIL;
 
-    getLatitudeBandMinNorthing(letters[0], &min_northing, &northing_offset);
+     getLatitudeBandMinNorthing(letters[0], &min_northing, &northing_offset);
 
-    grid_northing = row_letter_northing - pattern_offset;
-    if(grid_northing < 0)
-      grid_northing += TWOMIL;
+     grid_northing = row_letter_northing - pattern_offset;
+     if(grid_northing < 0)
+        grid_northing += TWOMIL;
 
-    grid_northing += northing_offset;
+     grid_northing += northing_offset;
 
-    if(grid_northing < min_northing)
-      grid_northing += TWOMIL;
+     if(grid_northing < min_northing)
+        grid_northing += TWOMIL;
 
-    easting = grid_easting + easting;
-    northing = grid_northing + northing;
+     easting = grid_easting + easting;
+     northing = grid_northing + northing;
 
-    utmCoordinates = new UTMCoordinates( CoordinateType::universalTransverseMercator, zone, hemisphere, easting, northing );
+     utmCoordinates = new UTMCoordinates(
+        CoordinateType::universalTransverseMercator,
+        zone, hemisphere, easting, northing );
 
-    /* check that point is within Zone Letter bounds */
-    GeodeticCoordinates* geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
+     /* check that point is within Zone Letter bounds */
+     GeodeticCoordinates* geodeticCoordinates = 0;
+     try
+     {
+        geodeticCoordinates = utm->convertToGeodetic( utmCoordinates );
+     }
+     catch ( CoordinateConversionException e )
+     {
+        delete utmCoordinates;
+        throw e;
+     }
 
-    divisor = pow (10.0, (double)precision);
-    getLatitudeRange(letters[0], &upper_lat_limit, &lower_lat_limit);
+     divisor = pow (10.0, (double)precision);
+     getLatitudeRange(letters[0], &upper_lat_limit, &lower_lat_limit);
 
-    double latitude = geodeticCoordinates->latitude();
+     double latitude = geodeticCoordinates->latitude();
 
-    delete geodeticCoordinates;
-    geodeticCoordinates = 0;
+     delete geodeticCoordinates;
 
-    if (!(((lower_lat_limit - PI_OVER_180/divisor) <= latitude) && (latitude <= (upper_lat_limit + PI_OVER_180/divisor))))
-      utmCoordinates->setWarningMessage( MSP::CCS::WarningMessages::latitude );
+     if(!(((lower_lat_limit - PI_OVER_180/divisor) <= latitude) &&
+         (latitude <= (upper_lat_limit + PI_OVER_180/divisor))))
+        utmCoordinates->setWarningMessage( MSP::CCS::WarningMessages::latitude);
   }
 
   return utmCoordinates;
 }
 
 
-MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUPS( MSP::CCS::UPSCoordinates* upsCoordinates, long precision )
+MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUPS(
+   MSP::CCS::UPSCoordinates* upsCoordinates,
+   long precision )
 {
 /*
  * The function fromUPS converts UPS (hemisphere, easting,
@@ -1062,8 +1153,6 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUPS( MSP::CCS::UPSCoordinates* upsCoo
   double easting = upsCoordinates->easting();
   double northing = upsCoordinates->northing();
 
-  easting = roundUSNG(easting);
-  northing = roundUSNG(northing);
   divisor = pow (10.0, (5.0 - precision));
   easting = (long)(easting/divisor) * divisor;
   northing = (long)(northing/divisor) * divisor;
@@ -1128,11 +1217,14 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUPS( MSP::CCS::UPSCoordinates* upsCoo
 
   makeUSNGString( USNGString, 0, letters, easting, northing, precision );
 
-  return new MGRSorUSNGCoordinates( CoordinateType::usNationalGrid, USNGString );
+  return new MGRSorUSNGCoordinates( CoordinateType::usNationalGrid, USNGString);
 }
 
 
-MSP::CCS::UPSCoordinates* USNG::toUPS( long letters[USNG_LETTERS], double easting, double northing )
+MSP::CCS::UPSCoordinates* USNG::toUPS(
+   long letters[USNG_LETTERS],
+   double easting,
+   double northing )
 {
 /*
  * The function toUPS converts an USNG coordinate string
@@ -1197,7 +1289,7 @@ MSP::CCS::UPSCoordinates* USNG::toUPS( long letters[USNG_LETTERS], double eastin
   if (letters[2] > LETTER_O)
     grid_northing = grid_northing - ONEHT;
 
-  grid_easting = (double)((letters[1]) - ltr2_low_value) * ONEHT + false_easting;
+  grid_easting = (double)((letters[1]) - ltr2_low_value) * ONEHT +false_easting;
   if (ltr2_low_value != LETTER_A)
   {
     if (letters[1] > LETTER_L)
@@ -1221,11 +1313,17 @@ MSP::CCS::UPSCoordinates* USNG::toUPS( long letters[USNG_LETTERS], double eastin
   easting = grid_easting + easting;
   northing = grid_northing + northing;
 
-  return new UPSCoordinates( CoordinateType::universalPolarStereographic, hemisphere, easting, northing );
+  return new UPSCoordinates(
+     CoordinateType::universalPolarStereographic,
+     hemisphere, easting, northing);
 }
 
 
-void USNG::getGridValues( long zone, long* ltr2_low_value, long* ltr2_high_value, double *pattern_offset )
+void USNG::getGridValues(
+   long    zone,
+   long*   ltr2_low_value,
+   long*   ltr2_high_value,
+   double *pattern_offset )
 {
 /*
  * The function getGridValues sets the letter range used for
@@ -1271,12 +1369,15 @@ void USNG::getGridValues( long zone, long* ltr2_low_value, long* ltr2_high_value
 }
 
 
-void USNG::getLatitudeBandMinNorthing( long letter, double* min_northing, double* northing_offset )
+void USNG::getLatitudeBandMinNorthing(
+   long    letter,
+   double* min_northing,
+   double* northing_offset )
 {
 /*
  * The function getLatitudeBandMinNorthing receives a latitude band letter
- * and uses the Latitude_Band_Table to determine the minimum northing and northing offset
- * for that latitude band letter.
+ * and uses the Latitude_Band_Table to determine the minimum northing
+ * and northing offset for that latitude band letter.
  *
  *   letter          : Latitude band letter             (input)
  *   min_northing    : Minimum northing for that letter (output)
@@ -1360,9 +1461,5 @@ void USNG::getLatitudeLetter( double latitude, int* letter )
   else
     throw CoordinateConversionException( ErrorMessages::latitude );
 }
-
-
-
-
 
 // CLASSIFICATION: UNCLASSIFIED

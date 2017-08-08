@@ -19,9 +19,9 @@
  *    the bitwise or.  This combining allows multiple error codes to be
  *    returned. The possible error codes are:
  *
- *  GEOID_NO_ERROR               : No errors occured in function
+ *  GEOID_NO_ERROR               : No errors occurred in function
  *  GEOID_FILE_OPEN_ERROR        : Geoid file opening error
- *  GEOID_INITIALIZE_ERROR       : Geoid seoaration database can not initialize
+ *  GEOID_INITIALIZE_ERROR       : Geoid separation database can not initialize
  *  GEOID_LAT_ERROR              : Latitude out of valid range
  *                                 (-90 to 90 degrees)
  *  GEOID_LON_ERROR              : Longitude out of valid range
@@ -66,7 +66,11 @@
  *    03-14-07          Original C++ Code
  *    05-12-10          S. Gillis, BAEts26542, MSL-HAE for 30 minute grid added
  *    07-21-10          Read in full file at once instead of one post at a time 
+ *    12-17-10          RD Craig added pointer to EGM2008 interpolator (BAEts26267).
+ *
  */
+
+#include "egm2008_geoid_grid.h"
 
 #include "DtccApi.h"
 
@@ -190,10 +194,28 @@ namespace MSP
              *    latitude            : Geodetic latitude in radians     (input)
              *    ellipsoidHeight     : Ellipsoid height, in meters      (input)
              *    geoidHeight         : Geoid height, in meters.        (output)
-       *
-       */
+             */
 
             void convertEllipsoidToEGM84ThirtyMinBiLinearHeight(
+               double longitude,
+               double latitude,
+               double ellipsoidHeight,
+               double *geoidHeight );
+
+            /*
+             * The function convertEllipsoidHeightToEGM2008GeoidHeight
+             * converts the specified WGS84 ellipsoid height at the specified
+             * geodetic coordinates to the equivalent height above the geoid. This function
+             * uses the EGM2008 gravity model, plus the bicubic spline interpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters      (input)
+             *    geoidHeight         : Height above the geoid, meters  (output)
+             */
+
+            void
+            convertEllipsoidHeightToEGM2008GeoidHeight(
                double longitude,
                double latitude,
                double ellipsoidHeight,
@@ -218,7 +240,6 @@ namespace MSP
                double latitude,
                double geoidHeight,
                double *ellipsoidHeight );
-            
 
             /*
              * The function convertEGM96VariableNaturalSplineToEllipsoidHeight
@@ -300,12 +321,33 @@ namespace MSP
                double geoidHeight,
                double *ellipsoidHeight );
 
+            /*
+             * The function convertEGM2008GeoidHeightToEllipsoidHeight(
+             * converts the specified EGM2008 geoid height at the specified
+             * geodetic coordinates to the equivalent ellipsoid height.  It uses
+             * the EGM2008 gravity model, plus the bicubic spline interpolation method.
+             *
+             *    longitude           : Geodetic longitude in radians    (input)
+             *    latitude            : Geodetic latitude in radians     (input)
+             *    geoidHeight         : Height above the geoid, meters   (input)
+             *    ellipsoidHeight     : Ellipsoid height, in meters     (output)
+             */
+
+            void convertEGM2008GeoidHeightToEllipsoidHeight(
+               double longitude,
+               double latitude,
+               double geoidHeight,
+               double *ellipsoidHeight ); 
+
          protected:
 
             /*
              * The constructor creates empty lists which are used 
              * to store the geoid separation data
-             * contained in the data files egm84.grd and egm96.grd
+             * contained in the data files egm84.grd and egm96.grd.
+             *
+             * The constructor now also instantiates the 
+             * appropriate EGM2008 geoid separation interpolator.
              */
             
 	    GeoidLibrary();
@@ -331,6 +373,11 @@ namespace MSP
 
             /* List of EGM84 thirty minute elevations */
             double *egm84ThirtyMinGeoidList;
+
+            /* Pointer to EGM2008 interpolator object */
+
+            Egm2008GeoidGrid*  egm2008Geoid;
+
             /*
              * The function loadGeoids reads geoid separation data from a file
              * in the current directory and builds the geoid separation table
@@ -384,6 +431,27 @@ namespace MSP
              */
 
             void initializeEGM84ThirtyMinGeoid();
+
+            /*
+             * The function initializeEGM2008Geoid 
+             * instantiates one of two geoid-separation objects.
+             * The FULL_GRID interpolator reads the entire
+             * geoid-separation file into memory upon instantiation,
+             * while the AOI_GRID interpolator only reads the
+             * grid file's header into memory upon instantiation.
+             * 
+             * The FULL_GRID interpolator builds its local interpolation
+             * windows from data contained in the worldwide, memory-resident,
+             * geoid separation grid.  The AOI_GRID interpolator reads intermediate 
+             * Area of Interest grids into memory before populating local interpolation 
+             * windows.  These AOI grids are much smaller than the EGM2008 worldwide grid,
+             * so they load quickly, and they permit high-resolution geoid separations to be
+             * computed even on small computer systems.  AOI grids do not need to be reloaded
+             * into computer memory if all requested geoid separations are spatially localized.
+             * AOI grid reloads are automatic, and they require no action by GeoidLibrary users.
+             */
+
+            void initializeEGM2008Geoid();
 
             /*
              * The private function bilinearInterpolateDoubleHeights returns the

@@ -10,6 +10,9 @@
  * DATE      NAME        DR#               DESCRIPTION
  *
  * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
+ * 05/31/11  K. Lam      BAEts28657        Update version to 3.2
+ * 07/13/11  K. Swanson  BAEts27157        Add ability to set leading
+ *                                         zeros, separator, lon range.
  */
 
 package geotrans3.misc;
@@ -29,7 +32,7 @@ import geotrans3.utility.Constants;
  */
 public class StringHandler extends Object 
 {
-  private final java.lang.String title = "MSP GEOTRANS 3.1";
+  private final java.lang.String title = "MSP GEOTRANS 3.2";
   
   private java.lang.String errorMsg[];
   private boolean ccsError = false;
@@ -59,7 +62,22 @@ public class StringHandler extends Object
   {
     stringToVal.setPrecision(_precision);
   }
+
+  public void setLeadingZeros (boolean leadingZeros )
+  {
+    stringToVal.showLeadingZeros(leadingZeros);
+  }
+
+  public void setSeparator (char sepChar )
+  {
+    stringToVal.setSeparator(sepChar);
+  }
   
+  public void setLonRange (int lonRange )
+  {
+    stringToVal.setLongRange(lonRange);
+  }
+
     
   public String longitudeToString(final double longitude, boolean use_NSEW, boolean use_Minutes, boolean use_Seconds) throws CoordinateConversionException
   {

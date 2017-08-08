@@ -144,6 +144,9 @@ CCSERVICESRCS = \
         dtcc/DatumLibrary.cpp \
         dtcc/EllipsoidLibrary.cpp \
         dtcc/GeoidLibrary.cpp \
+        dtcc/egm2008_geoid_grid.cpp \
+        dtcc/egm2008_full_grid_package.cpp \
+        dtcc/egm2008_aoi_grid_package.cpp \
         dtcc/CoordinateSystemParameters/CoordinateSystemParameters.cpp \
         dtcc/CoordinateSystemParameters/EllipsoidParameters.cpp \
         dtcc/CoordinateSystemParameters/EquidistantCylindricalParameters.cpp \
@@ -181,6 +184,9 @@ CCSERVICE_O = \
         DatumLibrary.cpp \
         EllipsoidLibrary.cpp \
         GeoidLibrary.cpp \
+        egm2008_geoid_grid.cpp \
+        egm2008_full_grid_package.cpp \
+        egm2008_aoi_grid_package.cpp \
         CoordinateSystemParameters.cpp \
         EllipsoidParameters.cpp \
         EquidistantCylindricalParameters.cpp \
