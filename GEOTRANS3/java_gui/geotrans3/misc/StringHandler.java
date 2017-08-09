@@ -15,6 +15,7 @@
 *                                    zeros, separator, lon range.
 * 11/18/11  K. Lam      MSP_029475   Update version to 3.3 
 * 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+* 01/12/16  K. Chen     MSP_00030518 Update version to 3.7 and add US Survey Feet Support
 *****************************************************************************/
 
 package geotrans3.misc;
@@ -27,7 +28,7 @@ import geotrans3.utility.Constants;
 
 public class StringHandler extends Object 
 {
-  private final java.lang.String title = "MSP GEOTRANS 3.5";
+  private final java.lang.String title = "MSP GEOTRANS 3.7";
   
   private java.lang.String errorMsg[];
   private boolean ccsError = false;
@@ -91,6 +92,10 @@ public class StringHandler extends Object
     return stringToVal.meterToString(meters);
   }
 
+  public String surveyFeetToString(final double feet)
+  {
+	  return stringToVal.surveyFeetToString(feet);
+  }
 
   public double stringToLatitude(java.lang.String str, java.lang.String msg)
   {

@@ -1,58 +1,37 @@
+// CLASSIFICATION: UNCLASSIFIED
 
 /******************************************************************************
-* Filename        : DtccApi.h
-* Classification  : UNCLASSIFIED
-******************************************************************************/
+ * Filename: DtccApi.h
+ *
+ * Copyright BAE Systems Inc. 2012  ALL RIGHTS RESERVED
+ *
+ * Description: Windows DLL Import/Export symbol definitions.
+ *
+ ******************************************************************************/
 
 #ifndef _MSP_DTCC_API_H
 #define _MSP_DTCC_API_H
 
-//-----------------------------------------------------------------------------------
-//    System Includes
-//-----------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------
-//    Local Includes
-//-----------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------
-//    Local Structures
-//-----------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------
-//    Enumerated Types
-//-----------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------
-//    Local Defines
-//-----------------------------------------------------------------------------------
-
 #if defined(WIN32)
-#	if defined(_USRDLL)
-#		if defined(MSP_CCS_EXPORTS)
-#			define MSP_DTCC_API __declspec(dllexport)
-#			define MSP_DTCC_TEMPLATE_EXPORT 
-#		elif defined(MSP_CCS_IMPORTS)
-#			define MSP_DTCC_API __declspec(dllimport)
-#			define MSP_DTCC_TEMPLATE_EXPORT extern
-#		else
-#			define MSP_DTCC_API
-#			define MSP_DTCC_TEMPLATE_EXPORT
-#		endif
-#	else
-#		define MSP_DTCC_API
-#		define MSP_DTCC_TEMPLATE_EXPORT 
-#	endif
+#   if defined(_USRDLL)
+#      if defined(MSP_CCS_EXPORTS)
+#         define MSP_DTCC_API __declspec(dllexport)
+#         define MSP_DTCC_TEMPLATE_EXPORT 
+#      elif defined(MSP_CCS_IMPORTS)
+#         define MSP_DTCC_API __declspec(dllimport)
+#         define MSP_DTCC_TEMPLATE_EXPORT extern
+#      else
+#         define MSP_DTCC_API
+#         define MSP_DTCC_TEMPLATE_EXPORT
+#      endif
+#   else
+#      define MSP_DTCC_API
+#      define MSP_DTCC_TEMPLATE_EXPORT 
+#   endif
 #else
-#		define MSP_DTCC_API
+#   define MSP_DTCC_API
 #endif
 
-//-----------------------------------------------------------------------------------
-//    Function Prototypes
-//-----------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------
-//    End of File
-//-----------------------------------------------------------------------------------
-
 #endif // _MSP_DTCC_API_H
+
+// CLASSIFICATION: UNCLASSIFIED

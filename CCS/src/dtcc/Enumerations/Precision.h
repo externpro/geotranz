@@ -50,6 +50,31 @@ namespace MSP
 
           return val;
        }
+
+       static double toMeters( const Enum &prec )
+       {
+          double val = 0.0;
+          if( prec == degree )
+             val = 100000.0;
+          else if( prec == tenMinute )
+             val = 10000.0;
+          else if( prec == minute )
+             val = 1000.0;
+          else if( prec == tenSecond )
+             val = 100.0;
+          else if( prec == second)
+             val = 10.0;
+          else if( prec == tenthOfSecond)
+             val = 1.0;
+          else if( prec == hundrethOfSecond)
+             val = 0.1;
+          else if( prec == thousandthOfSecond)
+             val = 0.01;
+          else if( prec == tenThousandthOfSecond)
+             val = 0.001;
+
+          return val;
+       }
     };
   }
 }

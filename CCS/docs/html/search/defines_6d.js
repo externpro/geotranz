@@ -16,6 +16,5 @@ var searchData=
   ['min_5fmgrs_5fnon_5fpolar_5flat',['MIN_MGRS_NON_POLAR_LAT',['../_m_g_r_s_8cpp.html#a974e68c95248264430f7969348ceddb6',1,'MGRS.cpp']]],
   ['min_5fnorthing',['MIN_NORTHING',['../_m_g_r_s_8cpp.html#a04c0819c07aa428013da167f5000bf5a',1,'MIN_NORTHING():&#160;MGRS.cpp'],['../_u_t_m_8cpp.html#a04c0819c07aa428013da167f5000bf5a',1,'MIN_NORTHING():&#160;UTM.cpp']]],
   ['min_5fscale_5ffactor',['MIN_SCALE_FACTOR',['../_polar_stereographic_8cpp.html#a4290a819c4acab9f7bc9359dd911ddc8',1,'MIN_SCALE_FACTOR():&#160;PolarStereographic.cpp'],['../_transverse_mercator_8cpp.html#a4290a819c4acab9f7bc9359dd911ddc8',1,'MIN_SCALE_FACTOR():&#160;TransverseMercator.cpp']]],
-  ['msp_5fcoordinate_5fconversion_5fapi',['MSP_COORDINATE_CONVERSION_API',['../_coordinate_conversion_service_a_p_i_8h.html#a623ea9403f6d6031da90c8186ac94db9',1,'CoordinateConversionServiceAPI.h']]],
   ['msp_5fdtcc_5fapi',['MSP_DTCC_API',['../_dtcc_api_8h.html#a5995458476ac88a055b3f40b0238f2ae',1,'DtccApi.h']]]
 ];

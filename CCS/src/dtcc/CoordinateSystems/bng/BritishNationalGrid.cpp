@@ -71,6 +71,9 @@
  *    03-02-07         Original C++ Code
  *    3/23/2011 NGL    BAEts28583 Updated for memory leaks in convertToGeodetic 
  *                     and convertFromGeodetic. 
+ * 
+ *    1/19/2016        A. Layne MSP_DR30125 Updated to pass ellipsoid code to 
+ *					   TransverseMercator 
  *
  *
  */
@@ -432,10 +435,9 @@ BritishNationalGrid::BritishNationalGrid( char *ellipsoidCode ) :
   }
     
   strcpy( BNG_Ellipsoid_Code, ellipsoidCode );
-
   transverseMercator = new TransverseMercator(
      semiMajorAxis, flattening, BNG_Origin_Long, BNG_Origin_Lat,
-     BNG_False_Easting, BNG_False_Northing, BNG_Scale_Factor );
+     BNG_False_Easting, BNG_False_Northing, BNG_Scale_Factor, BNG_Ellipsoid_Code );
 }
 
 

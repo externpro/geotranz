@@ -1957,7 +1957,7 @@ MSP::CCS::CoordinateSystemParameters* SpreadsheetTester::getCoordinateSystem( co
     case CoordinateType::usNationalGrid:
       return coordinateSystemState[direction].parameters.coordinateSystemParameters;
     default:
-      throw CoordinateConversionException(ErrorMessages::invalidType);
+	  throw CoordinateConversionException(MSP::CCS::ErrorMessages::invalidType);
   }
 }
 
@@ -2678,7 +2678,7 @@ void SpreadsheetTester::convertSourceToTarget()
       break;
     }
     default:
-      throw CoordinateConversionException(ErrorMessages::invalidType);
+	  throw CoordinateConversionException(MSP::CCS::ErrorMessages::invalidType);
   }
 
 }

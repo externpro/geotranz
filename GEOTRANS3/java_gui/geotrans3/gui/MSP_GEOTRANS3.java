@@ -17,6 +17,9 @@
 * 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
 * 07/31/13  K. Lam      MSP_00029595 Fix Load/Save Settings &
 *                                    update version to 3.4
+* 06/24/15  K. Lam      MSP_00023924 Enhance Load/Save Settings
+*                                    allowing users to specify filename
+* 01/12/16  K. Chen     MSP_00030518 Add US Survey Feet Support
 *****************************************************************************/
 
 package geotrans3.gui;
@@ -80,7 +83,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     currentAccuracy      = new Accuracy[2];
     
     initComponents();
-    initialize();
+
     setIcons();
 
     javax.swing.ButtonGroup lookAndFeelGroup = new javax.swing.ButtonGroup();
@@ -111,7 +114,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     {
        dataDirPathName = "../../data/";
     }
-    dataDirPathName += "settings.xml";
+    dataDirPathName += "default.xml";
 
     defaultFile = new java.io.File(dataDirPathName);
 
@@ -121,8 +124,6 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
        {
           defaultSettings = new LoadSettings(this, defaultFile);
           defaultSettings.readDefaults();
-
-          updateDefaultSettings();
        }
     }
     catch(Exception e)
@@ -131,6 +132,8 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
        defaultSettings = null;
     }
 
+    initialize();
+    
     // do pack at end; after gui is setup and size is set
     pack();
 
@@ -199,7 +202,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     helpMenuSeparator = new javax.swing.JSeparator();
     aboutMenuItem = new javax.swing.JMenuItem();
 
-    setTitle("MSP GEOTRANS 3.5");
+    setTitle("MSP GEOTRANS 3.7");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -629,18 +632,19 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
   }// </editor-fold>//GEN-END:initComponents
 
   private void loadSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadSettingsActionPerformed
-    if(defaultSettings == null)
+    // MSP_0023924 - Allow user to load settings from file
+    javax.swing.JFileChooser jChooser1 = new javax.swing.JFileChooser(currentDir.getDirectory());
+    jChooser1.addChoosableFileFilter(new XMLFileFilter());
+    jChooser1.setSelectedFile(new java.io.File("*.xml"));
+    int state = jChooser1.showOpenDialog(this);
+    if(state == javax.swing.JFileChooser.APPROVE_OPTION)
     {
-      if(defaultFile.exists())
+      java.io.File file = jChooser1.getSelectedFile();
+      currentDir.setDirectory(file.getAbsolutePath());
+      if(file != null)
       {
-        // DR 29595 - initialize defaultSettings
-        defaultSettings = new LoadSettings(this, defaultFile);
+        defaultSettings = new LoadSettings(this, file);
       }
-      else
-      {
-        javax.swing.JOptionPane.showMessageDialog(this, "File does not exist: " + defaultFile, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        return;
-      }      
     }
     
     try
@@ -658,7 +662,21 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
 }//GEN-LAST:event_loadSettingsActionPerformed
 
   private void saveSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSettingsActionPerformed
-    new SaveSettings(this, defaultFile, upperMasterPanel, lowerMasterPanel, formatOptions);
+    // MSP_0023924 - Allow user to save settings to file
+    javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser(currentDir.getDirectory());
+    fileChooser.setDialogTitle("Save As");
+    fileChooser.addChoosableFileFilter(new XMLFileFilter()); 
+    fileChooser.setSelectedFile(new java.io.File("*.xml"));
+    int state = fileChooser.showSaveDialog(this);   
+    if( state == javax.swing.JFileChooser.APPROVE_OPTION )
+    {
+        java.io.File file = fileChooser.getSelectedFile();
+        currentDir.setDirectory(file.getAbsolutePath());
+        if( file != null )
+        {
+            new SaveSettings(this, file, upperMasterPanel, lowerMasterPanel, formatOptions);
+        }
+    }
 }//GEN-LAST:event_saveSettingsActionPerformed
 
     private void convertUpButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_convertUpButtonMouseReleased
@@ -885,7 +903,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     {
       stringHandler.displayErrorMsg(this, e.getMessage());
     }
-  }//GEN-LAST:event_convertDownActionPerformed
+  }                                           
 
   private void deleteEllipsoidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEllipsoidActionPerformed
     try
@@ -1004,20 +1022,21 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
   // If it is not, set the geodetic height fields to read only
   public void check3DConversion()
   {
+  
       boolean _3dConversion = false;
       if (upperMasterPanel.getProjectionType() == CoordinateType.GEODETIC)
       {
         if ((lowerMasterPanel.getProjectionType() == CoordinateType.GEODETIC) || (lowerMasterPanel.getProjectionType() == CoordinateType.GEOCENTRIC) || (lowerMasterPanel.getProjectionType() == CoordinateType.LOCCART))
         {
             upperMasterPanel.enableHeightComboBox(true);
-            upperMasterPanel.selectEllipsoidHeightButton();
+
            _3dConversion = true;
             upperMasterPanel.setHeightFieldEditable(true);
 
             if (lowerMasterPanel.getProjectionType() == CoordinateType.GEODETIC)
             {
                 lowerMasterPanel.enableHeightComboBox(true);
-                lowerMasterPanel.selectEllipsoidHeightButton();
+
                 lowerMasterPanel.setHeightFieldEditable(true);
             }
         }
@@ -1031,10 +1050,11 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
       }
       else if (lowerMasterPanel.getProjectionType() == CoordinateType.GEODETIC)
       {
-        if ((upperMasterPanel.getProjectionType() == CoordinateType.GEOCENTRIC) || (upperMasterPanel.getProjectionType() == CoordinateType.LOCCART))
+
+        if ( (upperMasterPanel.getProjectionType() == CoordinateType.GEODETIC) || (upperMasterPanel.getProjectionType() == CoordinateType.GEOCENTRIC) || (upperMasterPanel.getProjectionType() == CoordinateType.LOCCART))
         {
             lowerMasterPanel.enableHeightComboBox(true);
-            lowerMasterPanel.selectEllipsoidHeightButton();
+
             _3dConversion = true;
             lowerMasterPanel.setHeightFieldEditable(true);
         }
@@ -1175,6 +1195,9 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
       jniCoordinateConversionService = new JNICoordinateConversionService(currentDatum[SourceOrTarget.SOURCE], currentParameters[SourceOrTarget.SOURCE], currentDatum[SourceOrTarget.TARGET], currentParameters[SourceOrTarget.TARGET]);
 
       upperMasterPanel = new MasterPanel(jniCoordinateConversionService, ConversionState.INTERACTIVE, SourceOrTarget.SOURCE, formatOptions, stringHandler);
+
+      upperMasterPanel.setDefaults(SourceOrTarget.SOURCE, jniCoordinateConversionService, formatOptions, stringHandler);
+
       if(upperMasterPanel == null)
       {
         stringHandler.displayErrorMsg(this, "Unable to initialize GEOTRANS");
@@ -1182,6 +1205,9 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
       }
 
       lowerMasterPanel = new MasterPanel(jniCoordinateConversionService, ConversionState.INTERACTIVE, SourceOrTarget.TARGET, formatOptions, stringHandler);
+
+      lowerMasterPanel.setDefaults(SourceOrTarget.TARGET, jniCoordinateConversionService, formatOptions, stringHandler);
+
       if(lowerMasterPanel == null)
       {
         stringHandler.displayErrorMsg(this, "Unable to initialize GEOTRANS");

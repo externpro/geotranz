@@ -73,6 +73,10 @@
  *                     if MGRS input is not within zone letter bounds. 
  *    9/16/2013 KNL    MSP_29918 Validate MGRS string, display errors if 
  *                     special character is found in input string.
+ *    1/18/2016 KC     BAE_MSP00030349/BAE_MSP00030211  Fix the setting of 
+ *                     the latitude band in MGRS.
+ *    1/19/2016        A. Layne MSP_DR30125 Updated to pass ellipsoid code 
+ *                     into call to UTM and UTM override.  
  */
 
 /***************************************************************************/
@@ -502,7 +506,7 @@ MGRS::MGRS(
 
   ups = new UPS( semiMajorAxis, flattening );
 
-  utm = new UTM( semiMajorAxis, flattening, 0 );
+  utm = new UTM( semiMajorAxis, flattening, MGRSEllipsoidCode, 0 );
 }
 
 
@@ -1007,7 +1011,8 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUTM(
       natural_zone = 1;
   if (zone != natural_zone) 
   { // reconvert to override zone
-    UTM utmOverride( semiMajorAxis, flattening, natural_zone );
+    
+      UTM utmOverride( semiMajorAxis, flattening, MGRSEllipsoidCode, natural_zone );
     GeodeticCoordinates geodeticCoordinates(
        CoordinateType::geodetic, longitude, latitude );
     UTMCoordinates* utmCoordinatesOverride =
@@ -1044,7 +1049,8 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUTM(
 
   if (override) 
   { // reconvert to override zone
-     UTM utmOverride( semiMajorAxis, flattening, override );
+            
+     UTM utmOverride( semiMajorAxis, flattening, MGRSEllipsoidCode, override );
      GeodeticCoordinates geodeticCoordinates(
         CoordinateType::geodetic, longitude, latitude );
     UTMCoordinates* utmCoordinatesOverride = 
@@ -1206,8 +1212,8 @@ MSP::CCS::UTMCoordinates* MGRS::toUTM(
     delete geodeticCoordinates;
     geodeticCoordinates = 0;
 
-    divisor = computeScale( precision );
-
+    divisor = ONEHT / computeScale( precision );
+	
     if( ! inLatitudeRange(letters[0], latitude, PI_OVER_180/divisor) )
     {
        // check adjacent bands

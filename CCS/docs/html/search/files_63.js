@@ -11,7 +11,6 @@ var searchData=
   ['coordinateconversionexception_2eh',['CoordinateConversionException.h',['../_coordinate_conversion_exception_8h.html',1,'']]],
   ['coordinateconversionservice_2ecpp',['CoordinateConversionService.cpp',['../_coordinate_conversion_service_8cpp.html',1,'']]],
   ['coordinateconversionservice_2eh',['CoordinateConversionService.h',['../_coordinate_conversion_service_8h.html',1,'']]],
-  ['coordinateconversionserviceapi_2eh',['CoordinateConversionServiceAPI.h',['../_coordinate_conversion_service_a_p_i_8h.html',1,'']]],
   ['coordinatesystem_2ecpp',['CoordinateSystem.cpp',['../_coordinate_system_8cpp.html',1,'']]],
   ['coordinatesystem_2eh',['CoordinateSystem.h',['../_coordinate_system_8h.html',1,'']]],
   ['coordinatesystemparameters_2ecpp',['CoordinateSystemParameters.cpp',['../_coordinate_system_parameters_8cpp.html',1,'']]],

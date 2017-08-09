@@ -29,7 +29,7 @@ var searchData=
   ['datumname',['datumName',['../class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html#a136c6d2fd9edeaf3a4403287503175dc',1,'MSP::CCS::DatumLibraryImplementation']]],
   ['datumrotation',['datumRotation',['../class_m_s_p_1_1_c_c_s_1_1_error_messages.html#aad7d401d3b2dce0a7512b580165f0d95',1,'MSP::CCS::ErrorMessages']]],
   ['datumsevenparameters',['datumSevenParameters',['../class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html#aed18f536d72c60ced6ce2fb9e6a88465',1,'MSP::CCS::DatumLibraryImplementation']]],
-  ['datumshifterror',['datumShiftError',['../class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html#a40682c61520be5b1a19f8959897ad8d3',1,'MSP::CCS::DatumLibraryImplementation']]],
+  ['datumshifterror',['datumShiftError',['../class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html#a499a3552a91c09811de99c10035cb791',1,'MSP::CCS::DatumLibraryImplementation']]],
   ['datumsigma',['datumSigma',['../class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a7ba2cbdf62bce53f9bdfc9fe596cc5da',1,'MSP::CCS::ErrorMessages']]],
   ['datumstandarderrors',['datumStandardErrors',['../class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html#a006292dc81927730502d6252aa164813',1,'MSP::CCS::DatumLibraryImplementation']]],
   ['datumtranslationvalues',['datumTranslationValues',['../class_m_s_p_1_1_c_c_s_1_1_datum_library_implementation.html#a4062957fb1a91a45d097b854f577d342',1,'MSP::CCS::DatumLibraryImplementation']]],

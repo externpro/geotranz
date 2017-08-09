@@ -3,7 +3,7 @@ CLASSIFICATION : UNCLASSIFIED
 This directory contains the MSP GEOTRANS sample code for the 
 Coordinate Conversion service.
 
-For Unix system
+For Linux system
 - To build the sample code
 	make -f Makefile.<platform>
 
@@ -12,7 +12,7 @@ For Unix system
 
 For Windows system
 - To build the sample code
-	nmake -f Makefile.win
+	make -f Makefile.win
 
 - To run the sample
 	runCoordinateConversionSample.bat

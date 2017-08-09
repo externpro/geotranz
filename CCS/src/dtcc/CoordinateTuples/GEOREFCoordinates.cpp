@@ -109,7 +109,14 @@ char* GEOREFCoordinates::GEOREFString()
 
 Precision::Enum GEOREFCoordinates::precision() const
 {
-  return _precision;
+   Precision::Enum temp_precision = _precision;
+
+   if (temp_precision < 0)
+      temp_precision = Precision::degree;
+   if (temp_precision > 5)
+      temp_precision = Precision::tenthOfSecond;
+
+  return temp_precision;
 }
 
 // CLASSIFICATION: UNCLASSIFIED

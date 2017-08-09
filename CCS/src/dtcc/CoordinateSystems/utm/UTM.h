@@ -74,6 +74,9 @@
  *                for each fromGeodetic call.  The override in the call has
  *                precedence over what is set in the class constructor.
  *    5-09-11     DR 28908, add default constructor
+ * 
+ *    1/16/2016   A. Layne MSP_DR30125 Updated constructor to receive ellipsoid 
+ *				  code from callers
  */
 
 
@@ -112,11 +115,13 @@ namespace MSP
              */
 
             UTM();
-
+            
             UTM(
                double ellipsoidSemiMajorAxis,
                double ellipsoidFlattening,
-               long   override = 0 );
+               char   *ellipsoidCode,
+               long   override = 0
+               );
 
 
             UTM( const UTM &u );
@@ -180,6 +185,7 @@ namespace MSP
                MSP::CCS::UTMCoordinates* utmCoordinates );
 
          private:
+            char   ellipsCode[3];
 
             std::map< int, TransverseMercator* > transverseMercatorMap;
 

@@ -7,7 +7,7 @@ var searchData=
   ['webmconversionto',['webmConversionTo',['../class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a4c37752267a667fb9d3225399735a465',1,'MSP::CCS::ErrorMessages']]],
   ['webmellipsoid',['webmEllipsoid',['../class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a16add3450c51922f8f5a56429a611202',1,'MSP::CCS::ErrorMessages']]],
   ['webmercator',['WebMercator',['../class_m_s_p_1_1_c_c_s_1_1_web_mercator.html',1,'MSP::CCS']]],
-  ['webmercator',['webMercator',['../class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eba5122b01dcb73efc900c0d30c9326b501',1,'MSP::CCS::CoordinateType::webMercator()'],['../class_m_s_p_1_1_c_c_s_1_1_web_mercator.html#a472810077ea0ea5f0fe38ca74ed62882',1,'MSP::CCS::WebMercator::WebMercator()']]],
+  ['webmercator',['WebMercator',['../class_m_s_p_1_1_c_c_s_1_1_web_mercator.html#a472810077ea0ea5f0fe38ca74ed62882',1,'MSP::CCS::WebMercator::WebMercator()'],['../class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eba5122b01dcb73efc900c0d30c9326b501',1,'MSP::CCS::CoordinateType::webMercator()']]],
   ['webmercator_2ecpp',['WebMercator.cpp',['../_web_mercator_8cpp.html',1,'']]],
   ['webmercator_2eh',['WebMercator.h',['../_web_mercator_8h.html',1,'']]],
   ['webminvalidtargetcs',['webmInvalidTargetCS',['../class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a3e9729a0994800c59573b8a1c106a658',1,'MSP::CCS::ErrorMessages']]],

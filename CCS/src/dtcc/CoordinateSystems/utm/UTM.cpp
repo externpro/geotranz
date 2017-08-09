@@ -71,6 +71,10 @@
  *                      Norway and Svalbard. This was removed with BAEts24468 
  *                      and we are being asked to put it back in.
  *    5-09-11     KNL   BAEts28908, add default constructor.
+ *	  1-16-16	  AL    MSP_DR30125 added ellipsoid code into constructor 
+ *						and passes ellipsoid code to TransMercator
+ *	  1-21-16	  KC	BAE_MSP00030211, removed the shift from longitude.
+ *						Shift is applied when determining the zone. 
  *
  */
 
@@ -128,7 +132,8 @@ UTM::UTM()
 /*
  * The default constructor
  */
-
+  // DR30125    default WGS-84
+  strcpy( ellipsCode, "WE" ); 
   double ellipsoidSemiMajorAxis = 6378137.0;
   double ellipsoidFlattening =  1 / 298.257223563;
   double inv_f = 1 / ellipsoidFlattening;
@@ -149,17 +154,19 @@ UTM::UTM()
         centralMeridian = ((6 * zone - 183) * PI_OVER_180);
      else
         centralMeridian = ((6 * zone + 177) * PI_OVER_180);
-
+     
      transverseMercatorMap[zone] = new TransverseMercator(
         semiMajorAxis, flattening, centralMeridian, originLatitude,
-        falseEasting, falseNorthing, scale);
+        falseEasting, falseNorthing, scale, ellipsCode);
   }
 }
 
 UTM::UTM(
    double ellipsoidSemiMajorAxis,
    double ellipsoidFlattening,
-   long   override ) :
+   char *ellipsoidCode,
+   long   override
+   ) :
    UTM_Override( 0 )
 {
 /*
@@ -172,7 +179,8 @@ UTM::UTM(
  * ellipsoidFlattening    : Flattening of ellipsoid                 (input)
  * override               : UTM override zone, 0 indicates no override (input)
  */
-
+  /* get ellipsoid Code */
+  strcpy( ellipsCode, ellipsoidCode ); 
   double inv_f = 1 / ellipsoidFlattening;
 
   if (ellipsoidSemiMajorAxis <= 0.0)
@@ -205,10 +213,10 @@ UTM::UTM(
         centralMeridian = ((6 * zone - 183) * PI_OVER_180);
      else
         centralMeridian = ((6 * zone + 177) * PI_OVER_180);
-    
+     
      transverseMercatorMap[zone] = new TransverseMercator(
         semiMajorAxis, flattening, centralMeridian, originLatitude,
-        falseEasting, falseNorthing, scale);
+        falseEasting, falseNorthing, scale, ellipsCode);
   }
 }
 
@@ -324,15 +332,15 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic(
     latitude = 0.0;
 
   if (longitude < 0)
-    longitude += (2*PI) + 1.0e-10;
+    longitude += (2*PI);
 
   Lat_Degrees = (long)(latitude * 180.0 / PI);
   Long_Degrees = (long)(longitude * 180.0 / PI);
 
   if (longitude < PI)
-    temp_zone = (long)(31 + ((longitude * 180.0 / PI) / 6.0));
+    temp_zone = (long)(31 + (((longitude+1.0e-10) * 180.0 / PI) / 6.0));
   else
-    temp_zone = (long)(((longitude * 180.0 / PI) / 6.0) - 29);
+    temp_zone = (long)((((longitude+1.0e-10) * 180.0 / PI) / 6.0) - 29);
 
   if (temp_zone > 60)
     temp_zone = 1;

@@ -15,6 +15,7 @@
 * 01/04/12  K Lam       BAEts29500   Remove recommend from EGM 96
 * 01/24/12  S Gillis    BAEts29500   Reorder EGM2008
 * 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+* 01/12/16  K Chen      MSP_00030518 Add US Survey Feet Support
 *****************************************************************************/
 
 package geotrans3.gui;
@@ -2166,7 +2167,17 @@ public class MasterPanel extends javax.swing.JPanel
       }
       else
       {
-        heightType = HeightType.ELLIPSOID_HEIGHT;
+		
+        //Change the index from C++ index to the Java index.
+        if (heightType == 7)
+        {
+         heightType = 2;
+        }
+        else if ((heightType < 7) && ( heightType >= 2))
+        {
+         heightType++;
+        }
+		
         heightComboBox.setSelectedIndex(heightType);
         enableHeightComboBox(true);
       }
@@ -2305,6 +2316,8 @@ public class MasterPanel extends javax.swing.JPanel
         _3ParamFieldsRow1LabelB.setText("Origin Latitude:");
         _3ParamFieldsRow1LabelC.setText("Origin Height (m):");
         _3ParamFieldsRow2LabelB.setText("Orientation:");
+
+
         try
         {
             _3ParamFieldsRow1TextFieldA.setText(stringHandler.longitudeToString(0, useNSEW, useMinutes, useSeconds));
@@ -2543,9 +2556,9 @@ public class MasterPanel extends javax.swing.JPanel
          heightComboBox.addItem("Ellipsoid Height");
 
          //"MSL-EGM2008-2.5M-BCS Height" is third in the list (index 2) on the
-         //GUI but is still index 7 in the HeightType enum. 
-         heightComboBox.addItem("MSL-EGM2008-2.5M-BCS Height");
-
+         //GUI but is still index 7 in the HeightType enum.
+         heightComboBox.addItem("MSL-EGM2008-2.5M-BCS Height");		 
+		 
          heightComboBox.addItem("MSL-EGM96-15M-BL Height");
          heightComboBox.addItem("MSL-EGM96-VG-NS Height");
          heightComboBox.addItem("MSL-EGM84-10D-BL Height");
@@ -2726,7 +2739,21 @@ public class MasterPanel extends javax.swing.JPanel
 
     public void setAccuracy(Accuracy accuracy)
     {
-      coordPanel.setAccuracy(accuracy);
+       boolean applyPrecision = true;
+       switch(projectionType)
+       {
+          case CoordinateType.BNG:
+          case CoordinateType.GARS:
+          case CoordinateType.GEOREF:
+          case CoordinateType.F16GRS:
+          case CoordinateType.MGRS:
+          case CoordinateType.USNG:
+          {
+             applyPrecision = false;
+          }
+       }
+
+       coordPanel.setAccuracy(accuracy, applyPrecision);
     }
 
     public void resetAccuracy()
@@ -2736,7 +2763,20 @@ public class MasterPanel extends javax.swing.JPanel
 
     public void updateSrcErrors(boolean _3dConversion)
     {
-        coordPanel.updateSrcErrors(_3dConversion);
+       boolean applyPrecision = true;
+       switch(projectionType)
+       {
+          case CoordinateType.BNG:
+          case CoordinateType.GARS:
+          case CoordinateType.GEOREF:
+          case CoordinateType.F16GRS:
+          case CoordinateType.MGRS:
+          case CoordinateType.USNG:
+          {
+             applyPrecision = false;
+          }
+       }
+       coordPanel.updateSrcErrors(_3dConversion, applyPrecision );
     }
 
     // MSP CCS parent class
@@ -2804,7 +2844,7 @@ public class MasterPanel extends javax.swing.JPanel
   // Get Parameters
     
   public int getGeodeticHeight()
-  {
+  {	 	 
       return heightType;
   }
   

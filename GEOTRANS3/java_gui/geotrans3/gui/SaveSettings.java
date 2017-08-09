@@ -170,7 +170,19 @@ public class SaveSettings
           contents += "      <falseNorthing>" + masterPanel.getFalseNorthing() + "</falseNorthing>\r\n";
           break;
         case CoordinateType.GEODETIC:
-          contents += "      <heightType>" + masterPanel.getGeodeticHeight() + "</heightType>\r\n";
+
+          int geodeticHeight = masterPanel.getGeodeticHeight();
+          //Change the index from C++ index to the Java index.
+          if (geodeticHeight == 7)
+          {
+            geodeticHeight = 2;
+          }
+          else if ((geodeticHeight < 7) && ( geodeticHeight >= 2))
+          {
+            geodeticHeight++;
+          }		  
+		  
+          contents += "      <heightType>" + geodeticHeight + "</heightType>\r\n";
           break;
         case CoordinateType.LOCCART:
           contents += "      <originLongitude>" + masterPanel.getOriginLongitude() + "</originLongitude>\r\n";
@@ -259,6 +271,10 @@ public class SaveSettings
       contents += "      <value>" + joptions.getLeadingZeros() + "</value>\r\n";
       contents += "    </leadingZeros>\r\n";
       
+      contents += "    <heightUnit>\r\n";
+      contents += "      <value>" + joptions.getHeightUnit() + "</value>\r\n";
+      contents += "    </heightUnit>\r\n";
+
       contents += "  </options>\r\n";   
       defaultFile.write(contents, 0, contents.length());
     }

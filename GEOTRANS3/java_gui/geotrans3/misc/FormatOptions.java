@@ -49,6 +49,10 @@ public class FormatOptions
     public static final int MET_001 = 8;
     public static final int MET_SCI = 9;        // Scientific notation
 
+    //LSC-2325
+    public static final int METER = 0;
+    public static final int SURVEY_FEET = 1;
+
     private int units = DMS;  
     private char separator = SPACE;
     private int signHemi = HEMI;
@@ -56,6 +60,9 @@ public class FormatOptions
     private int precision = MET1;
     private boolean leadingZeros = false;
     
+    //LSC-2325
+    private int heightUnit = METER;
+
     private String unitsString = "DMS";
     private int separatorIndex = 0;
     private String signHemiString = "N/S,E/W";
@@ -212,6 +219,17 @@ public class FormatOptions
         return precision;
     }
 
+    //LSC-2325
+    public int getHeightUnit()
+    {
+        return heightUnit;
+    }
+
+    public void setHeightUnit(int h)
+    {
+        heightUnit = h;
+    }
+
     public String getPrecisionString()
     {
         return precisionString;
@@ -313,6 +331,7 @@ public class FormatOptions
         separator = formatOptions.separator;
         range = formatOptions.range;
         leadingZeros = formatOptions.leadingZeros;
+        heightUnit = formatOptions.heightUnit;
     }            
 } 
 

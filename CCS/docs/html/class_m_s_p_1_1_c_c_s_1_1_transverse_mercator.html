@@ -63,6 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -106,8 +107,8 @@ Inheritance diagram for MSP::CCS::TransverseMercator:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab97d0847124707d2e0cf790d76252733"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_transverse_mercator.html#ab97d0847124707d2e0cf790d76252733">TransverseMercator</a> (double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double latitudeOfTrueScale, double falseEasting, double falseNorthing, double scaleFactor)</td></tr>
-<tr class="separator:ab97d0847124707d2e0cf790d76252733"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1d9069ea2d35397e5045ce3d1f6b1a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_transverse_mercator.html#ad1d9069ea2d35397e5045ce3d1f6b1a9">TransverseMercator</a> (double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double latitudeOfTrueScale, double falseEasting, double falseNorthing, double scaleFactor, char *ellipsoidCode)</td></tr>
+<tr class="separator:ad1d9069ea2d35397e5045ce3d1f6b1a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9e0bea6c74e250c8c8a75f990ec20fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_transverse_mercator.html#ae9e0bea6c74e250c8c8a75f990ec20fb">TransverseMercator</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_transverse_mercator.html">TransverseMercator</a> &amp;tm)</td></tr>
 <tr class="separator:ae9e0bea6c74e250c8c8a75f990ec20fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78e80c93021f304002c187ffd7e45a8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_transverse_mercator.html#a78e80c93021f304002c187ffd7e45a8e">~TransverseMercator</a> (void)</td></tr>
@@ -143,7 +144,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="_transverse_mercator_8h_source.html#l00059">59</a> of file <a class="el" href="_transverse_mercator_8h_source.html">TransverseMercator.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ab97d0847124707d2e0cf790d76252733"></a>
+<a class="anchor" id="ad1d9069ea2d35397e5045ce3d1f6b1a9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -187,7 +188,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>scaleFactor</em>&#160;</td>
+          <td class="paramname"><em>scaleFactor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>ellipsoidCode</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -210,7 +217,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00047">47</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00054">54</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
 
 </div>
 </div>
@@ -229,7 +236,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Copy Constructor </p>
 
-<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00103">103</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00118">118</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
 
 </div>
 </div>
@@ -248,7 +255,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Destructor </p>
 
-<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00109">109</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00124">124</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
 
 </div>
 </div>
@@ -277,7 +284,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00154">154</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00169">169</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
 
 </div>
 </div>
@@ -295,7 +302,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00268">268</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00283">283</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
 
 </div>
 </div>
@@ -314,7 +321,7 @@ Additional Inherited Members</h2></td></tr>
 <p>The function getParameters returns the current ellipsoid and Transverse <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_mercator.html">Mercator</a> projection parameters. </p>
 <dl class="section return"><dt>Returns</dt><dd>Transverse <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_mercator.html">Mercator</a> projection parameters. </dd></dl>
 
-<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00145">145</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00160">160</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
 
 </div>
 </div>
@@ -333,14 +340,14 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Equals operator </p>
 
-<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00113">113</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_transverse_mercator_8cpp_source.html#l00128">128</a> of file <a class="el" href="_transverse_mercator_8cpp_source.html">TransverseMercator.cpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 2 2014 17:07:56 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Feb 16 2016 14:54:03 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

@@ -25,7 +25,7 @@ var searchData=
   ['usng_5fletters',['USNG_LETTERS',['../_u_s_n_g_8h.html#ab103e6d427710ad44fbc773064c1bd38',1,'USNG.h']]],
   ['usngstring',['usngString',['../class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1338bafa7d3cdb831117e325b2ae719d',1,'MSP::CCS::ErrorMessages']]],
   ['utm',['UTM',['../class_m_s_p_1_1_c_c_s_1_1_u_t_m.html',1,'MSP::CCS']]],
-  ['utm',['UTM',['../class_m_s_p_1_1_c_c_s_1_1_u_t_m.html#a11617331128d102e28a771bf59469d0b',1,'MSP::CCS::UTM::UTM()'],['../class_m_s_p_1_1_c_c_s_1_1_u_t_m.html#a170791f589589dee6cf168c498843148',1,'MSP::CCS::UTM::UTM(double ellipsoidSemiMajorAxis, double ellipsoidFlattening, long override=0)'],['../class_m_s_p_1_1_c_c_s_1_1_u_t_m.html#aa20396cc0dbaf2042b6b835ffbeaaf41',1,'MSP::CCS::UTM::UTM(const UTM &amp;u)']]],
+  ['utm',['UTM',['../class_m_s_p_1_1_c_c_s_1_1_u_t_m.html#a11617331128d102e28a771bf59469d0b',1,'MSP::CCS::UTM::UTM()'],['../class_m_s_p_1_1_c_c_s_1_1_u_t_m.html#ad7cee2281d5e07721ae5fd34da84e9a7',1,'MSP::CCS::UTM::UTM(double ellipsoidSemiMajorAxis, double ellipsoidFlattening, char *ellipsoidCode, long override=0)'],['../class_m_s_p_1_1_c_c_s_1_1_u_t_m.html#aa20396cc0dbaf2042b6b835ffbeaaf41',1,'MSP::CCS::UTM::UTM(const UTM &amp;u)']]],
   ['utm_2ecpp',['UTM.cpp',['../_u_t_m_8cpp.html',1,'']]],
   ['utm_2eh',['UTM.h',['../_u_t_m_8h.html',1,'']]],
   ['utmcoordinates',['UTMCoordinates',['../class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html',1,'MSP::CCS']]],

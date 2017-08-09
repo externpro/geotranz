@@ -75,7 +75,6 @@ namespace MSP
           * @param  falseNorthing         Northing/Y at projection center
           * @param  scaleFactor           Projection scale factor
           */
-
          TransverseMercator(
             double ellipsoidSemiMajorAxis,
             double ellipsoidFlattening,
@@ -83,7 +82,8 @@ namespace MSP
             double latitudeOfTrueScale,
             double falseEasting,
             double falseNorthing,
-            double scaleFactor );
+            double scaleFactor,
+            char  *ellipsoidCode);
 
          /**
           * Copy Constructor
@@ -138,6 +138,8 @@ namespace MSP
       private:
     
          /* Ellipsoid Parameters */
+         char   ellipsCode[3];            // 2 Letter ellipsoid code
+         
          double TranMerc_eps;             // Eccentricity
 
          double TranMerc_K0R4;            // SCALE_FACTOR*R4
@@ -177,13 +179,15 @@ namespace MSP
 
          /**
           * Generate coefficients for trig series.
+          * 
           */
          static void generateCoefficients(
             double  invfla,
             double &n1,
             double  Acoeff[8],
             double  Bcoeff[8],
-            double &R4oa);
+            double &R4oa,
+            char *ellipsoidCode);
 
          /**
           * Check if latitude and longitude are in valid range.

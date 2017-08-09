@@ -84,6 +84,8 @@
  *    05/31/11  K. Lam BAE28657  Update service version for MSP 1.1.5
  *    11/18/11  K. Lam MSP_29475  Update service version for MSP 1.2
  *    06/16/14  Krinsky Add Web Mercator
+ *    01/16/16  A. Layne MSP_DR30125 added pass of ellipsoid code into transverseMercator
+ *              and UTM. 
  */
 
 #include <stdio.h>
@@ -671,7 +673,7 @@ int CoordinateConversionService::getServiceVersion()
     * The function getServiceVersion returns current service version.
     */
 
-  return 350;
+  return 360; // update service version for msp 1.5
 }
 
 
@@ -1546,7 +1548,7 @@ void CoordinateConversionService::setParameters(
     {
        MapProjection5Parameters* param =
           row->parameters.mapProjection5Parameters;
-
+       
        coordinateSystemState[direction].coordinateSystem =
           new TransverseMercator(
              semiMajorAxis, flattening,
@@ -1554,7 +1556,8 @@ void CoordinateConversionService::setParameters(
              param->originLatitude(),
              param->falseEasting(),
              param->falseNorthing(),
-             param->scaleFactor() );
+             param->scaleFactor(),
+             ellipsoidCode);
        break;
     }
     case CoordinateType::universalPolarStereographic:
@@ -1579,11 +1582,11 @@ void CoordinateConversionService::setParameters(
           }
 
           coordinateSystemState[direction].coordinateSystem = new UTM(
-             semiMajorAxis, flattening, param->zone() );
+             semiMajorAxis, flattening, ellipsoidCode, param->zone() );
        }
        else
           coordinateSystemState[direction].coordinateSystem = new UTM(
-             semiMajorAxis, flattening, 0 );
+             semiMajorAxis, flattening, ellipsoidCode, 0 );
 
        break;
     }
@@ -2697,11 +2700,19 @@ void CoordinateConversionService::convert(
            targetAccuracy.set(-1.0, -1.0, -1.0);
         else
         {
+           Precision::Enum precS = sourceCoordinates->precision();
+           Precision::Enum precT = targetCoordinates.precision();
+           Precision::Enum prec = precS;
+           if( precT < prec )
+           {
+              prec = precT;
+           }
+
            Accuracy* _targetAccuracy =
               datumLibraryImplementation->datumShiftError(
            source->datumIndex, target->datumIndex,
            _wgs84Geodetic->longitude(), 
-           _wgs84Geodetic->latitude(), sourceAccuracy );
+           _wgs84Geodetic->latitude(), sourceAccuracy, prec );
 
            targetAccuracy.set(
               _targetAccuracy->circularError90(),

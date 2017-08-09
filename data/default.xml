@@ -24,6 +24,9 @@
     <leadingZeros>
       <value>false</value>
     </leadingZeros>
+    <heightUnit>
+      <value>0</value>
+    </heightUnit>
   </options>
   <source>
     <datum>
@@ -44,7 +47,7 @@
       <code>WGE</code>
     </datum>
     <projection>
-      <index>32</index>
+      <index>34</index>
       <code>UT</code>
     </projection>
     <parameters>

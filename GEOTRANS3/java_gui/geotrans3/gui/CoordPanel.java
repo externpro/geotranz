@@ -10,8 +10,8 @@
 * DATE      NAME        DR#          DESCRIPTION
 *
 * 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+* 01/12/16  K. Chen     MSP_00030518 Add US Survey Feet Support
 *****************************************************************************/
-
 package geotrans3.gui;
 
 import geotrans3.coordinates.*;
@@ -38,6 +38,13 @@ public class CoordPanel extends javax.swing.JPanel
   private boolean _3dConversion;
   private Accuracy currentAccuracy;
 
+  private int HeightUnitType;
+  
+  public void setHeightType(int _heightHandler)
+  {
+	  HeightUnitType = _heightHandler;
+  }
+
   
     /** Creates new form coordPanel */
   public CoordPanel(FormatOptions _formatOptions, StringHandler _stringHandler)
@@ -61,6 +68,8 @@ public class CoordPanel extends javax.swing.JPanel
       _3CoordFieldsLabelA.setForeground(java.awt.Color.black);
       _3CoordFieldsLabelB.setForeground(java.awt.Color.black);
       _3CoordFieldsLabelC.setForeground(java.awt.Color.black);
+      _3CoordFieldsLabelUnit_C.setForeground(java.awt.Color.black);
+
       _2CoordFieldsLabelA.setForeground(java.awt.Color.black);
       _2CoordFieldsLabelB.setForeground(java.awt.Color.black);
       ce90Label.setForeground(java.awt.Color.black);
@@ -76,6 +85,8 @@ public class CoordPanel extends javax.swing.JPanel
       _3CoordFieldsLabelA.setFont(new java.awt.Font("Dialog", 1, 10));
       _3CoordFieldsLabelB.setFont(new java.awt.Font("Dialog", 1, 10));
       _3CoordFieldsLabelC.setFont(new java.awt.Font("Dialog", 1, 10));
+      _3CoordFieldsLabelUnit_C.setFont(new java.awt.Font("Dialog", 1, 10));
+      
       _2CoordFieldsLabelA.setFont(new java.awt.Font("Dialog", 1, 10));
       _2CoordFieldsLabelB.setFont(new java.awt.Font("Dialog", 1, 10));
       ce90Label.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -105,6 +116,9 @@ public class CoordPanel extends javax.swing.JPanel
         _3CoordFieldsLabelA = new javax.swing.JLabel();
         _3CoordFieldsLabelB = new javax.swing.JLabel();
         _3CoordFieldsLabelC = new javax.swing.JLabel();
+        _3CoordFieldsLabelUnit_C = new javax.swing.JLabel();
+        _3CoordFieldsLabelUnitFont_C = _3CoordFieldsLabelUnit_C.getFont();
+
         _3CoordFieldsTextFieldA = new javax.swing.JTextField();
         _3CoordFieldsTextFieldB = new javax.swing.JTextField();
         _3CoordFieldsTextFieldC = new javax.swing.JTextField();
@@ -143,7 +157,9 @@ public class CoordPanel extends javax.swing.JPanel
         coordLayeredPane.setMinimumSize(new java.awt.Dimension(439, 38));
         coordLayeredPane.setPreferredSize(new java.awt.Dimension(460, 38));
         coordLayeredPane.setOpaque(true);
-        _3CoordFieldsPanel.setLayout(new java.awt.GridLayout(2, 3, 12, 0));
+
+        _3CoordFieldsPanel.setLayout(null);
+
 
         _3CoordFieldsPanel.setMaximumSize(new java.awt.Dimension(339, 36));
         _3CoordFieldsPanel.setMinimumSize(new java.awt.Dimension(339, 36));
@@ -156,6 +172,8 @@ public class CoordPanel extends javax.swing.JPanel
         _3CoordFieldsLabelA.setOpaque(true);
         _3CoordFieldsPanel.add(_3CoordFieldsLabelA);
 
+        _3CoordFieldsLabelA.setBounds(0, 0, 138, 18);
+
         _3CoordFieldsLabelB.setText("Y (m):");
         _3CoordFieldsLabelB.setMaximumSize(new java.awt.Dimension(105, 16));
         _3CoordFieldsLabelB.setMinimumSize(new java.awt.Dimension(105, 16));
@@ -163,12 +181,33 @@ public class CoordPanel extends javax.swing.JPanel
         _3CoordFieldsLabelB.setOpaque(true);
         _3CoordFieldsPanel.add(_3CoordFieldsLabelB);
 
-        _3CoordFieldsLabelC.setText("Z (m):");
+        _3CoordFieldsLabelB.setBounds(150, 0, 138, 18);
+
+
+        _3CoordFieldsLabelC.setText("Z");        
+        _3CoordFieldsLabelC.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
         _3CoordFieldsLabelC.setMaximumSize(new java.awt.Dimension(105, 16));
         _3CoordFieldsLabelC.setMinimumSize(new java.awt.Dimension(105, 16));
         _3CoordFieldsLabelC.setPreferredSize(new java.awt.Dimension(105, 16));
         _3CoordFieldsLabelC.setOpaque(true);
         _3CoordFieldsPanel.add(_3CoordFieldsLabelC);
+
+        _3CoordFieldsLabelC.setBounds(300, 0, 7, 18);
+
+        _3CoordFieldsLabelUnit_C.setText("(m):");
+        if (javax.swing.UIManager.getLookAndFeel().getName().equalsIgnoreCase("Metal"))
+        	_3CoordFieldsLabelUnit_C.setFont(_3CoordFieldsLabelUnitFont_C);
+        else
+        	_3CoordFieldsLabelUnit_C.setFont(_3CoordFieldsLabelUnit_C.getFont().deriveFont(java.awt.Font.PLAIN));
+
+        _3CoordFieldsLabelUnit_C.setMaximumSize(new java.awt.Dimension(105, 16));
+        _3CoordFieldsLabelUnit_C.setMinimumSize(new java.awt.Dimension(105, 16));
+        _3CoordFieldsLabelUnit_C.setPreferredSize(new java.awt.Dimension(105, 16));
+        _3CoordFieldsLabelUnit_C.setOpaque(true);        
+        _3CoordFieldsPanel.add(_3CoordFieldsLabelUnit_C);
+        _3CoordFieldsLabelUnit_C.setBounds(310, 0, 30, 18);
+
 
         _3CoordFieldsTextFieldA.setText("0.0");
         _3CoordFieldsTextFieldA.setBorder(new javax.swing.border.BevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -176,17 +215,23 @@ public class CoordPanel extends javax.swing.JPanel
         _3CoordFieldsTextFieldA.setPreferredSize(new java.awt.Dimension(105, 20));
         _3CoordFieldsPanel.add(_3CoordFieldsTextFieldA);
 
+        _3CoordFieldsTextFieldA.setBounds(0, 18, 138, 18);
+
         _3CoordFieldsTextFieldB.setText("0.0");
         _3CoordFieldsTextFieldB.setBorder(new javax.swing.border.BevelBorder(javax.swing.border.BevelBorder.LOWERED));
         _3CoordFieldsTextFieldB.setMinimumSize(new java.awt.Dimension(105, 20));
         _3CoordFieldsTextFieldB.setPreferredSize(new java.awt.Dimension(105, 20));
         _3CoordFieldsPanel.add(_3CoordFieldsTextFieldB);
 
+        _3CoordFieldsTextFieldB.setBounds(150, 18, 138, 18);
+
         _3CoordFieldsTextFieldC.setText("0.0");
         _3CoordFieldsTextFieldC.setBorder(new javax.swing.border.BevelBorder(javax.swing.border.BevelBorder.LOWERED));
         _3CoordFieldsTextFieldC.setMinimumSize(new java.awt.Dimension(105, 20));
         _3CoordFieldsTextFieldC.setPreferredSize(new java.awt.Dimension(105, 20));
         _3CoordFieldsPanel.add(_3CoordFieldsTextFieldC);
+
+        _3CoordFieldsTextFieldC.setBounds(300, 18, 138, 18);
 
         _3CoordFieldsPanel.setBounds(2, 2, 439, 37);
         coordLayeredPane.add(_3CoordFieldsPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -455,7 +500,7 @@ public class CoordPanel extends javax.swing.JPanel
   }//GEN-LAST:event_accuracyTextFieldKeyTyped
 
   private void sourcesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sourcesComboBoxActionPerformed
-    updateAccuracy();
+    updateAccuracy(false);
   }//GEN-LAST:event_sourcesComboBoxActionPerformed
 
   private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
@@ -489,6 +534,9 @@ public class CoordPanel extends javax.swing.JPanel
         // Hide optional fields.
         _3CoordFieldsLabelA.setVisible(false);
         _3CoordFieldsLabelC.setVisible(false);
+
+        _3CoordFieldsLabelUnit_C.setVisible(false);
+
         _3CoordFieldsTextFieldA.setVisible(false);
         _3CoordFieldsTextFieldC.setVisible(false);
 
@@ -515,6 +563,9 @@ public class CoordPanel extends javax.swing.JPanel
         // Show optional fields.
         _3CoordFieldsLabelA.setVisible(true);
         _3CoordFieldsLabelC.setVisible(true);
+
+        _3CoordFieldsLabelUnit_C.setVisible(true);
+
         _3CoordFieldsTextFieldA.setVisible(true);
         _3CoordFieldsTextFieldC.setVisible(true);
 
@@ -523,7 +574,18 @@ public class CoordPanel extends javax.swing.JPanel
 
         _3CoordFieldsLabelA.setText("X (m):");
         _3CoordFieldsLabelB.setText("Y (m):");
-        _3CoordFieldsLabelC.setText("Z (m):");
+
+        _3CoordFieldsLabelC.setText("Z");
+        _3CoordFieldsLabelC.setBounds(300, 0, 7, 18);
+        _3CoordFieldsLabelUnit_C.setText("(m):");
+
+        if (javax.swing.UIManager.getLookAndFeel().getName().equalsIgnoreCase("Metal"))
+        	_3CoordFieldsLabelUnit_C.setFont(_3CoordFieldsLabelUnitFont_C);
+        else
+        	_3CoordFieldsLabelUnit_C.setFont(_3CoordFieldsLabelUnit_C.getFont().deriveFont(java.awt.Font.PLAIN));
+
+        _3CoordFieldsLabelUnit_C.setBounds(310, 0, 30, 18);
+
         _3CoordFieldsTextFieldA.setText( "0" );
         _3CoordFieldsTextFieldB.setText( "0" );
         _3CoordFieldsTextFieldC.setText( "0" );
@@ -731,7 +793,17 @@ public class CoordPanel extends javax.swing.JPanel
 
           _3CoordFieldsTextFieldA.setText(stringHandler.longitudeToString(coordinates.getLongitude() * Constants._180_OVER_PI, useNSEW, useMinutes, useSeconds));
           _3CoordFieldsTextFieldB.setText(stringHandler.latitudeToString(coordinates.getLatitude() * Constants._180_OVER_PI, useNSEW, useMinutes, useSeconds));
-          _3CoordFieldsTextFieldC.setText(stringHandler.meterToString(coordinates.getHeight()));
+
+		  //converts the output from meter to feet
+          if ( formatOptions.getHeightUnit() == FormatOptions.SURVEY_FEET)
+          {
+        	  double feetToMeterRatio = (double)1200/3937;;
+        	  _3CoordFieldsTextFieldC.setText(stringHandler.surveyFeetToString((coordinates.getHeight())/feetToMeterRatio));
+          }
+          else
+          {
+        	  _3CoordFieldsTextFieldC.setText(stringHandler.meterToString((coordinates.getHeight())));        	  
+          }
 
           break;
         }
@@ -864,10 +936,19 @@ public class CoordPanel extends javax.swing.JPanel
         }
         case CoordinateType.GEODETIC:
         {
+        	double textFieldC_value = stringHandler.stringToDouble(_3CoordFieldsTextFieldC.getText().trim(), "Invalid Height");
+
+        	//converts the input from feet to meter        	
+            if ( formatOptions.getHeightUnit() == FormatOptions.SURVEY_FEET)
+            {
+				double meterToFeetRatio = (double)3937/1200;				
+            	textFieldC_value = textFieldC_value / meterToFeetRatio;
+            }
+        	
             GeodeticCoordinates coordinates = new GeodeticCoordinates(projType, 
                                               stringHandler.stringToLongitude(_3CoordFieldsTextFieldA.getText().trim(), "Invalid Longitude"),
                                               stringHandler.stringToLatitude(_3CoordFieldsTextFieldB.getText().trim(), "Invalid Latitude"),
-                                              stringHandler.stringToDouble(_3CoordFieldsTextFieldC.getText().trim(), "Invalid Height"));
+                                              textFieldC_value);
 
             return coordinates;
         }
@@ -914,6 +995,8 @@ public class CoordPanel extends javax.swing.JPanel
                 // Show optional fields.
                 _3CoordFieldsLabelA.setVisible(true);
                 _3CoordFieldsLabelC.setVisible(true);
+                _3CoordFieldsLabelUnit_C.setVisible(true);
+
                 _3CoordFieldsTextFieldA.setVisible(true);
                 _3CoordFieldsTextFieldC.setVisible(true);
                 /* may be turned off by height type buttons. */
@@ -921,7 +1004,30 @@ public class CoordPanel extends javax.swing.JPanel
 
                 _3CoordFieldsLabelA.setText("Longitude:");
                 _3CoordFieldsLabelB.setText("Latitude:");
-                _3CoordFieldsLabelC.setText("Height (m):");
+                _3CoordFieldsLabelC.setText("Height");
+                _3CoordFieldsLabelC.setBounds(296, 0, 39, 18);
+
+                if (formatOptions.getHeightUnit() == FormatOptions.METER)
+                {
+                   	//plain font
+                	_3CoordFieldsLabelUnit_C.setText("(m):");
+                	if (javax.swing.UIManager.getLookAndFeel().getName().equalsIgnoreCase("Metal"))
+                		_3CoordFieldsLabelUnit_C.setFont(_3CoordFieldsLabelUnitFont_C);
+                	else
+                		_3CoordFieldsLabelUnit_C.setFont(_3CoordFieldsLabelUnit_C.getFont().deriveFont(java.awt.Font.PLAIN));
+                }
+                else
+                {
+                   	//italtic font
+                	_3CoordFieldsLabelUnit_C.setText("(ft):");
+                	if (javax.swing.UIManager.getLookAndFeel().getName().equalsIgnoreCase("Metal"))
+                		_3CoordFieldsLabelUnit_C.setFont(_3CoordFieldsLabelUnit_C.getFont().deriveFont(java.awt.Font.BOLD | java.awt.Font.ITALIC));
+                	else
+                		_3CoordFieldsLabelUnit_C.setFont(_3CoordFieldsLabelUnit_C.getFont().deriveFont(java.awt.Font.PLAIN | java.awt.Font.ITALIC));
+                }                
+
+                _3CoordFieldsLabelUnit_C.setBounds(339, 0, 30, 18);
+
                 try
                 {
                     _3CoordFieldsTextFieldA.setText(stringHandler.longitudeToString(0, useNSEW, useMinutes, useSeconds));
@@ -1036,47 +1142,75 @@ public class CoordPanel extends javax.swing.JPanel
     } /*   end of createCoordPanel()     */
 
     
-    public void resetOutputErrors()
-    {
-        ce90TextField.setText("N/A");
-        le90TextField.setText("N/A");
-        se90TextField.setText("N/A");
-    }
-
-
-  public void setAccuracy(Accuracy accuracy)
-  {
-    currentAccuracy = accuracy;
-
-    double ce90 = accuracy.getCE90();
-    double le90 = accuracy.getLE90();
-    double se90 = accuracy.getSE90();
-
-    usePrevAccuracies = true;
-
-    if(ce90 == -1.0)
-      ce90TextField.setText("Unk");
-    else
-      stringHandler.setNumberFormat(ce90TextField, ce90, 0);
-
-    if(!_3dConversion)
-    {
+   public void resetOutputErrors()
+   {
+      ce90TextField.setText("N/A");
       le90TextField.setText("N/A");
       se90TextField.setText("N/A");
-    }
-    else
-    {
-      if(le90 == -1.0)
-        le90TextField.setText("Unk");
-      else
-        stringHandler.setNumberFormat(le90TextField, le90, 0);
+   }
 
-      if(se90 == -1.0)
-        se90TextField.setText("Unk");
+
+   public void setAccuracy(Accuracy accuracy, boolean applyPrecision )
+   {
+      currentAccuracy = accuracy;
+
+      double ce90 = accuracy.getCE90();
+      double le90 = accuracy.getLE90();
+      double se90 = accuracy.getSE90();
+
+      if( applyPrecision )
+      {
+         int precision = formatOptions.getPrecision();
+         double sigma = 100000.0 / Math.sqrt( 12.0 );
+         for( int i = 0; i < precision; i++ )
+         {
+            sigma /= 10.0;
+         }
+
+         if( le90 > 0.0 )
+         {
+            double lePrec = 1.6449 * sigma;
+            le90 = Math.sqrt( le90 * le90 + lePrec * lePrec );
+         }
+
+         if( ce90 > 0.0 )
+         {
+            double cePrec = 2.146 * sigma;
+            ce90 = Math.sqrt( ce90 * ce90 + cePrec * cePrec );
+         }
+
+         if( se90 > 0.0 )
+         {
+            double sePrec = 2.146 * sigma;
+            se90 = Math.sqrt( se90 * se90 + sePrec * sePrec );
+         }
+      }
+
+      //      usePrevAccuracies = true;
+
+      if(ce90 == -1.0)
+         ce90TextField.setText("Unk");
       else
-        stringHandler.setNumberFormat(se90TextField, se90, 0);
-    }
-  }
+         stringHandler.setNumberFormat(ce90TextField, ce90, 0);
+
+      if(!_3dConversion)
+      {
+         le90TextField.setText("N/A");
+         se90TextField.setText("N/A");
+      }
+      else
+      {
+         if(le90 == -1.0)
+            le90TextField.setText("Unk");
+         else
+            stringHandler.setNumberFormat(le90TextField, le90, 0);
+         
+         if(se90 == -1.0)
+            se90TextField.setText("Unk");
+         else
+            stringHandler.setNumberFormat(se90TextField, se90, 0);
+      }
+   }
 
   // Set the input accuracy values
   public Accuracy getAccuracy()
@@ -1108,55 +1242,32 @@ public class CoordPanel extends javax.swing.JPanel
   }
 
   // Set the source text fields editable/uneditable if it's a 3D/2D conversion
-  public void updateSrcErrors(boolean _3dConv)
+   public void updateSrcErrors(boolean _3dConv, boolean applyPrecision )
   {
     le90TextField.setEditable(_3dConv);
     se90TextField.setEditable(_3dConv);
     _3dConversion = _3dConv;
-    updateAccuracy();
+    updateAccuracy(applyPrecision);
   }
 
   // Set the source text fields with the values corresponding
   // to the current combo box selection
-  public void updateAccuracy()
+  public void updateAccuracy( boolean applyPrecision )
   {
-    try
-    {
-      int index = sourcesComboBox.getSelectedIndex();/// + 1;
+     try
+     {
+        int index = sourcesComboBox.getSelectedIndex(); /// + 1;
 
-      Accuracy accuracy = Source.accuracy(index);
+           Accuracy accuracy = Source.accuracy(index);
 
-      usePrevAccuracies = false;
-
-      double ce90 = accuracy.getCE90();
-      double le90 = accuracy.getLE90();
-      double se90 = accuracy.getSE90();
-
-      if(ce90 == -1.0)
-        ce90TextField.setText("Unk");
-      else
-        stringHandler.setNumberFormat(ce90TextField, accuracy.getCE90(), 0);
-      if(!_3dConversion)
-      {
-        le90TextField.setText("N/A");
-        se90TextField.setText("N/A");
-      }
-      else
-      {
-        if(le90 == -1.0)
-          le90TextField.setText("Unk");
-        else
-          stringHandler.setNumberFormat(le90TextField, accuracy.getLE90(), 0);
-        if(se90 == -1.0)
-          se90TextField.setText("Unk");
-        else
-          stringHandler.setNumberFormat(se90TextField, accuracy.getSE90(), 0);
-      }
-    }
-    catch(CoordinateConversionException e)
-    {
-      stringHandler.displayErrorMsg(this, e.getMessage());
-    }
+           setAccuracy( accuracy, applyPrecision );
+           
+           usePrevAccuracies = false;
+     }
+     catch(CoordinateConversionException e)
+     {
+        stringHandler.displayErrorMsg(this, e.getMessage());
+     }
   }
 
   public void setHeightText(String height)
@@ -1215,6 +1326,9 @@ public class CoordPanel extends javax.swing.JPanel
     private javax.swing.JLabel _3CoordFieldsLabelA;
     private javax.swing.JLabel _3CoordFieldsLabelB;
     private javax.swing.JLabel _3CoordFieldsLabelC;
+    private javax.swing.JLabel _3CoordFieldsLabelUnit_C;
+    private java.awt.Font _3CoordFieldsLabelUnitFont_C;
+
     private javax.swing.JPanel _3CoordFieldsPanel;
     private javax.swing.JTextField _3CoordFieldsTextFieldA;
     private javax.swing.JTextField _3CoordFieldsTextFieldB;

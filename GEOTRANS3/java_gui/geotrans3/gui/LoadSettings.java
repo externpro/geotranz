@@ -199,20 +199,20 @@ public class LoadSettings
            + err.getLineNumber () + ", uri " + err.getSystemId ());
       System.out.println(" " + err.getMessage ());
 
-      throw new CoordinateConversionException("Error parsing settings.xml file");
+      throw new CoordinateConversionException("Error parsing " + file + " file");
     }
     catch (SAXException e) 
     {
       Exception x = e.getException ();
       ((x == null) ? e : x).printStackTrace ();
 
-      throw new CoordinateConversionException("Error parsing settings.xml file");
+      throw new CoordinateConversionException("Error parsing " + file + " file");
     }
     catch (Throwable t)
     {
       t.printStackTrace ();
       
-      throw new CoordinateConversionException("Error parsing settings.xml file");
+      throw new CoordinateConversionException("Error parsing " + file + " file");
     }
   }
   
@@ -307,6 +307,15 @@ public class LoadSettings
         boolean defaultLeadingZerosValue = Boolean.valueOf(leadingZerosValueTextNode.getNodeValue().trim()).booleanValue();
 
         joptions.setLeadingZeros(defaultLeadingZerosValue);
+
+        NodeList heightUnitList = optionsElement.getElementsByTagName("heightUnit");
+        Element heightUnitElement = (Element)heightUnitList.item(0);
+
+        NodeList heightUnitValueList = heightUnitElement.getElementsByTagName("value");
+        Node heightUnitValueTextNode = heightUnitValueList.item(0).getLastChild();
+        int defaultHeightUnitValue = Integer.valueOf(heightUnitValueTextNode.getNodeValue().trim()).intValue();
+
+        joptions.setHeightUnit(defaultHeightUnitValue);
     }  
   }
   
@@ -659,6 +668,7 @@ public class LoadSettings
       case CoordinateType.USNG:
       case CoordinateType.NZMG:
       case CoordinateType.UPS:
+      case CoordinateType.WEBMERCATOR:
         return new CoordinateSystemParameters(projectionType);
     default:
       throw new CoordinateConversionException("Invalid coordinate type");

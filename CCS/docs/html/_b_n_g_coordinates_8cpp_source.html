@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>GeographicTranslator: /net/defender/users/ccadmin/MSP/BUILDS/MSP_1.4.0.8_UNCLASS/GTDT_3.5.0_Delivery_141203/master/CCS/src/dtcc/CoordinateTuples/BNGCoordinates.cpp Source File</title>
+<title>GeographicTranslator: C:/master/geotrans3.7/CCS/src/dtcc/CoordinateTuples/BNGCoordinates.cpp Source File</title>
 <b><p style="text-align:center;color:green;font-size:20px">UNCLASSIFIED</p></b>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_5b54db12472b77737e55dc248c85493b.html">net</a></li><li class="navelem"><a class="el" href="dir_30c70bc3b25d95c4ed8b804fe786d180.html">defender</a></li><li class="navelem"><a class="el" href="dir_8782a220ffb10f56d0f01d32c3cb8881.html">users</a></li><li class="navelem"><a class="el" href="dir_89760c4eefba5807ca44f8d4a6e6519e.html">ccadmin</a></li><li class="navelem"><a class="el" href="dir_4fd0e7caf740e7e6b9defd048d8683af.html">MSP</a></li><li class="navelem"><a class="el" href="dir_94e489f5449a57ef2163958d3fef04d9.html">BUILDS</a></li><li class="navelem"><a class="el" href="dir_47aedf4fae75c0fe7093d29a8eac57b8.html">MSP_1.4.0.8_UNCLASS</a></li><li class="navelem"><a class="el" href="dir_de48973d0284901a59400de3824d0ed0.html">GTDT_3.5.0_Delivery_141203</a></li><li class="navelem"><a class="el" href="dir_33b7a40d32a5b89327e940dd7c046638.html">master</a></li><li class="navelem"><a class="el" href="dir_e482a4a8af61bea2a57abb6e8790ab94.html">CCS</a></li><li class="navelem"><a class="el" href="dir_ff6bb2db25355fd2183d8388b9c29dd4.html">src</a></li><li class="navelem"><a class="el" href="dir_f8404b1bdefaa4f4a92ef418bbcc1e51.html">dtcc</a></li><li class="navelem"><a class="el" href="dir_8447364e4c678a11118b39b35109d4ad.html">CoordinateTuples</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_edf3df7db5b0053f7cba67b155deccfc.html">master</a></li><li class="navelem"><a class="el" href="dir_8b3490cac915c107683d68df3d9c98a6.html">geotrans3.7</a></li><li class="navelem"><a class="el" href="dir_d0951f0e396e7f3ab5db438f6b9f5363.html">CCS</a></li><li class="navelem"><a class="el" href="dir_3b11bca187df89c3daa83d17707827d4.html">src</a></li><li class="navelem"><a class="el" href="dir_ce1728a50ed0f8e5fbefa80fc2874faa.html">dtcc</a></li><li class="navelem"><a class="el" href="dir_4e7d8eab89a63f302e752286fc5e0c68.html">CoordinateTuples</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -199,14 +199,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
 <div class="line"><a name="l00110"></a><span class="lineno"><a class="code" href="class_m_s_p_1_1_c_c_s_1_1_b_n_g_coordinates.html#ada77c8bb9095cfaa74a7be777979120e">  110</a></span>&#160;<a class="code" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2">Precision::Enum</a> <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_b_n_g_coordinates.html#ada77c8bb9095cfaa74a7be777979120e">BNGCoordinates::precision</a>()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordflow">return</span> _precision;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">// CLASSIFICATION: UNCLASSIFIED</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2">Precision::Enum</a> temp_precision = _precision;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   <span class="keywordflow">if</span> (temp_precision &lt; 0)</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      temp_precision = <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2adf2aea75690fb9c3cc60a24b769e7167">Precision::degree</a>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   <span class="keywordflow">if</span> (temp_precision &gt; 5)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      temp_precision = <a class="code" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2a82a0104eb485899ba4afa586a637450d">Precision::tenthOfSecond</a>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keywordflow">return</span> temp_precision;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">// CLASSIFICATION: UNCLASSIFIED</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 2 2014 17:07:45 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Feb 16 2016 14:54:02 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

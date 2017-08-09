@@ -10,6 +10,7 @@
 * DATE      NAME        DR#          DESCRIPTION
 *
 * 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+* 01/12/16  K. Chen     MSP_00030518 Add US Survey Feet Support
 *****************************************************************************/
 
 package geotrans3.misc;
@@ -748,6 +749,10 @@ public class StringToVal
     }
   }
 
+  public String surveyFeetToString(final double feet)
+  {
+	  return meterToString(feet);
+  }
 
   /**
    * Converts a meter value to a string using the current precision setting. 

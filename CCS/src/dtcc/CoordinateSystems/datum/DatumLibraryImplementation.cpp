@@ -957,26 +957,13 @@ void DatumLibraryImplementation::datumTranslationValues(
 
 
 Accuracy* DatumLibraryImplementation::datumShiftError(
-   const long sourceIndex,
-   const long targetIndex, 
-   double longitude,
-   double latitude,
-   Accuracy* sourceAccuracy )
+   const long      sourceIndex,
+   const long      targetIndex, 
+   double          longitude,
+   double          latitude,
+   Accuracy*       sourceAccuracy,
+   Precision::Enum precision )
 {
-/*
- *  The function datumShiftError returns the 90% horizontal (circular), vertical (linear), and
- *  spherical errors for a shift from the specified source datum to the
- *  specified destination datum at the specified location.
- *
- *  sourceIndex      : Index of source datum                            (input)
- *  targetIndex      : Index of destination datum                       (input)
- *  latitude         : Latitude of point being converted in radians     (input)
- *  longitude        : Longitude of point being converted in radians    (input)
- *  circularError90  : Combined 90% circular horizontal error in meters (output)
- *  linearError90    : Combined 90% linear vertical error in meters     (output)
- *  sphericalError90 : Combined 90% spherical error in meters           (output)
- */
-
   double sinlat = sin( latitude );
   double coslat = cos( latitude );
   double sinlon = sin( longitude );
@@ -1169,7 +1156,37 @@ Accuracy* DatumLibraryImplementation::datumShiftError(
     }
   }
 
-  return new Accuracy(circularError90, linearError90, sphericalError90);
+  // Correct for limited precision of input/output coordinate.
+
+  // sigma for uniform distribution due to rounding.
+  double sigma = Precision::toMeters( precision ) / sqrt( 12.0 );
+
+  // For linear error
+  if( linearError90 > 0.0 )
+  {
+     double lePrec = 1.6449 * sigma;
+     linearError90 = sqrt(
+        linearError90 * linearError90 + lePrec * lePrec);
+  }
+
+  // For circular error
+  if( circularError90 > 0.0 )
+  {
+     double cePrec = 2.146 * sigma;
+     circularError90 = sqrt(
+        circularError90 * circularError90 + cePrec * cePrec);
+  }
+
+  // For spherical error
+  if( sphericalError90 > 0.0 )
+  {
+     // Assume sigma in all directions
+     double sePrec = 2.5003 * sigma;
+     sphericalError90 = sqrt( 
+        sphericalError90 * sphericalError90 + sePrec * sePrec );
+  }
+
+  return new Accuracy( circularError90, linearError90, sphericalError90 );
 }
 
 

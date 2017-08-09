@@ -1,4 +1,3 @@
-
 // CLASSIFICATION: UNCLASSIFIED
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,9 +34,6 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
   
-// This file contains definitions
-// for functions in the Egm2008GeoidGrid class.
-
 // THIS PACKAGE REQUIRES NGA's WORLDWIDE GEOID HEIGHT GRID.  THIS GRID'S
 // DIRECTORY PATH MUST BE SPECIFIED BY ENVIRONMENT VARIABLE "MSPCCS_DATA".
 
@@ -47,11 +43,10 @@
 //       the term "geoid height" with height of a point above or below the
 //       geoid: these heights are properly called elevations or heights-above-MSL.
  
-#include <iostream>           // DEBUG
-#include <iomanip>            // DEBUG
-
 #include <fstream>
-
+#include <iomanip>            // DEBUG
+#include <iostream>           // DEBUG
+#include <stdlib.h>
 #include <string>
 
 #ifdef IRIXN32
@@ -872,7 +867,4 @@ Egm2008GeoidGrid::swGridIndices(
 
 }  // End of function Egm2008GeoidGrid::swGridIndices
 
-////////////////////////////////////////////////////////////////////////////////
-//          UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED            //
-////////////////////////////////////////////////////////////////////////////////
-
+// CLASSIFICATION: UNCLASSIFIED

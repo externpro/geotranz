@@ -70,6 +70,8 @@
  * ----     -----------
  * 3-1-07   Original Code (cloned from MGRS)
  * 3/23/11  N. Lundgren BAEts28583 Updated for memory leaks in convert methods
+ * 
+ * 1/16/16  A. Layne MSP_DR30125 Updated to pass ellipsoid code in call to UTM.
  */
 
 /***************************************************************************/
@@ -417,7 +419,7 @@ USNG::USNG( double ellipsoidSemiMajorAxis, double ellipsoidFlattening, char* ell
 
   ups = new UPS( semiMajorAxis, flattening );
 
-  utm = new UTM( semiMajorAxis, flattening, 0 );
+  utm = new UTM( semiMajorAxis, flattening, USNGEllipsoidCode, 0 );
 }
 
 
@@ -894,7 +896,7 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM(
 
   if (zone != natural_zone) 
   { // reconvert to override zone
-    UTM utmOverride( semiMajorAxis, flattening, natural_zone );
+    UTM utmOverride( semiMajorAxis, flattening, USNGEllipsoidCode, natural_zone );
     GeodeticCoordinates geodeticCoordinates(
        CoordinateType::geodetic, longitude, latitude );
     UTMCoordinates* utmCoordinatesOverride = utmOverride.convertFromGeodetic(
@@ -931,7 +933,7 @@ MSP::CCS::MGRSorUSNGCoordinates* USNG::fromUTM(
 
   if (override) 
   { // reconvert to override zone
-     UTM utmOverride( semiMajorAxis, flattening, override );
+     UTM utmOverride( semiMajorAxis, flattening, USNGEllipsoidCode, override );
      GeodeticCoordinates geodeticCoordinates(
         CoordinateType::geodetic, longitude, latitude );
      UTMCoordinates* utmCoordinatesOverride = 

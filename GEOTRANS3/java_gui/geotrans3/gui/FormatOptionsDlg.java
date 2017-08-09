@@ -6,12 +6,13 @@
  * Created on August 31, 2000, 11:34 AM
  *
  * Revision History
- * Date          Person      DR          Description
+ * Date          Person     DR           Description
  * --------------------------------------------------------------
- * 13 July 2011  K Swanson   BAEts27157  Handle Separator, Lon range
+ * 13 July 2011  K Swanson  BAEts27157   Handle Separator, Lon range
  *                                       Leading zeros, precision changes
  *                                       so they are reflected in the new 
  *                                       string
+ * 12 Jan  2016  K Chen     MSP_00030518 Add US Survey Feet Support
  * --------------------------------------------------------------
  */
 
@@ -24,6 +25,7 @@ import geotrans3.misc.StringHandler;
 import geotrans3.misc.StringToVal;
 import geotrans3.utility.Utility;
 import geotrans3.utility.Platform;
+
 
 
 /**
@@ -53,6 +55,9 @@ public class FormatOptionsDlg extends javax.swing.JDialog
     setRangeButton(joptions.getRange());
     setPrecisionButton(joptions.getPrecision());   
     leadingZerosCheckBox.setSelected(joptions.getLeadingZeros());
+
+    setHeightUnitButton(joptions.getHeightUnit());
+
     setFormatString(formatTextField);
     setFormatString(newFormatTextField);
     
@@ -65,6 +70,7 @@ public class FormatOptionsDlg extends javax.swing.JDialog
         signHemiLabel.setForeground(java.awt.Color.black);
         longRangeLabel.setForeground(java.awt.Color.black);
         leadingZerosCheckBox.setForeground(java.awt.Color.black);
+		geodeticHeightUnitLabel.setForeground(java.awt.Color.black);
     }
     pack ();
     Utility.center(parent, this);
@@ -118,6 +124,13 @@ public class FormatOptionsDlg extends javax.swing.JDialog
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         applyButton = new javax.swing.JButton();
+
+        heightElevationPanel = new javax.swing.JPanel();
+        geodeticHeightUnitLabel = new javax.swing.JLabel();
+        heightMeterRadioButton = new javax.swing.JRadioButton();
+        heightSurveyFeetRadioButton = new javax.swing.JRadioButton();
+        heightMetersUnitLabel = new javax.swing.JLabel();
+        heightSurveyFeetUnitLabel = new javax.swing.JLabel();
 
         setTitle("Format");
         setName("");
@@ -560,6 +573,38 @@ public class FormatOptionsDlg extends javax.swing.JDialog
 
         getContentPane().add(buttonsPanel, java.awt.BorderLayout.SOUTH);
 
+        heightElevationPanel.setLayout(null);
+
+		heightElevationPanel.add(geodeticHeightUnitLabel);
+		geodeticHeightUnitLabel.setText("Geodetic Height Units");
+		geodeticHeightUnitLabel.setBounds(10, 5, 150, 20);
+		
+        heightElevationPanel.add(heightMeterRadioButton);
+        heightMeterRadioButton.setFont(new java.awt.Font("Dialog", 0, 10));
+        heightMeterRadioButton.setText("Meters");
+        //heightMeterRadioButton.setBounds(10, 5, 57, 20);
+        heightMeterRadioButton.setBounds(10, 28, 57, 20);		
+        heightMeterRadioButton.setModel(heightMeterRadioButton.getModel());
+
+        heightElevationPanel.add(heightMetersUnitLabel);
+        heightMetersUnitLabel.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
+        heightMetersUnitLabel.setText("(m)");
+        //heightMetersUnitLabel.setBounds(67, 5, 20, 20);
+        heightMetersUnitLabel.setBounds(67, 28, 20, 20);		
+
+        heightElevationPanel.add(heightSurveyFeetRadioButton);
+        heightSurveyFeetRadioButton.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
+        heightSurveyFeetRadioButton.setText("U.S. Survey Feet");
+        heightSurveyFeetRadioButton.setBounds(10, 51, 105, 20);
+        heightSurveyFeetRadioButton.setModel(heightSurveyFeetRadioButton.getModel());
+
+        heightElevationPanel.add(heightSurveyFeetUnitLabel);
+        heightSurveyFeetUnitLabel.setFont(new java.awt.Font("Dialog", java.awt.Font.ITALIC, 10));
+        heightSurveyFeetUnitLabel.setText("(ft)");
+        heightSurveyFeetUnitLabel.setBounds(115, 51, 20, 20);
+
+        optionsTabbedPane.addTab("Height / Elevation", null, heightElevationPanel, "");
+
     }//GEN-END:initComponents
 
     private void leadingZerosCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leadingZerosCheckBoxActionPerformed
@@ -586,8 +631,24 @@ public class FormatOptionsDlg extends javax.swing.JDialog
   }//GEN-LAST:event_cancelActionPerformed
 
   private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
+    
+    previousHeightUnit = options.getHeightUnit();
+    
+    if (heightMeterRadioButton.isSelected())
+        options.setHeightUnit(FormatOptions.METER);
+    else if (heightSurveyFeetRadioButton.isSelected())
+        options.setHeightUnit(FormatOptions.SURVEY_FEET);
+      
+    if ( heightUnitChange())
+    {
+        String message = "Height units were changed.\n"
+                + "Please reselect Projection to refresh Height units.";
+        stringHandler.displayWarningMsg(this, message);
+    }
+    
     setVisible (false);
     dispose();
+
   }//GEN-LAST:event_okActionPerformed
 
   private void precisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionActionPerformed
@@ -652,6 +713,22 @@ public class FormatOptionsDlg extends javax.swing.JDialog
         options.setUnits(FormatOptions.DEG);
   }//GEN-LAST:event_unitsActionPerformed
      
+
+  private static int previousHeightUnit = FormatOptions.METER;
+
+  public boolean heightUnitChange()
+  {
+      if ( previousHeightUnit == options.getHeightUnit())
+      {
+          return false;
+      }
+      else
+      {
+          return true;
+      }
+  }
+  
+
     private void setUnitsButton(int units)
     { 
         if (units == options.DMS)
@@ -687,7 +764,15 @@ public class FormatOptionsDlg extends javax.swing.JDialog
         else if (range == options._180_180)
             _180_180RangeRadioButton.setSelected(true);
     }
-    
+
+    private void setHeightUnitButton(int height)
+    {
+        if (height == options.METER)
+            heightMeterRadioButton.setSelected(true);
+        else if (height == options.SURVEY_FEET)
+            heightSurveyFeetRadioButton.setSelected(true);
+    }
+
     private void setPrecisionButton(int precis)
     {  
         if (precis == options.MET100000)
@@ -741,6 +826,8 @@ public class FormatOptionsDlg extends javax.swing.JDialog
     javax.swing.ButtonGroup range_group = new javax.swing.ButtonGroup();
     javax.swing.ButtonGroup precision_group = new javax.swing.ButtonGroup();
 
+    javax.swing.ButtonGroup height_group = new javax.swing.ButtonGroup();
+
     unit_group.add(dmsUnitsRadioButton); 
     unit_group.add(dmUnitsRadioButton);     
     unit_group.add(dUnitsRadioButton); 
@@ -764,6 +851,9 @@ public class FormatOptionsDlg extends javax.swing.JDialog
     precision_group.add(__1mPrecisionRadioButton); 
     precision_group.add(__01mPrecisionRadioButton); 
     precision_group.add(__001mPrecisionRadioButton); 
+
+    height_group.add(heightMeterRadioButton);
+    height_group.add(heightSurveyFeetRadioButton);
   }
 
   /**
@@ -825,6 +915,14 @@ public class FormatOptionsDlg extends javax.swing.JDialog
     private javax.swing.JRadioButton slashSeparatorRadioButton;
     private javax.swing.JRadioButton spaceSeparatorRadioButton;
     private javax.swing.JPanel unitsPanel;
+    private javax.swing.JPanel heightElevationPanel;
+	private javax.swing.JLabel geodeticHeightUnitLabel;
+    private javax.swing.JRadioButton heightMeterRadioButton;
+    private javax.swing.JRadioButton heightSurveyFeetRadioButton;
+    private javax.swing.JLabel heightMetersUnitLabel;
+    private javax.swing.JLabel heightSurveyFeetUnitLabel;
+    private javax.swing.JTextArea heightNoteText;
+
     // End of variables declaration//GEN-END:variables
 
 } 

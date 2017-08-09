@@ -109,22 +109,23 @@
  *
  * MODIFICATIONS
  *
- *    Date              Description
- *    ----              -----------
- *    03/30/97          Original Code
- *    05/28/99          Added user-definable datums (for JMTK)
- *                      Added datum domain of validity checking (for JMTK)
- *                      Added datum shift accuracy calculation (for JMTK)
- *    06/27/06          Moved data files to data directory
- *    03-14-07          Original C++ Code
- *    05/26/10          S. Gillis, BAEts26674, Added Validate Datum to the API
- *                      in MSP Geotrans 3.0
- *    08/13/12          S. Gillis, MSP_00029654, Added lat/lon to define7ParamDatum
+ *    Date         Description
+ *    ----         -----------
+ *    03/30/97     Original Code
+ *    05/28/99     Added user-definable datums (for JMTK)
+ *                 Added datum domain of validity checking (for JMTK)
+ *                 Added datum shift accuracy calculation (for JMTK)
+ *    06/27/06     Moved data files to data directory
+ *    03-14-07     Original C++ Code
+ *    05/26/10     S. Gillis, BAEts26674, Added Validate Datum to the API
+ *                 in MSP Geotrans 3.0
+ *    08/13/12     S. Gillis, MSP_00029654, Added lat/lon to define7ParamDatum
  */
 
 
 #include <vector>
 #include "DatumType.h"
+#include "Precision.h"
 #include "DtccApi.h"
 
 
@@ -326,31 +327,39 @@ namespace MSP
        *   for the datum referenced by index.
        *
        *    index       : The index of a given datum in the datum table. (input)
-       *    deltaX      : X translation in meters                        (output)
-       *    deltaY      : Y translation in meters                        (output)
-       *    deltaZ      : Z translation in meters                        (output)
+       *    deltaX      : X translation in meters                       (output)
+       *    deltaY      : Y translation in meters                       (output)
+       *    deltaZ      : Z translation in meters                       (output)
        */
 
-      void datumTranslationValues( const long index, double *deltaX, double *deltaY, double *deltaZ );
+      void datumTranslationValues(
+         const long index,
+         double *deltaX,
+         double *deltaY,
+         double *deltaZ );
 
 
       /*
-       *  The function datumShiftError returns the 90% horizontal (circular), vertical (linear), and
-       *  spherical errors for a shift from the specified source datum to the
-       *  specified destination datum at the specified location.
+       *  The function datumShiftError returns the 90% horizontal (circular),
+       *  vertical (linear), and spherical errors for a shift from the
+       *  specified source datum to the specified destination datum at
+       *  the specified location.
        *
-       *  sourceIndex      : Index of source datum                                      (input)
-       *  targetIndex      : Index of destination datum                                 (input)
-       *  latitude         : Latitude of point being converted in radians               (input)
-       *  longitude        : Longitude of point being converted in radians              (input)
-       *  circularError90  : Combined 90% circular horizontal error in meters           (output)
-       *  linearError90    : Combined 90% linear vertical error in meters               (output)
-       *  sphericalError90 : Combined 90% spherical error in meters                     (output)
+       *  sourceIndex      : Index of source datum                       (input)
+       *  targetIndex      : Index of destination datum                  (input)
+       *  longitude        : Longitude of point being converted (radians)(input)
+       *  latitude         : Latitude of point being converted (radians) (input)
+       *  sourceAccuracy   : Accuracy of the source coordinate           (input)
+       *  precision        : Precision of the source coordinate          (input)
        */
 
-      Accuracy* datumShiftError( const long sourceIndex, const long targetIndex, 
-                            double longitude, double latitude, Accuracy* sourceAccuracy );
-
+      Accuracy* datumShiftError(
+         const long      sourceIndex,
+         const long      targetIndex, 
+         double          longitude,
+         double          latitude,
+         Accuracy*       sourceAccuracy,
+         Precision::Enum precision );
 
       /*
        *  The function datumUserDefined checks whether or not the specified datum is

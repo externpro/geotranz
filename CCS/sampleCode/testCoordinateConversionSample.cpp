@@ -1,23 +1,22 @@
+// Classification  : UNCLASSIFIED
+
 /******************************************************************************
- * Filename        : testCoordinateConversionSample.h
- *
- * Classification  : UNCLASSIFIED
- *
- * 
- *    Copyright 2007 BAE Systems National Security Solutions Inc. 1989-2006
- *                            ALL RIGHTS RESERVED
- *
- * MODIFICATION HISTORY:
- *
- * DATE        NAME              DR#               DESCRIPTION
- * 
- * 05/12/10    S Gillis          BAEts26542        MSP TS MSL-HAE conversion 
- *                                                 should use CCS         
- * 06/11/10    S. Gillis         BAEts26724        Fixed memory error problem
- *                                                 when MSPCCS_DATA is not set 
- * 08/26/11    K Ou              BAEts27716        Improved CCS sample code
- *
- ******************************************************************************/
+* Filename        : testCoordinateConversionSample.h
+* 
+*    Copyright 2007 BAE Systems National Security Solutions Inc. 1989-2006
+*                            ALL RIGHTS RESERVED
+*
+* MODIFICATION HISTORY:
+*
+* DATE        NAME              DR#               DESCRIPTION
+* 
+* 05/12/10    S Gillis          BAEts26542        MSP TS MSL-HAE conversion 
+*                                                 should use CCS         
+* 06/11/10    S. Gillis         BAEts26724        Fixed memory error problem
+*                                                 when MSPCCS_DATA is not set 
+* 08/26/11    K Ou              BAEts27716        Improved CCS sample code
+*
+******************************************************************************/
 
 #include <iostream>
 #include <string>
@@ -35,10 +34,6 @@
 #include "CoordinateType.h"
 #include "HeightType.h"
 #include "CoordinateConversionException.h"
-
-using namespace std;
-using namespace MSP::CCS;
-
 
 /**
  * Sample code to demontrate how to use the MSP Coordinate Conversion Service.
@@ -70,7 +65,7 @@ using namespace MSP::CCS;
  * convert the given lat, lon, and height to x, y, z coordinates.
  **/
 void convertGeodeticEllipsoidToGeocentric(
-   CoordinateConversionService& ccsGeodeticEllipsoidToGeocentric,
+   MSP::CCS::CoordinateConversionService& ccsGeodeticEllipsoidToGeocentric,
    double lat, 
    double lon, 
    double height, 
@@ -78,10 +73,12 @@ void convertGeodeticEllipsoidToGeocentric(
    double& y, 
    double& z)
 {    
-   Accuracy sourceAccuracy;
-   Accuracy targetAccuracy;
-   GeodeticCoordinates sourceCoordinates(CoordinateType::geodetic, lon, lat, height);
-   CartesianCoordinates targetCoordinates(CoordinateType::geocentric);
+   MSP::CCS::Accuracy sourceAccuracy;
+   MSP::CCS::Accuracy targetAccuracy;
+   MSP::CCS::GeodeticCoordinates sourceCoordinates(
+      MSP::CCS::CoordinateType::geodetic, lon, lat, height);
+   MSP::CCS::CartesianCoordinates targetCoordinates(
+      MSP::CCS::CoordinateType::geocentric);
 
    ccsGeodeticEllipsoidToGeocentric.convertSourceToTarget(
       &sourceCoordinates, 
@@ -101,7 +98,7 @@ void convertGeodeticEllipsoidToGeocentric(
  * convert the given x, y, z coordinates to a lat, lon, and height.
  **/
 void convertGeocentricToGeodeticEllipsoid(
-   CoordinateConversionService& ccsGeodeticEllipsoidToGeocentric,
+   MSP::CCS::CoordinateConversionService& ccsGeodeticEllipsoidToGeocentric,
    double x, 
    double y, 
    double z, 
@@ -109,10 +106,11 @@ void convertGeocentricToGeodeticEllipsoid(
    double& lon, 
    double& height)
 {
-   Accuracy geocentricAccuracy;
-   Accuracy geodeticAccuracy;
-   CartesianCoordinates geocentricCoordinates(CoordinateType::geocentric, x, y, z);
-   GeodeticCoordinates geodeticCoordinates;
+   MSP::CCS::Accuracy geocentricAccuracy;
+   MSP::CCS::Accuracy geodeticAccuracy;
+   MSP::CCS::CartesianCoordinates geocentricCoordinates(
+      MSP::CCS::CoordinateType::geocentric, x, y, z);
+   MSP::CCS::GeodeticCoordinates geodeticCoordinates;
 
    // Note that the Geodetic (Ellipsoid Height) to Geocentric Coordinate
    // Conversion Service is used here in conjunction with the
@@ -137,7 +135,7 @@ void convertGeocentricToGeodeticEllipsoid(
  * convert the given x, y, z coordinates to a lat, lon, and height.
  **/
 void convertGeocentricToGeodeticMslEgm96(
-   CoordinateConversionService& ccsGeocentricToGeodeticMslEgm96,
+   MSP::CCS::CoordinateConversionService& ccsGeocentricToGeodeticMslEgm96,
    double x,
    double y,
    double z, 
@@ -145,10 +143,12 @@ void convertGeocentricToGeodeticMslEgm96(
    double& lon, 
    double& height)
 {
-   Accuracy sourceAccuracy;
-   Accuracy targetAccuracy;
-   CartesianCoordinates sourceCoordinates(CoordinateType::geocentric, x, y, z);
-   GeodeticCoordinates targetCoordinates(CoordinateType::geodetic, lon, lat, height);
+   MSP::CCS::Accuracy sourceAccuracy;
+   MSP::CCS::Accuracy targetAccuracy;
+   MSP::CCS::CartesianCoordinates sourceCoordinates(
+      MSP::CCS::CoordinateType::geocentric, x, y, z);
+   MSP::CCS::GeodeticCoordinates targetCoordinates(
+      MSP::CCS::CoordinateType::geodetic, lon, lat, height);
 
    ccsGeocentricToGeodeticMslEgm96.convertSourceToTarget(
       &sourceCoordinates, 
@@ -169,16 +169,17 @@ void convertGeocentricToGeodeticMslEgm96(
  * given lat, lon, to an Ellipsoid height.
  **/
 void convertMslEgm96ToEllipsoidHeight(
-   CoordinateConversionService& ccsMslEgm96ToEllipsoidHeight,
+   MSP::CCS::CoordinateConversionService& ccsMslEgm96ToEllipsoidHeight,
    double lat, 
    double lon,
    double mslHeight,
    double& ellipsoidHeight)
 {
-   Accuracy sourceAccuracy;
-   Accuracy targetAccuracy;
-   GeodeticCoordinates sourceCoordinates(CoordinateType::geodetic, lon, lat, mslHeight);
-   GeodeticCoordinates targetCoordinates;
+   MSP::CCS::Accuracy sourceAccuracy;
+   MSP::CCS::Accuracy targetAccuracy;
+   MSP::CCS::GeodeticCoordinates sourceCoordinates(
+      MSP::CCS::CoordinateType::geodetic, lon, lat, mslHeight);
+   MSP::CCS::GeodeticCoordinates targetCoordinates;
 
    ccsMslEgm96ToEllipsoidHeight.convertSourceToTarget(
       &sourceCoordinates, 
@@ -197,17 +198,18 @@ void convertMslEgm96ToEllipsoidHeight(
  * the given lat, lon, to an MSL height.
  **/
 void convertEllipsoidHeightToMslEgm96(
-   CoordinateConversionService& ccsEllipsoidHeightToMslEgm96,
+   MSP::CCS::CoordinateConversionService& ccsEllipsoidHeightToMslEgm96,
    double lat, 
    double lon, 
    double ellipsoidHeight, 
    double& mslHeight)
 {
-   Accuracy sourceAccuracy;
-   Accuracy targetAccuracy;
+   MSP::CCS::Accuracy sourceAccuracy;
+   MSP::CCS::Accuracy targetAccuracy;
 
-   GeodeticCoordinates sourceCoordinates(CoordinateType::geodetic, lon, lat, ellipsoidHeight);
-   GeodeticCoordinates targetCoordinates;
+   MSP::CCS::GeodeticCoordinates sourceCoordinates(
+      MSP::CCS::CoordinateType::geodetic, lon, lat, ellipsoidHeight);
+   MSP::CCS::GeodeticCoordinates targetCoordinates;
 
    ccsEllipsoidHeightToMslEgm96.convertSourceToTarget(
       &sourceCoordinates, 
@@ -225,7 +227,7 @@ void convertEllipsoidHeightToMslEgm96(
  * a UTM zone, hemisphere, Easting and Northing.
  **/
 void convertGeocentricToUtm(
-   CoordinateConversionService& ccsGeocentricToUtm,
+   MSP::CCS::CoordinateConversionService& ccsGeocentricToUtm,
    double x,
    double y,
    double z, 
@@ -234,10 +236,11 @@ void convertGeocentricToUtm(
    double& easting,
    double& northing)
 {
-   Accuracy sourceAccuracy;
-   Accuracy targetAccuracy;
-   CartesianCoordinates sourceCoordinates(CoordinateType::geocentric, x, y, z);
-   UTMCoordinates targetCoordinates;
+   MSP::CCS::Accuracy sourceAccuracy;
+   MSP::CCS::Accuracy targetAccuracy;
+   MSP::CCS::CartesianCoordinates sourceCoordinates(
+      MSP::CCS::CoordinateType::geocentric, x, y, z);
+   MSP::CCS::UTMCoordinates targetCoordinates;
 
    ccsGeocentricToUtm.convertSourceToTarget(
       &sourceCoordinates, 
@@ -257,20 +260,21 @@ void convertGeocentricToUtm(
  * Service, 'ccsGeocentricToMgrs', to convert the given x, y, z coordinates
  * to an MGRS string and precision.
  **/
-string convertGeocentricToMgrs(
-   CoordinateConversionService& ccsGeocentricToMgrs,
+std::string convertGeocentricToMgrs(
+   MSP::CCS::CoordinateConversionService& ccsGeocentricToMgrs,
    double x,
    double y,
    double z, 
-   Precision::Enum& precision)
+   MSP::CCS::Precision::Enum& precision)
 {
    char* p;
-   string mgrsString;
+   std::string mgrsString;
 
-   Accuracy sourceAccuracy;
-   Accuracy targetAccuracy;
-   CartesianCoordinates sourceCoordinates(CoordinateType::geocentric, x, y, z);
-   MGRSorUSNGCoordinates targetCoordinates;
+   MSP::CCS::Accuracy sourceAccuracy;
+   MSP::CCS::Accuracy targetAccuracy;
+   MSP::CCS::CartesianCoordinates sourceCoordinates(
+      MSP::CCS::CoordinateType::geocentric, x, y, z);
+   MSP::CCS::MGRSorUSNGCoordinates targetCoordinates;
 
    ccsGeocentricToMgrs.convertSourceToTarget(
       &sourceCoordinates, 
@@ -301,52 +305,53 @@ int main(int argc, char **argv)
    // initialize status value to one, indicating an error condition
    int status = 1; 
 
-   cout << "Coordinate Conversion Service Sample Test Driver" << endl;
-   cout << endl;
+   std::cout << "Coordinate Conversion Service Sample Test Driver" << std::endl;
+   std::cout << std::endl;
 
    //
    // Coordinate System Parameters 
    //
-   GeodeticParameters ellipsoidParameters(
-      CoordinateType::geodetic, 
-      HeightType::ellipsoidHeight);
+   MSP::CCS::GeodeticParameters ellipsoidParameters(
+      MSP::CCS::CoordinateType::geodetic, 
+      MSP::CCS::HeightType::ellipsoidHeight);
 
-   CoordinateSystemParameters geocentricParameters(CoordinateType::geocentric);
+   MSP::CCS::CoordinateSystemParameters geocentricParameters(
+      MSP::CCS::CoordinateType::geocentric);
 
-   GeodeticParameters mslEgm96Parameters(
-      CoordinateType::geodetic, 
-      HeightType::EGM96FifteenMinBilinear);
+   MSP::CCS::GeodeticParameters mslEgm96Parameters(
+      MSP::CCS::CoordinateType::geodetic, 
+      MSP::CCS::HeightType::EGM96FifteenMinBilinear);
 
-   UTMParameters utmParameters(
-      CoordinateType::universalTransverseMercator, 
+   MSP::CCS::UTMParameters utmParameters(
+      MSP::CCS::CoordinateType::universalTransverseMercator, 
       1, 
       0);
 
-   CoordinateSystemParameters mgrsParameters(
-      CoordinateType::militaryGridReferenceSystem);
+   MSP::CCS::CoordinateSystemParameters mgrsParameters(
+      MSP::CCS::CoordinateType::militaryGridReferenceSystem);
 
    //
    // Coordinate Conversion Services 
    //
-   CoordinateConversionService ccsGeodeticEllipsoidToGeocentric(
+   MSP::CCS::CoordinateConversionService ccsGeodeticEllipsoidToGeocentric(
       WGE, &ellipsoidParameters, 
       WGE, &geocentricParameters);
 
-   CoordinateConversionService ccsGeocentricToGeodeticMslEgm96(
+   MSP::CCS::CoordinateConversionService ccsGeocentricToGeodeticMslEgm96(
       WGE, &geocentricParameters, 
       WGE, &mslEgm96Parameters);
 
-   CoordinateConversionService ccsMslEgm96ToEllipsoidHeight(
+   MSP::CCS::CoordinateConversionService ccsMslEgm96ToEllipsoidHeight(
       WGE, &mslEgm96Parameters, 
       WGE, &ellipsoidParameters);
-   CoordinateConversionService ccsEllipsoidHeightToMslEgm96(
+   MSP::CCS::CoordinateConversionService ccsEllipsoidHeightToMslEgm96(
       WGE, &ellipsoidParameters, 
       WGE, &mslEgm96Parameters);
 
-   CoordinateConversionService ccsGeocentricToUtm(
+   MSP::CCS::CoordinateConversionService ccsGeocentricToUtm(
       WGE, &geocentricParameters, 
       WGE, &utmParameters);
-   CoordinateConversionService ccsGeocentricToMgrs(
+   MSP::CCS::CoordinateConversionService ccsGeocentricToMgrs(
       WGE, &geocentricParameters, 
       WGE, &mgrsParameters);
 
@@ -366,16 +371,16 @@ int main(int argc, char **argv)
          lat, lon, height, 
          x, y, z);
 
-      cout << "Convert Geodetic (Ellipsoid Height) to Geocentric" << endl
-           << endl
-           << "Lat (radians): " << lat << endl
-           << "Lon (radians): " << lon << endl
-           << "Height(m): " << height << endl
-           << endl 
-           << "x: " << x << endl
-           << "y: " << y << endl
-           << "z: " << z << endl
-           << endl;
+      std::cout << "Convert Geodetic (Ellipsoid Height) to Geocentric" << std::endl
+           << std::endl
+           << "Lat (radians): " << lat << std::endl
+           << "Lon (radians): " << lon << std::endl
+           << "Height(m): " << height << std::endl
+           << std::endl 
+           << "x: " << x << std::endl
+           << "y: " << y << std::endl
+           << "z: " << z << std::endl
+           << std::endl;
 
       //
       // Geocentric to Geodetic (Ellipsoid Height)
@@ -389,16 +394,16 @@ int main(int argc, char **argv)
          x, y, z, 
          lat, lon, height);
 
-      cout << "Revert Geocentric To Geodetic (Ellipsoid Height): " << endl
-           << endl
-           << "x: " << x << endl
-           << "y: " << y << endl
-           << "z: " << z << endl
-           << endl
-           << "Lat (radians): " << lat << endl
-           << "Lon (radians): " << lon << endl
-           << "Height(m): " << height << endl
-           << endl;
+      std::cout << "Revert Geocentric To Geodetic (Ellipsoid Height): " << std::endl
+           << std::endl
+           << "x: " << x << std::endl
+           << "y: " << y << std::endl
+           << "z: " << z << std::endl
+           << std::endl
+           << "Lat (radians): " << lat << std::endl
+           << "Lon (radians): " << lon << std::endl
+           << "Height(m): " << height << std::endl
+           << std::endl;
 
 
       // reuse ccsGeodeticEllipsoidToGeocentric instance to perform another
@@ -412,16 +417,16 @@ int main(int argc, char **argv)
          lat, lon, height, 
          x, y, z);
 
-      cout << "Convert Geodetic (Ellipsoid Height) to Geocentric" << endl
-           << endl
-           << "Lat (radians): " << lat << endl
-           << "Lon (radians): " << lon << endl
-           << "Height(m): " << height << endl
-           << endl
-           << "x: " << x << endl
-           << "y: " << y << endl
-           << "z: " << z << endl
-           << endl;
+      std::cout << "Convert Geodetic (Ellipsoid Height) to Geocentric" << std::endl
+           << std::endl
+           << "Lat (radians): " << lat << std::endl
+           << "Lon (radians): " << lon << std::endl
+           << "Height(m): " << height << std::endl
+           << std::endl
+           << "x: " << x << std::endl
+           << "y: " << y << std::endl
+           << "z: " << z << std::endl
+           << std::endl;
 
       // reuse ccsGeodeticEllipsoidToGeocentric instance to perform another
       // Geodetic (Ellipsoid Height) to Geocentric conversions
@@ -434,16 +439,16 @@ int main(int argc, char **argv)
          lat, lon, height, 
          x, y, z);
 
-      cout << "Convert Geodetic (Ellipsoid Height) to Geocentric" << endl
-           << endl
-           << "Lat (radians): " << lat << endl
-           << "Lon (radians): " << lon << endl
-           << "Height(m): " << height << endl
-           << endl
-           << "x: " << x << endl
-           << "y: " << y << endl
-           << "z: " << z << endl
-           << endl;
+      std::cout << "Convert Geodetic (Ellipsoid Height) to Geocentric" << std::endl
+           << std::endl
+           << "Lat (radians): " << lat << std::endl
+           << "Lon (radians): " << lon << std::endl
+           << "Height(m): " << height << std::endl
+           << std::endl
+           << "x: " << x << std::endl
+           << "y: " << y << std::endl
+           << "z: " << z << std::endl
+           << std::endl;
 
       //
       // Geocentric to Geodetic (MSL EGM96 15M)
@@ -459,16 +464,16 @@ int main(int argc, char **argv)
          x, y, z, 
          lat, lon, mslHeight);
 
-      cout << "Convert Geocentric To Geodetic MSL EGM96: " << endl
-           << endl
-           << "x: " << x << endl
-           << "y: " << y << endl
-           << "z: " << z << endl
-           << endl
-           << "Lat (radians): " << lat << endl
-           << "Lon (radians): " << lon << endl
-           << "MSL EGM96 15M Height: " << mslHeight << endl
-           << endl;
+      std::cout << "Convert Geocentric To Geodetic MSL EGM96: " << std::endl
+           << std::endl
+           << "x: " << x << std::endl
+           << "y: " << y << std::endl
+           << "z: " << z << std::endl
+           << std::endl
+           << "Lat (radians): " << lat << std::endl
+           << "Lon (radians): " << lon << std::endl
+           << "MSL EGM96 15M Height: " << mslHeight << std::endl
+           << std::endl;
 
       //
       // Geodetic (MSL EGM96 15M) to Geodetic (Ellipsoid Height)   
@@ -478,14 +483,14 @@ int main(int argc, char **argv)
          lat, lon, mslHeight, 
          height);
 
-      cout << "Convert Geodetic (MSL EMG96 15M Height) To Geodetic (Ellipsoid Height)" << endl
-           << endl
-           << "Lat (radians): " << lat << endl
-           << "Lon (radians): " << lon << endl
-           << "MSL EGM96 15M Height: " << mslHeight << endl
-           << endl
-           << "Ellipsoid Height: " << height << endl
-           << endl;
+      std::cout << "Convert Geodetic (MSL EMG96 15M Height) To Geodetic (Ellipsoid Height)" << std::endl
+           << std::endl
+           << "Lat (radians): " << lat << std::endl
+           << "Lon (radians): " << lon << std::endl
+           << "MSL EGM96 15M Height: " << mslHeight << std::endl
+           << std::endl
+           << "Ellipsoid Height: " << height << std::endl
+           << std::endl;
 
       //
       // Geodetic (Ellipsoid Height) to Geodetic (MSL EMG96 15M)
@@ -495,14 +500,14 @@ int main(int argc, char **argv)
          lat, lon, height, 
          mslHeight);
 
-      cout << "Revert Geodetic (Ellipsoid Height) To Geodetic (MSL EGM96 15M) Height" << endl
-           << endl
-           << "Lat (radians): " << lat << endl
-           << "Lon (radians): " << lon << endl
-           << "Height(m): " << height << endl
-           << endl
-           << "MSL EGM96 15M Height: " << mslHeight << endl
-           << endl;
+      std::cout << "Revert Geodetic (Ellipsoid Height) To Geodetic (MSL EGM96 15M) Height" << std::endl
+           << std::endl
+           << "Lat (radians): " << lat << std::endl
+           << "Lon (radians): " << lon << std::endl
+           << "Height(m): " << height << std::endl
+           << std::endl
+           << "MSL EGM96 15M Height: " << mslHeight << std::endl
+           << std::endl;
 
       //
       // Geocentric to UTM
@@ -515,53 +520,57 @@ int main(int argc, char **argv)
          x, y, z, 
          zone, hemi, easting, northing);
 
-      cout << "Convert Geocentric To UTM: " << endl
-           << endl
-           << "x: " << x << endl
-           << "y: " << y << endl
-           << "z: " << z << endl
-           << endl
-           << "Zone: " << zone << endl
-           << "Hemisphere: " << hemi << endl
-           << "Easting: " << easting << endl
-           << "Northing: " << northing<< endl
-           << endl;
+      std::cout << "Convert Geocentric To UTM: " << std::endl
+           << std::endl
+           << "x: " << x << std::endl
+           << "y: " << y << std::endl
+           << "z: " << z << std::endl
+           << std::endl
+           << "Zone: " << zone << std::endl
+           << "Hemisphere: " << hemi << std::endl
+           << "Easting: " << easting << std::endl
+           << "Northing: " << northing<< std::endl
+           << std::endl;
 
       //
       // Geocentric to MGRS
       //
-      string mgrsString;
-      Precision::Enum precision;
+      std::string mgrsString;
+      MSP::CCS::Precision::Enum precision;
 
       mgrsString = convertGeocentricToMgrs(
          ccsGeocentricToMgrs, 
          x, y, z, 
          precision);
 
-      cout << "Convert Geocentric To MGRS: " << endl
-           << endl
-           << "x: " << x << endl
-           << "y: " << y << endl
-           << "z: " << z << endl
-           << endl
-           << "MGRS: " << mgrsString << endl
-           << "Precision: " << precision << endl
-           << endl;
+      std::cout << "Convert Geocentric To MGRS: " << std::endl
+           << std::endl
+           << "x: " << x << std::endl
+           << "y: " << y << std::endl
+           << "z: " << z << std::endl
+           << std::endl
+           << "MGRS: " << mgrsString << std::endl
+           << "Precision: " << precision << std::endl
+           << std::endl;
       
       // set status value to zero to indicate successful completion
       status = 0;
 
-   } catch(CoordinateConversionException& e) {
+   } catch(MSP::CCS::CoordinateConversionException& e) {
       // catch and report any exceptions thrown by the Coordinate
       // Conversion Service
-      cerr << "ERROR: Coordinate Conversion Service exception encountered - " 
+      std::cerr
+           << "ERROR: Coordinate Conversion Service exception encountered - " 
            << e.getMessage() 
-           << endl;
+           << std::endl;
 
-   } catch(exception& e) {
+   } catch(std::exception& e) {
       // catch and report any unexpected exceptions thrown
-      cerr << "ERROR: Unexpected exception encountered - " << e.what() << endl;
+      std::cerr << "ERROR: Unexpected exception encountered - "
+                << e.what() << std::endl;
    }
 
    return status;
 }
+
+// Classification  : UNCLASSIFIED
