@@ -315,7 +315,7 @@ MSP::CCS::UTMCoordinates* UTM::convertFromGeodetic(
   { /* latitude out of range */
     throw CoordinateConversionException( ErrorMessages::latitude );
   }
-  if ((longitude < -PI) || (longitude > (2*PI)))
+  if ((longitude < (-PI - EPSILON)) || (longitude > (2*PI + EPSILON)))
   { /* longitude out of range */
     throw CoordinateConversionException( ErrorMessages::longitude );
   }

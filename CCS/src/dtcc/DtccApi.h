@@ -29,12 +29,15 @@
 
 #if defined(WIN32)
 #	if defined(_USRDLL)
-#		if defined(MSP_CCS_EX)
+#		if defined(MSP_CCS_EXPORTS)
 #			define MSP_DTCC_API __declspec(dllexport)
 #			define MSP_DTCC_TEMPLATE_EXPORT 
-#		else
+#		elif defined(MSP_CCS_IMPORTS)
 #			define MSP_DTCC_API __declspec(dllimport)
 #			define MSP_DTCC_TEMPLATE_EXPORT extern
+#		else
+#			define MSP_DTCC_API
+#			define MSP_DTCC_TEMPLATE_EXPORT
 #		endif
 #	else
 #		define MSP_DTCC_API

@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,41 +92,252 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::EllipsoidParameters Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_ellipsoid_parameters_8h_source.html">EllipsoidParameters.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5db57f857655697fa3ba6fb1bd8d01a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5db57f857655697fa3ba6fb1bd8d01a3"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>EllipsoidParameters</b> (double __semiMajorAxis, double __flattening, char *__ellipsoidCode)</td></tr>
-<tr class="separator:a5db57f857655697fa3ba6fb1bd8d01a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73355537c7843b3afcb95056d1c27f7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73355537c7843b3afcb95056d1c27f7f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>EllipsoidParameters</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp;ecp)</td></tr>
-<tr class="separator:a73355537c7843b3afcb95056d1c27f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61ce2356d266b5461a4aa3447b0b5412"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61ce2356d266b5461a4aa3447b0b5412"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp;ecp)</td></tr>
-<tr class="separator:a61ce2356d266b5461a4aa3447b0b5412"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a702549b4187fb4307b2dd27a3faabc2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a702549b4187fb4307b2dd27a3faabc2b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSemiMajorAxis</b> (double __semiMajorAxis)</td></tr>
-<tr class="separator:a702549b4187fb4307b2dd27a3faabc2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c7e6ab91dafe0571155bfde113d9039"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c7e6ab91dafe0571155bfde113d9039"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFlattening</b> (double __flattening)</td></tr>
-<tr class="separator:a8c7e6ab91dafe0571155bfde113d9039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d6a248ebd40d3a4b8d7d52beb38b507"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d6a248ebd40d3a4b8d7d52beb38b507"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setEllipsoidCode</b> (char __ellipsoidCode[4])</td></tr>
-<tr class="separator:a4d6a248ebd40d3a4b8d7d52beb38b507"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b1e70d1f9950688787d316e2a30cb5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b1e70d1f9950688787d316e2a30cb5c"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>semiMajorAxis</b> () const </td></tr>
-<tr class="separator:a8b1e70d1f9950688787d316e2a30cb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d8ed684381039f1836665e6adcf6a73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d8ed684381039f1836665e6adcf6a73"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>flattening</b> () const </td></tr>
-<tr class="separator:a2d8ed684381039f1836665e6adcf6a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a376377744813b26db46202c3f69c5071"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a376377744813b26db46202c3f69c5071"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipsoidCode</b> ()</td></tr>
-<tr class="separator:a376377744813b26db46202c3f69c5071"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0bddc9c566635f7a89f6b02959264b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#ac0bddc9c566635f7a89f6b02959264b0">EllipsoidParameters</a> ()</td></tr>
+<tr class="separator:ac0bddc9c566635f7a89f6b02959264b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a545afcf822b6048eb360383599922b1e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a545afcf822b6048eb360383599922b1e">EllipsoidParameters</a> (double __semiMajorAxis, double __flattening, const char *__ellipsoidCode)</td></tr>
+<tr class="separator:a545afcf822b6048eb360383599922b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4816866fb4fcf6d741b78cb03c970066"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a4816866fb4fcf6d741b78cb03c970066">EllipsoidParameters</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp;ecp)</td></tr>
+<tr class="separator:a4816866fb4fcf6d741b78cb03c970066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42b5d017aa230c16abf56afeae7abb39"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a42b5d017aa230c16abf56afeae7abb39">~EllipsoidParameters</a> ()</td></tr>
+<tr class="separator:a42b5d017aa230c16abf56afeae7abb39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c7b133f2703f80e4d77c30f772d54c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a08c7b133f2703f80e4d77c30f772d54c">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp;ecp)</td></tr>
+<tr class="separator:a08c7b133f2703f80e4d77c30f772d54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae184cdbb40b448d7716f248fd6bf6839"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#ae184cdbb40b448d7716f248fd6bf6839">setSemiMajorAxis</a> (double __semiMajorAxis)</td></tr>
+<tr class="separator:ae184cdbb40b448d7716f248fd6bf6839"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8553e8c2a08fc89a09e815eded32139a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a8553e8c2a08fc89a09e815eded32139a">setFlattening</a> (double __flattening)</td></tr>
+<tr class="separator:a8553e8c2a08fc89a09e815eded32139a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a799535f8f582d5b8101cf1af6178c11e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a799535f8f582d5b8101cf1af6178c11e">setEllipsoidCode</a> (char __ellipsoidCode[4])</td></tr>
+<tr class="separator:a799535f8f582d5b8101cf1af6178c11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a66ca57c9ba571b86853a11c01b047f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a7a66ca57c9ba571b86853a11c01b047f">semiMajorAxis</a> () const </td></tr>
+<tr class="separator:a7a66ca57c9ba571b86853a11c01b047f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a344f253f7da09c7507e525a9176fd5d3"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a344f253f7da09c7507e525a9176fd5d3">flattening</a> () const </td></tr>
+<tr class="separator:a344f253f7da09c7507e525a9176fd5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a255c3b55652ed76a8d104b20dac61071"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html#a255c3b55652ed76a8d104b20dac61071">ellipsoidCode</a> ()</td></tr>
+<tr class="separator:a255c3b55652ed76a8d104b20dac61071"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8h_source.html#l00013">13</a> of file <a class="el" href="_ellipsoid_parameters_8h_source.html">EllipsoidParameters.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ac0bddc9c566635f7a89f6b02959264b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EllipsoidParameters::EllipsoidParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00010">10</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a545afcf822b6048eb360383599922b1e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EllipsoidParameters::EllipsoidParameters </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__semiMajorAxis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__flattening</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__ellipsoidCode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00018">18</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4816866fb4fcf6d741b78cb03c970066"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EllipsoidParameters::EllipsoidParameters </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>ecp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00027">27</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a42b5d017aa230c16abf56afeae7abb39"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EllipsoidParameters::~EllipsoidParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00036">36</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a255c3b55652ed76a8d104b20dac61071"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * EllipsoidParameters::ellipsoidCode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00089">89</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a344f253f7da09c7507e525a9176fd5d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double EllipsoidParameters::flattening </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00083">83</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a08c7b133f2703f80e4d77c30f772d54c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp; EllipsoidParameters::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid_parameters.html">EllipsoidParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>ecp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00044">44</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7a66ca57c9ba571b86853a11c01b047f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double EllipsoidParameters::semiMajorAxis </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00077">77</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a799535f8f582d5b8101cf1af6178c11e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EllipsoidParameters::setEllipsoidCode </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>__ellipsoidCode</em>[4]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00070">70</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8553e8c2a08fc89a09e815eded32139a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EllipsoidParameters::setFlattening </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__flattening</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00064">64</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae184cdbb40b448d7716f248fd6bf6839"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EllipsoidParameters::setSemiMajorAxis </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__semiMajorAxis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_parameters_8cpp_source.html#l00058">58</a> of file <a class="el" href="_ellipsoid_parameters_8cpp_source.html">EllipsoidParameters.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:11 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:51 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

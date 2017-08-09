@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html">Ellipsoid</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html">Ellipsoid</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,41 +92,278 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::Ellipsoid Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_ellipsoid_8h_source.html">Ellipsoid.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af8713d312bfb60705149c68557f26043"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8713d312bfb60705149c68557f26043"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Ellipsoid</b> (long __index, char *__code, char *__name, double __semiMajorAxis, double __semiMinorAxis, double __flattening, double __eccentricitySquared, bool __userDefined)</td></tr>
-<tr class="separator:af8713d312bfb60705149c68557f26043"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab61e5938bc9384a463f7bfeda88d7633"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab61e5938bc9384a463f7bfeda88d7633"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>index</b> () const </td></tr>
-<tr class="separator:ab61e5938bc9384a463f7bfeda88d7633"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98692881a11944aab5730ad9d2134a5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98692881a11944aab5730ad9d2134a5d"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>code</b> () const </td></tr>
-<tr class="separator:a98692881a11944aab5730ad9d2134a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee5dee7d297f87da7c4891d1bec9a603"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee5dee7d297f87da7c4891d1bec9a603"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const </td></tr>
-<tr class="separator:aee5dee7d297f87da7c4891d1bec9a603"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c34ec05adaf2abb3cf4b17a6afd7755"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c34ec05adaf2abb3cf4b17a6afd7755"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>semiMajorAxis</b> () const </td></tr>
-<tr class="separator:a9c34ec05adaf2abb3cf4b17a6afd7755"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af47cf02022783269b7b9019edcda59c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af47cf02022783269b7b9019edcda59c2"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>semiMinorAxis</b> () const </td></tr>
-<tr class="separator:af47cf02022783269b7b9019edcda59c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09d68130490bd27444318483d1338a02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09d68130490bd27444318483d1338a02"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>flattening</b> () const </td></tr>
-<tr class="separator:a09d68130490bd27444318483d1338a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a357699ce28303abe6663e47757803941"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a357699ce28303abe6663e47757803941"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>eccentricitySquared</b> () const </td></tr>
-<tr class="separator:a357699ce28303abe6663e47757803941"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1e5fcfc4741933e71b902cb0712459a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1e5fcfc4741933e71b902cb0712459a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>userDefined</b> () const </td></tr>
-<tr class="separator:ae1e5fcfc4741933e71b902cb0712459a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8aba92dbd635c581c3a5e96f285dd651"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#a8aba92dbd635c581c3a5e96f285dd651">Ellipsoid</a> ()</td></tr>
+<tr class="separator:a8aba92dbd635c581c3a5e96f285dd651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae6bc0508f4ca18a8ae9669bbb8bc261"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#aae6bc0508f4ca18a8ae9669bbb8bc261">Ellipsoid</a> (long __index, char *__code, char *__name, double __semiMajorAxis, double __semiMinorAxis, double __flattening, double __eccentricitySquared, bool __userDefined)</td></tr>
+<tr class="separator:aae6bc0508f4ca18a8ae9669bbb8bc261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eae6128d31f150b6a2e5ae85c82124b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#a5eae6128d31f150b6a2e5ae85c82124b">~Ellipsoid</a> (void)</td></tr>
+<tr class="separator:a5eae6128d31f150b6a2e5ae85c82124b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a219660fd21fe45fe38dafabeb90a2157"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#a219660fd21fe45fe38dafabeb90a2157">index</a> () const </td></tr>
+<tr class="separator:a219660fd21fe45fe38dafabeb90a2157"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec8b7798392da695f02912f1d2c5fb96"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#aec8b7798392da695f02912f1d2c5fb96">code</a> () const </td></tr>
+<tr class="separator:aec8b7798392da695f02912f1d2c5fb96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afeff8e669d3722f88f79d1df06551fef"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#afeff8e669d3722f88f79d1df06551fef">name</a> () const </td></tr>
+<tr class="separator:afeff8e669d3722f88f79d1df06551fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a774e175d31ecbcca14feac063b8aaf12"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#a774e175d31ecbcca14feac063b8aaf12">semiMajorAxis</a> () const </td></tr>
+<tr class="separator:a774e175d31ecbcca14feac063b8aaf12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3655d3c5cc455e24c710ea2d9a0f7c5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#ae3655d3c5cc455e24c710ea2d9a0f7c5">semiMinorAxis</a> () const </td></tr>
+<tr class="separator:ae3655d3c5cc455e24c710ea2d9a0f7c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9519aabdf1331994060b11042a0f69ee"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#a9519aabdf1331994060b11042a0f69ee">flattening</a> () const </td></tr>
+<tr class="separator:a9519aabdf1331994060b11042a0f69ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9390076e1f7e9b2bec62ae60aaa8c94e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#a9390076e1f7e9b2bec62ae60aaa8c94e">eccentricitySquared</a> () const </td></tr>
+<tr class="separator:a9390076e1f7e9b2bec62ae60aaa8c94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d29fd5235f3fc39d7f4d8338c025e04"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_ellipsoid.html#a0d29fd5235f3fc39d7f4d8338c025e04">userDefined</a> () const </td></tr>
+<tr class="separator:a0d29fd5235f3fc39d7f4d8338c025e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_ellipsoid_8h_source.html#l00012">12</a> of file <a class="el" href="_ellipsoid_8h_source.html">Ellipsoid.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a8aba92dbd635c581c3a5e96f285dd651"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Ellipsoid::Ellipsoid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00022">22</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aae6bc0508f4ca18a8ae9669bbb8bc261"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Ellipsoid::Ellipsoid </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>__index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>__code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>__name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__semiMajorAxis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__semiMinorAxis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__flattening</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__eccentricitySquared</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>__userDefined</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00036">36</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5eae6128d31f150b6a2e5ae85c82124b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Ellipsoid::~Ellipsoid </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00052">52</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aec8b7798392da695f02912f1d2c5fb96"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * Ellipsoid::code </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00068">68</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9390076e1f7e9b2bec62ae60aaa8c94e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Ellipsoid::eccentricitySquared </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00098">98</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9519aabdf1331994060b11042a0f69ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Ellipsoid::flattening </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00092">92</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a219660fd21fe45fe38dafabeb90a2157"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long Ellipsoid::index </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00062">62</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afeff8e669d3722f88f79d1df06551fef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * Ellipsoid::name </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00074">74</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a774e175d31ecbcca14feac063b8aaf12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Ellipsoid::semiMajorAxis </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00080">80</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae3655d3c5cc455e24c710ea2d9a0f7c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Ellipsoid::semiMinorAxis </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00086">86</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0d29fd5235f3fc39d7f4d8338c025e04"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Ellipsoid::userDefined </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_ellipsoid_8cpp_source.html#l00104">104</a> of file <a class="el" href="_ellipsoid_8cpp_source.html">Ellipsoid.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:13 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:54 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

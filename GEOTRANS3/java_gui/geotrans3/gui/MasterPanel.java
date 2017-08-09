@@ -1246,6 +1246,7 @@ public class MasterPanel extends javax.swing.JPanel
               case CoordinateType.UPS:
               case CoordinateType.USNG:
               case CoordinateType.UTM:
+              case CoordinateType.WEBMERCATOR:
               {
                 switch(projectionType)
                 {
@@ -1278,6 +1279,9 @@ public class MasterPanel extends javax.swing.JPanel
                   case CoordinateType.UTM:
                       inputProjectionLabel.setText("Universal Transverse Mercator (UTM) Projection");
                       break;
+                  case CoordinateType.WEBMERCATOR:
+                    inputProjectionLabel.setText("Web Mercator Projection");
+                    break;
                 }
                 
                 hideParams();
@@ -1548,6 +1552,7 @@ public class MasterPanel extends javax.swing.JPanel
             case CoordinateType.MGRS:
             case CoordinateType.USNG:
             case CoordinateType.NZMG:
+            case CoordinateType.WEBMERCATOR:
             {
                 hideParams();
                 break;
@@ -1966,6 +1971,8 @@ public class MasterPanel extends javax.swing.JPanel
             return new CoordinateSystemParameters(CoordinateType.UPS);
           case CoordinateType.USNG:
             return new CoordinateSystemParameters(CoordinateType.USNG);
+          case CoordinateType.WEBMERCATOR:
+             return new CoordinateSystemParameters(CoordinateType.WEBMERCATOR);
           default:
               throw new CoordinateConversionException("Invalid coordinate type");
       }
@@ -2587,6 +2594,7 @@ public class MasterPanel extends javax.swing.JPanel
         projectionComboBox.addItem(CoordinateType.TRCYLEQA_STR);
         projectionComboBox.addItem(CoordinateType.TRANMERC_STR);
         projectionComboBox.addItem(CoordinateType.GRINTEN_STR);
+        projectionComboBox.addItem(CoordinateType.WEBMERCATOR_STR);
         if (state != ConversionState.FILE)
             projectionComboBox.addItem(CoordinateType.F16GRS_STR);
         projectionComboBox.updateUI();

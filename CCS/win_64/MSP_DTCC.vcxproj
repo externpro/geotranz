@@ -68,15 +68,17 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\.\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\.\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\.\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\.\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\dtcc\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\.\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\.\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\.\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\.\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\dtcc\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MSPdtcc</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MSPdtcc</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -206,11 +208,11 @@
     <Link>
       <OutputFile>MSPdtcc.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\./msp_ccs.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\./MSPdtcc.pdb</ProgramDatabaseFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>.\./msp_ccs.lib</ImportLibrary>
+      <ImportLibrary>.\./MSPdtcc.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -249,11 +251,11 @@
     <Link>
       <OutputFile>MSPdtcc.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\./msp_ccs.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\./MSPdtcc.pdb</ProgramDatabaseFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>.\./msp_ccs.lib</ImportLibrary>
+      <ImportLibrary>.\./MSPdtcc.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -845,6 +847,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;MSP_CCS_EXPORTS;LITTLE_ENDIAN;MSP_CCS_EX</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;MSP_CCS_EXPORTS;LITTLE_ENDIAN;MSP_CCS_EX</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\webmerc\WebMercator.cpp" />
     <ClCompile Include="..\src\dtcc\DatumLibrary.cpp" />
     <ClCompile Include="..\src\dtcc\egm2008_aoi_grid_package.cpp" />
     <ClCompile Include="..\src\dtcc\egm2008_full_grid_package.cpp" />
@@ -1301,6 +1304,7 @@
     <ClInclude Include="..\src\dtcc\CoordinateSystems\usng\USNG.h" />
     <ClInclude Include="..\src\dtcc\CoordinateSystems\utm\UTM.h" />
     <ClInclude Include="..\src\dtcc\CoordinateSystems\grinten\VanDerGrinten.h" />
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\webmerc\WebMercator.h" />
     <ClInclude Include="..\src\dtcc\DatumLibrary.h" />
     <ClInclude Include="..\src\dtcc\egm2008_aoi_grid_package.h" />
     <ClInclude Include="..\src\dtcc\egm2008_full_grid_package.h" />

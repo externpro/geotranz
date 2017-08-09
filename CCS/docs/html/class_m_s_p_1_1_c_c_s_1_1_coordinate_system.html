@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">CoordinateSystem</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">CoordinateSystem</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -92,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::CoordinateSystem Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_coordinate_system_8h_source.html">CoordinateSystem.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MSP::CCS::CoordinateSystem:</div>
 <div class="dyncontent">
@@ -131,31 +134,172 @@ Inheritance diagram for MSP::CCS::CoordinateSystem:</div>
 <area href="class_m_s_p_1_1_c_c_s_1_1_u_s_n_g.html" alt="MSP::CCS::USNG" shape="rect" coords="271,1736,532,1760"/>
 <area href="class_m_s_p_1_1_c_c_s_1_1_u_t_m.html" alt="MSP::CCS::UTM" shape="rect" coords="271,1792,532,1816"/>
 <area href="class_m_s_p_1_1_c_c_s_1_1_van_der_grinten.html" alt="MSP::CCS::VanDerGrinten" shape="rect" coords="271,1848,532,1872"/>
+<area href="class_m_s_p_1_1_c_c_s_1_1_web_mercator.html" alt="MSP::CCS::WebMercator" shape="rect" coords="271,1904,532,1928"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3ff03e0870c4055d55c5b685cd6af6ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ff03e0870c4055d55c5b685cd6af6ca"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateSystem</b> (double _semiMajorAxis, double _flattening)</td></tr>
-<tr class="separator:a3ff03e0870c4055d55c5b685cd6af6ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e20d45a892cf1ee0603566147de3c9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e20d45a892cf1ee0603566147de3c9d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>getEllipsoidParameters</b> (double *_semiMajorAxis, double *_flattening)</td></tr>
-<tr class="separator:a8e20d45a892cf1ee0603566147de3c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9766023795a2cac640751f0b9688cc50"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a9766023795a2cac640751f0b9688cc50">CoordinateSystem</a> ()</td></tr>
+<tr class="separator:a9766023795a2cac640751f0b9688cc50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a432865e3a18763abfb9b89e21c17738c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a432865e3a18763abfb9b89e21c17738c">CoordinateSystem</a> (double _semiMajorAxis, double _flattening)</td></tr>
+<tr class="separator:a432865e3a18763abfb9b89e21c17738c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00742877a364fbc15b69aab14196f40e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a00742877a364fbc15b69aab14196f40e">~CoordinateSystem</a> ()</td></tr>
+<tr class="separator:a00742877a364fbc15b69aab14196f40e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a958167d7271548d7af0e7f24da53c4bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a958167d7271548d7af0e7f24da53c4bc">getEllipsoidParameters</a> (double *_semiMajorAxis, double *_flattening)</td></tr>
+<tr class="separator:a958167d7271548d7af0e7f24da53c4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ab4b25504df8abc3fb23b5f03eaf6c14e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4b25504df8abc3fb23b5f03eaf6c14e"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>semiMajorAxis</b></td></tr>
+<tr class="memitem:ab4b25504df8abc3fb23b5f03eaf6c14e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#ab4b25504df8abc3fb23b5f03eaf6c14e">semiMajorAxis</a></td></tr>
 <tr class="separator:ab4b25504df8abc3fb23b5f03eaf6c14e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a103abc45b36f0bc52bd992f2d19bbfc6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a103abc45b36f0bc52bd992f2d19bbfc6"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>flattening</b></td></tr>
+<tr class="memitem:a103abc45b36f0bc52bd992f2d19bbfc6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a103abc45b36f0bc52bd992f2d19bbfc6">flattening</a></td></tr>
 <tr class="separator:a103abc45b36f0bc52bd992f2d19bbfc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_coordinate_system_8h_source.html#l00013">13</a> of file <a class="el" href="_coordinate_system_8h_source.html">CoordinateSystem.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a9766023795a2cac640751f0b9688cc50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CoordinateSystem::CoordinateSystem </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_coordinate_system_8cpp_source.html#l00009">9</a> of file <a class="el" href="_coordinate_system_8cpp_source.html">CoordinateSystem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a432865e3a18763abfb9b89e21c17738c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CoordinateSystem::CoordinateSystem </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>_semiMajorAxis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>_flattening</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_coordinate_system_8cpp_source.html#l00020">20</a> of file <a class="el" href="_coordinate_system_8cpp_source.html">CoordinateSystem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a00742877a364fbc15b69aab14196f40e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CoordinateSystem::~CoordinateSystem </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_coordinate_system_8cpp_source.html#l00034">34</a> of file <a class="el" href="_coordinate_system_8cpp_source.html">CoordinateSystem.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a958167d7271548d7af0e7f24da53c4bc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CoordinateSystem::getEllipsoidParameters </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>_semiMajorAxis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>_flattening</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_coordinate_system_8cpp_source.html#l00058">58</a> of file <a class="el" href="_coordinate_system_8cpp_source.html">CoordinateSystem.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a103abc45b36f0bc52bd992f2d19bbfc6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double MSP::CCS::CoordinateSystem::flattening</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_coordinate_system_8h_source.html#l00052">52</a> of file <a class="el" href="_coordinate_system_8h_source.html">CoordinateSystem.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab4b25504df8abc3fb23b5f03eaf6c14e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double MSP::CCS::CoordinateSystem::semiMajorAxis</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_coordinate_system_8h_source.html#l00051">51</a> of file <a class="el" href="_coordinate_system_8h_source.html">CoordinateSystem.h</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:14 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:55 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

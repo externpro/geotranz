@@ -4,7 +4,7 @@ var searchData=
   ['cassini',['Cassini',['../class_m_s_p_1_1_c_c_s_1_1_cassini.html',1,'MSP::CCS']]],
   ['ccsthreadlock',['CCSThreadLock',['../class_m_s_p_1_1_c_c_s_thread_lock.html',1,'MSP']]],
   ['ccsthreadmutex',['CCSThreadMutex',['../class_m_s_p_1_1_c_c_s_thread_mutex.html',1,'MSP']]],
-  ['color',['Color',['../struct_m_s_p_1_1_c_c_s_1_1_color.html',1,'MSP::CCS']]],
+  ['complex',['Complex',['../struct_complex.html',1,'']]],
   ['coordinateconversionexception',['CoordinateConversionException',['../class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_exception.html',1,'MSP::CCS']]],
   ['coordinateconversionservice',['CoordinateConversionService',['../class_m_s_p_1_1_c_c_s_1_1_coordinate_conversion_service.html',1,'MSP::CCS']]],
   ['coordinatesystem',['CoordinateSystem',['../class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html',1,'MSP::CCS']]],

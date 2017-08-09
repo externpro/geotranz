@@ -6,6 +6,7 @@ var searchData=
   ['geodeticcoordinates',['GeodeticCoordinates',['../class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html',1,'MSP::CCS']]],
   ['geodeticparameters',['GeodeticParameters',['../class_m_s_p_1_1_c_c_s_1_1_geodetic_parameters.html',1,'MSP::CCS']]],
   ['geoidlibrary',['GeoidLibrary',['../class_m_s_p_1_1_c_c_s_1_1_geoid_library.html',1,'MSP::CCS']]],
+  ['geoidlibrarycleaner',['GeoidLibraryCleaner',['../class_m_s_p_1_1_c_c_s_1_1_geoid_library_cleaner.html',1,'MSP::CCS']]],
   ['georef',['GEOREF',['../class_m_s_p_1_1_c_c_s_1_1_g_e_o_r_e_f.html',1,'MSP::CCS']]],
   ['georefcoordinates',['GEOREFCoordinates',['../class_m_s_p_1_1_c_c_s_1_1_g_e_o_r_e_f_coordinates.html',1,'MSP::CCS']]],
   ['gnomonic',['Gnomonic',['../class_m_s_p_1_1_c_c_s_1_1_gnomonic.html',1,'MSP::CCS']]]

@@ -1,76 +1,13 @@
 // CLASSIFICATION: UNCLASSIFIED
 
 /***************************************************************************/
-/* RSC IDENTIFIER: TRANSVERSE MERCATOR
+/* FILE: TransverseMercator.cpp
  *
  * ABSTRACT
  *
  *    This component provides conversions between Geodetic coordinates 
  *    (latitude and longitude) and Transverse Mercator projection coordinates
  *    (easting and northing).
- *
- * ERROR HANDLING
- *
- *    This component checks parameters for valid values.  If an invalid value
- *    is found the error code is combined with the current error code using 
- *    the bitwise or.  This combining allows multiple error codes to be
- *    returned. The possible error codes are:
- *
- *       TRANMERC_NO_ERROR         : No errors occurred in function
- *       TRANMERC_LAT_ERROR        : Latitude outside of valid range
- *                                    (-90 to 90 degrees)
- *       TRANMERC_LON_ERROR        : Longitude outside of valid range
- *                                    (-180 to 360 degrees, and within
- *                                      +/-90 of Central Meridian)
- *       TRANMERC_EASTING_ERROR    : Easting outside of valid range
- *                                    (depending on ellipsoid and
- *                                     projection parameters)
- *       TRANMERC_NORTHING_ERROR   : Northing outside of valid range
- *                                    (depending on ellipsoid and
- *                                     projection parameters)
- *       TRANMERC_ORIGIN_LAT_ERROR : Origin latitude outside of valid range
- *                                    (-90 to 90 degrees)
- *       TRANMERC_CENT_MER_ERROR   : Central meridian outside of valid range
- *                                    (-180 to 360 degrees)
- *       TRANMERC_A_ERROR          : Semi-major axis less than or equal to zero
- *       TRANMERC_INV_F_ERROR      : Inverse flattening outside of valid range
- *                                    (250 to 350)
- *       TRANMERC_SCALE_FACTOR_ERROR : Scale factor outside of valid
- *                                     range (0.3 to 3.0)
- *	 TRANMERC_LON_WARNING      : Distortion will result if longitude is more
- *                                     than 9 degrees from the Central Meridian
- *
- * REUSE NOTES
- *
- *    TRANSVERSE MERCATOR is intended for reuse by any application that 
- *    performs a Transverse Mercator projection or its inverse.
- *    
- * REFERENCES
- *
- *    Further information on TRANSVERSE MERCATOR can be found in the 
- *    Reuse Manual.
- *
- *    TRANSVERSE MERCATOR originated from :  
- *                      U.S. Army Topographic Engineering Center
- *                      Geospatial Information Division
- *                      7701 Telegraph Road
- *                      Alexandria, VA  22310-3864
- *
- * LICENSES
- *
- *    None apply to this component.
- *
- * RESTRICTIONS
- *
- *    TRANSVERSE MERCATOR has no restrictions.
- *
- * ENVIRONMENT
- *
- *    TRANSVERSE MERCATOR was tested and certified in the following 
- *    environments:
- *
- *    1. Solaris 2.5 with GCC, version 2.8.1
- *    2. Windows 95 with MS Visual C++, version 6
  *
  * MODIFICATIONS
  *
@@ -81,12 +18,10 @@
  *             in convertToGeodetic, by removing the multiply by cos(latitude)
  *    3/23/11  N. Lundgren BAEts28583 Updated memory leak checks for 
  *             code consistency.
+ *    7/02/14  Updated to algorithm in NGA Transverse Mercator document.
  *
  */
-/***************************************************************************/
-/*
- *                               INCLUDES
- */
+#include <iostream>
 
 #include <math.h>
 #include "TransverseMercator.h"
@@ -95,41 +30,19 @@
 #include "GeodeticCoordinates.h"
 #include "CoordinateConversionException.h"
 #include "ErrorMessages.h"
-#include "WarningMessages.h"
 
-/*
- *    math.h      - Standard C++ math library
- *    TransverseMercator.h  - Is for prototype error checking
- *    MapProjectionCoordinates.h   - defines map projection coordinates
- *    GeodeticCoordinates.h   - defines geodetic coordinates
- *    CoordinateConversionException.h - Exception handler
- *    ErrorMessages.h  - Contains exception messages
- */
+using MSP::CCS::TransverseMercator;
+// Terms in series A and B coefficients
+#define N_TERMS   6
+#define MAX_TERMS 8
 
-using namespace MSP::CCS;
-
-/***************************************************************************/
-/*                               DEFINES 
- *
- */
-// const double PI = 3.14159265358979323e0;      /* PI     */
-// const double PI_OVER_2 = (PI/2.0e0);          /* PI over 2 */
-// const double MAX_LAT = ((PI * 89.99)/180.0);  /* 89.99 degrees in radians */
-// const double MAX_DELTA_LONG = ((PI * 90)/180.0); /* 90 degrees in radians */
-// const double MIN_SCALE_FACTOR = 0.3;
-// const double MAX_SCALE_FACTOR = 3.0;
-
+//                  DEFINES
 #define PI                3.14159265358979323e0
 #define PI_OVER_2         (PI/2.0e0)
-#define MAX_LAT           ((PI * 89.99)/180.0)
-#define MAX_DELTA_LONG    ((PI * 90)/180.0)
-#define MIN_SCALE_FACTOR  0.3
-#define MAX_SCALE_FACTOR  3.0
+#define MAX_DELTA_LONG    ((PI * 70)/180.0)
+#define MIN_SCALE_FACTOR   0.1
+#define MAX_SCALE_FACTOR  10.0
 
-/************************************************************************/
-/*                              FUNCTIONS     
- *
- */
 
 TransverseMercator::TransverseMercator(
    double ellipsoidSemiMajorAxis,
@@ -139,152 +52,57 @@ TransverseMercator::TransverseMercator(
    double falseEasting,
    double falseNorthing,
    double scaleFactor ) :
-  CoordinateSystem(),
-  TranMerc_es( 0.0066943799901413800 ),
-  TranMerc_ebs( 0.0067394967565869 ),
-  TranMerc_Origin_Long( 0.0 ),
-  TranMerc_Origin_Lat( 0.0 ),
-  TranMerc_False_Easting( 0.0 ),
-  TranMerc_False_Northing( 0.0 ),
-  TranMerc_Scale_Factor( 1.0 ),
-  TranMerc_ap( 6367449.1458008 ),
-  TranMerc_bp( 16038.508696861 ),
-  TranMerc_cp( 16.832613334334 ),
-  TranMerc_dp( 0.021984404273757 ),
-  TranMerc_ep( 3.1148371319283e-005 ),
-  TranMerc_Delta_Easting( 40000000.0 ),
-  TranMerc_Delta_Northing( 40000000.0 )
+   CoordinateSystem( ellipsoidSemiMajorAxis, ellipsoidFlattening ),
+   TranMerc_Origin_Long( centralMeridian ),
+   TranMerc_Origin_Lat( latitudeOfTrueScale ),
+   TranMerc_False_Easting( falseEasting ),
+   TranMerc_False_Northing( falseNorthing ),
+   TranMerc_Scale_Factor( scaleFactor  ),
+   TranMerc_Delta_Easting(  20000000.0 ),
+   TranMerc_Delta_Northing( 10000000.0 )
 {
-/*
- * The constructor receives the ellipsoid
- * parameters and Tranverse Mercator projection parameters as inputs, and
- * sets the corresponding state variables. If any errors occur, an exception 
- * is thrown with a description of the error.
- *
- * ellipsoidSemiMajorAxis  : Semi-major axis of ellipsoid, in meters    (input)
- * ellipsoidFlattening     : Flattening of ellipsoid		        (input)
- * centralMeridian         : Longitude in radians at the center of the  (input)
- *                              projection
- * latitudeOfTrueScale     : Latitude in radians at the origin of the   (input)
- *                              projection
- * falseEasting            : Easting/X at the center of the projection  (input)
- * falseNorthing           : Northing/Y at the center of the projection (input)
- * scaleFactor             : Projection scale factor                    (input)
- */
+   double TranMerc_b; // Semi-minor axis of ellipsoid, in meters
+   double invFlattening = 1.0 / ellipsoidFlattening;
 
-  double tn;         /* True Meridianal distance constant  */
-  double tn2;
-  double tn3;
-  double tn4;
-  double tn5;
-  double TranMerc_b; /* Semi-minor axis of ellipsoid, in meters */
-  double inv_f = 1 / ellipsoidFlattening;
+   if (ellipsoidSemiMajorAxis <= 0.0)
+   { // Semi-major axis must be greater than zero
+      throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
+   }
+   if ( invFlattening < 150 )
+   {
+      throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
+   }
+   if ((latitudeOfTrueScale < -PI_OVER_2) || (latitudeOfTrueScale > PI_OVER_2))
+   { // latitudeOfTrueScale out of range
+      throw CoordinateConversionException( ErrorMessages::originLatitude );
+   }
+   if ((centralMeridian < -PI) || (centralMeridian > (2*PI)))
+   { // centralMeridian out of range
+      throw CoordinateConversionException( ErrorMessages::centralMeridian );
+   }
+   if ((scaleFactor < MIN_SCALE_FACTOR) || (scaleFactor > MAX_SCALE_FACTOR))
+   {
+      throw CoordinateConversionException( ErrorMessages::scaleFactor );
+   }
 
-  if (ellipsoidSemiMajorAxis <= 0.0)
-  { /* Semi-major axis must be greater than zero */
-    throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
-  }
-  if ((inv_f < 250) || (inv_f > 350))
-  { /* Inverse flattening must be between 250 and 350 */
-    throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
-  }
-  if ((latitudeOfTrueScale < -PI_OVER_2) || (latitudeOfTrueScale > PI_OVER_2))
-  { /* latitudeOfTrueScale out of range */
-    throw CoordinateConversionException( ErrorMessages::originLatitude );
-  }
-  if ((centralMeridian < -PI) || (centralMeridian > (2*PI)))
-  { /* centralMeridian out of range */
-    throw CoordinateConversionException( ErrorMessages::centralMeridian );
-  }
-  if ((scaleFactor < MIN_SCALE_FACTOR) || (scaleFactor > MAX_SCALE_FACTOR))
-  {
-    throw CoordinateConversionException( ErrorMessages::scaleFactor );
-  }
+   if (TranMerc_Origin_Long > PI)
+      TranMerc_Origin_Long -= (2*PI);
 
+   // Eccentricity
+   TranMerc_eps = sqrt( 2 * flattening - flattening * flattening );
 
-  semiMajorAxis = ellipsoidSemiMajorAxis;
-  flattening = ellipsoidFlattening;
+   double n1, R4oa;
+   generateCoefficients(
+      invFlattening, n1, TranMerc_aCoeff, TranMerc_bCoeff, R4oa );
 
-  TranMerc_Origin_Lat     = latitudeOfTrueScale;
-  if (centralMeridian > PI)
-    centralMeridian -= (2*PI);
-  TranMerc_Origin_Long    = centralMeridian;
-  TranMerc_False_Northing = falseNorthing;
-  TranMerc_False_Easting  = falseEasting; 
-  TranMerc_Scale_Factor   = scaleFactor;
-
-  /* Eccentricity Squared */
-  TranMerc_es = 2 * flattening - flattening * flattening;
-  /* Second Eccentricity Squared */
-  TranMerc_ebs = (1 / (1 - TranMerc_es)) - 1;
-
-  TranMerc_b = semiMajorAxis * (1 - flattening);    
-  /*True meridianal constants  */
-  tn = (semiMajorAxis - TranMerc_b) / (semiMajorAxis + TranMerc_b);
-  tn2 = tn * tn;
-  tn3 = tn2 * tn;
-  tn4 = tn3 * tn;
-  tn5 = tn4 * tn;
-
-  TranMerc_ap = semiMajorAxis * 
-     (1.e0 - tn + 5.e0 * (tn2 - tn3)/4.e0 + 81.e0 * (tn4 - tn5)/64.e0 );
-  TranMerc_bp = 3.e0 * semiMajorAxis * 
-     (tn - tn2 + 7.e0 * (tn3 - tn4) /8.e0 + 55.e0 * tn5/64.e0 ) / 2.e0;
-  TranMerc_cp = 15.e0 * semiMajorAxis *
-     (tn2 - tn3 + 3.e0 * (tn4 - tn5 )/4.e0) /16.0;
-  TranMerc_dp = 35.e0 * semiMajorAxis *
-     (tn3 - tn4 + 11.e0 * tn5 / 16.e0) / 48.e0;
-  TranMerc_ep = 315.e0 * semiMajorAxis * (tn4 - tn5) / 512.e0;
-
-  MapProjectionCoordinates* deltaCoordinates = 0;
-  try
-  {
-     GeodeticCoordinates gcDeltaNorthing(
-        CoordinateType::geodetic,
-        MAX_DELTA_LONG + TranMerc_Origin_Long, MAX_LAT );
-     deltaCoordinates = convertFromGeodetic( &gcDeltaNorthing );
-     TranMerc_Delta_Northing = deltaCoordinates->northing();
-     TranMerc_Delta_Northing ++;
-
-     delete deltaCoordinates;
-     deltaCoordinates = 0;
-
-     GeodeticCoordinates gcDeltaEasting(
-        CoordinateType::geodetic, MAX_DELTA_LONG + TranMerc_Origin_Long, 0 );
-     deltaCoordinates = convertFromGeodetic( &gcDeltaEasting );
-     TranMerc_Delta_Easting = deltaCoordinates->easting();
-     TranMerc_Delta_Easting++;
-
-     delete deltaCoordinates;
-  }
-  catch(CoordinateConversionException e)
-  {
-     delete deltaCoordinates;
-
-     TranMerc_Delta_Easting  = 40000000.0;
-     TranMerc_Delta_Northing = 40000000.0;
-  }
+   TranMerc_K0R4    = R4oa * TranMerc_Scale_Factor * ellipsoidSemiMajorAxis;
+   TranMerc_K0R4inv = 1.0 / TranMerc_K0R4;
 }
 
 
 TransverseMercator::TransverseMercator( const TransverseMercator &tm )
 {
-  semiMajorAxis           = tm.semiMajorAxis;
-  flattening              = tm.flattening;
-  TranMerc_es             = tm.TranMerc_es;     
-  TranMerc_ebs            = tm.TranMerc_ebs; 
-  TranMerc_Origin_Long    = tm.TranMerc_Origin_Long; 
-  TranMerc_Origin_Lat     = tm.TranMerc_Origin_Lat; 
-  TranMerc_False_Easting  = tm.TranMerc_False_Easting; 
-  TranMerc_False_Northing = tm.TranMerc_False_Northing; 
-  TranMerc_Scale_Factor   = tm.TranMerc_Scale_Factor; 
-  TranMerc_ap             = tm.TranMerc_ap; 
-  TranMerc_bp             = tm.TranMerc_bp; 
-  TranMerc_cp             = tm.TranMerc_cp; 
-  TranMerc_dp             = tm.TranMerc_dp; 
-  TranMerc_ep             = tm.TranMerc_ep; 
-  TranMerc_Delta_Easting  = tm.TranMerc_Delta_Easting; 
-  TranMerc_Delta_Northing = tm.TranMerc_Delta_Northing; 
+   *this = tm;
 }
 
 
@@ -292,451 +110,620 @@ TransverseMercator::~TransverseMercator()
 {
 }
 
-
-TransverseMercator& TransverseMercator::operator=( const TransverseMercator &tm )
+TransverseMercator& TransverseMercator::operator=( 
+   const TransverseMercator &tm )
 {
-  if( this != &tm )
-  {
-    semiMajorAxis           = tm.semiMajorAxis;
-    flattening              = tm.flattening;
-    TranMerc_es             = tm.TranMerc_es;     
-    TranMerc_ebs            = tm.TranMerc_ebs; 
-    TranMerc_Origin_Long    = tm.TranMerc_Origin_Long; 
-    TranMerc_Origin_Lat     = tm.TranMerc_Origin_Lat; 
-    TranMerc_False_Easting  = tm.TranMerc_False_Easting; 
-    TranMerc_False_Northing = tm.TranMerc_False_Northing; 
-    TranMerc_Scale_Factor   = tm.TranMerc_Scale_Factor; 
-    TranMerc_ap             = tm.TranMerc_ap; 
-    TranMerc_bp             = tm.TranMerc_bp; 
-    TranMerc_cp             = tm.TranMerc_cp; 
-    TranMerc_dp             = tm.TranMerc_dp; 
-    TranMerc_ep             = tm.TranMerc_ep; 
-    TranMerc_Delta_Easting  = tm.TranMerc_Delta_Easting; 
-    TranMerc_Delta_Northing = tm.TranMerc_Delta_Northing; 
-  }
+   if( this != &tm )
+   {
+      semiMajorAxis           = tm.semiMajorAxis;
+      flattening              = tm.flattening;
+      TranMerc_eps            = tm.TranMerc_eps;
 
-  return *this;
+      TranMerc_K0R4           = tm.TranMerc_K0R4;
+      TranMerc_K0R4inv        = tm.TranMerc_K0R4inv;
+
+      for( int i = 0; i < MAX_TERMS; i++ )
+      {
+         TranMerc_aCoeff[i] = tm.TranMerc_aCoeff[i];
+         TranMerc_bCoeff[i] = tm.TranMerc_bCoeff[i];
+      }
+
+      TranMerc_Origin_Long    = tm.TranMerc_Origin_Long; 
+      TranMerc_Origin_Lat     = tm.TranMerc_Origin_Lat; 
+      TranMerc_False_Easting  = tm.TranMerc_False_Easting; 
+      TranMerc_False_Northing = tm.TranMerc_False_Northing; 
+      TranMerc_Scale_Factor   = tm.TranMerc_Scale_Factor;
+
+      TranMerc_Delta_Easting  = tm.TranMerc_Delta_Easting; 
+      TranMerc_Delta_Northing = tm.TranMerc_Delta_Northing; 
+   }
+
+   return *this;
 }
 
 
-MapProjection5Parameters* TransverseMercator::getParameters() const
+MSP::CCS::MapProjection5Parameters* TransverseMercator::getParameters() const
 {
-/*
- * The function getParameters returns the current
- * ellipsoid and Transverse Mercator projection parameters.
- *
- * ellipsoidSemiMajorAxis : Semi-major axis of ellipsoid, in meters    (output)
- * ellipsoidFlattening    : Flattening of ellipsoid		       (output)
- * centralMeridian        : Longitude in radians at the center of the  (output)
- *                             projection
- * latitudeOfTrueScale    : Latitude in radians at the origin of the   (output)
- *                             projection
- * falseEasting           : Easting/X at the center of the projection  (output)
- * falseNorthing          : Northing/Y at the center of the projection (output)
- * scaleFactor            : Projection scale factor                    (output)
- */
-
-  return new MapProjection5Parameters(
-     CoordinateType::transverseMercator,
-     TranMerc_Origin_Long, TranMerc_Origin_Lat, TranMerc_Scale_Factor,
-     TranMerc_False_Easting, TranMerc_False_Northing );
+   return new MapProjection5Parameters(
+      CoordinateType::transverseMercator,
+      TranMerc_Origin_Long, TranMerc_Origin_Lat, TranMerc_Scale_Factor,
+      TranMerc_False_Easting, TranMerc_False_Northing );
 }
 
 
 MSP::CCS::MapProjectionCoordinates* TransverseMercator::convertFromGeodetic(
    MSP::CCS::GeodeticCoordinates* geodeticCoordinates )
 {
-/*
- * The function convertFromGeodetic converts geodetic
- * (latitude and longitude) coordinates to Transverse Mercator projection
- * (easting and northing) coordinates, according to the current ellipsoid
- * and Transverse Mercator projection coordinates.  If any errors occur, 
- * an exception is thrown with a description of the error.
- *
- *    longitude     : Longitude in radians                        (input)
- *    latitude      : Latitude in radians                         (input)
- *    easting       : Easting/X in meters                         (output)
- *    northing      : Northing/Y in meters                        (output)
- */
+   double longitude = geodeticCoordinates->longitude();
+   double latitude  = geodeticCoordinates->latitude();
 
-  double c;       /* Cosine of latitude                          */
-  double c2;
-  double c3;
-  double c5;
-  double c7;
-  double dlam;    /* Delta longitude - Difference in Longitude       */
-  double eta;     /* constant - TranMerc_ebs *c *c                   */
-  double eta2;
-  double eta3;
-  double eta4;
-  double s;       /* Sine of latitude                        */
-  double sn;      /* Radius of curvature in the prime vertical       */
-  double t;       /* Tangent of latitude                             */
-  double tan2;
-  double tan3;
-  double tan4;
-  double tan5;
-  double tan6;
-  double t1;      /* Term in coordinate conversion formula - GP to Y */
-  double t2;      /* Term in coordinate conversion formula - GP to Y */
-  double t3;      /* Term in coordinate conversion formula - GP to Y */
-  double t4;      /* Term in coordinate conversion formula - GP to Y */
-  double t5;      /* Term in coordinate conversion formula - GP to Y */
-  double t6;      /* Term in coordinate conversion formula - GP to Y */
-  double t7;      /* Term in coordinate conversion formula - GP to Y */
-  double t8;      /* Term in coordinate conversion formula - GP to Y */
-  double t9;      /* Term in coordinate conversion formula - GP to Y */
-  double tmd;     /* True Meridianal distance                        */
-  double tmdo;    /* True Meridianal distance for latitude of origin */
-  double temp_Origin;
-  double temp_Long;
+   if (longitude > PI)
+      longitude -= (2 * PI);
+   if (longitude < -PI)
+      longitude += (2 * PI);
 
-  double longitude = geodeticCoordinates->longitude();
-  double latitude  = geodeticCoordinates->latitude();
+   //  Convert longitude (Greenwhich) to longitude from the central meridian
+   //  (-Pi, Pi] equivalent needed for checkLatLon.
+   //  Compute its cosine and sine.
+   double lamda  = longitude - TranMerc_Origin_Long;
+   if (lamda > PI)
+      lamda -= (2 * PI);
+   if (lamda < -PI)
+      lamda += (2 * PI);
+   checkLatLon( latitude, lamda );
 
-  if ((latitude < -MAX_LAT) || (latitude > MAX_LAT))
-  {  /* Latitude out of range */
-    throw CoordinateConversionException( ErrorMessages::latitude );
-  }
+   double easting, northing;
+   latLonToNorthingEasting( latitude, longitude, northing, easting );
 
-  if (longitude > PI)
-    longitude -= (2 * PI);
-  if ((longitude < (TranMerc_Origin_Long - MAX_DELTA_LONG))
-      || (longitude > (TranMerc_Origin_Long + MAX_DELTA_LONG)))
-  {
-    if (longitude < 0)
-      temp_Long = longitude + 2 * PI;
-    else
-      temp_Long = longitude;
-    if (TranMerc_Origin_Long < 0)
-      temp_Origin = TranMerc_Origin_Long + 2 * PI;
-    else
-      temp_Origin = TranMerc_Origin_Long;
-    if ((temp_Long < (temp_Origin - MAX_DELTA_LONG))
-        || (temp_Long > (temp_Origin + MAX_DELTA_LONG)))
-       throw CoordinateConversionException( ErrorMessages::longitude );
-  }
+   // The origin may move form (0,0) and this is represented by 
+   // a change in the false Northing/Easting values. 
+   double falseEasting, falseNorthing;
+   latLonToNorthingEasting(
+      TranMerc_Origin_Lat, TranMerc_Origin_Long, falseNorthing, falseEasting );
 
-  /* 
-   *  Delta Longitude
-   */
-  dlam = longitude - TranMerc_Origin_Long;
+   easting  += TranMerc_False_Easting  - falseEasting;
+   northing += TranMerc_False_Northing - falseNorthing;
+
+   char warning[256] = "";
+   warning[0] = '\0';
+   double invFlattening = 1.0 / flattening;
+   if( invFlattening < 290.0 || invFlattening > 301.0 )
+      strcat( warning,
+         "Eccentricity is outside range that algorithm accuracy has been tested." );
+
+   return new MapProjectionCoordinates(
+      CoordinateType::transverseMercator, warning, easting, northing );
+}
 
 
-  char warning[256];
-  warning[0] = '\0';
-  if (fabs(dlam) > (9.0 * PI / 180))
-  { /* Distortion results if Longitude is > 9 degrees from Central Meridian */
-    strcat( warning, MSP::CCS::WarningMessages::longitude );
-  }
+void TransverseMercator::latLonToNorthingEasting( 
+   const double &latitude,
+   const double &longitude,
+   double       &northing,
+   double       &easting )
+{
+   //  Convert longitude (Greenwhich) to longitude from the central meridian
+   //  (-Pi, Pi] equivalent needed for checkLatLon.
+   //  Compute its cosine and sine.
+   double lamda  = longitude - TranMerc_Origin_Long;
+   if (lamda > PI)
+      lamda -= (2 * PI);
+   if (lamda < -PI)
+      lamda += (2 * PI);
+   checkLatLon( latitude, lamda );
 
-  if (dlam > PI)
-    dlam -= (2 * PI);
-  if (dlam < -PI)
-    dlam += (2 * PI);
-  if (fabs(dlam) < 2.e-10)
-    dlam = 0.0;
+   double cosLam = cos(lamda);
+   double sinLam = sin(lamda);
+   double cosPhi = cos(latitude);
+   double sinPhi = sin(latitude);
 
-  s  = sin(latitude);
-  c  = cos(latitude);
-  c2 = c * c;
-  c3 = c2 * c;
-  c5 = c3 * c2;
-  c7 = c5 * c2;
-  t  = tan (latitude);
-  tan2 = t * t;
-  tan3 = tan2 * t;
-  tan4 = tan3 * t;
-  tan5 = tan4 * t;
-  tan6 = tan5 * t;
-  eta  = TranMerc_ebs * c2;
-  eta2 = eta * eta;
-  eta3 = eta2 * eta;
-  eta4 = eta3 * eta;
+   double P, part1, part2, denom, cosChi, sinChi;
+   double U, V;
+   double c2ku[MAX_TERMS], s2ku[MAX_TERMS];
+   double c2kv[MAX_TERMS], s2kv[MAX_TERMS];
 
-  /* radius of curvature in prime vertical */
-  sn  = sphsn(s);
+   //  Ellipsoid to sphere
+   //  --------- -- ------ 
 
-  /* True Meridianal Distances */
-  tmd = sphtmd(latitude, s, c);
+   //  Convert geodetic latitude, Phi, to conformal latitude, Chi
+   //  Only the cosine and sine of Chi are actually needed.
+   P      = exp(TranMerc_eps * aTanH(TranMerc_eps * sinPhi));
+   part1  = (1 + sinPhi) / P;
+   part2  = (1 - sinPhi) * P;
+   denom  = part1 + part2;
+   cosChi = 2 * cosPhi / denom;
+   sinChi = (part1 - part2) / denom;
 
-  /*  Origin  */
-  tmdo = sphtmd(
-     TranMerc_Origin_Lat, sin(TranMerc_Origin_Lat), cos(TranMerc_Origin_Lat) );
+   //  Sphere to first plane
+   //  ------ -- ----- ----- 
 
-  /* northing */
-  t1 = (tmd - tmdo) * TranMerc_Scale_Factor;
-  t2 = sn * s * c * TranMerc_Scale_Factor/ 2.e0;
-  t3 = sn * s * c3 * TranMerc_Scale_Factor * 
-     (5.e0 - tan2 + 9.e0 * eta + 4.e0 * eta2) /24.e0; 
+   // Apply spherical theory of transverse Mercator to get (u,v) coord.s
+   U = aTanH(cosChi * sinLam);
+   V = atan2(sinChi, cosChi * cosLam);
 
-  t4 = sn * s * c5 * TranMerc_Scale_Factor *
-     (61.e0 - 58.e0 * tan2
-        + tan4 + 270.e0 * eta - 330.e0 * tan2 * eta + 445.e0 * eta2
-        + 324.e0 * eta3 -680.e0 * tan2 * eta2 + 88.e0 * eta4 
-        -600.e0 * tan2 * eta3 - 192.e0 * tan2 * eta4) / 720.e0;
+   // Use trig identities to compute cosh(2kU), sinh(2kU), cos(2kV), sin(2kV)
+   computeHyperbolicSeries( 2.0 * U, c2ku, s2ku );
+   computeTrigSeries( 2.0 * V, c2kv, s2kv );
 
-  t5 = sn * s * c7 * TranMerc_Scale_Factor *
-     (1385.e0 - 3111.e0 * tan2 + 543.e0 * tan4 - tan6) / 40320.e0;
+   //  First plane to second plane
+   //  Accumulate terms for X and Y
+   double xStar = 0;
+   double yStar = 0;
 
-  double dlamSq = dlam * dlam;
+   for (int k = N_TERMS - 1; k >= 0; k--)
+   {
+      xStar += TranMerc_aCoeff[k] * s2ku[k] * c2kv[k];
+      yStar += TranMerc_aCoeff[k] * c2ku[k] * s2kv[k];
+   }
 
-  double northing = TranMerc_False_Northing + t1 + 
-     (((t5 * dlamSq + t4) * dlamSq + t3) * dlamSq + t2) * dlamSq;
+   xStar += U;
+   yStar += V;
 
-  /* Easting */
-  t6 = sn * c  * TranMerc_Scale_Factor;
-  t7 = sn * c3 * TranMerc_Scale_Factor * (1.e0 - tan2 + eta ) /6.e0;
-  t8 = sn * c5 * TranMerc_Scale_Factor * (
-     5.e0 - 18.e0 * tan2 + tan4 + 14.e0 * eta - 58.e0 * tan2 * eta +
-     13.e0 * eta2 + 4.e0 * eta3 - 64.e0 * tan2 * eta2 - 24.e0 * tan2 * eta3 )
-     / 120.e0;
-  t9 = sn * c7 * TranMerc_Scale_Factor *
-     ( 61.e0 - 479.e0 * tan2 + 179.e0 * tan4 - tan6 ) /5040.e0;
-
-  double easting = TranMerc_False_Easting + 
-     (((t9 * dlamSq + t8) * dlamSq + t7) * dlamSq + t6) * dlam;
-
-  return new MapProjectionCoordinates(
-     CoordinateType::transverseMercator, warning, easting, northing );
+   // Apply isoperimetric radius, scale adjustment, and offsets
+   easting  = (TranMerc_K0R4 * xStar);
+   northing = (TranMerc_K0R4 * yStar);
 }
 
 
 MSP::CCS::GeodeticCoordinates* TransverseMercator::convertToGeodetic(
    MSP::CCS::MapProjectionCoordinates* mapProjectionCoordinates )
 {
-/*
- * The function convertToGeodetic converts Transverse
- * Mercator projection (easting and northing) coordinates to geodetic
- * (latitude and longitude) coordinates, according to the current ellipsoid
- * and Transverse Mercator projection parameters.  If any errors occur, 
- * an exception is thrown with a description of the error.
- *
- *    easting       : Easting/X in meters                         (input)
- *    northing      : Northing/Y in meters                        (input)
- *    longitude     : Longitude in radians                        (output)
- *    latitude      : Latitude in radians                         (output)
- */
+   double easting  = mapProjectionCoordinates->easting();
+   double northing = mapProjectionCoordinates->northing();
 
-  double c;       /* Cosine of latitude                          */
-  double de;      /* Delta easting - Difference in Easting (easting-Fe)    */
-  double dlam;    /* Delta longitude - Difference in Longitude       */
-  double eta;     /* constant - TranMerc_ebs *c *c                   */
-  double eta2;
-  double eta3;
-  double eta4;
-  double ftphi;   /* Footpoint latitude                              */
-  int    i;       /* Loop iterator                   */
-  double s;       /* Sine of latitude                        */
-  double sn;      /* Radius of curvature in the prime vertical       */
-  double sr;      /* Radius of curvature in the meridian             */
-  double t;       /* Tangent of latitude                             */
-  double tan2;
-  double tan4;
-  double t10;     /* Term in coordinate conversion formula - GP to Y */
-  double t11;     /* Term in coordinate conversion formula - GP to Y */
-  double t12;     /* Term in coordinate conversion formula - GP to Y */
-  double t13;     /* Term in coordinate conversion formula - GP to Y */
-  double t14;     /* Term in coordinate conversion formula - GP to Y */
-  double t15;     /* Term in coordinate conversion formula - GP to Y */
-  double t16;     /* Term in coordinate conversion formula - GP to Y */
-  double t17;     /* Term in coordinate conversion formula - GP to Y */
-  double tmd;     /* True Meridianal distance                        */
-  double tmdo;    /* True Meridianal distance for latitude of origin */
+   if (  (easting < (TranMerc_False_Easting - TranMerc_Delta_Easting))
+       ||(easting > (TranMerc_False_Easting + TranMerc_Delta_Easting)))
+   { // easting out of range
+      throw CoordinateConversionException( ErrorMessages::easting );
+   }
 
-  double easting = mapProjectionCoordinates->easting();
-  double northing = mapProjectionCoordinates->northing();
+   if (   (northing < (TranMerc_False_Northing - TranMerc_Delta_Northing))
+       || (northing > (TranMerc_False_Northing + TranMerc_Delta_Northing)))
+   { // northing out of range
+      throw CoordinateConversionException( ErrorMessages::northing );
+   }
 
-  if ((easting < (TranMerc_False_Easting - TranMerc_Delta_Easting))
-      ||(easting > (TranMerc_False_Easting + TranMerc_Delta_Easting)))
-  { /* easting out of range  */
-    throw CoordinateConversionException( ErrorMessages::easting );
-  }
+   double longitude, latitude;
+   // The origin may move form (0,0) and this is represented by 
+   // a change in the false Northing/Easting values. 
+   double falseEasting, falseNorthing;
+   latLonToNorthingEasting(
+      TranMerc_Origin_Lat, TranMerc_Origin_Long, falseNorthing, falseEasting );
 
-  if ((northing < (TranMerc_False_Northing - TranMerc_Delta_Northing))
-      || (northing > (TranMerc_False_Northing + TranMerc_Delta_Northing)))
-  { /* northing out of range */
-    throw CoordinateConversionException( ErrorMessages::northing );
-  }
+   easting  -= (TranMerc_False_Easting  - falseEasting);
+   northing -= (TranMerc_False_Northing - falseNorthing);
 
-  /* True Meridianal Distances for latitude of origin */
-  tmdo = sphtmd(
-     TranMerc_Origin_Lat, sin(TranMerc_Origin_Lat), cos(TranMerc_Origin_Lat) );
+   northingEastingToLatLon( northing, easting, latitude, longitude );
 
-  /*  Origin  */
-  tmd = tmdo +  (northing - TranMerc_False_Northing) / TranMerc_Scale_Factor; 
+   longitude = (longitude >   PI) ? longitude - (2 * PI): longitude;
+   longitude = (longitude <= -PI) ? longitude + (2 * PI): longitude;
 
-  /* First Estimate */
-  sr = sphsr(0.e0);
-  ftphi = tmd/sr;
+   if(fabs(latitude) > (90.0 * PI / 180.0))
+   {
+      throw CoordinateConversionException( ErrorMessages::northing );
+   }
+   if((longitude) > (PI))
+   {
+      longitude -= (2 * PI);
+      if(fabs(longitude) > PI)
+         throw CoordinateConversionException( ErrorMessages::easting );
+   }
+   else if((longitude) < (-PI))
+   {
+      longitude += (2 * PI);
+      if(fabs(longitude) > PI)
+         throw CoordinateConversionException( ErrorMessages::easting );
+   }
 
-  for (i = 0; i < 5 ; i++)
-  {
-     s     = sin(ftphi);
-     c     = cos(ftphi);
-     t10   = sphtmd(ftphi, s, c);
-     sr    = sphsr( s);
-     ftphi = ftphi + (tmd - t10) / sr;
-  }
+   char warning[256];
+   warning[0] = '\0';
+   double invFlattening = 1.0 / flattening;
+   if( invFlattening < 290.0 || invFlattening > 301.0 )
+      strcat( warning,
+         "Eccentricity is outside range that algorithm accuracy has been tested." );
 
-  /* Sine Cosine terms */
-  s = sin(ftphi);
-  c = cos(ftphi);
-
-  /* Radius of Curvature in the meridian */
-  sr = sphsr(s);
-
-  /* Radius of Curvature in the meridian */
-  sn = sphsn(s);
-
-  /* Tangent Value  */
-  t = s/c; //tan(ftphi);
-  tan2 = t * t;
-  tan4 = tan2 * tan2;
-  eta = TranMerc_ebs * c * c;
-  eta2 = eta * eta;
-  eta3 = eta2 * eta;
-  eta4 = eta3 * eta;
-
-  double sn2 = sn  * sn;
-  double sn3 = sn2 * sn;
-  double sn5 = sn2 * sn3;
-  double sn7 = sn2 * sn5;
-
-  de = easting - TranMerc_False_Easting;
-  if (fabs(de) < 0.0001)
-    de = 0.0;
-
-  /* Latitude */
-  double TranMerc_Scale_Factor2 =
-     TranMerc_Scale_Factor * TranMerc_Scale_Factor;
-  double TranMerc_Scale_Factor3 =
-     TranMerc_Scale_Factor2 * TranMerc_Scale_Factor;
-  double TranMerc_Scale_Factor4 = 
-     TranMerc_Scale_Factor2 * TranMerc_Scale_Factor2;
-  double TranMerc_Scale_Factor5 = 
-     TranMerc_Scale_Factor3 * TranMerc_Scale_Factor2;
-  double TranMerc_Scale_Factor6 = 
-     TranMerc_Scale_Factor4 * TranMerc_Scale_Factor2;
-  double TranMerc_Scale_Factor7 = 
-     TranMerc_Scale_Factor6 * TranMerc_Scale_Factor;
-  double TranMerc_Scale_Factor8 = 
-     TranMerc_Scale_Factor6 * TranMerc_Scale_Factor2;
-
-  t10 = t / (2.e0 * sr * sn * TranMerc_Scale_Factor2);
-
-  t11 = t * (5.e0  + 3.e0 * tan2 + eta - 4.e0 * eta2 - 9.e0 * tan2 * eta) /
-     (24.e0 * sr * sn3 * TranMerc_Scale_Factor4);
-
-  t12 = t * (61.e0 + 90.e0 * tan2 + 46.e0 * eta + 45.E0 * tan4
-             - 252.e0 * tan2 * eta  - 3.e0 * eta2 + 100.e0 
-             * eta3 - 66.e0 * tan2 * eta2 - 90.e0 * tan4
-             * eta + 88.e0 * eta4 + 225.e0 * tan4 * eta2
-             + 84.e0 * tan2* eta3 - 192.e0 * tan2 * eta4)
-        / ( 720.e0 * sr * sn5 * TranMerc_Scale_Factor6 );
-
-  double t6 = t * t * t * t * t * t;
-  t13 = t * ( 1385.e0 + 3633.e0 * tan2 + 4095.e0 * tan4 + 1575.e0 * t6 ) /
-     (40320.e0 * sr * sn7 * TranMerc_Scale_Factor8);
-
-  double de2 = de * de;
-  double latitude = ftphi + 
-     (((t13 * de2 - t12) * de2 + t11) * de2 - t10) *de2;
-
-
-  t14 = 1.e0 / (sn * c * TranMerc_Scale_Factor);
-
-  t15 = (1.e0 + 2.e0 * tan2 + eta) /
-     (6.e0 * sn3 * c * TranMerc_Scale_Factor3);
-
-  t16 = (5.e0 + 6.e0 * eta + 28.e0 * tan2 - 3.e0 * eta2
-     + 8.e0 * tan2 * eta + 24.e0 * tan4 - 4.e0 
-     * eta3 + 4.e0 * tan2 * eta2 + 24.e0 * tan2 * eta3) /
-     (120.e0 * sn5 * c * TranMerc_Scale_Factor5);
-
-  t17 = (61.e0 +  662.e0 * tan2 + 1320.e0 * tan4 + 720.e0 * t6 ) /
-     (5040.e0 * sn7 * c * TranMerc_Scale_Factor7);
-
-  /* Difference in Longitude */
-  dlam = (((-t17 * de2 + t16) * de2 - t15) * de2 + t14) *de;
-
-  /* Longitude */
-  double longitude = TranMerc_Origin_Long + dlam;
-
-  if(fabs(latitude) > (90.0 * PI / 180.0))
-    throw CoordinateConversionException( ErrorMessages::northing );
-
-  if((longitude) > (PI))
-  {
-     longitude -= (2 * PI);
-     if(fabs(longitude) > PI)
-        throw CoordinateConversionException( ErrorMessages::easting );
-  }
-  else if((longitude) < (-PI))
-  {
-     longitude += (2 * PI);
-     if(fabs(longitude) > PI)
-        throw CoordinateConversionException( ErrorMessages::easting );
-  }
-
-  char warning[256];
-  warning[0] = '\0';
-  if (fabs(dlam) > (9.0 * PI / 180))
-  { /* Distortion will result if longitude is more than 9 degrees from
-       the Central Meridian at the equator */
-    /* and decreases to 0 degrees at the poles */
-    /* As you move towards the poles, distortion becomes less significant */
-     strcat( warning, MSP::CCS::WarningMessages::longitude );
-  }
-
-  return new GeodeticCoordinates(
-     CoordinateType::geodetic, warning, longitude, latitude );
+   return new GeodeticCoordinates(
+      CoordinateType::geodetic, warning, longitude, latitude );
 }
 
-
-/************************************************************************/
-/*                              PRIVATE FUNCTIONS     
- *
- */
-
-double TransverseMercator::sphtmd(
-   double latitude,
-   double sinLat,
-   double cosLat )
+void TransverseMercator::northingEastingToLatLon( 
+   const double &northing,
+   const double &easting,
+   double       &latitude,
+   double       &longitude )
 {
-//   double sin2Lat = sin(2.e0 * latitude);
-//   double cos2Lat = cos(2.e0 * latitude);
-   double sin2Lat = 2.0 * sinLat * cosLat;
-   double cos2Lat = 2.0 * cosLat * cosLat - 1.0;
-   double sin2LatCubed = sin2Lat * sin2Lat * sin2Lat;
-   double sin4Lat = 2.0 * sin2Lat * cos2Lat;
-   double sin6Lat = 3.0 * sin2Lat - 4.0 * sin2LatCubed;
-   double sin8Lat = cos2Lat * ( 4.0 * sin2Lat - 8.0 * sin2LatCubed);
+   double c2kx[MAX_TERMS], s2kx[MAX_TERMS], c2ky[MAX_TERMS], s2ky[MAX_TERMS];
+   double U, V;
+   double lamda;
+   double sinChi;
 
-   return TranMerc_ap * latitude 
-      - TranMerc_bp * sin2Lat + TranMerc_cp * sin4Lat
-      - TranMerc_dp * sin6Lat + TranMerc_ep * sin8Lat;
+   //  Undo offsets, scale change, and factor R4
+   //  ---- -------  ----- ------  --- ------ --
+   double xStar = TranMerc_K0R4inv * (easting);
+   double yStar = TranMerc_K0R4inv * (northing);
 
-// return TranMerc_ap * latitude 
-//    - TranMerc_bp * sin(2.e0 * latitude) + TranMerc_cp * sin(4.e0 * latitude) 
-//    - TranMerc_dp * sin(6.e0 * latitude) + TranMerc_ep * sin(8.e0 * latitude);
+   // Use trig identities to compute cosh(2kU), sinh(2kU), cos(2kV), sin(2kV)
+   computeHyperbolicSeries( 2.0 * xStar, c2kx, s2kx );
+   computeTrigSeries( 2.0 * yStar, c2ky, s2ky );
+
+   //  Second plane (x*, y*) to first plane (u, v)
+   //  ------ ----- -------- -- ----- ----- ------
+   U = 0;
+   V = 0;
+
+   for (int k = N_TERMS - 1; k >= 0; k--)
+   {
+      U += TranMerc_bCoeff[k] * s2kx[k] * c2ky[k];
+      V += TranMerc_bCoeff[k] * c2kx[k] * s2ky[k];
+   }
+
+   U += xStar;
+   V += yStar;
+
+   //  First plane to sphere
+   //  ----- ----- -- ------
+   double coshU = cosh(U);
+   double sinhU = sinh(U);
+   double cosV  = cos(V);
+   double sinV  = sin(V);
+
+   //   Longitude from central meridian
+   if ((fabs(cosV) < 10E-12) && (fabs(coshU) < 10E-12))
+      lamda = 0;
+   else
+      lamda = atan2(sinhU, cosV);
+
+   //   Conformal latitude
+   sinChi = sinV / coshU;
+   latitude = geodeticLat( sinChi, TranMerc_eps );
+
+   // Longitude from Greenwich
+   // --------  ---- ---------
+   longitude = TranMerc_Origin_Long + lamda;
 }
 
+//                PRIVATE FUNCTIONS
 
-double TransverseMercator::sphsn( double  sinLat ) 
+void TransverseMercator::generateCoefficients(
+	double  invfla,
+	double &n1,
+	double  aCoeff[MAX_TERMS],
+	double  bCoeff[MAX_TERMS],
+	double &R4oa)
 {
-//   double sinLat = sin(latitude);
-   return semiMajorAxis / sqrt( 1.e0 - TranMerc_es * sinLat * sinLat);
+   /*  Generate Coefficients for Transverse Mercator algorithms
+       ===----- ===---------
+   Algorithm developed by: C. Rollins   April 18, 2006
+
+   INPUT
+   -----
+      invfla    Inverse flattening (reciprocal flattening)
+
+   OUTPUT
+   ------
+      n1        Helmert's "n"
+      aCoeff    Coefficients for omega as a trig series in chi
+      bBoeff    Coefficients for chi as a trig series in omega
+      R4oa      Ratio "R4 over a", i.e. R4/a
+
+   EXPLANATIONS
+   ------------
+      omega is rectifying latitude
+      chi is conformal latitude
+      psi is geocentric latitude
+      phi is geodetic latitude, commonly, "the latitude"
+      R4 is the meridional isoperimetric radius
+      "a" is the semi-major axis of the ellipsoid
+      "b" is the semi-minor axis of the ellipsoid
+      Helmert's n = (a - b)/(a + b)
+ 
+      This calculation depends only on the shape of the ellipsoid and are
+      independent of the ellipsoid size.
+ 
+      The array Acoeff(8) stores eight coefficients corresponding
+         to k = 2, 4, 6, 8, 10, 12, 14, 16 in the notation "a sub k".
+      Likewise Bcoeff(8) etc.
+*/
+
+   double n2, n3, n4, n5, n6, n7, n8, n9, n10, coeff;
+
+   n1  = 1.0 / (2*invfla - 1.0);
+
+   n2  = n1 * n1;
+   n3  = n2 * n1;
+   n4  = n3 * n1;
+   n5  = n4 * n1;
+   n6  = n5 * n1;
+   n7  = n6 * n1;
+   n8  = n7 * n1;
+   n9  = n8 * n1;
+   n10 = n9 * n1;
+
+   //   Computation of coefficient a2 
+   coeff = 0.0;
+   coeff += (-18975107.0) * n8 / 50803200.0;
+   coeff += (72161.0)     * n7 / 387072.0;
+   coeff += (7891.0)      * n6 / 37800.0;
+   coeff += (-127.0)      * n5 / 288.0;
+   coeff += (41.0)        * n4 / 180.0;
+   coeff += (5.0)         * n3 / 16.0;
+   coeff += (-2.0)        * n2 / 3.0;
+   coeff += (1.0)         * n1 / 2.0;
+
+   aCoeff[0] = coeff;
+
+   //   Computation of coefficient a4 
+   coeff = 0.0;
+   coeff += (148003883.0) * n8 / 174182400.0;
+   coeff += (13769.0)     * n7 / 28800.0;
+   coeff += (-1983433.0)  * n6 / 1935360.0;
+   coeff += (281.0)       * n5 / 630.0;
+   coeff += (557.0)       * n4 / 1440.0;
+   coeff += (-3.0)        * n3 / 5.0;
+   coeff += (13.0)        * n2 / 48.0;
+
+   aCoeff[1] = coeff;
+
+   //   Computation of coefficient a6 
+   coeff = 0.0;
+   coeff += (79682431.0)  * n8 / 79833600.0;
+   coeff += (-67102379.0) * n7 / 29030400.0;
+   coeff += (167603.0)    * n6 / 181440.0;
+   coeff += (15061.0)     * n5 / 26880.0;
+   coeff += (-103.0)      * n4 / 140.0;
+   coeff += (61.0)        * n3 / 240.0;
+
+   aCoeff[2] = coeff;
+
+   //   Computation of coefficient a8 
+   coeff = 0.0;
+   coeff += (-40176129013.0) * n8 / 7664025600.0;
+   coeff += (97445.0)        * n7 / 49896.0;
+   coeff += (6601661.0)      * n6 / 7257600.0;
+   coeff += (-179.0)         * n5 / 168.0;
+   coeff += (49561.0)        * n4 / 161280.0;
+
+   aCoeff[3] = coeff;
+
+   //   Computation of coefficient a10 
+   coeff = 0.0;
+   coeff += (2605413599.0) * n8 / 622702080.0;
+   coeff += (14644087.0)   * n7 / 9123840.0;
+   coeff += (-3418889.0)   * n6 / 1995840.0;
+   coeff += (34729.0)      * n5 / 80640.0;
+
+   aCoeff[4] = coeff;
+
+   //   Computation of coefficient a12 
+   coeff = 0.0;
+   coeff += (175214326799.0) * n8 / 58118860800.0;
+   coeff += (-30705481.0)    * n7 / 10378368.0;
+   coeff += (212378941.0)    * n6 / 319334400.0;
+
+   aCoeff[5] = coeff;
+
+   //   Computation of coefficient a14 
+   coeff = 0.0;
+   coeff += (-16759934899.0) * n8 / 3113510400.0;
+   coeff += (1522256789.0)   * n7 / 1383782400.0;
+
+   aCoeff[6] = coeff;
+
+   //   Computation of coefficient a16 
+   coeff = 0.0;
+   coeff += (1424729850961.0) * n8 / 743921418240.0;
+
+   aCoeff[7] = coeff;
+      
+   //   Computation of coefficient b2 
+   coeff = 0.0;
+   coeff += (-7944359.0) * n8 / 67737600.0;
+   coeff += (5406467.0)  * n7 / 38707200.0;
+   coeff += (-96199.0)   * n6 / 604800.0;
+   coeff += (81.0)       * n5 / 512.0;
+   coeff += (1.0)        * n4 / 360.0;
+   coeff += (-37.0)      * n3 / 96.0;
+   coeff += (2.0)        * n2 / 3.0;
+   coeff += (-1.0)       * n1 / 2.0;
+
+   bCoeff[0] = coeff;
+
+   //   Computation of coefficient b4 
+   coeff = 0.0;
+   coeff += (-24749483.0) * n8 / 348364800.0;
+   coeff += (-51841.0)    * n7 / 1209600.0;
+   coeff += (1118711.0)   * n6 / 3870720.0;
+   coeff += (-46.0)       * n5 / 105.0;
+   coeff += (437.0)       * n4 / 1440.0;
+   coeff += (-1.0)        * n3 / 15.0;
+   coeff += (-1.0)        * n2 / 48.0;
+
+   bCoeff[1] = coeff;
+
+   //   Computation of coefficient b6 
+   coeff = 0.0;
+   coeff += (6457463.0)  * n8 / 17740800.0;
+   coeff += (-9261899.0) * n7 / 58060800.0;
+   coeff += (-5569.0)    * n6 / 90720.0;
+   coeff += (209.0)      * n5 / 4480.0;
+   coeff += (37.0)       * n4 / 840.0;
+   coeff += (-17.0)      * n3 / 480.0;
+
+   bCoeff[2] = coeff;
+
+   //   Computation of coefficient b8 
+   coeff = 0.0;
+   coeff += (-324154477.0) * n8 / 7664025600.0;
+   coeff += (-466511.0)    * n7 / 2494800.0;
+   coeff += (830251.0)     * n6 / 7257600.0;
+   coeff += (11.0)         * n5 / 504.0;
+   coeff += (-4397.0)      * n4 / 161280.0;
+
+   bCoeff[3] = coeff;
+
+   //   Computation of coefficient b10 
+   coeff = 0.0;
+   coeff += (-22894433.0) * n8 / 124540416.0;
+   coeff += (8005831.0)   * n7 / 63866880.0;
+   coeff += (108847.0)    * n6 / 3991680.0;
+   coeff += (-4583.0)     * n5 / 161280.0;
+
+   bCoeff[4] = coeff;
+
+   //   Computation of coefficient b12 
+   coeff = 0.0;
+   coeff += (2204645983.0) * n8 / 12915302400.0;
+   coeff += (16363163.0)   * n7 / 518918400.0;
+   coeff += (-20648693.0)  * n6 / 638668800.0;
+
+   bCoeff[5] = coeff;
+
+   //   Computation of coefficient b14 
+   coeff = 0.0;
+   coeff += (497323811.0)  * n8 / 12454041600.0;
+   coeff += (-219941297.0) * n7 / 5535129600.0;
+
+   bCoeff[6] = coeff;
+
+   //   Computation of coefficient b16 
+   coeff = 0.0;
+   coeff += (-191773887257.0) * n8 / 3719607091200.0;
+
+   bCoeff[7] = coeff;
+
+   //   Computation of ratio R4/a
+   coeff = 0.0;
+   coeff += (83349.0)  * n10 / 65536.0;
+   coeff += (-20825.0) * n9 / 16384.0;
+   coeff += (20825.0)  * n8 / 16384.0;
+   coeff += (-325.0)   * n7 / 256.0;
+   coeff += (325.0)    * n6 / 256.0;
+   coeff += (-81.0)    * n5 / 64.0;
+   coeff += (81.0)     * n4 / 64.0;
+   coeff += (-5.0)     * n3 / 4.0;
+   coeff += (5.0)      * n2 / 4.0;
+   coeff += (-1.0)     * n1 / 1.0;
+   coeff += 1.0;
+
+   R4oa  = coeff;
 }
 
 
-double TransverseMercator::sphsr( double sinLat ) 
+void TransverseMercator::checkLatLon( double latitude, double deltaLon )
 {
-//   double sinLat = sin(latitude);
-   double denom = sqrt(1.e0 - TranMerc_es * sinLat * sinLat);
-   return semiMajorAxis * (1.e0 - TranMerc_es) / denom / denom / denom;
+   // test is based on distance from central meridian = deltaLon
+   if (deltaLon > PI)
+      deltaLon -= (2 * PI);
+   if (deltaLon < -PI)
+      deltaLon += (2 * PI);
+
+   double testAngle = fabs( deltaLon );
+
+   double delta = fabs( deltaLon - PI );
+   if( delta < testAngle )
+      testAngle = delta;
+
+   delta = fabs( deltaLon + PI );
+   if( delta < testAngle )
+      testAngle = delta;
+
+   // Away from the equator, is also valid
+   delta = PI_OVER_2 - latitude;
+   if( delta < testAngle )
+      testAngle = delta;
+
+   delta = PI_OVER_2 + latitude;
+   if( delta < testAngle )
+      testAngle = delta;
+
+   if( testAngle > MAX_DELTA_LONG )
+   {
+      throw CoordinateConversionException( ErrorMessages::longitude );
+   }
 }
 
 
+double TransverseMercator::aTanH(double x)
+{
+   return(0.5 * log((1 + x) / (1 - x)));
+}
+
+
+double TransverseMercator::geodeticLat(
+   double sinChi,
+   double e )
+{
+   double p;
+   double pSq;
+   double s_old = 1.0e99;
+   double s = sinChi;
+   double onePlusSinChi  = 1.0+sinChi;
+   double oneMinusSinChi = 1.0-sinChi;
+
+   for( int n = 0; n < 30; n++ )
+   {
+      p = exp( e * aTanH( e * s ) );
+      pSq = p * p;
+      s = ( onePlusSinChi * pSq - oneMinusSinChi ) 
+         /( onePlusSinChi * pSq + oneMinusSinChi );
+
+      if( fabs( s - s_old ) < 1.0e-12 )
+      {
+         break;
+      }
+      s_old = s;
+   }
+   return asin(s);
+}
+
+void TransverseMercator::computeHyperbolicSeries(
+   double twoX,
+   double c2kx[],
+   double s2kx[])
+{
+   // Use trig identities to compute
+   // c2kx[k] = cosh(2kX), s2kx[k] = sinh(2kX)   for k = 0 .. 8
+   c2kx[0] = cosh(twoX);
+   s2kx[0] = sinh(twoX);
+   c2kx[1] = 2.0 * c2kx[0] * c2kx[0] - 1.0;
+   s2kx[1] = 2.0 * c2kx[0] * s2kx[0];
+   c2kx[2] = c2kx[0] * c2kx[1] + s2kx[0] * s2kx[1];
+   s2kx[2] = c2kx[1] * s2kx[0] + c2kx[0] * s2kx[1];
+   c2kx[3] = 2.0 * c2kx[1] * c2kx[1] - 1.0;
+   s2kx[3] = 2.0 * c2kx[1] * s2kx[1];
+   c2kx[4] = c2kx[0] * c2kx[3] + s2kx[0] * s2kx[3];
+   s2kx[4] = c2kx[3] * s2kx[0] + c2kx[0] * s2kx[3];
+   c2kx[5] = 2.0 * c2kx[2] * c2kx[2] - 1.0;
+   s2kx[5] = 2.0 * c2kx[2] * s2kx[2];
+   c2kx[6] = c2kx[0] * c2kx[5] + s2kx[0] * s2kx[5];
+   s2kx[6] = c2kx[5] * s2kx[0] + c2kx[0] * s2kx[5];
+   c2kx[7] = 2.0 * c2kx[3] * c2kx[3] - 1.0;
+   s2kx[7] = 2.0 * c2kx[3] * s2kx[3];
+}
+
+void TransverseMercator::computeTrigSeries(
+   double twoY,
+   double c2ky[],
+   double s2ky[])
+{
+   // Use trig identities to compute
+   // c2ky[k] = cos(2kY), s2ky[k] = sin(2kY)   for k = 0 .. 8
+   c2ky[0] = cos(twoY);
+   s2ky[0] = sin(twoY);
+   c2ky[1] = 2.0 * c2ky[0] * c2ky[0] - 1.0;
+   s2ky[1] = 2.0 * c2ky[0] * s2ky[0];
+   c2ky[2] = c2ky[1] * c2ky[0] - s2ky[1] * s2ky[0];
+   s2ky[2] = c2ky[1] * s2ky[0] + c2ky[0] * s2ky[1];
+   c2ky[3] = 2.0 * c2ky[1] * c2ky[1] - 1.0;
+   s2ky[3] = 2.0 * c2ky[1] * s2ky[1];
+   c2ky[4] = c2ky[3] * c2ky[0] - s2ky[3] * s2ky[0];
+   s2ky[4] = c2ky[3] * s2ky[0] + c2ky[0] * s2ky[3];
+   c2ky[5] = 2.0 * c2ky[2] * c2ky[2] - 1.0;
+   s2ky[5] = 2.0 * c2ky[2] * s2ky[2];
+   c2ky[6] = c2ky[5] * c2ky[0] - s2ky[5] * s2ky[0];
+   s2ky[6] = c2ky[5] * s2ky[0] + c2ky[0] * s2ky[5];
+   c2ky[7] = 2.0 * c2ky[3] * c2ky[3] - 1.0;
+   s2ky[7] = 2.0 * c2ky[3] * s2ky[3];
+}
 
 // CLASSIFICATION: UNCLASSIFIED

@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::NeysParameters Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_neys_parameters_8h_source.html">NeysParameters.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MSP::CCS::NeysParameters:</div>
 <div class="dyncontent">
@@ -103,76 +106,384 @@ Inheritance diagram for MSP::CCS::NeysParameters:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a418c7232e5186d08814854abdac40547"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a418c7232e5186d08814854abdac40547"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>NeysParameters</b> (CoordinateType::Enum _coordinateType)</td></tr>
-<tr class="separator:a418c7232e5186d08814854abdac40547"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7216a084f4207c954589e0b0526f51ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7216a084f4207c954589e0b0526f51ce"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>NeysParameters</b> (CoordinateType::Enum _coordinateType, double __centralMeridian, double __originLatitude, double __standardParallel1, double __falseEasting, double __falseNorthing)</td></tr>
-<tr class="separator:a7216a084f4207c954589e0b0526f51ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfe3e9d4a0784a3d916fcbda8a341578"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adfe3e9d4a0784a3d916fcbda8a341578"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>NeysParameters</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp;p)</td></tr>
-<tr class="separator:adfe3e9d4a0784a3d916fcbda8a341578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36dd82cded032e60a515ba533226d6a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36dd82cded032e60a515ba533226d6a9"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp;p)</td></tr>
-<tr class="separator:a36dd82cded032e60a515ba533226d6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab299238a215295bcd5377821642958c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab299238a215295bcd5377821642958c1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCentralMeridian</b> (double __centralMeridian)</td></tr>
-<tr class="separator:ab299238a215295bcd5377821642958c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07733ecddd7973c7a966527b42dbd57e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07733ecddd7973c7a966527b42dbd57e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setOriginLatitude</b> (double __originLatitude)</td></tr>
-<tr class="separator:a07733ecddd7973c7a966527b42dbd57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a782180abb5c4f9738f7e7ef1bb53487b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a782180abb5c4f9738f7e7ef1bb53487b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setStandardParallel1</b> (double __standardParallel1)</td></tr>
-<tr class="separator:a782180abb5c4f9738f7e7ef1bb53487b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1410498c2128cb1d180e8c7494b85626"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1410498c2128cb1d180e8c7494b85626"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFalseEasting</b> (double __falseEasting)</td></tr>
-<tr class="separator:a1410498c2128cb1d180e8c7494b85626"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa18d430930664ffd3eb424e16e1b2dbb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa18d430930664ffd3eb424e16e1b2dbb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFalseNorthing</b> (double __falseNorthing)</td></tr>
-<tr class="separator:aa18d430930664ffd3eb424e16e1b2dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c7fa631c87c0c1579962c74d988f72a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c7fa631c87c0c1579962c74d988f72a"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>centralMeridian</b> () const </td></tr>
-<tr class="separator:a7c7fa631c87c0c1579962c74d988f72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb618d4249768ac0e5902bf6e30f9bec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb618d4249768ac0e5902bf6e30f9bec"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>originLatitude</b> () const </td></tr>
-<tr class="separator:adb618d4249768ac0e5902bf6e30f9bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2fbd078538986188e054997eade8a90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad2fbd078538986188e054997eade8a90"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>standardParallel1</b> () const </td></tr>
-<tr class="separator:ad2fbd078538986188e054997eade8a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5224a85223645c0bc1342c81de2aee3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5224a85223645c0bc1342c81de2aee3"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>falseEasting</b> () const </td></tr>
-<tr class="separator:ae5224a85223645c0bc1342c81de2aee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f177f52a5962c6451677e3be385565b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f177f52a5962c6451677e3be385565b"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>falseNorthing</b> () const </td></tr>
-<tr class="separator:a7f177f52a5962c6451677e3be385565b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f7b687ee172fe2f2551bb649a2bfa44"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a4f7b687ee172fe2f2551bb649a2bfa44">NeysParameters</a> ()</td></tr>
+<tr class="separator:a4f7b687ee172fe2f2551bb649a2bfa44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ca373c14695a3932661680c3f319fbc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a8ca373c14695a3932661680c3f319fbc">NeysParameters</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#aa13f4be6f90b5ad47d2ddd7153f7eecf">_coordinateType</a>)</td></tr>
+<tr class="separator:a8ca373c14695a3932661680c3f319fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6f6b076a4a448200180d0facdf5cac0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#ad6f6b076a4a448200180d0facdf5cac0">NeysParameters</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#aa13f4be6f90b5ad47d2ddd7153f7eecf">_coordinateType</a>, double __centralMeridian, double __originLatitude, double __standardParallel1, double __falseEasting, double __falseNorthing)</td></tr>
+<tr class="separator:ad6f6b076a4a448200180d0facdf5cac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4d8c36576503ee342ae229794ed9ff8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#ae4d8c36576503ee342ae229794ed9ff8">NeysParameters</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp;p)</td></tr>
+<tr class="separator:ae4d8c36576503ee342ae229794ed9ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad15cd0feb034b5e7049cac352f7ac22b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#ad15cd0feb034b5e7049cac352f7ac22b">~NeysParameters</a> ()</td></tr>
+<tr class="separator:ad15cd0feb034b5e7049cac352f7ac22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2a3959323a2e7eae7e1498a0e7cb116"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#aa2a3959323a2e7eae7e1498a0e7cb116">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp;p)</td></tr>
+<tr class="separator:aa2a3959323a2e7eae7e1498a0e7cb116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7614ca0819b791766395272c7e865ce3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a7614ca0819b791766395272c7e865ce3">setCentralMeridian</a> (double __centralMeridian)</td></tr>
+<tr class="separator:a7614ca0819b791766395272c7e865ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4996511cbedabf50c3d5e2bd53fff432"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a4996511cbedabf50c3d5e2bd53fff432">setOriginLatitude</a> (double __originLatitude)</td></tr>
+<tr class="separator:a4996511cbedabf50c3d5e2bd53fff432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2e15082b4ba06ad24e201a0c92c9463"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#ae2e15082b4ba06ad24e201a0c92c9463">setStandardParallel1</a> (double __standardParallel1)</td></tr>
+<tr class="separator:ae2e15082b4ba06ad24e201a0c92c9463"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1a0d69d5eb374da18208eb245f90175"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#ae1a0d69d5eb374da18208eb245f90175">setFalseEasting</a> (double __falseEasting)</td></tr>
+<tr class="separator:ae1a0d69d5eb374da18208eb245f90175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad11d2c34182d392cc35c73f70d21eae0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#ad11d2c34182d392cc35c73f70d21eae0">setFalseNorthing</a> (double __falseNorthing)</td></tr>
+<tr class="separator:ad11d2c34182d392cc35c73f70d21eae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7722d30b0e82047f6b124e0e5bfbd4e4"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a7722d30b0e82047f6b124e0e5bfbd4e4">centralMeridian</a> () const </td></tr>
+<tr class="separator:a7722d30b0e82047f6b124e0e5bfbd4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a321f9da56de0157dcd5bdbb45ce48930"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a321f9da56de0157dcd5bdbb45ce48930">originLatitude</a> () const </td></tr>
+<tr class="separator:a321f9da56de0157dcd5bdbb45ce48930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72455e16dd51af281f819034d2aa4a06"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a72455e16dd51af281f819034d2aa4a06">standardParallel1</a> () const </td></tr>
+<tr class="separator:a72455e16dd51af281f819034d2aa4a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cbb17039c9d05bd4850f966b1393bd8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a2cbb17039c9d05bd4850f966b1393bd8">falseEasting</a> () const </td></tr>
+<tr class="separator:a2cbb17039c9d05bd4850f966b1393bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c60225687fe2c6fa84e020b86163681"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html#a5c60225687fe2c6fa84e020b86163681">falseNorthing</a> () const </td></tr>
+<tr class="separator:a5c60225687fe2c6fa84e020b86163681"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a></td></tr>
-<tr class="memitem:a58813d39aecdacb702facd9b44be8dd3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58813d39aecdacb702facd9b44be8dd3"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateSystemParameters</b> (MSP::CCS::CoordinateType::Enum __coordinateType)</td></tr>
-<tr class="separator:a58813d39aecdacb702facd9b44be8dd3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26eb481dc2f3b771a8c9d7584e4e3fe1 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26eb481dc2f3b771a8c9d7584e4e3fe1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateSystemParameters</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;csp)</td></tr>
-<tr class="separator:a26eb481dc2f3b771a8c9d7584e4e3fe1 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95065d42e87fb172e35c947774182c5d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95065d42e87fb172e35c947774182c5d"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;csp)</td></tr>
-<tr class="separator:a95065d42e87fb172e35c947774182c5d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16c3a4a4b16bd0153371c1b12ec7d321 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16c3a4a4b16bd0153371c1b12ec7d321"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCoordinateType</b> (MSP::CCS::CoordinateType::Enum __coordinateType)</td></tr>
-<tr class="separator:a16c3a4a4b16bd0153371c1b12ec7d321 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f534814f133ceed344c0650286a0633 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f534814f133ceed344c0650286a0633"></a>
-CoordinateType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>coordinateType</b> () const </td></tr>
-<tr class="separator:a9f534814f133ceed344c0650286a0633 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7640ad4927c88c9b23ecd301d0e8e485 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a7640ad4927c88c9b23ecd301d0e8e485">CoordinateSystemParameters</a> ()</td></tr>
+<tr class="separator:a7640ad4927c88c9b23ecd301d0e8e485 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d92f32354611b359ad6c8bb457d69d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a70d92f32354611b359ad6c8bb457d69d">CoordinateSystemParameters</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType)</td></tr>
+<tr class="separator:a70d92f32354611b359ad6c8bb457d69d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12e8bbef0f5d7628d2f8ea2a3010fcc3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a12e8bbef0f5d7628d2f8ea2a3010fcc3">CoordinateSystemParameters</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;csp)</td></tr>
+<tr class="separator:a12e8bbef0f5d7628d2f8ea2a3010fcc3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9de0d16cfb66c3df26b765d42fe0f2ba inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a9de0d16cfb66c3df26b765d42fe0f2ba">~CoordinateSystemParameters</a> ()</td></tr>
+<tr class="separator:a9de0d16cfb66c3df26b765d42fe0f2ba inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a142d30af6e13edfe36a357464c04b9b3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a142d30af6e13edfe36a357464c04b9b3">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;csp)</td></tr>
+<tr class="separator:a142d30af6e13edfe36a357464c04b9b3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a530dda674d0a4ba44cd727a2f8412e11 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a530dda674d0a4ba44cd727a2f8412e11">setCoordinateType</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType)</td></tr>
+<tr class="separator:a530dda674d0a4ba44cd727a2f8412e11 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8367fe6f674e6ba31df32c3a16dbe839 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a8367fe6f674e6ba31df32c3a16dbe839">coordinateType</a> () const </td></tr>
+<tr class="separator:a8367fe6f674e6ba31df32c3a16dbe839 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a></td></tr>
-<tr class="memitem:aa13f4be6f90b5ad47d2ddd7153f7eecf inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa13f4be6f90b5ad47d2ddd7153f7eecf"></a>
-CoordinateType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>_coordinateType</b></td></tr>
+<tr class="memitem:aa13f4be6f90b5ad47d2ddd7153f7eecf inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#aa13f4be6f90b5ad47d2ddd7153f7eecf">_coordinateType</a></td></tr>
 <tr class="separator:aa13f4be6f90b5ad47d2ddd7153f7eecf inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_neys_parameters_8h_source.html#l00015">15</a> of file <a class="el" href="_neys_parameters_8h_source.html">NeysParameters.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a4f7b687ee172fe2f2551bb649a2bfa44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">NeysParameters::NeysParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00009">9</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8ca373c14695a3932661680c3f319fbc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">NeysParameters::NeysParameters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00020">20</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad6f6b076a4a448200180d0facdf5cac0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">NeysParameters::NeysParameters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__centralMeridian</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__originLatitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__standardParallel1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__falseEasting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__falseNorthing</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00031">31</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae4d8c36576503ee342ae229794ed9ff8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">NeysParameters::NeysParameters </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00042">42</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad15cd0feb034b5e7049cac352f7ac22b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">NeysParameters::~NeysParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00054">54</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a7722d30b0e82047f6b124e0e5bfbd4e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double NeysParameters::centralMeridian </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00111">111</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2cbb17039c9d05bd4850f966b1393bd8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double NeysParameters::falseEasting </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00129">129</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5c60225687fe2c6fa84e020b86163681"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double NeysParameters::falseNorthing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00135">135</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa2a3959323a2e7eae7e1498a0e7cb116"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp; NeysParameters::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_neys_parameters.html">NeysParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00064">64</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a321f9da56de0157dcd5bdbb45ce48930"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double NeysParameters::originLatitude </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00117">117</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7614ca0819b791766395272c7e865ce3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NeysParameters::setCentralMeridian </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__centralMeridian</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00081">81</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae1a0d69d5eb374da18208eb245f90175"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NeysParameters::setFalseEasting </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__falseEasting</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00099">99</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad11d2c34182d392cc35c73f70d21eae0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NeysParameters::setFalseNorthing </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__falseNorthing</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00105">105</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4996511cbedabf50c3d5e2bd53fff432"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NeysParameters::setOriginLatitude </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__originLatitude</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00087">87</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae2e15082b4ba06ad24e201a0c92c9463"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NeysParameters::setStandardParallel1 </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__standardParallel1</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00093">93</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a72455e16dd51af281f819034d2aa4a06"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double NeysParameters::standardParallel1 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_neys_parameters_8cpp_source.html#l00123">123</a> of file <a class="el" href="_neys_parameters_8cpp_source.html">NeysParameters.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:12 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:52 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

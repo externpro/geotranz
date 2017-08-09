@@ -52,7 +52,7 @@
 				Optimization="4"
 				InlineFunctionExpansion="1"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="../src/dtcc;../src/CoordinateConversion;../src/dtcc/CoordinateSystemParameters;../src/dtcc/CoordinateTuples;../src/dtcc/Enumerations;../src/dtcc/CoordinateSystems/misc;../src/dtcc/CoordinateSystems/datum;../src/dtcc/CoordinateSystems/ellipse;../src/dtcc/CoordinateSystems/albers;../src/dtcc/CoordinateSystems/azeq;../src/dtcc/CoordinateSystems/bng;../src/dtcc/CoordinateSystems/bonne;../src/dtcc/CoordinateSystems/cassini;../src/dtcc/CoordinateSystems/cyleqa;../src/dtcc/CoordinateSystems/eckert4;../src/dtcc/CoordinateSystems/eckert6;../src/dtcc/CoordinateSystems/eqdcyl;../src/dtcc/CoordinateSystems/gars;../src/dtcc/CoordinateSystems/geocent;../src/dtcc/CoordinateSystems/georef;../src/dtcc/CoordinateSystems/gnomonic;../src/dtcc/CoordinateSystems/grinten;../src/dtcc/CoordinateSystems/lambert;../src/dtcc/CoordinateSystems/loccart;../src/dtcc/CoordinateSystems/mercator;../src/dtcc/CoordinateSystems/mgrs;../src/dtcc/CoordinateSystems/miller;../src/dtcc/CoordinateSystems/mollweid;../src/dtcc/CoordinateSystems/neys;../src/dtcc/CoordinateSystems/nzmg;../src/dtcc/CoordinateSystems/omerc;../src/dtcc/CoordinateSystems/orthogr;../src/dtcc/CoordinateSystems/polarst;../src/dtcc/CoordinateSystems/polycon;../src/dtcc/CoordinateSystems/sinusoid;../src/dtcc/CoordinateSystems/stereogr;../src/dtcc/CoordinateSystems/threads;../src/dtcc/CoordinateSystems/tranmerc;../src/dtcc/CoordinateSystems/trcyleqa;../src/dtcc/CoordinateSystems/ups;../src/dtcc/CoordinateSystems/usng;../src/dtcc/CoordinateSystems/utm;../src/dtcc/Exception"
+				AdditionalIncludeDirectories="../src/dtcc;../src/CoordinateConversion;../src/dtcc/CoordinateSystemParameters;../src/dtcc/CoordinateTuples;../src/dtcc/Enumerations;../src/dtcc/CoordinateSystems/misc;../src/dtcc/CoordinateSystems/datum;../src/dtcc/CoordinateSystems/ellipse;../src/dtcc/CoordinateSystems/albers;../src/dtcc/CoordinateSystems/azeq;../src/dtcc/CoordinateSystems/bng;../src/dtcc/CoordinateSystems/bonne;../src/dtcc/CoordinateSystems/cassini;../src/dtcc/CoordinateSystems/cyleqa;../src/dtcc/CoordinateSystems/eckert4;../src/dtcc/CoordinateSystems/eckert6;../src/dtcc/CoordinateSystems/eqdcyl;../src/dtcc/CoordinateSystems/gars;../src/dtcc/CoordinateSystems/geocent;../src/dtcc/CoordinateSystems/georef;../src/dtcc/CoordinateSystems/gnomonic;../src/dtcc/CoordinateSystems/grinten;../src/dtcc/CoordinateSystems/lambert;../src/dtcc/CoordinateSystems/loccart;../src/dtcc/CoordinateSystems/mercator;../src/dtcc/CoordinateSystems/mgrs;../src/dtcc/CoordinateSystems/miller;../src/dtcc/CoordinateSystems/mollweid;../src/dtcc/CoordinateSystems/neys;../src/dtcc/CoordinateSystems/nzmg;../src/dtcc/CoordinateSystems/omerc;../src/dtcc/CoordinateSystems/orthogr;../src/dtcc/CoordinateSystems/polarst;../src/dtcc/CoordinateSystems/polycon;../src/dtcc/CoordinateSystems/sinusoid;../src/dtcc/CoordinateSystems/stereogr;../src/dtcc/CoordinateSystems/threads;../src/dtcc/CoordinateSystems/tranmerc;../src/dtcc/CoordinateSystems/trcyleqa;../src/dtcc/CoordinateSystems/ups;../src/dtcc/CoordinateSystems/usng;../src/dtcc/CoordinateSystems/webmerc;../src/dtcc/CoordinateSystems/utm;../src/dtcc/Exception"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;MSP_CCS_EXPORTS;LITTLE_ENDIAN;MSP_CCS_EX"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -1224,6 +1224,10 @@
 						/>
 					</FileConfiguration>
 				</File>
+				<File
+					RelativePath="..\src\dtcc\CoordinateSystems\webmerc\WebMercator.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="CoordinateSystems Header Files"
@@ -1394,6 +1398,10 @@
 				</File>
 				<File
 					RelativePath="..\src\dtcc\CoordinateSystems\grinten\VanDerGrinten.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\dtcc\CoordinateSystems\webmerc\WebMercator.h"
 					>
 				</File>
 			</Filter>

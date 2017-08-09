@@ -51,7 +51,7 @@ PROJECT_LOGO           =
 # If a relative path is entered, it will be relative to the location
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = /net/defender/users/ccadmin/MSP/BUILDS/MSP_1.3.0.12_UNCLASS/GeoTrans_Delivery_take3/master/CCS/docs
+OUTPUT_DIRECTORY       = /net/defender/users/ccadmin/MSP/BUILDS/MSP_1.4.0.8_UNCLASS/GTDT_3.5.0_Delivery_141203/master/CCS/docs
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create
 # 4096 sub-directories (in 2 levels) under the output directory of each output
@@ -359,7 +359,7 @@ LOOKUP_CACHE_SIZE      = 0
 # Private class members and static file members will be hidden unless
 # the EXTRACT_PRIVATE and EXTRACT_STATIC tags are set to YES
 
-EXTRACT_ALL            = NO
+EXTRACT_ALL            = YES
 
 # If the EXTRACT_PRIVATE tag is set to YES all private members of a class
 # will be included in the documentation.
@@ -660,7 +660,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = /net/defender/users/ccadmin/MSP/BUILDS/MSP_1.3.0.12_UNCLASS/GeoTrans_Delivery_take3/master/CCS/src
+INPUT                  = /net/defender/users/ccadmin/MSP/BUILDS/MSP_1.4.0.8_UNCLASS/GTDT_3.5.0_Delivery_141203/master/CCS/src
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -678,7 +678,7 @@ INPUT_ENCODING         = UTF-8
 # *.hxx *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.dox *.py
 # *.f90 *.f *.for *.vhd *.vhdl
 
-FILE_PATTERNS          = *.h
+FILE_PATTERNS          = *.cpp *.h
 
 # The RECURSIVE tag can be used to turn specify whether or not subdirectories
 # should be searched for input files as well. Possible values are YES and NO.
@@ -787,7 +787,7 @@ FILTER_SOURCE_PATTERNS =
 # Note: To get rid of all source code in the generated output, make sure also
 # VERBATIM_HEADERS is set to NO.
 
-SOURCE_BROWSER         = NO
+SOURCE_BROWSER         = YES
 
 # Setting the INLINE_SOURCES tag to YES will include the body
 # of functions and classes directly in the documentation.
@@ -1514,7 +1514,7 @@ INCLUDE_PATH           =
 # directories. If left blank, the patterns specified with FILE_PATTERNS will
 # be used.
 
-INCLUDE_FILE_PATTERNS  = *.h
+INCLUDE_FILE_PATTERNS  = 
 
 # The PREDEFINED tag can be used to specify one or more macro names that
 # are defined before the preprocessor is started (similar to the -D option of

@@ -37,7 +37,6 @@
  *  ELLIPSE_NO_ERROR             : No errors occured in function
  *  ELLIPSE_FILE_OPEN_ERROR      : Ellipsoid file opening error
  *  ELLIPSE_INITIALIZE_ERROR     : Ellipsoid table can not initialize
- *  ELLIPSE_TABLE_OVERFLOW_ERROR : Ellipsoid table overflow
  *  ELLIPSE_NOT_INITIALIZED_ERROR: Ellipsoid table not initialized properly
  *  ELLIPSE_INVALID_INDEX_ERROR  : Index is an invalid value
  *  ELLIPSE_INVALID_CODE_ERROR   : Code was not found in table
@@ -151,7 +150,6 @@ using MSP::CCSThreadLock;
  *
  */
 
-const int MAX_ELLIPSOIDS = 32;        /* Maximum number of ellipsoids in table */
 const int ELLIPSOID_CODE_LENGTH = 3;  /* Length of ellipsoid code (including null) */
 const int ELLIPSOID_NAME_LENGTH = 30; /* Max length of ellipsoid name */
 const int ELLIPSOID_BUF = 90;
@@ -235,21 +233,10 @@ void EllipsoidLibraryImplementation::deleteInstance()
 EllipsoidLibraryImplementation::EllipsoidLibraryImplementation():
   _datumLibraryImplementation( 0 )
 {
-/*
- * The constructor creates an empty list to store the ellipsoid data from ellips.dat
- * which is used to build the ellipsoid table.  
- */
-
-  ellipsoidList.reserve( MAX_ELLIPSOIDS );
-
-  try
-  {
-    loadEllipsoids();
-  }
-  catch(CoordinateConversionException e)
-  {
-    throw e;
-  }
+   /*
+    * The constructor loads ellipsoids from data file. 
+    */
+   loadEllipsoids();
 }
 
 
@@ -322,89 +309,93 @@ void EllipsoidLibraryImplementation::defineEllipsoid( const char* code, const ch
   __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "numEllipsoid %d ", numEllipsoids );
 #endif
 
-  if( !( numEllipsoids < MAX_ELLIPSOIDS ) )
-    throw CoordinateConversionException( ErrorMessages::ellipsoidOverflow );
+  // assume the ellipsoid code is new
+  bool isNewEllipsoidCode = true;
+  try
+  {
+     // check if ellipsoid code exists
+     ellipsoidIndex( code, &index );
+     // get here if ellipsoid code is found in current ellipsoid table
+     isNewEllipsoidCode = false;
+  }
+  catch(CoordinateConversionException e)
+  {
+     // the ellipsoid code is new, keep going
+  }
+
+  // the ellipsoid code exists in current ellipsoid table, throw an error
+  if ( !isNewEllipsoidCode )
+     throw CoordinateConversionException( ErrorMessages::invalidEllipsoidCode );
+
+  code_length = strlen( code );
+
+  if( ( code_length > ( ELLIPSOID_CODE_LENGTH - 1 ) ) )
+     throw CoordinateConversionException( ErrorMessages::invalidEllipsoidCode );
+  if( semiMajorAxis <= 0.0 )
+     throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
+  if( (inv_f < 250 ) || ( inv_f > 350 ) )
+  { /* Inverse flattening must be between 250 and 350 */
+     throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
+  }
+
+  strcpy( ellipsoid_code, code );
+  /* Convert code to upper case */
+  for( int i = 0; i < code_length; i++ )
+     ellipsoid_code[i] = ( char )toupper( ellipsoid_code[i] );
+
+  double semiMinorAxis = semiMajorAxis * ( 1 - flattening );
+  double eccentricitySquared = 2.0 * flattening - flattening * flattening;
+  ellipsoidList.push_back( new Ellipsoid( index, ellipsoid_code, ( char* )name, 
+        semiMajorAxis, semiMinorAxis, flattening, eccentricitySquared, true ) );
+
+  numEllipsoids++;
+
+  CCSThreadLock lock(&mutex);
+
+  /*output updated ellipsoid table*/
+  PathName = getenv( "MSPCCS_DATA" );
+  if( PathName != NULL )
+  {
+     strcpy( FileName, PathName );
+     strcat( FileName, "/" );
+  }
   else
   {
-     // assume the ellipsoid code is new
-     bool isNewEllipsoidCode = true;
-     try
-     {
-       // check if ellipsoid code exists
-       ellipsoidIndex( code, &index );
-       // get here if ellipsoid code is found in current ellipsoid table
-       isNewEllipsoidCode = false;
-     }
-     catch(CoordinateConversionException e)
-     {
-        // the ellipsoid code is new, keep going
-     }
-
-     // the ellipsoid code exists in current ellipsoid table, throw an error
-     if ( !isNewEllipsoidCode )
-       throw CoordinateConversionException( ErrorMessages::invalidEllipsoidCode );
-
-    code_length = strlen( code );
-
-    if( ( code_length > ( ELLIPSOID_CODE_LENGTH - 1 ) ) )
-      throw CoordinateConversionException( ErrorMessages::invalidEllipsoidCode );
-    if( semiMajorAxis <= 0.0 )
-      throw CoordinateConversionException( ErrorMessages::semiMajorAxis );
-    if( (inv_f < 250 ) || ( inv_f > 350 ) )
-    { /* Inverse flattening must be between 250 and 350 */
-      throw CoordinateConversionException( ErrorMessages::ellipsoidFlattening );
-    }
-
-    strcpy( ellipsoid_code, code );
-    /* Convert code to upper case */
-    for( int i = 0; i < code_length; i++ )
-      ellipsoid_code[i] = ( char )toupper( ellipsoid_code[i] );
-
-    double semiMinorAxis = semiMajorAxis * ( 1 - flattening );
-    double eccentricitySquared = 2.0 * flattening - flattening * flattening;
-    ellipsoidList.push_back( new Ellipsoid( index, ellipsoid_code, ( char* )name, 
-       semiMajorAxis, semiMinorAxis, flattening, eccentricitySquared, true ) );
-
-    numEllipsoids++;
-
-    CCSThreadLock lock(&mutex);
-
-    /*output updated ellipsoid table*/
-    PathName = getenv( "MSPCCS_DATA" );
-    if( PathName != NULL )
-    {
-      strcpy( FileName, PathName );
-      strcat( FileName, "/" );
-    }
-    else
-    {
-      strcpy( FileName, "../../data/" );
-    }
-    strcat( FileName, "ellips.dat" );
-
-    if( ( fp = fopen( FileName, "w" ) ) == NULL )
-    { /* fatal error */
-      throw CoordinateConversionException( ErrorMessages::ellipsoidFileOpenError );
-    }
-
-    /* write file */
-    index = 0;
-    while( index < numEllipsoids )
-    {
-      if( ellipsoidList[index]->userDefined() )
-        fprintf( fp, "*");
-
-      fprintf( fp, "%-29s  %-2s %11.9f %12.9f %13.13f \n",
-               ellipsoidList[index]->name(),
-               ellipsoidList[index]->code(),
-               ellipsoidList[index]->semiMajorAxis(),
-               ellipsoidList[index]->semiMinorAxis(),
-               1 / ellipsoidList[index]->flattening() );
-      index++;
-    }
-
-    fclose( fp );
+     strcpy( FileName, "../../data/" );
   }
+  strcat( FileName, "ellips.dat" );
+
+  if( ( fp = fopen( FileName, "w" ) ) == NULL )
+  { /* fatal error */
+     throw CoordinateConversionException( ErrorMessages::ellipsoidFileOpenError );
+  }
+
+  /* write file */
+  index = 0;
+  while( index < numEllipsoids )
+  {
+     if( ellipsoidList[index]->userDefined() )
+     {
+        fprintf( fp, "*%-28s  %-2s %11.9f %12.9f %13.13f \n",
+           ellipsoidList[index]->name(),
+           ellipsoidList[index]->code(),
+           ellipsoidList[index]->semiMajorAxis(),
+           ellipsoidList[index]->semiMinorAxis(),
+           1 / ellipsoidList[index]->flattening() );
+     }
+     else
+     {
+        fprintf( fp, "%-29s  %-2s %11.9f %12.9f %13.13f \n",
+           ellipsoidList[index]->name(),
+           ellipsoidList[index]->code(),
+           ellipsoidList[index]->semiMajorAxis(),
+           ellipsoidList[index]->semiMinorAxis(),
+           1 / ellipsoidList[index]->flattening() );
+     }
+     index++;
+  }
+
+  fclose( fp );
 } 
 
 
@@ -466,14 +457,23 @@ void EllipsoidLibraryImplementation::removeEllipsoid( const char* code )
    while( index < numEllipsoids )
    {
       if( ellipsoidList[index]->userDefined() )
-        fprintf( fp, "*" );
-
-      fprintf(fp, "%-29s  %-2s %11.3f %12.4f %13.9f \n",
-                 ellipsoidList[index]->name(),
-                 ellipsoidList[index]->code(),
-                 ellipsoidList[index]->semiMajorAxis(),
-                 ellipsoidList[index]->semiMinorAxis(),
-                 1 / ellipsoidList[index]->flattening() );
+      {
+         fprintf(fp, "*%-28s  %-2s %11.3f %12.4f %13.9f \n",
+            ellipsoidList[index]->name(),
+            ellipsoidList[index]->code(),
+            ellipsoidList[index]->semiMajorAxis(),
+            ellipsoidList[index]->semiMinorAxis(),
+            1 / ellipsoidList[index]->flattening() );
+      }
+      else
+      {
+         fprintf(fp, "*%-29s  %-2s %11.3f %12.4f %13.9f \n",
+            ellipsoidList[index]->name(),
+            ellipsoidList[index]->code(),
+            ellipsoidList[index]->semiMajorAxis(),
+            ellipsoidList[index]->semiMinorAxis(),
+            1 / ellipsoidList[index]->flattening() );
+      }
       index++;
    }
 
@@ -736,11 +736,8 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
   /* read file */
   while( !feof( fp ) )
   {
-    if( index <= MAX_ELLIPSOIDS )
-    {
-
-      if( fgets( buffer, ELLIPSOID_BUF, fp ) )
-      {
+     if( fgets( buffer, ELLIPSOID_BUF, fp ) )
+     {
         char name[ELLIPSOID_NAME_LENGTH];
         char code[ELLIPSOID_CODE_LENGTH];
         double semiMajorAxis;
@@ -763,21 +760,18 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
         double eccentricitySquared = 2.0 * flattening - flattening * flattening;
 
 #ifdef NDK_BUILD
-      //      LOGW("GtApp: name=%s code=%s recpF=%f", name, code, recpF);      
-      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "name %s", name);
-      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "code %s", code);
-      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "major %f", semiMajorAxis);
-      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "minor %f", semiMinorAxis);
-      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "recpF %f", recpF);
+        //      LOGW("GtApp: name=%s code=%s recpF=%f", name, code, recpF);
+        __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "name %s", name);
+        __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "code %s", code);
+        __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "major %f", semiMajorAxis);
+        __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "minor %f", semiMinorAxis);
+        __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "recpF %f", recpF);
 #endif
 
         ellipsoidList.push_back( new Ellipsoid( index, code, name, semiMajorAxis, semiMinorAxis, flattening, eccentricitySquared, userDefined ) );
 
         index++;
-      }
-    }
-    else
-      throw CoordinateConversionException( ErrorMessages::ellipsoidOverflow );
+     }
   }
   
   fclose( fp );

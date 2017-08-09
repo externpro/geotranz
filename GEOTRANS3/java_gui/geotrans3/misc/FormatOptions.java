@@ -47,6 +47,7 @@ public class FormatOptions
     public static final int MET_1   = 6;
     public static final int MET_01  = 7;
     public static final int MET_001 = 8;
+    public static final int MET_SCI = 9;        // Scientific notation
 
     private int units = DMS;  
     private char separator = SPACE;
@@ -249,7 +250,9 @@ public class FormatOptions
           case MET_001:
             precisionString = "0.001m";
             break;
-        }
+          case MET_SCI:
+            precisionString = "Scientific Notation";
+            break;        }
     }
 
   // Get/set leading zeros

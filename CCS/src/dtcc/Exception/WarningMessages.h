@@ -21,10 +21,10 @@ namespace MSP
       public:
 
         // Coordinate warning messages
-        static char* longitude;
-        static char* latitude;
+        static const char* longitude;
+        static const char* latitude;
 
-        static char* datum;
+        static const char* datum;
 
     };
   }

@@ -56,10 +56,8 @@
  *  DATUM_NOT_INITIALIZED_ERROR     : Datum module has not been initialized
  *  DATUM_7PARAM_FILE_OPEN_ERROR    : 7 parameter file opening error
  *  DATUM_7PARAM_FILE_PARSING_ERROR : 7 parameter file structure error
- *  DATUM_7PARAM_OVERFLOW_ERROR     : 7 parameter table overflow
  *  DATUM_3PARAM_FILE_OPEN_ERROR    : 3 parameter file opening error
  *  DATUM_3PARAM_FILE_PARSING_ERROR : 3 parameter file structure error
- *  DATUM_3PARAM_OVERFLOW_ERROR     : 3 parameter table overflow
  *  DATUM_INVALID_INDEX_ERROR       : Index out of valid range (less than one
  *                                      or more than Number_of_Datums)
  *  DATUM_INVALID_SRC_INDEX_ERROR   : Source datum index invalid
@@ -192,8 +190,6 @@ const double MAX_LON = (2.0 * PI);
 const int DATUM_CODE_LENGTH = 7;
 const int DATUM_NAME_LENGTH = 33;
 const int ELLIPSOID_CODE_LENGTH = 3;
-const int MAX_7PARAM = 25;
-const int MAX_3PARAM = 250;
 const int MAX_WGS = 2;
 const double MOLODENSKY_MAX = (89.75 * PI_OVER_180); /* Polar limit */
 const int FILENAME_LENGTH = 128;
@@ -376,21 +372,7 @@ DatumLibraryImplementation::DatumLibraryImplementation():
   datum3ParamCount( 0 ),
   datum7ParamCount( 0 )
 {
-/*
- * The constructor creates an empty list to store the datum information
- *  contained in two external files, 3_param.dat and 7_param.dat.  
- */
-
-  datumList.reserve( 2 + MAX_3PARAM + MAX_7PARAM );
-
-  try
-  {
-    loadDatums();
-  }
-  catch(CoordinateConversionException e)
-  {
-    throw e;
-  }
+   loadDatums();
 }
 
 
@@ -516,8 +498,6 @@ void DatumLibraryImplementation::define3ParamDatum(
   char *PathName = NULL;
   FILE *fp_3param = NULL;
 
-  if (!(datum3ParamCount < MAX_3PARAM))
-    throw CoordinateConversionException( ErrorMessages::datumOverflow );
   if (!(((sigmaX > 0.0) || (sigmaX == -1.0)) &&
         ((sigmaY > 0.0) || (sigmaY == -1.0)) &&
         ((sigmaZ > 0.0) || (sigmaZ == -1.0))))
@@ -633,9 +613,6 @@ void DatumLibraryImplementation::define7ParamDatum(
   long code_length = 0;
   char *PathName = NULL;
   FILE *fp_7param = NULL;
-
-  if (!(datum7ParamCount < MAX_7PARAM))
-    throw CoordinateConversionException( ErrorMessages::datumOverflow );
 
   if ((rotationX < -60.0) || (rotationX > 60.0))
     throw CoordinateConversionException( ErrorMessages::datumRotation );
@@ -2088,8 +2065,6 @@ void DatumLibraryImplementation::loadDatums()
     /* build 7-parameter datum table entries */
     while ( !feof(fp_7param ) )
     {
-      if ( datum7ParamCount < MAX_7PARAM )
-      { 
         char code[DATUM_CODE_LENGTH];
 
         bool userDefined = false;
@@ -2143,11 +2118,6 @@ void DatumLibraryImplementation::loadDatums()
         }
         index++;
         datum7ParamCount++;
-      }
-      else
-      {
-        throw CoordinateConversionException( ErrorMessages::datumOverflow );
-      }
     }
     fclose( fp_7param );
 
@@ -2188,9 +2158,7 @@ void DatumLibraryImplementation::loadDatums()
 
     /* build 3-parameter datum table entries */
     while( !feof( fp_3param ) )
-    {
-      if( datum3ParamCount < MAX_3PARAM )
-      { 
+    { 
         char code[DATUM_CODE_LENGTH];
 
         bool userDefined = false;
@@ -2249,11 +2217,6 @@ void DatumLibraryImplementation::loadDatums()
 
         index++;
         datum3ParamCount++;
-      }
-      else
-      {
-        throw CoordinateConversionException( ErrorMessages::datumOverflow );
-      }
     }
     fclose( fp_3param );
 

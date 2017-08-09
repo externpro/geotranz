@@ -46,7 +46,8 @@ package geotrans3.enumerations;
  * UTM              : Universal Transverse Mercator (UTM)
  * USNG             : United States National Grid (USNG) 
  * GRINTEN          : Van der Grinten
- * F16GRS           : F-16 Grid Reference System 
+ * WEBMERCATOR      : Web Mercator
+ * F16GRS           : F-16 Grid Reference System
  * 
  * </pre>
  * @author comstam
@@ -91,7 +92,8 @@ public class CoordinateType
   public final static int UTM = 34;
   public final static int USNG = 35;
   public final static int GRINTEN = 36;
-  public final static int F16GRS = 37;
+  public final static int WEBMERCATOR = 37;
+  public final static int F16GRS = 38;
   
   // Names
   public final static String ALBERS_STR = "Albers Equal Area Conic";
@@ -131,6 +133,7 @@ public class CoordinateType
   public final static String UTM_STR = "Universal Transverse Mercator (UTM)";
   public final static String USNG_STR = "United States National Grid (USNG)";
   public final static String GRINTEN_STR = "Van der Grinten";
+  public final static String WEBMERCATOR_STR = "Web Mercator (S)";
   public final static String F16GRS_STR = "F-16 Grid Reference System";
   
   // Codes
@@ -171,6 +174,7 @@ public class CoordinateType
   public final static String UTM_CODE = "UT";
   public final static String USNG_CODE = "US";
   public final static String GRINTEN_CODE = "VA";
+  public final static String WEBMERCATOR_CODE = "WM";
   public final static String F16GRS_CODE = "F-16 Grid Reference System";
 
   
@@ -252,6 +256,8 @@ public class CoordinateType
       return TRANMERC;
     else if(name.startsWith(GRINTEN_STR.toUpperCase()))
       return GRINTEN;
+    else if(name.startsWith(WEBMERCATOR_STR.toUpperCase()))
+      return WEBMERCATOR;
     else if(name.startsWith(F16GRS_STR.toUpperCase()))
       return F16GRS;
     else
@@ -343,6 +349,8 @@ public class CoordinateType
         return USNG_STR;
       case GRINTEN:
         return GRINTEN_STR;
+      case WEBMERCATOR:
+        return WEBMERCATOR_STR;
       case F16GRS:
         return F16GRS_STR;
       default:
@@ -435,6 +443,8 @@ public class CoordinateType
       return TRANMERC;
     else if(code.startsWith(GRINTEN_CODE))
       return GRINTEN;
+    else if(code.startsWith(WEBMERCATOR_CODE))
+      return WEBMERCATOR;
     else if(code.startsWith(F16GRS_CODE))
       return F16GRS;
     else
@@ -526,6 +536,8 @@ public class CoordinateType
         return USNG_CODE;
       case GRINTEN:
         return GRINTEN_CODE;
+      case WEBMERCATOR:
+        return WEBMERCATOR_CODE;
       case F16GRS:
         return F16GRS_CODE;
       default:

@@ -59,10 +59,8 @@
  *  DATUM_NOT_INITIALIZED_ERROR     : Datum module has not been initialized
  *  DATUM_7PARAM_FILE_OPEN_ERROR    : 7 parameter file opening error
  *  DATUM_7PARAM_FILE_PARSING_ERROR : 7 parameter file structure error
- *  DATUM_7PARAM_OVERFLOW_ERROR     : 7 parameter table overflow
  *  DATUM_3PARAM_FILE_OPEN_ERROR    : 3 parameter file opening error
  *  DATUM_3PARAM_FILE_PARSING_ERROR : 3 parameter file structure error
- *  DATUM_3PARAM_OVERFLOW_ERROR     : 3 parameter table overflow
  *  DATUM_INVALID_INDEX_ERROR       : Index out of valid range (less than one
  *                                      or more than Number_of_Datums)
  *  DATUM_INVALID_SRC_INDEX_ERROR   : Source datum index invalid

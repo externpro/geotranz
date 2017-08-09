@@ -37,8 +37,20 @@ Datum::Datum() :
 }
 
 
-Datum::Datum( long __index, char* __code,  char* __ellipsoidCode,  char* __name, DatumType::Enum __datumType, double __deltaX, double __deltaY, double __deltaZ, 
-              double __westLongitude, double __eastLongitude, double __southLatitude, double __northLatitude, bool __userDefined ) :
+Datum::Datum(
+   long            __index,
+   const char*     __code,
+   const char*     __ellipsoidCode,
+   const char*     __name,
+   DatumType::Enum __datumType,
+   double          __deltaX,
+   double          __deltaY,
+   double          __deltaZ, 
+   double          __westLongitude,
+   double          __eastLongitude,
+   double          __southLatitude,
+   double          __northLatitude,
+   bool            __userDefined ) :
    _index( __index ),
    _datumType( __datumType ),
    _deltaX( __deltaX ),

@@ -9,6 +9,11 @@ namespace MSP
 {
   namespace CCS
   {
+    /**
+     * Coordinate conversion supported coordinate or projection system type enumerations.
+     * @modified MSP 1.4. Added webMercator enumeration.
+     */
+
    class MSP_DTCC_API CoordinateType
     {
     public:
@@ -51,7 +56,8 @@ namespace MSP
         universalPolarStereographic,
         universalTransverseMercator,
         usNationalGrid,
-        vanDerGrinten
+        vanDerGrinten,
+        webMercator
       };
     };
   }

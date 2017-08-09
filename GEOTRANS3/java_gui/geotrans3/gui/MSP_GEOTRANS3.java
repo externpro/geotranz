@@ -43,42 +43,46 @@ import geotrans3.utility.color.*;
 public class MSP_GEOTRANS3 extends javax.swing.JFrame 
 { 
   private JNICoordinateConversionService jniCoordinateConversionService;
-  private Directory currentDir;
-  private StringHandler stringHandler;
-  private java.awt.Color defaultSelectedColor;
-  private java.awt.Color currentColor;
+  private Directory          currentDir;
+  private StringHandler      stringHandler;
+  private java.awt.Color     defaultSelectedColor;
+  private java.awt.Color     currentColor;
+  private java.awt.Color     currentColorUp;
+  private java.awt.Color     currentColorDown;
   private java.awt.Component prevFocus;
-  private MasterPanel upperMasterPanel;
-  private MasterPanel lowerMasterPanel;
-  private FormatOptions formatOptions;
-  private java.lang.String currLookAndFeel;
-  private String dataDirPathName;
-  private java.io.File defaultFile;
-  private LoadSettings defaultSettings;
-  private String[] currentDatum;
+  private MasterPanel        upperMasterPanel;
+  private MasterPanel        lowerMasterPanel;
+  private FormatOptions      formatOptions;
+  private java.lang.String   currLookAndFeel;
+  private String             dataDirPathName;
+  private java.io.File       defaultFile;
+  private LoadSettings       defaultSettings;
+  private String[]           currentDatum;
   private CoordinateSystemParameters[] currentParameters;
-  private Accuracy[] currentAccuracy;
+  private Accuracy[]                   currentAccuracy;
   
 
  /** Creates new form MSP_GEOTRANS3 */
   public MSP_GEOTRANS3()
   {
-    currentDir = new Directory(".");
-    stringHandler = new StringHandler();
+    currentDir           = new Directory(".");
+    stringHandler        = new StringHandler();
     defaultSelectedColor = new java.awt.Color(0, 0, 0);
     defaultSelectedColor = (java.awt.Color)javax.swing.UIManager.get("Button.select");
-    currentColor = Green.VALUE;
-    currLookAndFeel = "Java";
-    dataDirPathName = "";
+    currentColor         = Green.VALUE;
+    currentColorUp       = Green.VALUE;
+    currentColorDown     = Green.VALUE;
+    currLookAndFeel      = "Java";
+    dataDirPathName      = "";
 
-    currentDatum = new String[2];
-    currentParameters = new CoordinateSystemParameters[2];
-    currentAccuracy = new Accuracy[2];
+    currentDatum         = new String[2];
+    currentParameters    = new CoordinateSystemParameters[2];
+    currentAccuracy      = new Accuracy[2];
     
-    initComponents ();
+    initComponents();
     initialize();
     setIcons();
-    
+
     javax.swing.ButtonGroup lookAndFeelGroup = new javax.swing.ButtonGroup();
     lookAndFeelGroup.add(metalRadioButtonMenuItem);
     lookAndFeelGroup.add(unixRadioButtonMenuItem);
@@ -87,25 +91,25 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     Utility.setIcon(this, "/geotrans3/gui/icons/geotrans_logo.gif");
 
     if (Platform.isUnix)
-        setSize(new java.awt.Dimension(484, 679));
+       setSize(new java.awt.Dimension(484, 679));
     
     try
     {
-      java.util.Properties p = ReadEnv.getEnvVars();
-      dataDirPathName = p.getProperty("MSPCCS_DATA");
+       java.util.Properties p = ReadEnv.getEnvVars();
+       dataDirPathName = p.getProperty("MSPCCS_DATA");
     }
     catch(Throwable e)
     {
-      e.printStackTrace();
+       e.printStackTrace();
     }
     
     if(dataDirPathName != null && dataDirPathName.length() > 0)
     {
-      dataDirPathName += "/";
+       dataDirPathName += "/";
     }
     else
     {
-      dataDirPathName = "../../data/";
+       dataDirPathName = "../../data/";
     }
     dataDirPathName += "settings.xml";
 
@@ -113,18 +117,18 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
 
     try
     {
-      if(defaultFile.exists())
-      {
-        defaultSettings = new LoadSettings(this, defaultFile);
-        defaultSettings.readDefaults();
+       if(defaultFile.exists())
+       {
+          defaultSettings = new LoadSettings(this, defaultFile);
+          defaultSettings.readDefaults();
 
-        updateDefaultSettings();
-      }
+          updateDefaultSettings();
+       }
     }
     catch(Exception e)
     {
-      stringHandler.displayErrorMsg(this, e.getMessage());
-      defaultSettings = null;
+       stringHandler.displayErrorMsg(this, e.getMessage());
+       defaultSettings = null;
     }
 
     // do pack at end; after gui is setup and size is set
@@ -195,7 +199,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     helpMenuSeparator = new javax.swing.JSeparator();
     aboutMenuItem = new javax.swing.JMenuItem();
 
-    setTitle("MSP GEOTRANS 3.4");
+    setTitle("MSP GEOTRANS 3.5");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -1065,15 +1069,34 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
       int sourceCoordinateSystem = upperMasterPanel.getProjectionType();
       int targetCoordinateSystem = lowerMasterPanel.getProjectionType();
       
-      int validColor = Red.ID;
+      int validColorUp   = Red.ID;
+      int validColorDown = Red.ID;
       
       // If British National Grid is chosen, ellipsoid should be Airy
+      // If Web Mercator is chosen, ellipsoid should be WGS84
       // If New Zealand Map Grid is chosen, ellipsoid should be International
-      if((sourceCoordinateSystem == CoordinateType.BNG && !sourceEllipsoidCode.equalsIgnoreCase("AA")) ||
-         (targetCoordinateSystem == CoordinateType.BNG && !targetEllipsoidCode.equalsIgnoreCase("AA")) ||
+      if((sourceCoordinateSystem == CoordinateType.BNG  && !sourceEllipsoidCode.equalsIgnoreCase("AA")) ||
+         (targetCoordinateSystem == CoordinateType.BNG  && !targetEllipsoidCode.equalsIgnoreCase("AA")) ||
+         (sourceCoordinateSystem == CoordinateType.WEBMERCATOR  && !sourceEllipsoidCode.equalsIgnoreCase("WE")) ||
+         (targetCoordinateSystem == CoordinateType.WEBMERCATOR  && !targetEllipsoidCode.equalsIgnoreCase("WE")) ||
+         (sourceCoordinateSystem == CoordinateType.WEBMERCATOR  && targetCoordinateSystem != CoordinateType.GEODETIC ) ||
+         (targetCoordinateSystem == CoordinateType.WEBMERCATOR  && sourceCoordinateSystem != CoordinateType.GEODETIC ) ||
          (sourceCoordinateSystem == CoordinateType.NZMG && !sourceEllipsoidCode.equalsIgnoreCase("IN")) ||
          (targetCoordinateSystem == CoordinateType.NZMG && !targetEllipsoidCode.equalsIgnoreCase("IN")))
-        validColor = Red.ID;
+      {
+        validColorUp   = Red.ID;
+        validColorDown = Red.ID;
+      }
+      else if(sourceCoordinateSystem == CoordinateType.WEBMERCATOR  && targetCoordinateSystem == CoordinateType.GEODETIC )
+      {
+        validColorUp   = Red.ID;
+        validColorDown = Green.ID;
+      }
+      else if(targetCoordinateSystem == CoordinateType.WEBMERCATOR  && sourceCoordinateSystem == CoordinateType.GEODETIC )
+      {
+        validColorUp   = Green.ID;
+        validColorDown = Red.ID;
+      }
       else
       {
         AOI sourceAOI = jniDatumLibrary.getDatumValidRectangle(sourceDatumIndex);
@@ -1084,20 +1107,33 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
            (sourceAOI.getEastLongitude() <= targetAOI.getWestLongitude()) ||
            (sourceAOI.getSouthLatitude() >= targetAOI.getNorthLatitude()) ||
            (sourceAOI.getNorthLatitude() <= targetAOI.getSouthLatitude()))
-          validColor = Yellow.ID;
+        {
+          validColorUp   = Yellow.ID;
+          validColorDown = Yellow.ID;
+        }
         else
-          validColor = Green.ID;
+        {
+          validColorUp   = Green.ID;
+          validColorDown = Green.ID;
+        }
       }
       
-      if(validColor == Red.ID)  // Errors
-        currentColor = Red.VALUE;
-      else if(validColor == Yellow.ID)  // Warnings
-        currentColor = Yellow.VALUE;
-      else if(validColor == Green.ID)  // No errors or warnings
-        currentColor = Green.VALUE;
+      if(validColorUp == Red.ID)  // Errors
+        currentColorUp = Red.VALUE;
+      else if(validColorUp == Yellow.ID)  // Warnings
+        currentColorUp = Yellow.VALUE;
+      else if(validColorUp == Green.ID)  // No errors or warnings
+        currentColorUp = Green.VALUE;
 
-      convertUpButton.setBackground(currentColor);
-      convertDownButton.setBackground(currentColor);
+      if(validColorDown == Red.ID)  // Errors
+        currentColorDown = Red.VALUE;
+      else if(validColorDown == Yellow.ID)  // Warnings
+        currentColorDown = Yellow.VALUE;
+      else if(validColorDown == Green.ID)  // No errors or warnings
+        currentColorDown = Green.VALUE;
+
+      convertUpButton.setBackground(currentColorUp);
+      convertDownButton.setBackground(currentColorDown);
     }
     catch(CoordinateConversionException e)
     {
@@ -1297,6 +1333,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
       case CoordinateType.NZMG:
       case CoordinateType.UPS:
       case CoordinateType.USNG:
+      case CoordinateType.WEBMERCATOR:
       {
         if(currentParameters.equal(parameters))
           return false;

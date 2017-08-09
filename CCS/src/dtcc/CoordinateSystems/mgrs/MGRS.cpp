@@ -71,7 +71,7 @@
  *    2-27-07          Original Code
  *    3/23/2011 NGL    BAEts28583 Updated for memory leak in method toUTM,  
  *                     if MGRS input is not within zone letter bounds. 
- *    9/16/2013 KNL    MSP_29918 Validate MGRS string, display errors if
+ *    9/16/2013 KNL    MSP_29918 Validate MGRS string, display errors if 
  *                     special character is found in input string.
  */
 
@@ -115,7 +115,6 @@ using namespace std;
  *      ErrorMessages.h  - Contains exception messages
  *      WarningMessages.h  - Contains warning messages
  */
-
 
 using namespace MSP::CCS;
 
@@ -193,6 +192,8 @@ using namespace MSP::CCS;
 #define BESSEL_1841         "BR"
 #define BESSEL_1841_NAMIBIA "BN"
 
+#define EPSILON2 4.99e-4
+
 struct Latitude_Band
 {
   long letter;            /* letter representing latitude band  */
@@ -247,6 +248,42 @@ const UPS_Constant UPS_Constant_Table[4] =
  *
  */
 
+
+double computeScale( int prec )
+{
+   double scale = 1.0e5;
+   switch( prec )
+   {
+   case 0:
+      scale = 1.0e5;
+      break;
+
+   case 1:
+      scale = 1.0e4;
+      break;
+
+   case 2:
+      scale = 1.0e3;
+      break;
+
+   case 3:
+      scale = 1.0e2;
+      break;
+
+   case 4:
+      scale = 1.0e1;
+      break;
+
+   case 5:
+      scale = 1.0e0;
+      break;
+
+   default:
+      break;
+   }
+   return scale;
+}
+
 void makeMGRSString(
    char*  MGRSString,
    long   zone,
@@ -282,16 +319,18 @@ void makeMGRSString(
 
   for (j=0;j<3;j++)
     MGRSString[i++] = alphabet[letters[j]];
-  divisor = pow (10.0, (5.0 - precision));
+
+  divisor = computeScale( precision );
+
   easting = fmod (easting, 100000.0);
   if (easting >= 99999.5)
     easting = 99999.0;
-  east = (long)(easting/divisor);
+  east = (long)((easting+EPSILON2) /divisor);
   i += sprintf (MGRSString+i, "%*.*ld", precision, precision, east);
   northing = fmod (northing, 100000.0);
   if (northing >= 99999.5)
     northing = 99999.0;
-  north = (long)(northing/divisor);
+  north = (long)((northing+EPSILON2) /divisor);
   i += sprintf (MGRSString+i, "%*.*ld", precision, precision, north);
 }
 
@@ -329,7 +368,7 @@ void breakMGRSString(
      {
         // check for invalid character
         if (!isdigit(MGRSString[i]) && !isalpha(MGRSString[i]) )
-          throw CoordinateConversionException( ErrorMessages::mgrsString );
+		   throw CoordinateConversionException( ErrorMessages::mgrsString );
         tempMGRSString[j] = MGRSString[i];
         j++;
      }
@@ -404,9 +443,10 @@ void breakMGRSString(
       strncpy (north_string, tempMGRSString+j+n, n);
       north_string[n] = 0;
       sscanf (north_string, "%ld", &north);
-      multiplier = pow (10.0, 5.0 - n);
-      *easting = east * multiplier;
-      *northing = north * multiplier;
+      multiplier = computeScale( n );
+
+      *easting  = east  * multiplier;  // + (multiplier/2.0); // move to 
+      *northing = north * multiplier;  // + (multiplier/2.0); // grid center
     }
     else
     {
@@ -547,7 +587,7 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::convertFromGeodetic(
   { /* latitude out of range */
     throw CoordinateConversionException( ErrorMessages::latitude  );
   }
-  if ((longitude < -PI) || (longitude > (2*PI)))
+  if ((longitude < (-PI - EPSILON)) || (longitude > (2*PI + EPSILON)))
   { /* longitude out of range */
     throw CoordinateConversionException( ErrorMessages::longitude  );
   }
@@ -559,8 +599,8 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::convertFromGeodetic(
      // If the latitude is within the valid mgrs non polar range [-80, 84),
      // convert to mgrs using the utm path,
      // otherwise convert to mgrs using the ups path
-     if((latitude >= MIN_MGRS_NON_POLAR_LAT) &&
-        (latitude <  MAX_MGRS_NON_POLAR_LAT))
+     if((latitude >= MIN_MGRS_NON_POLAR_LAT - EPSILON) &&
+        (latitude <  MAX_MGRS_NON_POLAR_LAT + EPSILON))
      {
         utmCoordinates = utm->convertFromGeodetic( geodeticCoordinates );
         mgrsorUSNGCoordinates = fromUTM(
@@ -824,8 +864,8 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::convertFromUPS(
      // otherwise convert to mgrs using the utm path
      double latitude = geodeticCoordinates->latitude();
 
-     if((latitude <  (MIN_MGRS_NON_POLAR_LAT + EPSILON)) ||
-        (latitude >= (MAX_MGRS_NON_POLAR_LAT - EPSILON)))
+     if((latitude <  (MIN_MGRS_NON_POLAR_LAT - EPSILON)) ||
+        (latitude >= (MAX_MGRS_NON_POLAR_LAT + EPSILON)))
         mgrsorUSNGCoordinates = fromUPS( upsCoordinates, precision );
      else
      {
@@ -953,10 +993,15 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUTM(
 
   // Check if the point is within it's natural zone
   // If it is not, put it there
+  double pad = EPSILON2 / 6378137.0;
   if (longitude < PI)
-    natural_zone = (long)(31 + ((longitude) / _6));
+  {
+     natural_zone = (long)(31 + ((longitude+pad) / _6));
+  }
   else
-    natural_zone = (long)(((longitude) / _6) - 29);
+  {
+    natural_zone = (long)(((longitude+pad) / _6) - 29);
+  }
 
   if (natural_zone > 60)
       natural_zone = 1;
@@ -1014,9 +1059,10 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUTM(
     utmCoordinatesOverride = 0;
   }
 
-  double divisor = pow (10.0, (5.0 - precision));
-  easting  = ( long )( easting/divisor )  * divisor;
-  northing = ( long )( northing/divisor ) * divisor;
+  double divisor = computeScale( precision );
+
+  easting  = ( long )( (easting +EPSILON2) /divisor ) * divisor;
+  northing = ( long )( (northing+EPSILON2) /divisor ) * divisor;
 
   if( latitude <= 0.0 && northing == 1.0e7 )
   {
@@ -1050,7 +1096,8 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUTM(
   makeMGRSString( MGRSString, zone, letters, easting, northing, precision );
 
   return new MGRSorUSNGCoordinates(
-     CoordinateType::militaryGridReferenceSystem, MGRSString );
+     CoordinateType::militaryGridReferenceSystem, MGRSString,
+     MSP::CCS::Precision::toPrecision(precision) );
 }
 
 
@@ -1159,7 +1206,7 @@ MSP::CCS::UTMCoordinates* MGRS::toUTM(
     delete geodeticCoordinates;
     geodeticCoordinates = 0;
 
-    divisor = pow (10.0, (double)precision);
+    divisor = computeScale( precision );
 
     if( ! inLatitudeRange(letters[0], latitude, PI_OVER_180/divisor) )
     {
@@ -1223,12 +1270,13 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUPS(
   char MGRSString[21];
 
   char hemisphere = upsCoordinates->hemisphere();
-  double easting = upsCoordinates->easting();
+  double easting  = upsCoordinates->easting();
   double northing = upsCoordinates->northing();
 
-  divisor = pow (10.0, (5.0 - precision));
-  easting = (long)(easting/divisor) * divisor;
-  northing = (long)(northing/divisor) * divisor;
+  divisor = computeScale( precision );
+
+  easting  = (long)((easting +EPSILON2) /divisor) * divisor;
+  northing = (long)((northing+EPSILON2) /divisor) * divisor;
 
   if (hemisphere == 'N')
   {
@@ -1291,7 +1339,8 @@ MSP::CCS::MGRSorUSNGCoordinates* MGRS::fromUPS(
   makeMGRSString( MGRSString, 0, letters, easting, northing, precision );
 
   return new MGRSorUSNGCoordinates(
-     CoordinateType::militaryGridReferenceSystem, MGRSString );
+     CoordinateType::militaryGridReferenceSystem, MGRSString, 
+     MSP::CCS::Precision::toPrecision(precision) );
 }
 
 

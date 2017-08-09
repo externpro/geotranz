@@ -1240,6 +1240,7 @@ jobject translateToJNICoordinates( JNIEnv *env, CoordinateTuple* coordinates )
       case CoordinateType::transverseCylindricalEqualArea:
       case CoordinateType::transverseMercator:
       case CoordinateType::vanDerGrinten:
+      case CoordinateType::webMercator:
       {
         MapProjectionCoordinates _coordinates = ( *dynamic_cast< MapProjectionCoordinates* >( coordinates ) );
         jstring jWarningStr = env->NewStringUTF( _coordinates.warningMessage() );

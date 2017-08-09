@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::LocalCartesian Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_local_cartesian_8h_source.html">LocalCartesian.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MSP::CCS::LocalCartesian:</div>
 <div class="dyncontent">
@@ -103,52 +106,246 @@ Inheritance diagram for MSP::CCS::LocalCartesian:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adab60204f282ccd5031ba8faecbb534f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adab60204f282ccd5031ba8faecbb534f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>LocalCartesian</b> (double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double originLongitude, double originLatitude, double originHeight, double orientation)</td></tr>
-<tr class="separator:adab60204f282ccd5031ba8faecbb534f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec85255d12eea6d0bb99af3295cb14f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec85255d12eea6d0bb99af3295cb14f5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>LocalCartesian</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp;lc)</td></tr>
-<tr class="separator:aec85255d12eea6d0bb99af3295cb14f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac373b9122fb5c83b61a5a2093691466e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac373b9122fb5c83b61a5a2093691466e"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp;lc)</td></tr>
-<tr class="separator:ac373b9122fb5c83b61a5a2093691466e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7252422eacf2df64a338c052e6d38ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7252422eacf2df64a338c052e6d38ab"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian_parameters.html">LocalCartesianParameters</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getParameters</b> () const </td></tr>
-<tr class="separator:ac7252422eacf2df64a338c052e6d38ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53da9d9a590d0e5442473dae43bd084a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53da9d9a590d0e5442473dae43bd084a"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>convertFromGeodetic</b> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *geodeticCoordinates)</td></tr>
-<tr class="separator:a53da9d9a590d0e5442473dae43bd084a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3559a25f958294ce8fe0ea62cc7fa6ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3559a25f958294ce8fe0ea62cc7fa6ad"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>convertToGeodetic</b> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *cartesianCoordinates)</td></tr>
-<tr class="separator:a3559a25f958294ce8fe0ea62cc7fa6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a601129457ebbe9611580b000eea6d8ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a601129457ebbe9611580b000eea6d8ef"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>convertFromGeocentric</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *cartesianCoordinates)</td></tr>
-<tr class="separator:a601129457ebbe9611580b000eea6d8ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab16f4d505ec04dbdb971e8408ba6c71e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab16f4d505ec04dbdb971e8408ba6c71e"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>convertToGeocentric</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *cartesianCoordinates)</td></tr>
-<tr class="separator:ab16f4d505ec04dbdb971e8408ba6c71e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11f7aafadbf259592d58ba344411068d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#a11f7aafadbf259592d58ba344411068d">LocalCartesian</a> (double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double originLongitude, double originLatitude, double originHeight, double orientation)</td></tr>
+<tr class="separator:a11f7aafadbf259592d58ba344411068d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a697bc82ce7af40140ba5d080912d60b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#a697bc82ce7af40140ba5d080912d60b5">LocalCartesian</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp;lc)</td></tr>
+<tr class="separator:a697bc82ce7af40140ba5d080912d60b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f23d2f60a3fc1455de576900fec875f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#a9f23d2f60a3fc1455de576900fec875f">~LocalCartesian</a> (void)</td></tr>
+<tr class="separator:a9f23d2f60a3fc1455de576900fec875f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a568fbdc58eaa96743f90862e73d2c300"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#a568fbdc58eaa96743f90862e73d2c300">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp;lc)</td></tr>
+<tr class="separator:a568fbdc58eaa96743f90862e73d2c300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e24f5496b78710c4a1260a10994353"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian_parameters.html">LocalCartesianParameters</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#a09e24f5496b78710c4a1260a10994353">getParameters</a> () const </td></tr>
+<tr class="separator:a09e24f5496b78710c4a1260a10994353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88c41b784720c22a22e7340e26998283"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#a88c41b784720c22a22e7340e26998283">convertFromGeodetic</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *geodeticCoordinates)</td></tr>
+<tr class="separator:a88c41b784720c22a22e7340e26998283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a338d9434e43496aa0d0c9d8325809689"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#a338d9434e43496aa0d0c9d8325809689">convertToGeodetic</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *cartesianCoordinates)</td></tr>
+<tr class="separator:a338d9434e43496aa0d0c9d8325809689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0dc96b3287e9c8af1114a84a33a4229"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#ac0dc96b3287e9c8af1114a84a33a4229">convertFromGeocentric</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *cartesianCoordinates)</td></tr>
+<tr class="separator:ac0dc96b3287e9c8af1114a84a33a4229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f101c79e08136ff73c24f1701ad63a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html#a44f101c79e08136ff73c24f1701ad63a">convertToGeocentric</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *cartesianCoordinates)</td></tr>
+<tr class="separator:a44f101c79e08136ff73c24f1701ad63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">MSP::CCS::CoordinateSystem</a></td></tr>
-<tr class="memitem:a3ff03e0870c4055d55c5b685cd6af6ca inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ff03e0870c4055d55c5b685cd6af6ca"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateSystem</b> (double _semiMajorAxis, double _flattening)</td></tr>
-<tr class="separator:a3ff03e0870c4055d55c5b685cd6af6ca inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e20d45a892cf1ee0603566147de3c9d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e20d45a892cf1ee0603566147de3c9d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>getEllipsoidParameters</b> (double *_semiMajorAxis, double *_flattening)</td></tr>
-<tr class="separator:a8e20d45a892cf1ee0603566147de3c9d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9766023795a2cac640751f0b9688cc50 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a9766023795a2cac640751f0b9688cc50">CoordinateSystem</a> ()</td></tr>
+<tr class="separator:a9766023795a2cac640751f0b9688cc50 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a432865e3a18763abfb9b89e21c17738c inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a432865e3a18763abfb9b89e21c17738c">CoordinateSystem</a> (double _semiMajorAxis, double _flattening)</td></tr>
+<tr class="separator:a432865e3a18763abfb9b89e21c17738c inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00742877a364fbc15b69aab14196f40e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a00742877a364fbc15b69aab14196f40e">~CoordinateSystem</a> ()</td></tr>
+<tr class="separator:a00742877a364fbc15b69aab14196f40e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a958167d7271548d7af0e7f24da53c4bc inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a958167d7271548d7af0e7f24da53c4bc">getEllipsoidParameters</a> (double *_semiMajorAxis, double *_flattening)</td></tr>
+<tr class="separator:a958167d7271548d7af0e7f24da53c4bc inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">MSP::CCS::CoordinateSystem</a></td></tr>
-<tr class="memitem:ab4b25504df8abc3fb23b5f03eaf6c14e inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4b25504df8abc3fb23b5f03eaf6c14e"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>semiMajorAxis</b></td></tr>
+<tr class="memitem:ab4b25504df8abc3fb23b5f03eaf6c14e inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#ab4b25504df8abc3fb23b5f03eaf6c14e">semiMajorAxis</a></td></tr>
 <tr class="separator:ab4b25504df8abc3fb23b5f03eaf6c14e inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a103abc45b36f0bc52bd992f2d19bbfc6 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a103abc45b36f0bc52bd992f2d19bbfc6"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>flattening</b></td></tr>
+<tr class="memitem:a103abc45b36f0bc52bd992f2d19bbfc6 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a103abc45b36f0bc52bd992f2d19bbfc6">flattening</a></td></tr>
 <tr class="separator:a103abc45b36f0bc52bd992f2d19bbfc6 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_local_cartesian_8h_source.html#l00095">95</a> of file <a class="el" href="_local_cartesian_8h_source.html">LocalCartesian.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a11f7aafadbf259592d58ba344411068d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">LocalCartesian::LocalCartesian </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ellipsoidSemiMajorAxis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ellipsoidFlattening</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>originLongitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>originLatitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>originHeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>orientation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00122">122</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a697bc82ce7af40140ba5d080912d60b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">LocalCartesian::LocalCartesian </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp;&#160;</td>
+          <td class="paramname"><em>lc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00214">214</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9f23d2f60a3fc1455de576900fec875f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">LocalCartesian::~LocalCartesian </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00238">238</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ac0dc96b3287e9c8af1114a84a33a4229"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> * LocalCartesian::convertFromGeocentric </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td>
+          <td class="paramname"><em>cartesianCoordinates</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00387">387</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a88c41b784720c22a22e7340e26998283"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> * LocalCartesian::convertFromGeodetic </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *&#160;</td>
+          <td class="paramname"><em>geodeticCoordinates</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00293">293</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a44f101c79e08136ff73c24f1701ad63a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> * LocalCartesian::convertToGeocentric </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td>
+          <td class="paramname"><em>cartesianCoordinates</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00444">444</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a338d9434e43496aa0d0c9d8325809689"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> * LocalCartesian::convertToGeodetic </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_cartesian_coordinates.html">MSP::CCS::CartesianCoordinates</a> *&#160;</td>
+          <td class="paramname"><em>cartesianCoordinates</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00342">342</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a09e24f5496b78710c4a1260a10994353"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian_parameters.html">LocalCartesianParameters</a> * LocalCartesian::getParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00274">274</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a568fbdc58eaa96743f90862e73d2c300"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp; LocalCartesian::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_local_cartesian.html">LocalCartesian</a> &amp;&#160;</td>
+          <td class="paramname"><em>lc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_local_cartesian_8cpp_source.html#l00245">245</a> of file <a class="el" href="_local_cartesian_8cpp_source.html">LocalCartesian.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:14 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:55 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

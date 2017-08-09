@@ -24,6 +24,32 @@ namespace MSP
         thousandthOfSecond,
         tenThousandthOfSecond
       };
+
+       static Enum toPrecision( int prec )
+       {
+          Enum val = tenthOfSecond;
+
+          if( prec == degree )
+             val = degree;
+          else if( prec == tenMinute )
+             val = tenMinute;
+          else if( prec == minute )
+             val = minute;
+          else if( prec == tenSecond )
+             val = tenSecond;
+          else if( prec == second)
+             val = second;
+          else if( prec == tenthOfSecond)
+             val = tenthOfSecond;
+          else if( prec == hundrethOfSecond)
+             val = hundrethOfSecond;
+          else if( prec == thousandthOfSecond)
+             val = thousandthOfSecond;
+          else if( prec == tenThousandthOfSecond)
+             val = tenThousandthOfSecond;
+
+          return val;
+       }
     };
   }
 }

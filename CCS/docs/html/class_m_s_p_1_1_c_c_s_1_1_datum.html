@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html">Datum</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html">Datum</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::Datum Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_datum_8h_source.html">Datum.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MSP::CCS::Datum:</div>
 <div class="dyncontent">
@@ -104,53 +107,398 @@ Inheritance diagram for MSP::CCS::Datum:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a59c37c29b893d7f8c1460033efc70c98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59c37c29b893d7f8c1460033efc70c98"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Datum</b> (long __index, char *__code, char *__ellipsoidCode, char *__name, DatumType::Enum __datumType, double __deltaX, double __deltaY, double __deltaZ, double __westLongitude, double __eastLongitude, double __southLatitude, double __northLatitude, bool __userDefined)</td></tr>
-<tr class="separator:a59c37c29b893d7f8c1460033efc70c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a242c4cb09be7d72f66966c920b909f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a242c4cb09be7d72f66966c920b909f"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>index</b> () const </td></tr>
-<tr class="separator:a4a242c4cb09be7d72f66966c920b909f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad622a876db016b79a8b255de1022626e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad622a876db016b79a8b255de1022626e"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>code</b> () const </td></tr>
-<tr class="separator:ad622a876db016b79a8b255de1022626e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60c57fb73d8c34b6dce294a7a87a39a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60c57fb73d8c34b6dce294a7a87a39a0"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipsoidCode</b> () const </td></tr>
-<tr class="separator:a60c57fb73d8c34b6dce294a7a87a39a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18ed4e6ac7e95a7b80a2017732917029"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18ed4e6ac7e95a7b80a2017732917029"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const </td></tr>
-<tr class="separator:a18ed4e6ac7e95a7b80a2017732917029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a351b0ab13c85fc70a7cfe4402489a876"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a351b0ab13c85fc70a7cfe4402489a876"></a>
-DatumType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>datumType</b> () const </td></tr>
-<tr class="separator:a351b0ab13c85fc70a7cfe4402489a876"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24cd4a1f26eae26c9203a0f0b07c797c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24cd4a1f26eae26c9203a0f0b07c797c"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>deltaX</b> () const </td></tr>
-<tr class="separator:a24cd4a1f26eae26c9203a0f0b07c797c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfccf1445d95074d4aa9c10665a7715f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adfccf1445d95074d4aa9c10665a7715f"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>deltaY</b> () const </td></tr>
-<tr class="separator:adfccf1445d95074d4aa9c10665a7715f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb36554443e7980733bd80f94c73a622"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb36554443e7980733bd80f94c73a622"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>deltaZ</b> () const </td></tr>
-<tr class="separator:aeb36554443e7980733bd80f94c73a622"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee290d6eedf576903350eb0e01370141"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee290d6eedf576903350eb0e01370141"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>westLongitude</b> () const </td></tr>
-<tr class="separator:aee290d6eedf576903350eb0e01370141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1ec24f8fc8fb8aad609c64f67a28ee9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1ec24f8fc8fb8aad609c64f67a28ee9"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>eastLongitude</b> () const </td></tr>
-<tr class="separator:ad1ec24f8fc8fb8aad609c64f67a28ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78f4186b8fd4bd318a8da49760617744"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78f4186b8fd4bd318a8da49760617744"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>southLatitude</b> () const </td></tr>
-<tr class="separator:a78f4186b8fd4bd318a8da49760617744"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a15cc7789670e4ad7dcb6ec463e2925"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a15cc7789670e4ad7dcb6ec463e2925"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>northLatitude</b> () const </td></tr>
-<tr class="separator:a3a15cc7789670e4ad7dcb6ec463e2925"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a143b0fca9ada3cc436820de9a0d13bb1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a143b0fca9ada3cc436820de9a0d13bb1"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>userDefined</b> () const </td></tr>
-<tr class="separator:a143b0fca9ada3cc436820de9a0d13bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1880ae165f7a4aef90be6e8cfaa5ff5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#ae1880ae165f7a4aef90be6e8cfaa5ff5">Datum</a> ()</td></tr>
+<tr class="separator:ae1880ae165f7a4aef90be6e8cfaa5ff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0aee8ac9e248d431c1943e78cdf4993"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#ab0aee8ac9e248d431c1943e78cdf4993">Datum</a> (long __index, const char *__code, const char *__ellipsoidCode, const char *__name, <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum_type.html#aaf81ac751d4543864bcc2634810ca515">DatumType::Enum</a> __datumType, double __deltaX, double __deltaY, double __deltaZ, double __westLongitude, double __eastLongitude, double __southLatitude, double __northLatitude, bool __userDefined)</td></tr>
+<tr class="separator:ab0aee8ac9e248d431c1943e78cdf4993"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac818754b1bf998712938d7062c4ad936"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#ac818754b1bf998712938d7062c4ad936">~Datum</a> (void)</td></tr>
+<tr class="separator:ac818754b1bf998712938d7062c4ad936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adffa329e7fa75cf61f1816a9be1b3ca1"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#adffa329e7fa75cf61f1816a9be1b3ca1">index</a> () const </td></tr>
+<tr class="separator:adffa329e7fa75cf61f1816a9be1b3ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3e151e866b8ad7f0da4a83f6b2bb75"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a5e3e151e866b8ad7f0da4a83f6b2bb75">code</a> () const </td></tr>
+<tr class="separator:a5e3e151e866b8ad7f0da4a83f6b2bb75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47cfb4b7b5992e602c979b8c75026c73"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a47cfb4b7b5992e602c979b8c75026c73">ellipsoidCode</a> () const </td></tr>
+<tr class="separator:a47cfb4b7b5992e602c979b8c75026c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74be33497c4ca91ee64c5f79e09458e1"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a74be33497c4ca91ee64c5f79e09458e1">name</a> () const </td></tr>
+<tr class="separator:a74be33497c4ca91ee64c5f79e09458e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21bc6ed348dede73804a67c5cb5d63a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum_type.html#aaf81ac751d4543864bcc2634810ca515">DatumType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a21bc6ed348dede73804a67c5cb5d63a0">datumType</a> () const </td></tr>
+<tr class="separator:a21bc6ed348dede73804a67c5cb5d63a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48b4f1c0e19c1ed264e633e9edf5b593"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a48b4f1c0e19c1ed264e633e9edf5b593">deltaX</a> () const </td></tr>
+<tr class="separator:a48b4f1c0e19c1ed264e633e9edf5b593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862e4f5eb1236e8c51589d106482ea07"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a862e4f5eb1236e8c51589d106482ea07">deltaY</a> () const </td></tr>
+<tr class="separator:a862e4f5eb1236e8c51589d106482ea07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20cf3b70bac5c24d57d6d01aa176bdd0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a20cf3b70bac5c24d57d6d01aa176bdd0">deltaZ</a> () const </td></tr>
+<tr class="separator:a20cf3b70bac5c24d57d6d01aa176bdd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f4429e72046a6641e47cc58d05ab283"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a9f4429e72046a6641e47cc58d05ab283">westLongitude</a> () const </td></tr>
+<tr class="separator:a9f4429e72046a6641e47cc58d05ab283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad05a3019591aa4d78c99320aaa909ec5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#ad05a3019591aa4d78c99320aaa909ec5">eastLongitude</a> () const </td></tr>
+<tr class="separator:ad05a3019591aa4d78c99320aaa909ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6739c071d4aae52f8552df1968044b1c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#a6739c071d4aae52f8552df1968044b1c">southLatitude</a> () const </td></tr>
+<tr class="separator:a6739c071d4aae52f8552df1968044b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab2fe97a9a379b23bbcbb0c11223b093"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#aab2fe97a9a379b23bbcbb0c11223b093">northLatitude</a> () const </td></tr>
+<tr class="separator:aab2fe97a9a379b23bbcbb0c11223b093"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe66a0bfd5f4fd16343e4d81df528a18"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum.html#afe66a0bfd5f4fd16343e4d81df528a18">userDefined</a> () const </td></tr>
+<tr class="separator:afe66a0bfd5f4fd16343e4d81df528a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_datum_8h_source.html#l00014">14</a> of file <a class="el" href="_datum_8h_source.html">Datum.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ae1880ae165f7a4aef90be6e8cfaa5ff5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Datum::Datum </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00022">22</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab0aee8ac9e248d431c1943e78cdf4993"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Datum::Datum </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>__index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__ellipsoidCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum_type.html#aaf81ac751d4543864bcc2634810ca515">DatumType::Enum</a>&#160;</td>
+          <td class="paramname"><em>__datumType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__deltaX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__deltaY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__deltaZ</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__westLongitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__eastLongitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__southLatitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__northLatitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>__userDefined</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00040">40</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac818754b1bf998712938d7062c4ad936"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Datum::~Datum </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00076">76</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a5e3e151e866b8ad7f0da4a83f6b2bb75"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * Datum::code </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00095">95</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a21bc6ed348dede73804a67c5cb5d63a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_datum_type.html#aaf81ac751d4543864bcc2634810ca515">DatumType::Enum</a> Datum::datumType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00113">113</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a48b4f1c0e19c1ed264e633e9edf5b593"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Datum::deltaX </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00119">119</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a862e4f5eb1236e8c51589d106482ea07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Datum::deltaY </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00125">125</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a20cf3b70bac5c24d57d6d01aa176bdd0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Datum::deltaZ </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00131">131</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad05a3019591aa4d78c99320aaa909ec5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Datum::eastLongitude </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00143">143</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a47cfb4b7b5992e602c979b8c75026c73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * Datum::ellipsoidCode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00101">101</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adffa329e7fa75cf61f1816a9be1b3ca1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long Datum::index </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00089">89</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a74be33497c4ca91ee64c5f79e09458e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * Datum::name </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00107">107</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aab2fe97a9a379b23bbcbb0c11223b093"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Datum::northLatitude </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00155">155</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6739c071d4aae52f8552df1968044b1c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Datum::southLatitude </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00149">149</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afe66a0bfd5f4fd16343e4d81df528a18"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Datum::userDefined </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00161">161</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9f4429e72046a6641e47cc58d05ab283"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Datum::westLongitude </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_datum_8cpp_source.html#l00137">137</a> of file <a class="el" href="_datum_8cpp_source.html">Datum.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:13 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:53 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::GARSCoordinates Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_g_a_r_s_coordinates_8h_source.html">GARSCoordinates.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MSP::CCS::GARSCoordinates:</div>
 <div class="dyncontent">
@@ -103,85 +106,317 @@ Inheritance diagram for MSP::CCS::GARSCoordinates:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a854e589f451a57949394095e1daf1b2a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a854e589f451a57949394095e1daf1b2a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GARSCoordinates</b> (CoordinateType::Enum _coordinateType)</td></tr>
-<tr class="separator:a854e589f451a57949394095e1daf1b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6493f470c31170019b88b29cdefedb7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6493f470c31170019b88b29cdefedb7b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GARSCoordinates</b> (CoordinateType::Enum _coordinateType, const char *__GARSString)</td></tr>
-<tr class="separator:a6493f470c31170019b88b29cdefedb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7092fe955516e47e97f7a139a4a17dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7092fe955516e47e97f7a139a4a17dc"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GARSCoordinates</b> (CoordinateType::Enum _coordinateType, const char *__GARSString, Precision::Enum __precision)</td></tr>
-<tr class="separator:aa7092fe955516e47e97f7a139a4a17dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a670056700b184f2408595e7a5b2cb122"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a670056700b184f2408595e7a5b2cb122"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GARSCoordinates</b> (CoordinateType::Enum _coordinateType, const char *__warningMessage, const char *__GARSString, Precision::Enum __precision)</td></tr>
-<tr class="separator:a670056700b184f2408595e7a5b2cb122"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5115b7f74ca6cc8bff5e0ef8a21e226f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5115b7f74ca6cc8bff5e0ef8a21e226f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GARSCoordinates</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp;gc)</td></tr>
-<tr class="separator:a5115b7f74ca6cc8bff5e0ef8a21e226f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2dbc86bfa6bc122c2030e0d8ad23963"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2dbc86bfa6bc122c2030e0d8ad23963"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp;gc)</td></tr>
-<tr class="separator:ac2dbc86bfa6bc122c2030e0d8ad23963"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57ce2f4697f092e351e47ea95e5746ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a57ce2f4697f092e351e47ea95e5746ac"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (char __GARSString[8])</td></tr>
-<tr class="separator:a57ce2f4697f092e351e47ea95e5746ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13eea8e0a4c4ce3434d0f48fa8e50d66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13eea8e0a4c4ce3434d0f48fa8e50d66"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>GARSString</b> ()</td></tr>
-<tr class="separator:a13eea8e0a4c4ce3434d0f48fa8e50d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4df2a2b6834b86576e54a9bdb2702e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4df2a2b6834b86576e54a9bdb2702e0"></a>
-Precision::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>precision</b> () const </td></tr>
-<tr class="separator:af4df2a2b6834b86576e54a9bdb2702e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c07ad3e55472156001808e074782382"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#a6c07ad3e55472156001808e074782382">GARSCoordinates</a> ()</td></tr>
+<tr class="separator:a6c07ad3e55472156001808e074782382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ebac9201e5ff0c98ed2f5cb8972735"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#aa7ebac9201e5ff0c98ed2f5cb8972735">GARSCoordinates</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a>)</td></tr>
+<tr class="separator:aa7ebac9201e5ff0c98ed2f5cb8972735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb83f7593fc2bcea4bd3ce43a3b2579"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#a3fb83f7593fc2bcea4bd3ce43a3b2579">GARSCoordinates</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a>, const char *__GARSString)</td></tr>
+<tr class="separator:a3fb83f7593fc2bcea4bd3ce43a3b2579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02fa74c45f89a151b61c3a49385ac1e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#a02fa74c45f89a151b61c3a49385ac1e0">GARSCoordinates</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a>, const char *__GARSString, <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2">Precision::Enum</a> __precision)</td></tr>
+<tr class="separator:a02fa74c45f89a151b61c3a49385ac1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6466c0108bb0ea69f9577870afddf228"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#a6466c0108bb0ea69f9577870afddf228">GARSCoordinates</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a>, const char *__warningMessage, const char *__GARSString, <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2">Precision::Enum</a> __precision)</td></tr>
+<tr class="separator:a6466c0108bb0ea69f9577870afddf228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3de2d3269170533186278bc1b97ac84"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#ac3de2d3269170533186278bc1b97ac84">GARSCoordinates</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp;gc)</td></tr>
+<tr class="separator:ac3de2d3269170533186278bc1b97ac84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac829a9284ae3b7ab2a6b8a560ec9bdb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#ac829a9284ae3b7ab2a6b8a560ec9bdb5">~GARSCoordinates</a> ()</td></tr>
+<tr class="separator:ac829a9284ae3b7ab2a6b8a560ec9bdb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add2106469b1a532dcb1aefc30be101fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#add2106469b1a532dcb1aefc30be101fe">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp;gc)</td></tr>
+<tr class="separator:add2106469b1a532dcb1aefc30be101fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884b79035bc8c77e3879a9d7ffc165dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#a884b79035bc8c77e3879a9d7ffc165dd">set</a> (char __GARSString[8])</td></tr>
+<tr class="separator:a884b79035bc8c77e3879a9d7ffc165dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9f534f76158772ff411dcad6db1dcb6"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#ab9f534f76158772ff411dcad6db1dcb6">GARSString</a> ()</td></tr>
+<tr class="separator:ab9f534f76158772ff411dcad6db1dcb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2476ad98900e4bb0847cffeeda9a12f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2">Precision::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html#a2476ad98900e4bb0847cffeeda9a12f6">precision</a> () const </td></tr>
+<tr class="separator:a2476ad98900e4bb0847cffeeda9a12f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">MSP::CCS::CoordinateTuple</a></td></tr>
-<tr class="memitem:a334a205c573964b6d489ecfbb49f4985 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a334a205c573964b6d489ecfbb49f4985"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateTuple</b> (MSP::CCS::CoordinateType::Enum __coordinateType)</td></tr>
-<tr class="separator:a334a205c573964b6d489ecfbb49f4985 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d8cf4cf38e1c86486b5be561357c7b2 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d8cf4cf38e1c86486b5be561357c7b2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateTuple</b> (MSP::CCS::CoordinateType::Enum __coordinateType, const char *__warningMessage)</td></tr>
-<tr class="separator:a1d8cf4cf38e1c86486b5be561357c7b2 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad122cdccb2a64dff60a77df3aa4989d5 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad122cdccb2a64dff60a77df3aa4989d5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateTuple</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;ct)</td></tr>
-<tr class="separator:ad122cdccb2a64dff60a77df3aa4989d5 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8209719802bd811cb3255378755f19c1 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8209719802bd811cb3255378755f19c1"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;ct)</td></tr>
-<tr class="separator:a8209719802bd811cb3255378755f19c1 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb9099817238ddb2cc03d1fda53fd1b3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb9099817238ddb2cc03d1fda53fd1b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (MSP::CCS::CoordinateType::Enum __coordinateType, const char *__warningMessage, const char *__errorMessage)</td></tr>
-<tr class="separator:aeb9099817238ddb2cc03d1fda53fd1b3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15354b99b77858bb68e5149cd5ef9cd4 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15354b99b77858bb68e5149cd5ef9cd4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCoordinateType</b> (MSP::CCS::CoordinateType::Enum __coordinateType)</td></tr>
-<tr class="separator:a15354b99b77858bb68e5149cd5ef9cd4 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9164233eb79a3298a4f7110030608492 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9164233eb79a3298a4f7110030608492"></a>
-CoordinateType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>coordinateType</b> () const </td></tr>
-<tr class="separator:a9164233eb79a3298a4f7110030608492 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70f5ac18a031de30e1cedc9aa0442b19 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70f5ac18a031de30e1cedc9aa0442b19"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setErrorMessage</b> (const char *__errorMessage)</td></tr>
-<tr class="separator:a70f5ac18a031de30e1cedc9aa0442b19 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a668f6ab0d046db457c0786b662e2d6cb inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a668f6ab0d046db457c0786b662e2d6cb"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>errorMessage</b> () const </td></tr>
-<tr class="separator:a668f6ab0d046db457c0786b662e2d6cb inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70a5ecfe6d0444d68c0343935408c92a inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70a5ecfe6d0444d68c0343935408c92a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setWarningMessage</b> (const char *__warningMessage)</td></tr>
-<tr class="separator:a70a5ecfe6d0444d68c0343935408c92a inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca0562fcd6e3958cc742d5962d13bd2f inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca0562fcd6e3958cc742d5962d13bd2f"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>warningMessage</b> () const </td></tr>
-<tr class="separator:aca0562fcd6e3958cc742d5962d13bd2f inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2a6e79c1824221f28516eca47727ee9 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#af2a6e79c1824221f28516eca47727ee9">CoordinateTuple</a> ()</td></tr>
+<tr class="separator:af2a6e79c1824221f28516eca47727ee9 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a996a72edbca076809a9494e8b5aab944 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a996a72edbca076809a9494e8b5aab944">CoordinateTuple</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType)</td></tr>
+<tr class="separator:a996a72edbca076809a9494e8b5aab944 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9c037c4a02715d104a36b4089aaac3d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#aa9c037c4a02715d104a36b4089aaac3d">CoordinateTuple</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType, const char *__warningMessage)</td></tr>
+<tr class="separator:aa9c037c4a02715d104a36b4089aaac3d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a952144c44dd68fcc8bf33cc3e41d6480 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a952144c44dd68fcc8bf33cc3e41d6480">CoordinateTuple</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;ct)</td></tr>
+<tr class="separator:a952144c44dd68fcc8bf33cc3e41d6480 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad96e931bcb8381ca886901b3c124bd65 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#ad96e931bcb8381ca886901b3c124bd65">~CoordinateTuple</a> ()</td></tr>
+<tr class="separator:ad96e931bcb8381ca886901b3c124bd65 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6dd81a8e8a27c42ed949cc1fff7183e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#ae6dd81a8e8a27c42ed949cc1fff7183e">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;ct)</td></tr>
+<tr class="separator:ae6dd81a8e8a27c42ed949cc1fff7183e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab45935a903abb8df9fc34bba74157a07 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#ab45935a903abb8df9fc34bba74157a07">set</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType, const char *__warningMessage, const char *__errorMessage)</td></tr>
+<tr class="separator:ab45935a903abb8df9fc34bba74157a07 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261933f0a43a5ef385bf8318f0881e3d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a261933f0a43a5ef385bf8318f0881e3d">setCoordinateType</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType)</td></tr>
+<tr class="separator:a261933f0a43a5ef385bf8318f0881e3d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6abcb8ecab9f0900562791cb551a50a2 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a6abcb8ecab9f0900562791cb551a50a2">coordinateType</a> () const </td></tr>
+<tr class="separator:a6abcb8ecab9f0900562791cb551a50a2 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c496ec196ec947b8422a7ed9221e826 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a9c496ec196ec947b8422a7ed9221e826">setErrorMessage</a> (const char *__errorMessage)</td></tr>
+<tr class="separator:a9c496ec196ec947b8422a7ed9221e826 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9b8534d0a9e2fe16ca7800994c606bd inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#af9b8534d0a9e2fe16ca7800994c606bd">errorMessage</a> () const </td></tr>
+<tr class="separator:af9b8534d0a9e2fe16ca7800994c606bd inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd15733bba983388c6e2541901de162e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#acd15733bba983388c6e2541901de162e">setWarningMessage</a> (const char *__warningMessage)</td></tr>
+<tr class="separator:acd15733bba983388c6e2541901de162e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad809739421cc0b3d30c52c02bc901a55 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#ad809739421cc0b3d30c52c02bc901a55">warningMessage</a> () const </td></tr>
+<tr class="separator:ad809739421cc0b3d30c52c02bc901a55 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">MSP::CCS::CoordinateTuple</a></td></tr>
-<tr class="memitem:a3e728588a59f9d3efa8987ac3a120401 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e728588a59f9d3efa8987ac3a120401"></a>
-CoordinateType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>_coordinateType</b></td></tr>
+<tr class="memitem:a3e728588a59f9d3efa8987ac3a120401 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a></td></tr>
 <tr class="separator:a3e728588a59f9d3efa8987ac3a120401 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83b16bf74d2f26c593a2b82f11c32e9a inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83b16bf74d2f26c593a2b82f11c32e9a"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>_errorMessage</b> [500]</td></tr>
+<tr class="memitem:a83b16bf74d2f26c593a2b82f11c32e9a inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a83b16bf74d2f26c593a2b82f11c32e9a">_errorMessage</a> [500]</td></tr>
 <tr class="separator:a83b16bf74d2f26c593a2b82f11c32e9a inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b24c147df366470bd58eb16ca40dc27 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b24c147df366470bd58eb16ca40dc27"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>_warningMessage</b> [500]</td></tr>
+<tr class="memitem:a7b24c147df366470bd58eb16ca40dc27 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a7b24c147df366470bd58eb16ca40dc27">_warningMessage</a> [500]</td></tr>
 <tr class="separator:a7b24c147df366470bd58eb16ca40dc27 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8h_source.html#l00016">16</a> of file <a class="el" href="_g_a_r_s_coordinates_8h_source.html">GARSCoordinates.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a6c07ad3e55472156001808e074782382"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GARSCoordinates::GARSCoordinates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00011">11</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa7ebac9201e5ff0c98ed2f5cb8972735"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GARSCoordinates::GARSCoordinates </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00019">19</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3fb83f7593fc2bcea4bd3ce43a3b2579"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GARSCoordinates::GARSCoordinates </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__GARSString</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00027">27</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a02fa74c45f89a151b61c3a49385ac1e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GARSCoordinates::GARSCoordinates </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__GARSString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2">Precision::Enum</a>&#160;</td>
+          <td class="paramname"><em>__precision</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00036">36</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6466c0108bb0ea69f9577870afddf228"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GARSCoordinates::GARSCoordinates </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__warningMessage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__GARSString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2">Precision::Enum</a>&#160;</td>
+          <td class="paramname"><em>__precision</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00045">45</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac3de2d3269170533186278bc1b97ac84"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GARSCoordinates::GARSCoordinates </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp;&#160;</td>
+          <td class="paramname"><em>gc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00058">58</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac829a9284ae3b7ab2a6b8a560ec9bdb5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GARSCoordinates::~GARSCoordinates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00073">73</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ab9f534f76158772ff411dcad6db1dcb6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * GARSCoordinates::GARSString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00105">105</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="add2106469b1a532dcb1aefc30be101fe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp; GARSCoordinates::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s_coordinates.html">GARSCoordinates</a> &amp;&#160;</td>
+          <td class="paramname"><em>gc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00078">78</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2476ad98900e4bb0847cffeeda9a12f6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_precision.html#a7b0009095ed9c9f78561160f85fca6b2">Precision::Enum</a> GARSCoordinates::precision </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00111">111</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a884b79035bc8c77e3879a9d7ffc165dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GARSCoordinates::set </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>__GARSString</em>[8]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html#l00098">98</a> of file <a class="el" href="_g_a_r_s_coordinates_8cpp_source.html">GARSCoordinates.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:16 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:57 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html">ErrorMessages</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html">ErrorMessages</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,191 +92,1460 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::ErrorMessages Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:adaca5f6d36de1212cd4c58692d5e6c70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adaca5f6d36de1212cd4c58692d5e6c70"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>geoidFileOpenError</b></td></tr>
-<tr class="separator:adaca5f6d36de1212cd4c58692d5e6c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8a59e315361a3171aa87839c04f1898"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8a59e315361a3171aa87839c04f1898"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>geoidFileParseError</b></td></tr>
-<tr class="separator:ae8a59e315361a3171aa87839c04f1898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a822a13463b0df19dcd1d82faf45df0b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a822a13463b0df19dcd1d82faf45df0b1"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipsoidFileOpenError</b></td></tr>
-<tr class="separator:a822a13463b0df19dcd1d82faf45df0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb2f21924d0e18e13ef22d94fdc71f14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb2f21924d0e18e13ef22d94fdc71f14"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipsoidFileCloseError</b></td></tr>
-<tr class="separator:adb2f21924d0e18e13ef22d94fdc71f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe22c23f39b97b6f0815f86548e3c8be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe22c23f39b97b6f0815f86548e3c8be"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipsoidFileParseError</b></td></tr>
-<tr class="separator:afe22c23f39b97b6f0815f86548e3c8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0136e756bd2c7486eefd13c7f53ea5fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0136e756bd2c7486eefd13c7f53ea5fa"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipsoidOverflow</b></td></tr>
-<tr class="separator:a0136e756bd2c7486eefd13c7f53ea5fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0589481d6185c7aaaf2f2d3b68ea3c6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0589481d6185c7aaaf2f2d3b68ea3c6e"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipse</b></td></tr>
-<tr class="separator:a0589481d6185c7aaaf2f2d3b68ea3c6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a459e3e22f0c28546cd3033d2999554f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a459e3e22f0c28546cd3033d2999554f1"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>invalidEllipsoidCode</b></td></tr>
-<tr class="separator:a459e3e22f0c28546cd3033d2999554f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef1a16fa19b696a6d31bfa7f688857ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef1a16fa19b696a6d31bfa7f688857ec"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datumFileOpenError</b></td></tr>
-<tr class="separator:aef1a16fa19b696a6d31bfa7f688857ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ead309ac9821f85f7a76d93ee3e6b85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ead309ac9821f85f7a76d93ee3e6b85"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datumFileCloseError</b></td></tr>
-<tr class="separator:a1ead309ac9821f85f7a76d93ee3e6b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1928321a9c4c49b9316107569d61091a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1928321a9c4c49b9316107569d61091a"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datumFileParseError</b></td></tr>
-<tr class="separator:a1928321a9c4c49b9316107569d61091a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3a9fa5af0860c8583d1a5d2028470b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3a9fa5af0860c8583d1a5d2028470b7"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datumDomain</b></td></tr>
-<tr class="separator:ab3a9fa5af0860c8583d1a5d2028470b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62fe16bbdf14941cf61a4a0c230e9cf1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62fe16bbdf14941cf61a4a0c230e9cf1"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datumOverflow</b></td></tr>
-<tr class="separator:a62fe16bbdf14941cf61a4a0c230e9cf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d39f3cd0b1e079d71829e27af76940c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d39f3cd0b1e079d71829e27af76940c"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datumRotation</b></td></tr>
-<tr class="separator:a7d39f3cd0b1e079d71829e27af76940c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a150033c24df19bbfcbc73dffe81b3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a150033c24df19bbfcbc73dffe81b3c"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datumSigma</b></td></tr>
-<tr class="separator:a2a150033c24df19bbfcbc73dffe81b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3289494c43caf7048615554db651c9f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3289494c43caf7048615554db651c9f5"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datumType</b></td></tr>
-<tr class="separator:a3289494c43caf7048615554db651c9f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a073f753fb3b8bbd83deeeab1c45b623d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a073f753fb3b8bbd83deeeab1c45b623d"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>invalidDatumCode</b></td></tr>
-<tr class="separator:a073f753fb3b8bbd83deeeab1c45b623d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7982f9d5c7de99700211416bd0488540"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7982f9d5c7de99700211416bd0488540"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>notUserDefined</b></td></tr>
-<tr class="separator:a7982f9d5c7de99700211416bd0488540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaee72c5bf8364daa256dbe3c123a31eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaee72c5bf8364daa256dbe3c123a31eb"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipseInUse</b></td></tr>
-<tr class="separator:aaee72c5bf8364daa256dbe3c123a31eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9ac443deb4359bee1b5b664d412da64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9ac443deb4359bee1b5b664d412da64"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>semiMajorAxis</b></td></tr>
-<tr class="separator:ac9ac443deb4359bee1b5b664d412da64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0baeeb1e5cb006cc6bb82f788b53b02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0baeeb1e5cb006cc6bb82f788b53b02"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>ellipsoidFlattening</b></td></tr>
-<tr class="separator:ae0baeeb1e5cb006cc6bb82f788b53b02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a955f377fb7bac0e19e86736ccd6f1433"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a955f377fb7bac0e19e86736ccd6f1433"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>orientation</b></td></tr>
-<tr class="separator:a955f377fb7bac0e19e86736ccd6f1433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59ef9c6af331cfb1801b111ab7b07cae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59ef9c6af331cfb1801b111ab7b07cae"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>originLatitude</b></td></tr>
-<tr class="separator:a59ef9c6af331cfb1801b111ab7b07cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92a732b2d47fcf9d371ff5f860d2b06f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92a732b2d47fcf9d371ff5f860d2b06f"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>originLongitude</b></td></tr>
-<tr class="separator:a92a732b2d47fcf9d371ff5f860d2b06f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3565cc4245b6a816ce04e727e3b67c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3565cc4245b6a816ce04e727e3b67c0"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>centralMeridian</b></td></tr>
-<tr class="separator:ad3565cc4245b6a816ce04e727e3b67c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfdfbcab8025190633459f9c98d38ed5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfdfbcab8025190633459f9c98d38ed5"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>scaleFactor</b></td></tr>
-<tr class="separator:acfdfbcab8025190633459f9c98d38ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1592bb8228e388da9851c1b4d50e1656"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1592bb8228e388da9851c1b4d50e1656"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>zone</b></td></tr>
-<tr class="separator:a1592bb8228e388da9851c1b4d50e1656"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f4b4ce109613145811a284c6e6b9112"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f4b4ce109613145811a284c6e6b9112"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>zoneOverride</b></td></tr>
-<tr class="separator:a4f4b4ce109613145811a284c6e6b9112"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d3d1a0548f4a2203559a2a18aa8278a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d3d1a0548f4a2203559a2a18aa8278a"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>standardParallel1</b></td></tr>
-<tr class="separator:a5d3d1a0548f4a2203559a2a18aa8278a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab97ac146757d2f8d19b21c4036d75ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab97ac146757d2f8d19b21c4036d75ea"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>standardParallel2</b></td></tr>
-<tr class="separator:aab97ac146757d2f8d19b21c4036d75ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8a0d6b56f0549bc204e8244970c0f49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8a0d6b56f0549bc204e8244970c0f49"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>standardParallel1_2</b></td></tr>
-<tr class="separator:af8a0d6b56f0549bc204e8244970c0f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5b6f50d7b7cab9f743bd53c6b38447a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5b6f50d7b7cab9f743bd53c6b38447a"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>standardParallelHemisphere</b></td></tr>
-<tr class="separator:ae5b6f50d7b7cab9f743bd53c6b38447a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63b9dd95466cb3525645910943187690"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63b9dd95466cb3525645910943187690"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>precision</b></td></tr>
-<tr class="separator:a63b9dd95466cb3525645910943187690"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf357c8712287c9180b242b1518b2c3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf357c8712287c9180b242b1518b2c3a"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>bngEllipsoid</b></td></tr>
-<tr class="separator:aaf357c8712287c9180b242b1518b2c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f32b6be8f4cc6831b04175222fdfebf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f32b6be8f4cc6831b04175222fdfebf"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>nzmgEllipsoid</b></td></tr>
-<tr class="separator:a9f32b6be8f4cc6831b04175222fdfebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69f2bec6f40ab325a6a176c004277034"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69f2bec6f40ab325a6a176c004277034"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>latitude1</b></td></tr>
-<tr class="separator:a69f2bec6f40ab325a6a176c004277034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae60f09d3cb0c20b7ff9746fc06c59ec3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae60f09d3cb0c20b7ff9746fc06c59ec3"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>latitude2</b></td></tr>
-<tr class="separator:ae60f09d3cb0c20b7ff9746fc06c59ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0d3389d82cb936e3fbaaee5f21e2568"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0d3389d82cb936e3fbaaee5f21e2568"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>latitude1_2</b></td></tr>
-<tr class="separator:af0d3389d82cb936e3fbaaee5f21e2568"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08a68a600faeb44ee51f80e4ee74feb3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08a68a600faeb44ee51f80e4ee74feb3"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>longitude1</b></td></tr>
-<tr class="separator:a08a68a600faeb44ee51f80e4ee74feb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8344d6cb406a525f490611f2cee8d1e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8344d6cb406a525f490611f2cee8d1e7"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>longitude2</b></td></tr>
-<tr class="separator:a8344d6cb406a525f490611f2cee8d1e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cead61099dccb1598ef8623b3f6a717"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cead61099dccb1598ef8623b3f6a717"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>omercHemisphere</b></td></tr>
-<tr class="separator:a4cead61099dccb1598ef8623b3f6a717"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13b91bbd80f1bdb3a4ec3b03bc133056"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13b91bbd80f1bdb3a4ec3b03bc133056"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>hemisphere</b></td></tr>
-<tr class="separator:a13b91bbd80f1bdb3a4ec3b03bc133056"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7be961daa7d29d805a7dcfef56c4e4f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7be961daa7d29d805a7dcfef56c4e4f3"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>radius</b></td></tr>
-<tr class="separator:a7be961daa7d29d805a7dcfef56c4e4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92e286e3831839f9778103427860bc8a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92e286e3831839f9778103427860bc8a"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>latitude</b></td></tr>
-<tr class="separator:a92e286e3831839f9778103427860bc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e5a3201cfe01a8fc9bbd1a655680216"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e5a3201cfe01a8fc9bbd1a655680216"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>longitude</b></td></tr>
-<tr class="separator:a6e5a3201cfe01a8fc9bbd1a655680216"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac61444f986cc8c8c75fb5029a7aafdb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac61444f986cc8c8c75fb5029a7aafdb8"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>easting</b></td></tr>
-<tr class="separator:ac61444f986cc8c8c75fb5029a7aafdb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc1e5c77980cf509975667d823acb479"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc1e5c77980cf509975667d823acb479"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>northing</b></td></tr>
-<tr class="separator:abc1e5c77980cf509975667d823acb479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2527e124ab1857aebfb65dd3e65a952e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2527e124ab1857aebfb65dd3e65a952e"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>projection</b></td></tr>
-<tr class="separator:a2527e124ab1857aebfb65dd3e65a952e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4144503240b8a48691d0cd5129fd0e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4144503240b8a48691d0cd5129fd0e4"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>invalidArea</b></td></tr>
-<tr class="separator:af4144503240b8a48691d0cd5129fd0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac15bee13721f98e44182b12fa6807ee3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac15bee13721f98e44182b12fa6807ee3"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>bngString</b></td></tr>
-<tr class="separator:ac15bee13721f98e44182b12fa6807ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1a18247930bac365b753352c4cd0260"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1a18247930bac365b753352c4cd0260"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>garsString</b></td></tr>
-<tr class="separator:ac1a18247930bac365b753352c4cd0260"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b2d3ae0291eaee10df7c268ca0667b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b2d3ae0291eaee10df7c268ca0667b2"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>georefString</b></td></tr>
-<tr class="separator:a5b2d3ae0291eaee10df7c268ca0667b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe454a24b3f75139e6c275baf1ff742a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe454a24b3f75139e6c275baf1ff742a"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>mgrsString</b></td></tr>
-<tr class="separator:abe454a24b3f75139e6c275baf1ff742a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c9fe3f8fee3b40a4b3ae290513017fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c9fe3f8fee3b40a4b3ae290513017fb"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>usngString</b></td></tr>
-<tr class="separator:a7c9fe3f8fee3b40a4b3ae290513017fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3f865def9912f56c1301ec54343de69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3f865def9912f56c1301ec54343de69"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>invalidIndex</b></td></tr>
-<tr class="separator:aa3f865def9912f56c1301ec54343de69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a115c3a1e33e814627e4c984219feb82f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a115c3a1e33e814627e4c984219feb82f"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>invalidName</b></td></tr>
-<tr class="separator:a115c3a1e33e814627e4c984219feb82f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad41f16b4718119331db0f81b09a7bff8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad41f16b4718119331db0f81b09a7bff8"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>invalidType</b></td></tr>
-<tr class="separator:ad41f16b4718119331db0f81b09a7bff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad503c6d8fd00ce9ec545f9083740fe6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad503c6d8fd00ce9ec545f9083740fe6"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>latitude_min</b></td></tr>
-<tr class="separator:aad503c6d8fd00ce9ec545f9083740fe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28d0992ac4a4c2880ba6ff237eef2daf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28d0992ac4a4c2880ba6ff237eef2daf"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>longitude_min</b></td></tr>
-<tr class="separator:a28d0992ac4a4c2880ba6ff237eef2daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adae51275c4c807fff1612d58573dd3da"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#adae51275c4c807fff1612d58573dd3da">geoidFileOpenError</a> = &quot;Unable to locate geoid data file\n&quot;</td></tr>
+<tr class="separator:adae51275c4c807fff1612d58573dd3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a015e073c6eecf8f0fff5b251c4bc0e1b"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a015e073c6eecf8f0fff5b251c4bc0e1b">geoidFileParseError</a> = &quot;Unable to read geoid file\n&quot;</td></tr>
+<tr class="separator:a015e073c6eecf8f0fff5b251c4bc0e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49f1dd0b925a5941bd961b78d232bb4f"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a49f1dd0b925a5941bd961b78d232bb4f">ellipsoidFileOpenError</a> = &quot;Unable to locate ellipsoid data file: ellips.dat\n&quot;</td></tr>
+<tr class="separator:a49f1dd0b925a5941bd961b78d232bb4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af362d586d481b77b4a9d7bb7cfc5d5f6"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#af362d586d481b77b4a9d7bb7cfc5d5f6">ellipsoidFileCloseError</a> = &quot;Unable to close ellipsoid file: ellips.dat\n&quot;</td></tr>
+<tr class="separator:af362d586d481b77b4a9d7bb7cfc5d5f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3fc29ff8ef9f9c117a3a19806acb2ee"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#aa3fc29ff8ef9f9c117a3a19806acb2ee">ellipsoidFileParseError</a> = &quot;Unable to read ellipsoid file: ellips.dat\n&quot;</td></tr>
+<tr class="separator:aa3fc29ff8ef9f9c117a3a19806acb2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32276550a54d0f48f5b10d369e4146b0"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a32276550a54d0f48f5b10d369e4146b0">ellipse</a> = &quot;Ellipsoid library not initialized\n&quot;</td></tr>
+<tr class="separator:a32276550a54d0f48f5b10d369e4146b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1f78377254233410ebe053736bfd521"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#af1f78377254233410ebe053736bfd521">invalidEllipsoidCode</a> = &quot;Invalid ellipsoid code\n&quot;</td></tr>
+<tr class="separator:af1f78377254233410ebe053736bfd521"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cdfce7c83a83dbc86847b70a959b148"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a8cdfce7c83a83dbc86847b70a959b148">datumFileOpenError</a> = &quot;Unable to locate datum data file\n&quot;</td></tr>
+<tr class="separator:a8cdfce7c83a83dbc86847b70a959b148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e57b486bdd453471dbc60cf5f78f919"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a2e57b486bdd453471dbc60cf5f78f919">datumFileCloseError</a> = &quot;Unable to close datum file\n&quot;</td></tr>
+<tr class="separator:a2e57b486bdd453471dbc60cf5f78f919"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9db0df83aee36381b60ae057f403d942"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a9db0df83aee36381b60ae057f403d942">datumFileParseError</a> = &quot;Unable to read datum file\n&quot;</td></tr>
+<tr class="separator:a9db0df83aee36381b60ae057f403d942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4477988dd16d7c273be8570b0e37f48"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#ae4477988dd16d7c273be8570b0e37f48">datumDomain</a> = &quot;Invalid local datum domain of validity\n&quot;</td></tr>
+<tr class="separator:ae4477988dd16d7c273be8570b0e37f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad7d401d3b2dce0a7512b580165f0d95"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#aad7d401d3b2dce0a7512b580165f0d95">datumRotation</a> = &quot;Rotation values must be between -60.0 and 60.0&quot;</td></tr>
+<tr class="separator:aad7d401d3b2dce0a7512b580165f0d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ba2cbdf62bce53f9bdfc9fe596cc5da"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a7ba2cbdf62bce53f9bdfc9fe596cc5da">datumSigma</a> = &quot;Standard error values must be positive, or -1 if unknown\n&quot;</td></tr>
+<tr class="separator:a7ba2cbdf62bce53f9bdfc9fe596cc5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addf93fb2431690be1cb20c747c4bf135"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#addf93fb2431690be1cb20c747c4bf135">datumType</a> = &quot;Invalid datum type\n&quot;</td></tr>
+<tr class="separator:addf93fb2431690be1cb20c747c4bf135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a847804eff5325e07fead8eb8cf88f01d"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a847804eff5325e07fead8eb8cf88f01d">invalidDatumCode</a> = &quot;Invalid datum code\n&quot;</td></tr>
+<tr class="separator:a847804eff5325e07fead8eb8cf88f01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c9afc4f1e4d50d06d7454e7a5308a1"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a31c9afc4f1e4d50d06d7454e7a5308a1">notUserDefined</a> = &quot;Specified code not user defined\n&quot;</td></tr>
+<tr class="separator:a31c9afc4f1e4d50d06d7454e7a5308a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83215452515411bb0e8ebbfc19ac44d3"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a83215452515411bb0e8ebbfc19ac44d3">ellipseInUse</a> = &quot;Ellipsoid is in use by a datum\n&quot;</td></tr>
+<tr class="separator:a83215452515411bb0e8ebbfc19ac44d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f494a85ff1b96b4ada5511f3bcc914"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a75f494a85ff1b96b4ada5511f3bcc914">semiMajorAxis</a> = &quot;Ellipsoid semi-major axis must be greater than zero\n&quot;</td></tr>
+<tr class="separator:a75f494a85ff1b96b4ada5511f3bcc914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac376fe1588b8d462711455ba1ff73fb0"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#ac376fe1588b8d462711455ba1ff73fb0">ellipsoidFlattening</a> = &quot;Inverse flattening must be between 250 and 350\n&quot;</td></tr>
+<tr class="separator:ac376fe1588b8d462711455ba1ff73fb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc94a4ee31f8b71cd0f9f4a25ffffb00"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#abc94a4ee31f8b71cd0f9f4a25ffffb00">orientation</a> = &quot;Orientation out of range\n&quot;</td></tr>
+<tr class="separator:abc94a4ee31f8b71cd0f9f4a25ffffb00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a801c71c17f54875371096ac56784f924"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a801c71c17f54875371096ac56784f924">originLatitude</a> = &quot;Origin Latitude (or Standard Parallel or Latitude of True Scale) out of range\n&quot;</td></tr>
+<tr class="separator:a801c71c17f54875371096ac56784f924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bcca3fcd965d3fc669851a875b4002b"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a6bcca3fcd965d3fc669851a875b4002b">originLongitude</a> = &quot;Origin Longitude (or Longitude Down from Pole) out of range\n&quot;</td></tr>
+<tr class="separator:a6bcca3fcd965d3fc669851a875b4002b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a101516ca8b915b90297b9e2abf28bd6f"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a101516ca8b915b90297b9e2abf28bd6f">centralMeridian</a> = &quot;Central Meridian out of range\n&quot;</td></tr>
+<tr class="separator:a101516ca8b915b90297b9e2abf28bd6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63c7805192e3704ac35bfdfd38af79bb"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a63c7805192e3704ac35bfdfd38af79bb">scaleFactor</a> = &quot;Scale Factor out of range\n&quot;</td></tr>
+<tr class="separator:a63c7805192e3704ac35bfdfd38af79bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f3977014328500c8e58a338ba2cc330"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a4f3977014328500c8e58a338ba2cc330">zone</a> = &quot;Invalid Zone\n&quot;</td></tr>
+<tr class="separator:a4f3977014328500c8e58a338ba2cc330"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66f007b4a67f66c7a657dd3068e7e664"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a66f007b4a67f66c7a657dd3068e7e664">zoneOverride</a> = &quot;Invalid Zone Override\n&quot;</td></tr>
+<tr class="separator:a66f007b4a67f66c7a657dd3068e7e664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c2dfceebd518fdbc9bd67fdf2dd964"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a42c2dfceebd518fdbc9bd67fdf2dd964">standardParallel1</a> = &quot;Invalid 1st Standard Parallel\n&quot;</td></tr>
+<tr class="separator:a42c2dfceebd518fdbc9bd67fdf2dd964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a99ae6b343fd3694826423fdb9a6a27"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a7a99ae6b343fd3694826423fdb9a6a27">standardParallel2</a> = &quot;Invalid 2nd Standard Parallel\n&quot;</td></tr>
+<tr class="separator:a7a99ae6b343fd3694826423fdb9a6a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2358af0c5d50e0f1a346601d2d12a16"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#ae2358af0c5d50e0f1a346601d2d12a16">standardParallel1_2</a> = &quot;1st &amp; 2nd Standard Parallels cannot both be zero\n&quot;</td></tr>
+<tr class="separator:ae2358af0c5d50e0f1a346601d2d12a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1938a00421410eb476d75e72599f6800"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1938a00421410eb476d75e72599f6800">standardParallelHemisphere</a> = &quot;Standard Parallels cannot be equal and opposite latitudes\n&quot;</td></tr>
+<tr class="separator:a1938a00421410eb476d75e72599f6800"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c35a556546726adc3458ed1fd4546ea"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1c35a556546726adc3458ed1fd4546ea">precision</a> = &quot;Precision must be between 0 and 5\n&quot;</td></tr>
+<tr class="separator:a1c35a556546726adc3458ed1fd4546ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a118aae65e6d197d7b4fb7e3d6692a498"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a118aae65e6d197d7b4fb7e3d6692a498">bngEllipsoid</a> = &quot;British National Grid ellipsoid must be Airy\n&quot;</td></tr>
+<tr class="separator:a118aae65e6d197d7b4fb7e3d6692a498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcf9e7df3fc8863696e35a29b03ec7b1"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#adcf9e7df3fc8863696e35a29b03ec7b1">nzmgEllipsoid</a> = &quot;New Zealand Map Grid ellipsoid must be International\n&quot;</td></tr>
+<tr class="separator:adcf9e7df3fc8863696e35a29b03ec7b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16add3450c51922f8f5a56429a611202"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a16add3450c51922f8f5a56429a611202">webmEllipsoid</a> = &quot;Web <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_mercator.html">Mercator</a> ellipsoid must be WGS84\n&quot;</td></tr>
+<tr class="separator:a16add3450c51922f8f5a56429a611202"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c37752267a667fb9d3225399735a465"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a4c37752267a667fb9d3225399735a465">webmConversionTo</a> = &quot;GeoTrans does not allow conversion to Web Mercator\n&quot;</td></tr>
+<tr class="separator:a4c37752267a667fb9d3225399735a465"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e9729a0994800c59573b8a1c106a658"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a3e9729a0994800c59573b8a1c106a658">webmInvalidTargetCS</a> = &quot;Web <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_mercator.html">Mercator</a> can only be converted to Geodetic.\n&quot;</td></tr>
+<tr class="separator:a3e9729a0994800c59573b8a1c106a658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbd572ad9b9beb7bc3d59229aa8f43dd"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#adbd572ad9b9beb7bc3d59229aa8f43dd">latitude1</a> = &quot;Latitude 1 out of range\n&quot;</td></tr>
+<tr class="separator:adbd572ad9b9beb7bc3d59229aa8f43dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d2e0029688224b6961b0f838e2773eb"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1d2e0029688224b6961b0f838e2773eb">latitude2</a> = &quot;Latitude 2 out of range\n&quot;</td></tr>
+<tr class="separator:a1d2e0029688224b6961b0f838e2773eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a104e1fddad345142fd460ef7fd7e9fec"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a104e1fddad345142fd460ef7fd7e9fec">latitude1_2</a> = &quot;Latitude 1 and Latitude 2 cannot be equal\n&quot;</td></tr>
+<tr class="separator:a104e1fddad345142fd460ef7fd7e9fec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43121ca91d2738b7a6ceca2255bf4fc3"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a43121ca91d2738b7a6ceca2255bf4fc3">longitude1</a> = &quot;Longitude 1 out of range\n&quot;</td></tr>
+<tr class="separator:a43121ca91d2738b7a6ceca2255bf4fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d12532e31329914aae4fc0ff7dfbefe"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1d12532e31329914aae4fc0ff7dfbefe">longitude2</a> = &quot;Longitude 2 out of range\n&quot;</td></tr>
+<tr class="separator:a1d12532e31329914aae4fc0ff7dfbefe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1018662ba689431e24d4ccd1338f29b5"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1018662ba689431e24d4ccd1338f29b5">omercHemisphere</a> = &quot;Point 1 and Point 2 cannot be in different hemispheres\n&quot;</td></tr>
+<tr class="separator:a1018662ba689431e24d4ccd1338f29b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c1d77de9f9febae34c78d8199e60ab7"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1c1d77de9f9febae34c78d8199e60ab7">hemisphere</a> = &quot;Invalid Hemisphere\n&quot;</td></tr>
+<tr class="separator:a1c1d77de9f9febae34c78d8199e60ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbbddf041b162c69ef80c5fae8e98ff3"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#abbbddf041b162c69ef80c5fae8e98ff3">radius</a> = &quot;Easting/Northing too far from center of projection\n&quot;</td></tr>
+<tr class="separator:abbbddf041b162c69ef80c5fae8e98ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a816b9dcb83273fbc1ba1f3c215f26329"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a816b9dcb83273fbc1ba1f3c215f26329">latitude</a> = &quot;Latitude out of range\n&quot;</td></tr>
+<tr class="separator:a816b9dcb83273fbc1ba1f3c215f26329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca84764ebfd6a968bae4726c33c4c20b"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#aca84764ebfd6a968bae4726c33c4c20b">longitude</a> = &quot;Longitude out of range\n&quot;</td></tr>
+<tr class="separator:aca84764ebfd6a968bae4726c33c4c20b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35b927051eb2143a2fda20693abd3290"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a35b927051eb2143a2fda20693abd3290">easting</a> = &quot;Easting/X out of range\n&quot;</td></tr>
+<tr class="separator:a35b927051eb2143a2fda20693abd3290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31cbb504cb4705337394cdda99b6279c"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a31cbb504cb4705337394cdda99b6279c">northing</a> = &quot;Northing/Y out of range\n&quot;</td></tr>
+<tr class="separator:a31cbb504cb4705337394cdda99b6279c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77375ccda4057aa9b8b8f40ca8193801"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a77375ccda4057aa9b8b8f40ca8193801">projection</a> = &quot;Point projects into a circle\n&quot;</td></tr>
+<tr class="separator:a77375ccda4057aa9b8b8f40ca8193801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2e3c8dd1e3e61d274a08769ebad4e32"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#ae2e3c8dd1e3e61d274a08769ebad4e32">invalidArea</a> = &quot;Coordinates are outside valid area\n&quot;</td></tr>
+<tr class="separator:ae2e3c8dd1e3e61d274a08769ebad4e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae495751bfa9476c0f4f4c7664cbec2ab"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#ae495751bfa9476c0f4f4c7664cbec2ab">bngString</a> = &quot;Invalid British National Grid String\n&quot;</td></tr>
+<tr class="separator:ae495751bfa9476c0f4f4c7664cbec2ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35e5ed119754ca1e540c7d2d24a90fb9"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a35e5ed119754ca1e540c7d2d24a90fb9">garsString</a> = &quot;Invalid <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s.html">GARS</a> String\n&quot;</td></tr>
+<tr class="separator:a35e5ed119754ca1e540c7d2d24a90fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1062126294941e97317d6e74e0e69807"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1062126294941e97317d6e74e0e69807">georefString</a> = &quot;Invalid <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_e_o_r_e_f.html">GEOREF</a> String\n&quot;</td></tr>
+<tr class="separator:a1062126294941e97317d6e74e0e69807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ccbbceeb41af7029ad02dc8032c9db"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a35ccbbceeb41af7029ad02dc8032c9db">mgrsString</a> = &quot;Invalid <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_m_g_r_s.html">MGRS</a> String\n&quot;</td></tr>
+<tr class="separator:a35ccbbceeb41af7029ad02dc8032c9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1338bafa7d3cdb831117e325b2ae719d"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a1338bafa7d3cdb831117e325b2ae719d">usngString</a> = &quot;Invalid <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_s_n_g.html">USNG</a> String\n&quot;</td></tr>
+<tr class="separator:a1338bafa7d3cdb831117e325b2ae719d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa71d2b68968d5ed40ba36d30ea811957"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#aa71d2b68968d5ed40ba36d30ea811957">invalidIndex</a> = &quot;Index value outside of valid range\n&quot;</td></tr>
+<tr class="separator:aa71d2b68968d5ed40ba36d30ea811957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a213988c06a1dbfc0fff92a91d479f1b1"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a213988c06a1dbfc0fff92a91d479f1b1">invalidName</a> = &quot;Invalid name\n&quot;</td></tr>
+<tr class="separator:a213988c06a1dbfc0fff92a91d479f1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3633af5c4062cf19d2e8a5fcfc980d14"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a3633af5c4062cf19d2e8a5fcfc980d14">invalidType</a> = &quot;Invalid coordinate system type\n&quot;</td></tr>
+<tr class="separator:a3633af5c4062cf19d2e8a5fcfc980d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b9848c984c0c547acc7422d78fa735b"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a7b9848c984c0c547acc7422d78fa735b">latitude_min</a> = &quot;The <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a816b9dcb83273fbc1ba1f3c215f26329">latitude</a> minute part of the string is greater than 60\n&quot;</td></tr>
+<tr class="separator:a7b9848c984c0c547acc7422d78fa735b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0d56297017c2247a5d3f1b99f747a36"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#ab0d56297017c2247a5d3f1b99f747a36">longitude_min</a> = &quot;The <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#aca84764ebfd6a968bae4726c33c4c20b">longitude</a> minute part of the string is greater than 60\n&quot;</td></tr>
+<tr class="separator:ab0d56297017c2247a5d3f1b99f747a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00020">20</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a118aae65e6d197d7b4fb7e3d6692a498"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::bngEllipsoid = &quot;British National Grid ellipsoid must be Airy\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00060">60</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae495751bfa9476c0f4f4c7664cbec2ab"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::bngString = &quot;Invalid British National Grid String\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00081">81</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a101516ca8b915b90297b9e2abf28bd6f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::centralMeridian = &quot;Central Meridian out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00051">51</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae4477988dd16d7c273be8570b0e37f48"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::datumDomain = &quot;Invalid local datum domain of validity\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00036">36</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2e57b486bdd453471dbc60cf5f78f919"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::datumFileCloseError = &quot;Unable to close datum file\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00034">34</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8cdfce7c83a83dbc86847b70a959b148"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::datumFileOpenError = &quot;Unable to locate datum data file\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00033">33</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9db0df83aee36381b60ae057f403d942"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::datumFileParseError = &quot;Unable to read datum file\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00035">35</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aad7d401d3b2dce0a7512b580165f0d95"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::datumRotation = &quot;Rotation values must be between -60.0 and 60.0&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00037">37</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7ba2cbdf62bce53f9bdfc9fe596cc5da"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::datumSigma = &quot;Standard error values must be positive, or -1 if unknown\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00038">38</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="addf93fb2431690be1cb20c747c4bf135"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::datumType = &quot;Invalid datum type\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00039">39</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a35b927051eb2143a2fda20693abd3290"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::easting = &quot;Easting/X out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00077">77</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a32276550a54d0f48f5b10d369e4146b0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::ellipse = &quot;Ellipsoid library not initialized\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00030">30</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a83215452515411bb0e8ebbfc19ac44d3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::ellipseInUse = &quot;Ellipsoid is in use by a datum\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00043">43</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af362d586d481b77b4a9d7bb7cfc5d5f6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::ellipsoidFileCloseError = &quot;Unable to close ellipsoid file: ellips.dat\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00028">28</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a49f1dd0b925a5941bd961b78d232bb4f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::ellipsoidFileOpenError = &quot;Unable to locate ellipsoid data file: ellips.dat\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00027">27</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa3fc29ff8ef9f9c117a3a19806acb2ee"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::ellipsoidFileParseError = &quot;Unable to read ellipsoid file: ellips.dat\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00029">29</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac376fe1588b8d462711455ba1ff73fb0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::ellipsoidFlattening = &quot;Inverse flattening must be between 250 and 350\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00047">47</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a35e5ed119754ca1e540c7d2d24a90fb9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::garsString = &quot;Invalid <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_a_r_s.html">GARS</a> String\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00082">82</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adae51275c4c807fff1612d58573dd3da"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::geoidFileOpenError = &quot;Unable to locate geoid data file\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00024">24</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a015e073c6eecf8f0fff5b251c4bc0e1b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::geoidFileParseError = &quot;Unable to read geoid file\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00025">25</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1062126294941e97317d6e74e0e69807"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::georefString = &quot;Invalid <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_g_e_o_r_e_f.html">GEOREF</a> String\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00083">83</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1c1d77de9f9febae34c78d8199e60ab7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::hemisphere = &quot;Invalid Hemisphere\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00071">71</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae2e3c8dd1e3e61d274a08769ebad4e32"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::invalidArea = &quot;Coordinates are outside valid area\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00080">80</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a847804eff5325e07fead8eb8cf88f01d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::invalidDatumCode = &quot;Invalid datum code\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00040">40</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af1f78377254233410ebe053736bfd521"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::invalidEllipsoidCode = &quot;Invalid ellipsoid code\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00031">31</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa71d2b68968d5ed40ba36d30ea811957"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::invalidIndex = &quot;Index value outside of valid range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00099">99</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a213988c06a1dbfc0fff92a91d479f1b1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::invalidName = &quot;Invalid name\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00100">100</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3633af5c4062cf19d2e8a5fcfc980d14"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::invalidType = &quot;Invalid coordinate system type\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00101">101</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a816b9dcb83273fbc1ba1f3c215f26329"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::latitude = &quot;Latitude out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00075">75</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adbd572ad9b9beb7bc3d59229aa8f43dd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::latitude1 = &quot;Latitude 1 out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00065">65</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a104e1fddad345142fd460ef7fd7e9fec"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::latitude1_2 = &quot;Latitude 1 and Latitude 2 cannot be equal\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00067">67</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1d2e0029688224b6961b0f838e2773eb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::latitude2 = &quot;Latitude 2 out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00066">66</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7b9848c984c0c547acc7422d78fa735b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::latitude_min = &quot;The <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#a816b9dcb83273fbc1ba1f3c215f26329">latitude</a> minute part of the string is greater than 60\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00102">102</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aca84764ebfd6a968bae4726c33c4c20b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::longitude = &quot;Longitude out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00076">76</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a43121ca91d2738b7a6ceca2255bf4fc3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::longitude1 = &quot;Longitude 1 out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00068">68</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1d12532e31329914aae4fc0ff7dfbefe"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::longitude2 = &quot;Longitude 2 out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00069">69</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab0d56297017c2247a5d3f1b99f747a36"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::longitude_min = &quot;The <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_error_messages.html#aca84764ebfd6a968bae4726c33c4c20b">longitude</a> minute part of the string is greater than 60\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00103">103</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a35ccbbceeb41af7029ad02dc8032c9db"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::mgrsString = &quot;Invalid <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_m_g_r_s.html">MGRS</a> String\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00084">84</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a31cbb504cb4705337394cdda99b6279c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::northing = &quot;Northing/Y out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00078">78</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a31c9afc4f1e4d50d06d7454e7a5308a1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::notUserDefined = &quot;Specified code not user defined\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00042">42</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adcf9e7df3fc8863696e35a29b03ec7b1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::nzmgEllipsoid = &quot;New Zealand Map Grid ellipsoid must be International\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00061">61</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1018662ba689431e24d4ccd1338f29b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::omercHemisphere = &quot;Point 1 and Point 2 cannot be in different hemispheres\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00070">70</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abc94a4ee31f8b71cd0f9f4a25ffffb00"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::orientation = &quot;Orientation out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00048">48</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a801c71c17f54875371096ac56784f924"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::originLatitude = &quot;Origin Latitude (or Standard Parallel or Latitude of True Scale) out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00049">49</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6bcca3fcd965d3fc669851a875b4002b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::originLongitude = &quot;Origin Longitude (or Longitude Down from Pole) out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00050">50</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1c35a556546726adc3458ed1fd4546ea"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::precision = &quot;Precision must be between 0 and 5\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00059">59</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a77375ccda4057aa9b8b8f40ca8193801"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::projection = &quot;Point projects into a circle\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00079">79</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abbbddf041b162c69ef80c5fae8e98ff3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::radius = &quot;Easting/Northing too far from center of projection\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00072">72</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a63c7805192e3704ac35bfdfd38af79bb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::scaleFactor = &quot;Scale Factor out of range\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00052">52</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a75f494a85ff1b96b4ada5511f3bcc914"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::semiMajorAxis = &quot;Ellipsoid semi-major axis must be greater than zero\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00046">46</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a42c2dfceebd518fdbc9bd67fdf2dd964"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::standardParallel1 = &quot;Invalid 1st Standard Parallel\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00055">55</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae2358af0c5d50e0f1a346601d2d12a16"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::standardParallel1_2 = &quot;1st &amp; 2nd Standard Parallels cannot both be zero\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00057">57</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7a99ae6b343fd3694826423fdb9a6a27"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::standardParallel2 = &quot;Invalid 2nd Standard Parallel\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00056">56</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1938a00421410eb476d75e72599f6800"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::standardParallelHemisphere = &quot;Standard Parallels cannot be equal and opposite latitudes\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00058">58</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1338bafa7d3cdb831117e325b2ae719d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::usngString = &quot;Invalid <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_s_n_g.html">USNG</a> String\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00085">85</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c37752267a667fb9d3225399735a465"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::webmConversionTo = &quot;GeoTrans does not allow conversion to Web Mercator\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00063">63</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a16add3450c51922f8f5a56429a611202"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::webmEllipsoid = &quot;Web <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_mercator.html">Mercator</a> ellipsoid must be WGS84\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00062">62</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3e9729a0994800c59573b8a1c106a658"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::webmInvalidTargetCS = &quot;Web <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_mercator.html">Mercator</a> can only be converted to Geodetic.\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00064">64</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4f3977014328500c8e58a338ba2cc330"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::zone = &quot;Invalid Zone\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00053">53</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a66f007b4a67f66c7a657dd3068e7e664"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * ErrorMessages::zoneOverride = &quot;Invalid Zone Override\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_error_messages_8h_source.html#l00054">54</a> of file <a class="el" href="_error_messages_8h_source.html">ErrorMessages.h</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:17 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:58 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

@@ -636,6 +636,8 @@ public class CoordPanel extends javax.swing.JPanel
         return new UPSCoordinates(CoordinateType.UPS);
       case CoordinateType.UTM:
         return new UTMCoordinates(CoordinateType.UTM);
+      case CoordinateType.WEBMERCATOR:
+        return new MapProjectionCoordinates(CoordinateType.WEBMERCATOR);
       default:
         throw new CoordinateConversionException("Invalid coordinate type");
     }
@@ -679,6 +681,7 @@ public class CoordPanel extends javax.swing.JPanel
         case CoordinateType.TRCYLEQA:
         case CoordinateType.TRANMERC:
         case CoordinateType.GRINTEN:
+        case CoordinateType.WEBMERCATOR:
         {
           MapProjectionCoordinates coordinates = (MapProjectionCoordinates) _coordinates;
 
@@ -799,6 +802,7 @@ public class CoordPanel extends javax.swing.JPanel
         case CoordinateType.TRCYLEQA:
         case CoordinateType.TRANMERC:
         case CoordinateType.GRINTEN:
+        case CoordinateType.WEBMERCATOR:
         {
             MapProjectionCoordinates coordinates = new MapProjectionCoordinates(projType,
                                                    stringHandler.stringToDouble(_2CoordFieldsTextFieldA.getText().trim(), "Invalid Easting"),
@@ -1019,6 +1023,7 @@ public class CoordPanel extends javax.swing.JPanel
             case CoordinateType.TRCYLEQA:
             case CoordinateType.TRANMERC:
             case CoordinateType.GRINTEN:
+            case CoordinateType.WEBMERCATOR:
             {
                 setTwoCoords();
                 break;

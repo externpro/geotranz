@@ -940,6 +940,7 @@ CoordinateSystemParameters* Fiomeths::getCoordinateSystemParameters() const
     case CoordinateType::newZealandMapGrid:
     case CoordinateType::universalPolarStereographic:
     case CoordinateType::usNationalGrid:
+    case CoordinateType::webMercator:
      return coordinateSystemParameters;
     case CoordinateType::eckert4:
     case CoordinateType::eckert6:
@@ -1949,6 +1950,11 @@ long Fiomeths::parseInputFileHeader(FILE *file)
         delete mapProjection3Parameters;
       mapProjection3Parameters = new MapProjection3Parameters(CoordinateType::vanDerGrinten, centralMeridian, falseEasting, falseNorthing);
       break;
+    case CoordinateType::webMercator:
+      if( coordinateSystemParameters )
+        delete coordinateSystemParameters;
+      coordinateSystemParameters = new CoordinateSystemParameters(CoordinateType::webMercator);
+      break;
     default:
       throw CoordinateConversionException( INVALID_SOURCE_CS );
   }
@@ -2048,6 +2054,7 @@ void Fiomeths::writeOutputFileHeader(
     case CoordinateType::universalPolarStereographic:
     case CoordinateType::usNationalGrid:
     case CoordinateType::universalTransverseMercator:
+    case CoordinateType::webMercator:
     break;
     case CoordinateType::localCartesian:
     {
@@ -2695,6 +2702,12 @@ void Fiomeths::setCoordinateSystemParameters( MSP::CCS::CoordinateSystemParamete
     case CoordinateType::vanDerGrinten:
       if( dynamic_cast< MapProjection3Parameters* >( parameters ) )
         targetParameters = new MapProjection3Parameters( *dynamic_cast< MapProjection3Parameters* >( parameters ) );
+      else
+        throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
+      break;
+    case CoordinateType::webMercator:
+      if( dynamic_cast< CoordinateSystemParameters* >( parameters ) )
+        targetParameters = new CoordinateSystemParameters( *dynamic_cast< CoordinateSystemParameters* >( parameters ) );
       else
         throw CoordinateConversionException( INVALID_TARGET_PARAMETERS );
       break;
@@ -3373,6 +3386,21 @@ CoordinateTuple* Fiomeths::readCoordinate()
 
       break;
     }
+    case CoordinateType::webMercator:
+    {
+      double easting, northing;
+
+      Eat_Noise(inputFile);
+      tempErrorCode = readCoord( &easting, &northing );
+      if(!tempErrorCode)
+      {
+        return new MapProjectionCoordinates(
+           CoordinateType::webMercator, easting, northing);
+      }
+      else
+        throw CoordinateConversionException( ERROR_PARSING_FILE );
+      break;
+    }
     default:
       throw CoordinateConversionException( INVALID_TARGET_CS );
   }
@@ -3719,6 +3747,8 @@ CoordinateTuple* Fiomeths::initTargetCoordinate()
       return new MGRSorUSNGCoordinates(CoordinateType::usNationalGrid);
     case CoordinateType::vanDerGrinten:
       return new MapProjectionCoordinates(CoordinateType::vanDerGrinten);
+  case CoordinateType::webMercator:
+      return new MapProjectionCoordinates(CoordinateType::webMercator);
     default:   
       throw CoordinateConversionException( INVALID_TARGET_CS );
   }
@@ -3877,6 +3907,7 @@ void Fiomeths::writeTargetCoordinate( CoordinateTuple* targetCoordinate )
     case CoordinateType::transverseCylindricalEqualArea:  
     case CoordinateType::transverseMercator:  
     case CoordinateType::vanDerGrinten:
+    case CoordinateType::webMercator:
     {
       if( dynamic_cast< MapProjectionCoordinates* >( targetCoordinate ) )
       {
@@ -4093,6 +4124,7 @@ void Fiomeths::writeExampleCoord()
     case CoordinateType::transverseCylindricalEqualArea:
     case CoordinateType::transverseMercator:
     case CoordinateType::vanDerGrinten:
+    case CoordinateType::webMercator:
     {
       writeCoord(0, 0);
       break;

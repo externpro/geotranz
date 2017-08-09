@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::PolarStereographic Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_polar_stereographic_8h_source.html">PolarStereographic.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MSP::CCS::PolarStereographic:</div>
 <div class="dyncontent">
@@ -103,52 +106,285 @@ Inheritance diagram for MSP::CCS::PolarStereographic:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0e07b055c16873aed9c712ac09ceda8a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e07b055c16873aed9c712ac09ceda8a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PolarStereographic</b> (double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double standardParallel, double falseEasting, double falseNorthing)</td></tr>
-<tr class="separator:a0e07b055c16873aed9c712ac09ceda8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecdeec00b2bf58e2bf3088084d5fde83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecdeec00b2bf58e2bf3088084d5fde83"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PolarStereographic</b> (double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double scaleFactor, char hemisphere, double falseEasting, double falseNorthing)</td></tr>
-<tr class="separator:aecdeec00b2bf58e2bf3088084d5fde83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c7e9b0716ffdf2fc2c902815a61f01e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c7e9b0716ffdf2fc2c902815a61f01e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PolarStereographic</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp;ps)</td></tr>
-<tr class="separator:a1c7e9b0716ffdf2fc2c902815a61f01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14e54a51a6caf7373e8ff7a420a0e215"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14e54a51a6caf7373e8ff7a420a0e215"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp;ps)</td></tr>
-<tr class="separator:a14e54a51a6caf7373e8ff7a420a0e215"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a875a4e5cbda5785c75fdecdfa2e9cbf8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a875a4e5cbda5785c75fdecdfa2e9cbf8"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_standard_parallel_parameters.html">PolarStereographicStandardParallelParameters</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getStandardParallelParameters</b> () const </td></tr>
-<tr class="separator:a875a4e5cbda5785c75fdecdfa2e9cbf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab85e1958d3ed9cd9011aac915c6e9744"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab85e1958d3ed9cd9011aac915c6e9744"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_scale_factor_parameters.html">PolarStereographicScaleFactorParameters</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getScaleFactorParameters</b> () const </td></tr>
-<tr class="separator:ab85e1958d3ed9cd9011aac915c6e9744"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af61318670a4c716c84cccabaa2df2f8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af61318670a4c716c84cccabaa2df2f8c"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MSP::CCS::MapProjectionCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>convertFromGeodetic</b> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *geodeticCoordinates)</td></tr>
-<tr class="separator:af61318670a4c716c84cccabaa2df2f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1deec105db3c2d75b6ce87b4f8ea9e84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1deec105db3c2d75b6ce87b4f8ea9e84"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>convertToGeodetic</b> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MSP::CCS::MapProjectionCoordinates</a> *mapProjectionCoordinates)</td></tr>
-<tr class="separator:a1deec105db3c2d75b6ce87b4f8ea9e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde4c16dcb85e6b48adf39a15acfd57e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#abde4c16dcb85e6b48adf39a15acfd57e">PolarStereographic</a> (double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double standardParallel, double falseEasting, double falseNorthing)</td></tr>
+<tr class="separator:abde4c16dcb85e6b48adf39a15acfd57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a042e9e5320d566670023b43a7b3834e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#a042e9e5320d566670023b43a7b3834e1">PolarStereographic</a> (double ellipsoidSemiMajorAxis, double ellipsoidFlattening, double centralMeridian, double scaleFactor, char hemisphere, double falseEasting, double falseNorthing)</td></tr>
+<tr class="separator:a042e9e5320d566670023b43a7b3834e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1773dd92a62d59d70453a9d117b91813"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#a1773dd92a62d59d70453a9d117b91813">PolarStereographic</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp;ps)</td></tr>
+<tr class="separator:a1773dd92a62d59d70453a9d117b91813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b53b72f0ea3badaa09d4865857cb235"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#a0b53b72f0ea3badaa09d4865857cb235">~PolarStereographic</a> (void)</td></tr>
+<tr class="separator:a0b53b72f0ea3badaa09d4865857cb235"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abce6ba905f5e88ea01999f3ba28e10a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#abce6ba905f5e88ea01999f3ba28e10a3">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp;ps)</td></tr>
+<tr class="separator:abce6ba905f5e88ea01999f3ba28e10a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f810dae64132f70b34ba3c55d66eda1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_standard_parallel_parameters.html">PolarStereographicStandardParallelParameters</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#a2f810dae64132f70b34ba3c55d66eda1">getStandardParallelParameters</a> () const </td></tr>
+<tr class="separator:a2f810dae64132f70b34ba3c55d66eda1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc988a2151458f37ad9ed58cbc1a4be0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_scale_factor_parameters.html">PolarStereographicScaleFactorParameters</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#abc988a2151458f37ad9ed58cbc1a4be0">getScaleFactorParameters</a> () const </td></tr>
+<tr class="separator:abc988a2151458f37ad9ed58cbc1a4be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab565325bd5601978b7dbb82445f42c61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MSP::CCS::MapProjectionCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#ab565325bd5601978b7dbb82445f42c61">convertFromGeodetic</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *geodeticCoordinates)</td></tr>
+<tr class="separator:ab565325bd5601978b7dbb82445f42c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5baef04d3b4ee35bbb13cb469c04b83c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html#a5baef04d3b4ee35bbb13cb469c04b83c">convertToGeodetic</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MSP::CCS::MapProjectionCoordinates</a> *mapProjectionCoordinates)</td></tr>
+<tr class="separator:a5baef04d3b4ee35bbb13cb469c04b83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">MSP::CCS::CoordinateSystem</a></td></tr>
-<tr class="memitem:a3ff03e0870c4055d55c5b685cd6af6ca inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ff03e0870c4055d55c5b685cd6af6ca"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateSystem</b> (double _semiMajorAxis, double _flattening)</td></tr>
-<tr class="separator:a3ff03e0870c4055d55c5b685cd6af6ca inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e20d45a892cf1ee0603566147de3c9d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e20d45a892cf1ee0603566147de3c9d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>getEllipsoidParameters</b> (double *_semiMajorAxis, double *_flattening)</td></tr>
-<tr class="separator:a8e20d45a892cf1ee0603566147de3c9d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9766023795a2cac640751f0b9688cc50 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a9766023795a2cac640751f0b9688cc50">CoordinateSystem</a> ()</td></tr>
+<tr class="separator:a9766023795a2cac640751f0b9688cc50 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a432865e3a18763abfb9b89e21c17738c inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a432865e3a18763abfb9b89e21c17738c">CoordinateSystem</a> (double _semiMajorAxis, double _flattening)</td></tr>
+<tr class="separator:a432865e3a18763abfb9b89e21c17738c inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00742877a364fbc15b69aab14196f40e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a00742877a364fbc15b69aab14196f40e">~CoordinateSystem</a> ()</td></tr>
+<tr class="separator:a00742877a364fbc15b69aab14196f40e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a958167d7271548d7af0e7f24da53c4bc inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a958167d7271548d7af0e7f24da53c4bc">getEllipsoidParameters</a> (double *_semiMajorAxis, double *_flattening)</td></tr>
+<tr class="separator:a958167d7271548d7af0e7f24da53c4bc inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html">MSP::CCS::CoordinateSystem</a></td></tr>
-<tr class="memitem:ab4b25504df8abc3fb23b5f03eaf6c14e inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4b25504df8abc3fb23b5f03eaf6c14e"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>semiMajorAxis</b></td></tr>
+<tr class="memitem:ab4b25504df8abc3fb23b5f03eaf6c14e inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#ab4b25504df8abc3fb23b5f03eaf6c14e">semiMajorAxis</a></td></tr>
 <tr class="separator:ab4b25504df8abc3fb23b5f03eaf6c14e inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a103abc45b36f0bc52bd992f2d19bbfc6 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a103abc45b36f0bc52bd992f2d19bbfc6"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>flattening</b></td></tr>
+<tr class="memitem:a103abc45b36f0bc52bd992f2d19bbfc6 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system.html#a103abc45b36f0bc52bd992f2d19bbfc6">flattening</a></td></tr>
 <tr class="separator:a103abc45b36f0bc52bd992f2d19bbfc6 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_polar_stereographic_8h_source.html#l00113">113</a> of file <a class="el" href="_polar_stereographic_8h_source.html">PolarStereographic.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="abde4c16dcb85e6b48adf39a15acfd57e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PolarStereographic::PolarStereographic </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ellipsoidSemiMajorAxis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ellipsoidFlattening</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>centralMeridian</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>standardParallel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>falseEasting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>falseNorthing</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00138">138</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a042e9e5320d566670023b43a7b3834e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PolarStereographic::PolarStereographic </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ellipsoidSemiMajorAxis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ellipsoidFlattening</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>centralMeridian</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>scaleFactor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>hemisphere</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>falseEasting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>falseNorthing</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00264">264</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1773dd92a62d59d70453a9d117b91813"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PolarStereographic::PolarStereographic </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp;&#160;</td>
+          <td class="paramname"><em>ps</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00408">408</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0b53b72f0ea3badaa09d4865857cb235"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PolarStereographic::~PolarStereographic </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00430">430</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ab565325bd5601978b7dbb82445f42c61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MSP::CCS::MapProjectionCoordinates</a> * PolarStereographic::convertFromGeodetic </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> *&#160;</td>
+          <td class="paramname"><em>geodeticCoordinates</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00501">501</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5baef04d3b4ee35bbb13cb469c04b83c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_geodetic_coordinates.html">MSP::CCS::GeodeticCoordinates</a> * PolarStereographic::convertToGeodetic </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_map_projection_coordinates.html">MSP::CCS::MapProjectionCoordinates</a> *&#160;</td>
+          <td class="paramname"><em>mapProjectionCoordinates</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00592">592</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abc988a2151458f37ad9ed58cbc1a4be0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_scale_factor_parameters.html">PolarStereographicScaleFactorParameters</a> * PolarStereographic::getScaleFactorParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00480">480</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2f810dae64132f70b34ba3c55d66eda1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic_standard_parallel_parameters.html">PolarStereographicStandardParallelParameters</a> * PolarStereographic::getStandardParallelParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00462">462</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abce6ba905f5e88ea01999f3ba28e10a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp; PolarStereographic::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_polar_stereographic.html">PolarStereographic</a> &amp;&#160;</td>
+          <td class="paramname"><em>ps</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_polar_stereographic_8cpp_source.html#l00435">435</a> of file <a class="el" href="_polar_stereographic_8cpp_source.html">PolarStereographic.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:15 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:56 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

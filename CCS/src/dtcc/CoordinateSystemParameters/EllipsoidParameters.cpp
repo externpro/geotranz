@@ -15,7 +15,7 @@ EllipsoidParameters::EllipsoidParameters() :
 }
 
 
-EllipsoidParameters::EllipsoidParameters( double __semiMajorAxis, double __flattening, char* __ellipsoidCode ) :
+EllipsoidParameters::EllipsoidParameters( double __semiMajorAxis, double __flattening, const char* __ellipsoidCode ) :
   _semiMajorAxis( __semiMajorAxis ),
   _flattening( __flattening )
 {

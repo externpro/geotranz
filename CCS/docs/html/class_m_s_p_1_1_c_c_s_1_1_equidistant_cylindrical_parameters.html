@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::EquidistantCylindricalParameters Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_equidistant_cylindrical_parameters_8h_source.html">EquidistantCylindricalParameters.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MSP::CCS::EquidistantCylindricalParameters:</div>
 <div class="dyncontent">
@@ -103,70 +106,339 @@ Inheritance diagram for MSP::CCS::EquidistantCylindricalParameters:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a824294fa3ff24751e25e524771b1b73d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a824294fa3ff24751e25e524771b1b73d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>EquidistantCylindricalParameters</b> (CoordinateType::Enum _coordinateType)</td></tr>
-<tr class="separator:a824294fa3ff24751e25e524771b1b73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a575ed4f85e525ef3950bef082910536e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a575ed4f85e525ef3950bef082910536e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>EquidistantCylindricalParameters</b> (CoordinateType::Enum _coordinateType, double __centralMeridian, double __standardParallel, double __falseEasting, double __falseNorthing)</td></tr>
-<tr class="separator:a575ed4f85e525ef3950bef082910536e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafadb95afc9285cd3f2cce2d8ff49dc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafadb95afc9285cd3f2cce2d8ff49dc5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>EquidistantCylindricalParameters</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp;ecp)</td></tr>
-<tr class="separator:aafadb95afc9285cd3f2cce2d8ff49dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba71bff5cbabcb20b6a2940bee659e6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba71bff5cbabcb20b6a2940bee659e6b"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp;ecp)</td></tr>
-<tr class="separator:aba71bff5cbabcb20b6a2940bee659e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62869b5b288bd8070edd1996e666877b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62869b5b288bd8070edd1996e666877b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCentralMeridian</b> (double __centralMeridian)</td></tr>
-<tr class="separator:a62869b5b288bd8070edd1996e666877b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f00bfe7efb5dc084d4df14991a16787"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f00bfe7efb5dc084d4df14991a16787"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setStandardParallel</b> (double __standardParallel)</td></tr>
-<tr class="separator:a9f00bfe7efb5dc084d4df14991a16787"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1be0642b3d22c9d3df77f905d4167c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1be0642b3d22c9d3df77f905d4167c6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFalseEasting</b> (double __falseEasting)</td></tr>
-<tr class="separator:ad1be0642b3d22c9d3df77f905d4167c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a060ebee1477f85357efb83f2def8232a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a060ebee1477f85357efb83f2def8232a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFalseNorthing</b> (double __falseNorthing)</td></tr>
-<tr class="separator:a060ebee1477f85357efb83f2def8232a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0aa5a861f25918b02fa33f1a4b7a69d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0aa5a861f25918b02fa33f1a4b7a69d"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>centralMeridian</b> () const </td></tr>
-<tr class="separator:af0aa5a861f25918b02fa33f1a4b7a69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5501c618c6ad34cc482d61389630dfed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5501c618c6ad34cc482d61389630dfed"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>standardParallel</b> () const </td></tr>
-<tr class="separator:a5501c618c6ad34cc482d61389630dfed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3759716b5ec21220faaddfde6d15a279"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3759716b5ec21220faaddfde6d15a279"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>falseEasting</b> () const </td></tr>
-<tr class="separator:a3759716b5ec21220faaddfde6d15a279"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9d4b327108e7bfc8b86e24e8d39cfa4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9d4b327108e7bfc8b86e24e8d39cfa4"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>falseNorthing</b> () const </td></tr>
-<tr class="separator:af9d4b327108e7bfc8b86e24e8d39cfa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f86fb27fa1651d7a52608cdf3af03a0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#a5f86fb27fa1651d7a52608cdf3af03a0">EquidistantCylindricalParameters</a> ()</td></tr>
+<tr class="separator:a5f86fb27fa1651d7a52608cdf3af03a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d6b1079255e3d39ceaca3e6dcbc0be7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#a4d6b1079255e3d39ceaca3e6dcbc0be7">EquidistantCylindricalParameters</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#aa13f4be6f90b5ad47d2ddd7153f7eecf">_coordinateType</a>)</td></tr>
+<tr class="separator:a4d6b1079255e3d39ceaca3e6dcbc0be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac24492a2f3a21d447b23959e2a70cd5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#aac24492a2f3a21d447b23959e2a70cd5">EquidistantCylindricalParameters</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#aa13f4be6f90b5ad47d2ddd7153f7eecf">_coordinateType</a>, double __centralMeridian, double __standardParallel, double __falseEasting, double __falseNorthing)</td></tr>
+<tr class="separator:aac24492a2f3a21d447b23959e2a70cd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a291a4f97cdf7c7d20da45b94c9583ceb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#a291a4f97cdf7c7d20da45b94c9583ceb">EquidistantCylindricalParameters</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp;ecp)</td></tr>
+<tr class="separator:a291a4f97cdf7c7d20da45b94c9583ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa630db50f052ebf851f8bacbac7386bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#aa630db50f052ebf851f8bacbac7386bb">~EquidistantCylindricalParameters</a> ()</td></tr>
+<tr class="separator:aa630db50f052ebf851f8bacbac7386bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad808497dc40e5d1064de3c59a5613e49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#ad808497dc40e5d1064de3c59a5613e49">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp;ecp)</td></tr>
+<tr class="separator:ad808497dc40e5d1064de3c59a5613e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a813bbb2123af7cea21d223dbfa644070"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#a813bbb2123af7cea21d223dbfa644070">setCentralMeridian</a> (double __centralMeridian)</td></tr>
+<tr class="separator:a813bbb2123af7cea21d223dbfa644070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1545cf4fe1d5424d29f76eff4c0ba5d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#a1545cf4fe1d5424d29f76eff4c0ba5d4">setStandardParallel</a> (double __standardParallel)</td></tr>
+<tr class="separator:a1545cf4fe1d5424d29f76eff4c0ba5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82eefbf0e265fcc172dbd239ecd746c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#a82eefbf0e265fcc172dbd239ecd746c7">setFalseEasting</a> (double __falseEasting)</td></tr>
+<tr class="separator:a82eefbf0e265fcc172dbd239ecd746c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfff925bfe53c9ba3e9b1246ba634e9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#adfff925bfe53c9ba3e9b1246ba634e9b">setFalseNorthing</a> (double __falseNorthing)</td></tr>
+<tr class="separator:adfff925bfe53c9ba3e9b1246ba634e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00fe36ee2c7bc0e93b22a7a8d734d1b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#ae00fe36ee2c7bc0e93b22a7a8d734d1b">centralMeridian</a> () const </td></tr>
+<tr class="separator:ae00fe36ee2c7bc0e93b22a7a8d734d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0cadc1c7ebe427f85afe075d6a7ba85"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#aa0cadc1c7ebe427f85afe075d6a7ba85">standardParallel</a> () const </td></tr>
+<tr class="separator:aa0cadc1c7ebe427f85afe075d6a7ba85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa76da97fc9d48b8cb3443e9d9850892c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#aa76da97fc9d48b8cb3443e9d9850892c">falseEasting</a> () const </td></tr>
+<tr class="separator:aa76da97fc9d48b8cb3443e9d9850892c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02ce2d4f613aac0f80124063ca61f765"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html#a02ce2d4f613aac0f80124063ca61f765">falseNorthing</a> () const </td></tr>
+<tr class="separator:a02ce2d4f613aac0f80124063ca61f765"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a></td></tr>
-<tr class="memitem:a58813d39aecdacb702facd9b44be8dd3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58813d39aecdacb702facd9b44be8dd3"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateSystemParameters</b> (MSP::CCS::CoordinateType::Enum __coordinateType)</td></tr>
-<tr class="separator:a58813d39aecdacb702facd9b44be8dd3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26eb481dc2f3b771a8c9d7584e4e3fe1 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26eb481dc2f3b771a8c9d7584e4e3fe1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateSystemParameters</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;csp)</td></tr>
-<tr class="separator:a26eb481dc2f3b771a8c9d7584e4e3fe1 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95065d42e87fb172e35c947774182c5d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95065d42e87fb172e35c947774182c5d"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;csp)</td></tr>
-<tr class="separator:a95065d42e87fb172e35c947774182c5d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16c3a4a4b16bd0153371c1b12ec7d321 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16c3a4a4b16bd0153371c1b12ec7d321"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCoordinateType</b> (MSP::CCS::CoordinateType::Enum __coordinateType)</td></tr>
-<tr class="separator:a16c3a4a4b16bd0153371c1b12ec7d321 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f534814f133ceed344c0650286a0633 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f534814f133ceed344c0650286a0633"></a>
-CoordinateType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>coordinateType</b> () const </td></tr>
-<tr class="separator:a9f534814f133ceed344c0650286a0633 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7640ad4927c88c9b23ecd301d0e8e485 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a7640ad4927c88c9b23ecd301d0e8e485">CoordinateSystemParameters</a> ()</td></tr>
+<tr class="separator:a7640ad4927c88c9b23ecd301d0e8e485 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d92f32354611b359ad6c8bb457d69d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a70d92f32354611b359ad6c8bb457d69d">CoordinateSystemParameters</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType)</td></tr>
+<tr class="separator:a70d92f32354611b359ad6c8bb457d69d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12e8bbef0f5d7628d2f8ea2a3010fcc3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a12e8bbef0f5d7628d2f8ea2a3010fcc3">CoordinateSystemParameters</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;csp)</td></tr>
+<tr class="separator:a12e8bbef0f5d7628d2f8ea2a3010fcc3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9de0d16cfb66c3df26b765d42fe0f2ba inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a9de0d16cfb66c3df26b765d42fe0f2ba">~CoordinateSystemParameters</a> ()</td></tr>
+<tr class="separator:a9de0d16cfb66c3df26b765d42fe0f2ba inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a142d30af6e13edfe36a357464c04b9b3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a142d30af6e13edfe36a357464c04b9b3">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">CoordinateSystemParameters</a> &amp;csp)</td></tr>
+<tr class="separator:a142d30af6e13edfe36a357464c04b9b3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a530dda674d0a4ba44cd727a2f8412e11 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a530dda674d0a4ba44cd727a2f8412e11">setCoordinateType</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType)</td></tr>
+<tr class="separator:a530dda674d0a4ba44cd727a2f8412e11 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8367fe6f674e6ba31df32c3a16dbe839 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#a8367fe6f674e6ba31df32c3a16dbe839">coordinateType</a> () const </td></tr>
+<tr class="separator:a8367fe6f674e6ba31df32c3a16dbe839 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html">MSP::CCS::CoordinateSystemParameters</a></td></tr>
-<tr class="memitem:aa13f4be6f90b5ad47d2ddd7153f7eecf inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa13f4be6f90b5ad47d2ddd7153f7eecf"></a>
-CoordinateType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>_coordinateType</b></td></tr>
+<tr class="memitem:aa13f4be6f90b5ad47d2ddd7153f7eecf inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters.html#aa13f4be6f90b5ad47d2ddd7153f7eecf">_coordinateType</a></td></tr>
 <tr class="separator:aa13f4be6f90b5ad47d2ddd7153f7eecf inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_system_parameters"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8h_source.html#l00015">15</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8h_source.html">EquidistantCylindricalParameters.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a5f86fb27fa1651d7a52608cdf3af03a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EquidistantCylindricalParameters::EquidistantCylindricalParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00009">9</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4d6b1079255e3d39ceaca3e6dcbc0be7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EquidistantCylindricalParameters::EquidistantCylindricalParameters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00019">19</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aac24492a2f3a21d447b23959e2a70cd5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EquidistantCylindricalParameters::EquidistantCylindricalParameters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__centralMeridian</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__standardParallel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__falseEasting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__falseNorthing</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00029">29</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a291a4f97cdf7c7d20da45b94c9583ceb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EquidistantCylindricalParameters::EquidistantCylindricalParameters </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>ecp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00039">39</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa630db50f052ebf851f8bacbac7386bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EquidistantCylindricalParameters::~EquidistantCylindricalParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00050">50</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ae00fe36ee2c7bc0e93b22a7a8d734d1b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double EquidistantCylindricalParameters::centralMeridian </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00099">99</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa76da97fc9d48b8cb3443e9d9850892c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double EquidistantCylindricalParameters::falseEasting </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00111">111</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a02ce2d4f613aac0f80124063ca61f765"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double EquidistantCylindricalParameters::falseNorthing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00117">117</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad808497dc40e5d1064de3c59a5613e49"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp; EquidistantCylindricalParameters::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_equidistant_cylindrical_parameters.html">EquidistantCylindricalParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>ecp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00059">59</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a813bbb2123af7cea21d223dbfa644070"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EquidistantCylindricalParameters::setCentralMeridian </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__centralMeridian</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00075">75</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a82eefbf0e265fcc172dbd239ecd746c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EquidistantCylindricalParameters::setFalseEasting </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__falseEasting</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00087">87</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adfff925bfe53c9ba3e9b1246ba634e9b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EquidistantCylindricalParameters::setFalseNorthing </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__falseNorthing</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00093">93</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1545cf4fe1d5424d29f76eff4c0ba5d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EquidistantCylindricalParameters::setStandardParallel </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__standardParallel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00081">81</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa0cadc1c7ebe427f85afe075d6a7ba85"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double EquidistantCylindricalParameters::standardParallel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html#l00105">105</a> of file <a class="el" href="_equidistant_cylindrical_parameters_8cpp_source.html">EquidistantCylindricalParameters.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:11 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:51 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

@@ -65,12 +65,12 @@
  *
  * MODIFICATIONS
  *
- *    Date              Description
- *    ----              -----------
- *    09-06-00          Original Code
- *    03-02-07          Original C++ Code
- *    3/23/2011 NGL     BAEts28583 Updated for memory leaks in convertToGeodetic 
- *                      and convertFromGeodetic. 
+ *    Date             Description
+ *    ----             -----------
+ *    09-06-00         Original Code
+ *    03-02-07         Original C++ Code
+ *    3/23/2011 NGL    BAEts28583 Updated for memory leaks in convertToGeodetic 
+ *                     and convertFromGeodetic. 
  *
  *
  */
@@ -113,9 +113,7 @@ using namespace MSP::CCS;
 
 
 /***************************************************************************/
-/*                               DEFINES 
- *
- */
+/*                               DEFINES                                   */
 
 const double PI = 3.14159265358979323e0;              /* PI     */
 const double PI_OVER_2 = (PI / 2.0e0);                /* PI over 2 */
@@ -128,25 +126,22 @@ const char* BNG500GRID = "STNOHJ";                    /* 500,000 unit square ide
 const char* BNG100GRID = "VWXYZQRSTULMNOPFGHJKABCDE"; /* 100,000 unit square identifications */
 
 /* BNG projection Parameters */
-const double BNG_Origin_Lat = (49.0 * PI / 180.0);  /* Latitude of origin, in radians */
-const double BNG_Origin_Long = (-2.0 * PI / 180.0); /* Longitude of origin, in radians */
-const double BNG_False_Northing = -100000.0;        /* False northing, in meters */
-const double BNG_False_Easting = 400000.0;          /* False easting, in meters */
-const double BNG_Scale_Factor = .9996012717;        /* Scale factor                      */
+const double BNG_Origin_Lat  = (49.0 * PI / 180.0); // Latitude of origin, in radians
+const double BNG_Origin_Long = (-2.0 * PI / 180.0); // Longitude of origin, in radians
+const double BNG_False_Northing = -100000.0;      // False northing, in meters
+const double BNG_False_Easting  = 400000.0;       // False easting, in meters
+const double BNG_Scale_Factor   = .9996012717;    // Scale factor
 
 /* Maximum variance for easting and northing values for Airy. */
-const double BNG_Max_Easting = 759961.0;
+const double BNG_Max_Easting  = 759961.0;
 const double BNG_Max_Northing = 1257875.0;
-const double BNG_Min_Easting = -133134.0;
+const double BNG_Min_Easting  = -133134.0;
 const double BNG_Min_Northing = -14829.0;
 
 static const char* Airy = "AA";
 
-
 /************************************************************************/
-/*                              LOCAL FUNCTIONS     
- *
- */
+//                           LOCAL FUNCTIONS
 
 void findIndex( char letter, const char* letterArray, long *index )
 {   
@@ -226,7 +221,6 @@ void makeBNGString( char ltrnum[4], long easting, long northing, char* BNGString
 
 
 bool checkOutOfArea( char BNG500, char BNG100 )
-
 { 
 /*
  * The function checkOutOfArea checks if the 500,000 and 
@@ -439,8 +433,9 @@ BritishNationalGrid::BritishNationalGrid( char *ellipsoidCode ) :
     
   strcpy( BNG_Ellipsoid_Code, ellipsoidCode );
 
-  transverseMercator = new TransverseMercator( semiMajorAxis, flattening, BNG_Origin_Long, BNG_Origin_Lat,
-                                     BNG_False_Easting, BNG_False_Northing, BNG_Scale_Factor );
+  transverseMercator = new TransverseMercator(
+     semiMajorAxis, flattening, BNG_Origin_Long, BNG_Origin_Lat,
+     BNG_False_Easting, BNG_False_Northing, BNG_Scale_Factor );
 }
 
 
@@ -507,7 +502,7 @@ MSP::CCS::BNGCoordinates* BritishNationalGrid::convertFromGeodetic( MSP::CCS::Ge
   double TMEasting, TMNorthing;
 
   double longitude = geodeticCoordinates->longitude();
-  double latitude = geodeticCoordinates->latitude();
+  double latitude  = geodeticCoordinates->latitude();
 
   if ((latitude < MIN_LAT) || (latitude > MAX_LAT))
   {  /* Latitude out of range */
@@ -677,7 +672,9 @@ MSP::CCS::BNGCoordinates* BritishNationalGrid::convertFromTransverseMercator( Ma
       letters[1] = BNG100GRID[index];
 
       if( checkOutOfArea(letters[0], letters[1]) )
+      {
         throw CoordinateConversionException( ErrorMessages::invalidArea );
+      }
 
       letters[2] = ' ';
       letters[3] = 0;
@@ -691,7 +688,9 @@ MSP::CCS::BNGCoordinates* BritishNationalGrid::convertFromTransverseMercator( Ma
       if ((x >= (25 - five_y)) || (x < -five_y))
         throw CoordinateConversionException( ErrorMessages::easting );
       if ((five_y >= (25 - x)) || (five_y < -x))
+      {
         throw CoordinateConversionException( ErrorMessages::northing );
+      }
     }
   }
   else
@@ -700,7 +699,9 @@ MSP::CCS::BNGCoordinates* BritishNationalGrid::convertFromTransverseMercator( Ma
     if ((x >= (25 - five_y)) || (x < -five_y))
       throw CoordinateConversionException( ErrorMessages::easting );
     if ((five_y >= (25 - x)) || (five_y < -x))
-      throw CoordinateConversionException( ErrorMessages::northing );
+    {
+       throw CoordinateConversionException( ErrorMessages::northing );
+    }
   }
 
   return new BNGCoordinates( CoordinateType::britishNationalGrid, BNGString );

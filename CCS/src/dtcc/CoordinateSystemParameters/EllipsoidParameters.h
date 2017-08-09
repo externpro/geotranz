@@ -15,7 +15,10 @@ namespace MSP
     public:
 
       EllipsoidParameters();
-      EllipsoidParameters( double __semiMajorAxis, double __flattening, char* __ellipsoidCode );
+      EllipsoidParameters(
+         double      __semiMajorAxis,
+         double      __flattening,
+         const char* __ellipsoidCode );
       EllipsoidParameters( const EllipsoidParameters& ecp );
 
       ~EllipsoidParameters();

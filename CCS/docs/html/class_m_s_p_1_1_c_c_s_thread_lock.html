@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -91,22 +92,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCSThreadLock Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_c_c_s_thread_lock_8h_source.html">CCSThreadLock.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a57097ac3a66204e658acf9b44a6a320d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a57097ac3a66204e658acf9b44a6a320d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_thread_lock.html#a57097ac3a66204e658acf9b44a6a320d">CCSThreadLock</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_thread_mutex.html">CCSThreadMutex</a> *mutex)</td></tr>
-<tr class="memdesc:a57097ac3a66204e658acf9b44a6a320d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br/></td></tr>
-<tr class="separator:a57097ac3a66204e658acf9b44a6a320d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa191dfd3d21718ea336269b9a6fda955"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa191dfd3d21718ea336269b9a6fda955"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_thread_lock.html#aa191dfd3d21718ea336269b9a6fda955">~CCSThreadLock</a> ()</td></tr>
-<tr class="memdesc:aa191dfd3d21718ea336269b9a6fda955"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
-<tr class="separator:aa191dfd3d21718ea336269b9a6fda955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02db0e585ce15dd847b5530011d7a68e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_thread_lock.html#a02db0e585ce15dd847b5530011d7a68e">CCSThreadLock</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_thread_mutex.html">CCSThreadMutex</a> *mutex)</td></tr>
+<tr class="memdesc:a02db0e585ce15dd847b5530011d7a68e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor.  <a href="#a02db0e585ce15dd847b5530011d7a68e"></a><br/></td></tr>
+<tr class="separator:a02db0e585ce15dd847b5530011d7a68e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9548e9896355dfdf5d14f6b6b321c5d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_thread_lock.html#a9548e9896355dfdf5d14f6b6b321c5d3">~CCSThreadLock</a> ()</td></tr>
+<tr class="memdesc:a9548e9896355dfdf5d14f6b6b321c5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a9548e9896355dfdf5d14f6b6b321c5d3"></a><br/></td></tr>
+<tr class="separator:a9548e9896355dfdf5d14f6b6b321c5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_c_c_s_thread_lock_8h_source.html#l00015">15</a> of file <a class="el" href="_c_c_s_thread_lock_8h_source.html">CCSThreadLock.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a02db0e585ce15dd847b5530011d7a68e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CCSThreadLock::CCSThreadLock </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_thread_mutex.html">CCSThreadMutex</a> *&#160;</td>
+          <td class="paramname"><em>mutex</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default Constructor. </p>
+
+<p>Definition at line <a class="el" href="_c_c_s_thread_lock_8cpp_source.html#l00008">8</a> of file <a class="el" href="_c_c_s_thread_lock_8cpp_source.html">CCSThreadLock.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9548e9896355dfdf5d14f6b6b321c5d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CCSThreadLock::~CCSThreadLock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destructor. </p>
+
+<p>Definition at line <a class="el" href="_c_c_s_thread_lock_8cpp_source.html#l00014">14</a> of file <a class="el" href="_c_c_s_thread_lock_8cpp_source.html">CCSThreadLock.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:10 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:51 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

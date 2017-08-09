@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="CoordinateSystems">
+      <UniqueIdentifier>{0c256ca8-11ad-428f-a8e8-2e6f7f776d6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoordinateSystems\CoordinateSystems Source Files">
+      <UniqueIdentifier>{1d0f688c-a8e4-4182-a86a-deda30d948ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoordinateSystems\CoordinateSystems Header Files">
+      <UniqueIdentifier>{6e71f132-b435-4744-b79f-a69c9d7adfca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dtcc">
+      <UniqueIdentifier>{ab0a0952-6581-4b52-8357-509d3ee88850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dtcc\dtcc Source Files">
+      <UniqueIdentifier>{8aae23ab-e281-4044-8667-8175ac12d903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dtcc\dtcc Header Files">
+      <UniqueIdentifier>{6aeb4226-13e9-4f65-9358-c69b5e5a1e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters">
+      <UniqueIdentifier>{16cfd338-8c6c-4d04-90b1-226f609ca817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters\Parameters Source Files">
+      <UniqueIdentifier>{3378b385-9713-44ea-a421-179c71032de4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters\Parameters Header Files">
+      <UniqueIdentifier>{6cb0033b-3c33-4650-aab6-e6d3af36f6b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Coordinates">
+      <UniqueIdentifier>{a135ccdc-8e01-421e-b69f-e1de9d3e3072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Coordinates\Coordinates Source Files">
+      <UniqueIdentifier>{f2ae911d-af7c-43e8-87fe-40ea034d1e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Coordinates\Coordinates Header Files">
+      <UniqueIdentifier>{2e18321e-18c4-4880-91d2-386c95c3fa59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enumerations">
+      <UniqueIdentifier>{11fbdcc9-5403-46e1-a47e-3684b4ab3063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exception">
+      <UniqueIdentifier>{42bf5c2c-7a27-4bdf-8ffc-92f27e60f79d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exception\Exception Source Files">
+      <UniqueIdentifier>{b65ec813-3cb5-44ed-9701-f60f79c2f254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exception\Exception Header Files">
+      <UniqueIdentifier>{d22882b7-d5b8-4c0a-b24e-ee508e0569db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{2620f789-2633-48a5-b33a-4636da96eb11}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\albers\AlbersEqualAreaConic.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\azeq\AzimuthalEquidistant.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\bonne\Bonne.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\bng\BritishNationalGrid.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\cassini\Cassini.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\threads\CCSThreadLock.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\threads\CCSThreadMutex.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\misc\CoordinateSystem.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\cyleqa\CylindricalEqualArea.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\datum\Datum.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\datum\DatumLibraryImplementation.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\eckert4\Eckert4.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\eckert6\Eckert6.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\ellipse\Ellipsoid.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\ellipse\EllipsoidLibraryImplementation.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\eqdcyl\EquidistantCylindrical.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\gars\GARS.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\geocent\Geocentric.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\georef\GEOREF.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\gnomonic\Gnomonic.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\lambert\LambertConformalConic.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\loccart\LocalCartesian.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\mercator\Mercator.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\mgrs\MGRS.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\miller\MillerCylindrical.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\mollweid\Mollweide.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\neys\Neys.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\nzmg\NZMG.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\omerc\ObliqueMercator.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\orthogr\Orthographic.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\polarst\PolarStereographic.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\polycon\Polyconic.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\datum\SevenParameterDatum.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\sinusoid\Sinusoidal.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\stereogr\Stereographic.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\datum\ThreeParameterDatum.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\trcyleqa\TransverseCylindricalEqualArea.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\tranmerc\TransverseMercator.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\ups\UPS.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\usng\USNG.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\utm\UTM.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\grinten\VanDerGrinten.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystems\webmerc\WebMercator.cpp">
+      <Filter>CoordinateSystems\CoordinateSystems Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\DatumLibrary.cpp">
+      <Filter>dtcc\dtcc Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\egm2008_aoi_grid_package.cpp">
+      <Filter>dtcc\dtcc Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\egm2008_full_grid_package.cpp">
+      <Filter>dtcc\dtcc Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\egm2008_geoid_grid.cpp">
+      <Filter>dtcc\dtcc Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\EllipsoidLibrary.cpp">
+      <Filter>dtcc\dtcc Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\GeoidLibrary.cpp">
+      <Filter>dtcc\dtcc Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\CoordinateSystemParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\EllipsoidParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\EquidistantCylindricalParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\GeodeticParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\LocalCartesianParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\MapProjection3Parameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\MapProjection4Parameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\MapProjection5Parameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\MapProjection6Parameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\MercatorScaleFactorParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\MercatorStandardParallelParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\NeysParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\ObliqueMercatorParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\PolarStereographicScaleFactorParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\PolarStereographicStandardParallelParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateSystemParameters\UTMParameters.cpp">
+      <Filter>Parameters\Parameters Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\Accuracy.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\BNGCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\CartesianCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\CoordinateTuple.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\GARSCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\GeodeticCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\GEOREFCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\MapProjectionCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\MGRSorUSNGCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\UPSCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\CoordinateTuples\UTMCoordinates.cpp">
+      <Filter>Coordinates\Coordinates Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\Exception\ErrorMessages.cpp">
+      <Filter>Exception\Exception Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dtcc\Exception\WarningMessages.cpp">
+      <Filter>Exception\Exception Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\albers\AlbersEqualAreaConic.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\azeq\AzimuthalEquidistant.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\bonne\Bonne.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\bng\BritishNationalGrid.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\cassini\Cassini.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\threads\CCSThreadLock.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\threads\CCSThreadMutex.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\misc\CoordinateSystem.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\cyleqa\CylindricalEqualArea.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\datum\Datum.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\datum\DatumLibraryImplementation.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\eckert4\Eckert4.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\eckert6\Eckert6.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\ellipse\Ellipsoid.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\ellipse\EllipsoidLibraryImplementation.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\eqdcyl\EquidistantCylindrical.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\gars\GARS.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\geocent\Geocentric.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\georef\GEOREF.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\gnomonic\Gnomonic.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\lambert\LambertConformalConic.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\loccart\LocalCartesian.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\mercator\Mercator.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\mgrs\MGRS.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\miller\MillerCylindrical.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\mollweid\Mollweide.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\neys\Neys.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\nzmg\NZMG.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\omerc\ObliqueMercator.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\orthogr\Orthographic.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\polarst\PolarStereographic.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\polycon\Polyconic.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\datum\SevenParameterDatum.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\sinusoid\Sinusoidal.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\stereogr\Stereographic.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\datum\ThreeParameterDatum.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\trcyleqa\TransverseCylindricalEqualArea.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\tranmerc\TransverseMercator.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\ups\UPS.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\usng\USNG.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\utm\UTM.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\grinten\VanDerGrinten.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystems\webmerc\WebMercator.h">
+      <Filter>CoordinateSystems\CoordinateSystems Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\DatumLibrary.h">
+      <Filter>dtcc\dtcc Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\egm2008_aoi_grid_package.h">
+      <Filter>dtcc\dtcc Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\egm2008_full_grid_package.h">
+      <Filter>dtcc\dtcc Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\egm2008_geoid_grid.h">
+      <Filter>dtcc\dtcc Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\EllipsoidLibrary.h">
+      <Filter>dtcc\dtcc Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\GeoidLibrary.h">
+      <Filter>dtcc\dtcc Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\CoordinateSystemParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\EllipsoidParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\EquidistantCylindricalParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\GeodeticParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\LocalCartesianParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\MapProjection3Parameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\MapProjection4Parameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\MapProjection5Parameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\MapProjection6Parameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\MercatorScaleFactorParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\MercatorStandardParallelParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\NeysParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\ObliqueMercatorParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\PolarStereographicScaleFactorParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\PolarStereographicStandardParallelParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateSystemParameters\UTMParameters.h">
+      <Filter>Parameters\Parameters Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\Accuracy.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\BNGCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\CartesianCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\CoordinateTuple.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\GARSCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\GeodeticCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\GEOREFCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\MapProjectionCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\MGRSorUSNGCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\UPSCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\CoordinateTuples\UTMCoordinates.h">
+      <Filter>Coordinates\Coordinates Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\Enumerations\CoordinateType.h">
+      <Filter>Enumerations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\Enumerations\DatumType.h">
+      <Filter>Enumerations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\Enumerations\HeightType.h">
+      <Filter>Enumerations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\Enumerations\Precision.h">
+      <Filter>Enumerations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\Enumerations\SourceOrTarget.h">
+      <Filter>Enumerations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\Exception\CoordinateConversionException.h">
+      <Filter>Exception\Exception Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\Exception\ErrorMessages.h">
+      <Filter>Exception\Exception Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dtcc\Exception\WarningMessages.h">
+      <Filter>Exception\Exception Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

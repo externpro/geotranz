@@ -27,7 +27,7 @@ import geotrans3.utility.Constants;
 
 public class StringHandler extends Object 
 {
-  private final java.lang.String title = "MSP GEOTRANS 3.4";
+  private final java.lang.String title = "MSP GEOTRANS 3.5";
   
   private java.lang.String errorMsg[];
   private boolean ccsError = false;

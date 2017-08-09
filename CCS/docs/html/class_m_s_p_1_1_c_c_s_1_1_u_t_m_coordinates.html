@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::UTMCoordinates Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_u_t_m_coordinates_8h_source.html">UTMCoordinates.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MSP::CCS::UTMCoordinates:</div>
 <div class="dyncontent">
@@ -103,100 +106,451 @@ Inheritance diagram for MSP::CCS::UTMCoordinates:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1a07d5ef5073accd6e16b7c211d9634e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a07d5ef5073accd6e16b7c211d9634e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>UTMCoordinates</b> (CoordinateType::Enum _coordinateType)</td></tr>
-<tr class="separator:a1a07d5ef5073accd6e16b7c211d9634e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8ec4554a6d173e8cf5a5d4a68f44857"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8ec4554a6d173e8cf5a5d4a68f44857"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>UTMCoordinates</b> (CoordinateType::Enum _coordinateType, long __zone, char __hemisphere, double __easting, double __northing)</td></tr>
-<tr class="separator:ab8ec4554a6d173e8cf5a5d4a68f44857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03b2db424c4362d9c5d915330f82428a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03b2db424c4362d9c5d915330f82428a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>UTMCoordinates</b> (CoordinateType::Enum _coordinateType, const char *__warningMessage, long __zone, char __hemisphere, double __easting, double __northing)</td></tr>
-<tr class="separator:a03b2db424c4362d9c5d915330f82428a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9683fd4e18ea2f9c0c357464f5a3878"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9683fd4e18ea2f9c0c357464f5a3878"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>UTMCoordinates</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp;c)</td></tr>
-<tr class="separator:ab9683fd4e18ea2f9c0c357464f5a3878"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a951d7d8fd59e7f21d86df43f13ac5be5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a951d7d8fd59e7f21d86df43f13ac5be5"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp;c)</td></tr>
-<tr class="separator:a951d7d8fd59e7f21d86df43f13ac5be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58d760f77cdaf7711494c2bf29e6e926"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58d760f77cdaf7711494c2bf29e6e926"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (long __zone, char __hemisphere, double __easting, double __northing)</td></tr>
-<tr class="separator:a58d760f77cdaf7711494c2bf29e6e926"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31d321444a4deb2e8b795be4bde61c69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31d321444a4deb2e8b795be4bde61c69"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setZone</b> (long __zone)</td></tr>
-<tr class="separator:a31d321444a4deb2e8b795be4bde61c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade7b98c8c303ae2137625162c29b0458"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade7b98c8c303ae2137625162c29b0458"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>zone</b> () const </td></tr>
-<tr class="separator:ade7b98c8c303ae2137625162c29b0458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4019a7ab0e707ec4f55421291a7fb541"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4019a7ab0e707ec4f55421291a7fb541"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setHemisphere</b> (char __hemisphere)</td></tr>
-<tr class="separator:a4019a7ab0e707ec4f55421291a7fb541"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a830dbd0a1f39b71c943f0e3969d81c24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a830dbd0a1f39b71c943f0e3969d81c24"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>hemisphere</b> () const </td></tr>
-<tr class="separator:a830dbd0a1f39b71c943f0e3969d81c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a593ebe9e688447cff66ba6cff5978807"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a593ebe9e688447cff66ba6cff5978807"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setEasting</b> (double __easting)</td></tr>
-<tr class="separator:a593ebe9e688447cff66ba6cff5978807"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68ff0abc12d479b66a9bee29eb5c3d6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68ff0abc12d479b66a9bee29eb5c3d6a"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>easting</b> () const </td></tr>
-<tr class="separator:a68ff0abc12d479b66a9bee29eb5c3d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac00f011a0be18fbcf89991ef627a9d2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac00f011a0be18fbcf89991ef627a9d2c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setNorthing</b> (double __northing)</td></tr>
-<tr class="separator:ac00f011a0be18fbcf89991ef627a9d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcd3a28c759516eb48d89f1d754de985"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcd3a28c759516eb48d89f1d754de985"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>northing</b> () const </td></tr>
-<tr class="separator:afcd3a28c759516eb48d89f1d754de985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a001ca04bc474193257f03d8e9614c2fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a001ca04bc474193257f03d8e9614c2fc">UTMCoordinates</a> ()</td></tr>
+<tr class="separator:a001ca04bc474193257f03d8e9614c2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e105aa46185f2e30e2daaf08055948e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a5e105aa46185f2e30e2daaf08055948e">UTMCoordinates</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a>)</td></tr>
+<tr class="separator:a5e105aa46185f2e30e2daaf08055948e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90ac574cd9a1ccf9dc51efe6f36ebb65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a90ac574cd9a1ccf9dc51efe6f36ebb65">UTMCoordinates</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a>, long __zone, char __hemisphere, double __easting, double __northing)</td></tr>
+<tr class="separator:a90ac574cd9a1ccf9dc51efe6f36ebb65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88b49c64eca55f4b4300ff9d428a963f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a88b49c64eca55f4b4300ff9d428a963f">UTMCoordinates</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a> <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a>, const char *__warningMessage, long __zone, char __hemisphere, double __easting, double __northing)</td></tr>
+<tr class="separator:a88b49c64eca55f4b4300ff9d428a963f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49308901ecf2938832faf49c226d3418"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a49308901ecf2938832faf49c226d3418">UTMCoordinates</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp;c)</td></tr>
+<tr class="separator:a49308901ecf2938832faf49c226d3418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a693157e978991f0ece2f21a60c31bd5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a693157e978991f0ece2f21a60c31bd5d">~UTMCoordinates</a> ()</td></tr>
+<tr class="separator:a693157e978991f0ece2f21a60c31bd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62977dffdd6dca8111e0d380e5c1532a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a62977dffdd6dca8111e0d380e5c1532a">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp;c)</td></tr>
+<tr class="separator:a62977dffdd6dca8111e0d380e5c1532a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dbd62713050304c78d68e7fea446429"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a0dbd62713050304c78d68e7fea446429">set</a> (long __zone, char __hemisphere, double __easting, double __northing)</td></tr>
+<tr class="separator:a0dbd62713050304c78d68e7fea446429"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a218d7d279292844de2e5b480c08aa68d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a218d7d279292844de2e5b480c08aa68d">setZone</a> (long __zone)</td></tr>
+<tr class="separator:a218d7d279292844de2e5b480c08aa68d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92db13121e8ae616e03dd62608412381"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a92db13121e8ae616e03dd62608412381">zone</a> () const </td></tr>
+<tr class="separator:a92db13121e8ae616e03dd62608412381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7f427917c0ea5f8a05850dc050adcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#acb7f427917c0ea5f8a05850dc050adcf">setHemisphere</a> (char __hemisphere)</td></tr>
+<tr class="separator:acb7f427917c0ea5f8a05850dc050adcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56a71123cc61870eae1f26882273824a"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a56a71123cc61870eae1f26882273824a">hemisphere</a> () const </td></tr>
+<tr class="separator:a56a71123cc61870eae1f26882273824a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f7e4328f5957aa8be6c48d3b54fdd29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a5f7e4328f5957aa8be6c48d3b54fdd29">setEasting</a> (double __easting)</td></tr>
+<tr class="separator:a5f7e4328f5957aa8be6c48d3b54fdd29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7c9fe4e4875df681f382c3c9538aa37"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#af7c9fe4e4875df681f382c3c9538aa37">easting</a> () const </td></tr>
+<tr class="separator:af7c9fe4e4875df681f382c3c9538aa37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81d8ffc7865ce46533862cc33a542b4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a81d8ffc7865ce46533862cc33a542b4f">setNorthing</a> (double __northing)</td></tr>
+<tr class="separator:a81d8ffc7865ce46533862cc33a542b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9487fc2821f7c0d1d3021c7dda3ee52b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html#a9487fc2821f7c0d1d3021c7dda3ee52b">northing</a> () const </td></tr>
+<tr class="separator:a9487fc2821f7c0d1d3021c7dda3ee52b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">MSP::CCS::CoordinateTuple</a></td></tr>
-<tr class="memitem:a334a205c573964b6d489ecfbb49f4985 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a334a205c573964b6d489ecfbb49f4985"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateTuple</b> (MSP::CCS::CoordinateType::Enum __coordinateType)</td></tr>
-<tr class="separator:a334a205c573964b6d489ecfbb49f4985 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d8cf4cf38e1c86486b5be561357c7b2 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d8cf4cf38e1c86486b5be561357c7b2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateTuple</b> (MSP::CCS::CoordinateType::Enum __coordinateType, const char *__warningMessage)</td></tr>
-<tr class="separator:a1d8cf4cf38e1c86486b5be561357c7b2 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad122cdccb2a64dff60a77df3aa4989d5 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad122cdccb2a64dff60a77df3aa4989d5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoordinateTuple</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;ct)</td></tr>
-<tr class="separator:ad122cdccb2a64dff60a77df3aa4989d5 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8209719802bd811cb3255378755f19c1 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8209719802bd811cb3255378755f19c1"></a>
-<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;ct)</td></tr>
-<tr class="separator:a8209719802bd811cb3255378755f19c1 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb9099817238ddb2cc03d1fda53fd1b3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb9099817238ddb2cc03d1fda53fd1b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (MSP::CCS::CoordinateType::Enum __coordinateType, const char *__warningMessage, const char *__errorMessage)</td></tr>
-<tr class="separator:aeb9099817238ddb2cc03d1fda53fd1b3 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15354b99b77858bb68e5149cd5ef9cd4 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15354b99b77858bb68e5149cd5ef9cd4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCoordinateType</b> (MSP::CCS::CoordinateType::Enum __coordinateType)</td></tr>
-<tr class="separator:a15354b99b77858bb68e5149cd5ef9cd4 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9164233eb79a3298a4f7110030608492 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9164233eb79a3298a4f7110030608492"></a>
-CoordinateType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>coordinateType</b> () const </td></tr>
-<tr class="separator:a9164233eb79a3298a4f7110030608492 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70f5ac18a031de30e1cedc9aa0442b19 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70f5ac18a031de30e1cedc9aa0442b19"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setErrorMessage</b> (const char *__errorMessage)</td></tr>
-<tr class="separator:a70f5ac18a031de30e1cedc9aa0442b19 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a668f6ab0d046db457c0786b662e2d6cb inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a668f6ab0d046db457c0786b662e2d6cb"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>errorMessage</b> () const </td></tr>
-<tr class="separator:a668f6ab0d046db457c0786b662e2d6cb inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70a5ecfe6d0444d68c0343935408c92a inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70a5ecfe6d0444d68c0343935408c92a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setWarningMessage</b> (const char *__warningMessage)</td></tr>
-<tr class="separator:a70a5ecfe6d0444d68c0343935408c92a inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca0562fcd6e3958cc742d5962d13bd2f inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca0562fcd6e3958cc742d5962d13bd2f"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>warningMessage</b> () const </td></tr>
-<tr class="separator:aca0562fcd6e3958cc742d5962d13bd2f inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2a6e79c1824221f28516eca47727ee9 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#af2a6e79c1824221f28516eca47727ee9">CoordinateTuple</a> ()</td></tr>
+<tr class="separator:af2a6e79c1824221f28516eca47727ee9 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a996a72edbca076809a9494e8b5aab944 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a996a72edbca076809a9494e8b5aab944">CoordinateTuple</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType)</td></tr>
+<tr class="separator:a996a72edbca076809a9494e8b5aab944 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9c037c4a02715d104a36b4089aaac3d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#aa9c037c4a02715d104a36b4089aaac3d">CoordinateTuple</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType, const char *__warningMessage)</td></tr>
+<tr class="separator:aa9c037c4a02715d104a36b4089aaac3d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a952144c44dd68fcc8bf33cc3e41d6480 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a952144c44dd68fcc8bf33cc3e41d6480">CoordinateTuple</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;ct)</td></tr>
+<tr class="separator:a952144c44dd68fcc8bf33cc3e41d6480 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad96e931bcb8381ca886901b3c124bd65 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#ad96e931bcb8381ca886901b3c124bd65">~CoordinateTuple</a> ()</td></tr>
+<tr class="separator:ad96e931bcb8381ca886901b3c124bd65 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6dd81a8e8a27c42ed949cc1fff7183e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#ae6dd81a8e8a27c42ed949cc1fff7183e">operator=</a> (const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">CoordinateTuple</a> &amp;ct)</td></tr>
+<tr class="separator:ae6dd81a8e8a27c42ed949cc1fff7183e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab45935a903abb8df9fc34bba74157a07 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#ab45935a903abb8df9fc34bba74157a07">set</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType, const char *__warningMessage, const char *__errorMessage)</td></tr>
+<tr class="separator:ab45935a903abb8df9fc34bba74157a07 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261933f0a43a5ef385bf8318f0881e3d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a261933f0a43a5ef385bf8318f0881e3d">setCoordinateType</a> (<a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">MSP::CCS::CoordinateType::Enum</a> __coordinateType)</td></tr>
+<tr class="separator:a261933f0a43a5ef385bf8318f0881e3d inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6abcb8ecab9f0900562791cb551a50a2 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a6abcb8ecab9f0900562791cb551a50a2">coordinateType</a> () const </td></tr>
+<tr class="separator:a6abcb8ecab9f0900562791cb551a50a2 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c496ec196ec947b8422a7ed9221e826 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a9c496ec196ec947b8422a7ed9221e826">setErrorMessage</a> (const char *__errorMessage)</td></tr>
+<tr class="separator:a9c496ec196ec947b8422a7ed9221e826 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9b8534d0a9e2fe16ca7800994c606bd inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#af9b8534d0a9e2fe16ca7800994c606bd">errorMessage</a> () const </td></tr>
+<tr class="separator:af9b8534d0a9e2fe16ca7800994c606bd inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd15733bba983388c6e2541901de162e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#acd15733bba983388c6e2541901de162e">setWarningMessage</a> (const char *__warningMessage)</td></tr>
+<tr class="separator:acd15733bba983388c6e2541901de162e inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad809739421cc0b3d30c52c02bc901a55 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#ad809739421cc0b3d30c52c02bc901a55">warningMessage</a> () const </td></tr>
+<tr class="separator:ad809739421cc0b3d30c52c02bc901a55 inherit pub_methods_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html">MSP::CCS::CoordinateTuple</a></td></tr>
-<tr class="memitem:a3e728588a59f9d3efa8987ac3a120401 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e728588a59f9d3efa8987ac3a120401"></a>
-CoordinateType::Enum&#160;</td><td class="memItemRight" valign="bottom"><b>_coordinateType</b></td></tr>
+<tr class="memitem:a3e728588a59f9d3efa8987ac3a120401 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a3e728588a59f9d3efa8987ac3a120401">_coordinateType</a></td></tr>
 <tr class="separator:a3e728588a59f9d3efa8987ac3a120401 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83b16bf74d2f26c593a2b82f11c32e9a inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83b16bf74d2f26c593a2b82f11c32e9a"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>_errorMessage</b> [500]</td></tr>
+<tr class="memitem:a83b16bf74d2f26c593a2b82f11c32e9a inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a83b16bf74d2f26c593a2b82f11c32e9a">_errorMessage</a> [500]</td></tr>
 <tr class="separator:a83b16bf74d2f26c593a2b82f11c32e9a inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b24c147df366470bd58eb16ca40dc27 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b24c147df366470bd58eb16ca40dc27"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>_warningMessage</b> [500]</td></tr>
+<tr class="memitem:a7b24c147df366470bd58eb16ca40dc27 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple.html#a7b24c147df366470bd58eb16ca40dc27">_warningMessage</a> [500]</td></tr>
 <tr class="separator:a7b24c147df366470bd58eb16ca40dc27 inherit pro_attribs_class_m_s_p_1_1_c_c_s_1_1_coordinate_tuple"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8h_source.html#l00015">15</a> of file <a class="el" href="_u_t_m_coordinates_8h_source.html">UTMCoordinates.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a001ca04bc474193257f03d8e9614c2fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UTMCoordinates::UTMCoordinates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00010">10</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5e105aa46185f2e30e2daaf08055948e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UTMCoordinates::UTMCoordinates </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00020">20</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a90ac574cd9a1ccf9dc51efe6f36ebb65"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UTMCoordinates::UTMCoordinates </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>__zone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>__hemisphere</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__easting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__northing</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00030">30</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a88b49c64eca55f4b4300ff9d428a963f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UTMCoordinates::UTMCoordinates </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_coordinate_type.html#a418b669819e988d0cb43c506beffd8eb">CoordinateType::Enum</a>&#160;</td>
+          <td class="paramname"><em>_coordinateType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>__warningMessage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>__zone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>__hemisphere</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__easting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__northing</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00040">40</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a49308901ecf2938832faf49c226d3418"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UTMCoordinates::UTMCoordinates </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp;&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00053">53</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a693157e978991f0ece2f21a60c31bd5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UTMCoordinates::~UTMCoordinates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00068">68</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="af7c9fe4e4875df681f382c3c9538aa37"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double UTMCoordinates::easting </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00132">132</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a56a71123cc61870eae1f26882273824a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char UTMCoordinates::hemisphere </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00120">120</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9487fc2821f7c0d1d3021c7dda3ee52b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double UTMCoordinates::northing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00144">144</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a62977dffdd6dca8111e0d380e5c1532a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp; UTMCoordinates::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_m_s_p_1_1_c_c_s_1_1_u_t_m_coordinates.html">UTMCoordinates</a> &amp;&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00073">73</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0dbd62713050304c78d68e7fea446429"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTMCoordinates::set </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>__zone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>__hemisphere</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__easting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__northing</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00093">93</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5f7e4328f5957aa8be6c48d3b54fdd29"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTMCoordinates::setEasting </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__easting</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00126">126</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acb7f427917c0ea5f8a05850dc050adcf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTMCoordinates::setHemisphere </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>__hemisphere</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00114">114</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a81d8ffc7865ce46533862cc33a542b4f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTMCoordinates::setNorthing </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>__northing</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00138">138</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a218d7d279292844de2e5b480c08aa68d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UTMCoordinates::setZone </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>__zone</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00102">102</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a92db13121e8ae616e03dd62608412381"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long UTMCoordinates::zone </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_u_t_m_coordinates_8cpp_source.html#l00108">108</a> of file <a class="el" href="_u_t_m_coordinates_8cpp_source.html">UTMCoordinates.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:16 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:57 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>

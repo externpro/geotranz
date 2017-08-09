@@ -40,7 +40,6 @@
  *  ELLIPSE_NO_ERROR             : No errors occured in function
  *  ELLIPSE_FILE_OPEN_ERROR      : Ellipsoid file opening error
  *  ELLIPSE_INITIALIZE_ERROR     : Ellipsoid table can not initialize
- *  ELLIPSE_TABLE_OVERFLOW_ERROR : Ellipsoid table overflow
  *  ELLIPSE_NOT_INITIALIZED_ERROR: Ellipsoid table not initialized properly
  *  ELLIPSE_INVALID_INDEX_ERROR  : Index is an invalid value
  *  ELLIPSE_INVALID_CODE_ERROR   : Code was not found in table

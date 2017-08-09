@@ -215,6 +215,10 @@ SVC_Status String_to_Projection(const char *str, MSP::CCS::CoordinateType::Enum*
   {
     *val = CoordinateType::vanDerGrinten;
   }
+  else if (strstr("WEB MERCATOR", str))
+  {
+    *val = CoordinateType::webMercator;
+  }
   else
   {
     error_Code = SVC_Invalid_Projection_String;
@@ -413,6 +417,11 @@ SVC_Status Projection_to_String(const CoordinateType::Enum val, char str[32])
   case CoordinateType::vanDerGrinten:
     {
       strcpy(str, "Van der Grinten");
+      break;
+    }
+  case CoordinateType::webMercator:
+    {
+      strcpy(str, "Web Mercator");
       break;
     }
   default:

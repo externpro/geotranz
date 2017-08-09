@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><b>CCS</b></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_warning_messages.html">WarningMessages</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_m_s_p.html">MSP</a></li><li class="navelem"><a class="el" href="namespace_m_s_p_1_1_c_c_s.html">CCS</a></li><li class="navelem"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_warning_messages.html">WarningMessages</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,23 +92,92 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MSP::CCS::WarningMessages Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_warning_messages_8h_source.html">WarningMessages.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:ab6b068e60122db3e5bdcb93a7919d3c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6b068e60122db3e5bdcb93a7919d3c6"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>longitude</b></td></tr>
-<tr class="separator:ab6b068e60122db3e5bdcb93a7919d3c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4fdf49863bfa436e00fbbc6683db03d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4fdf49863bfa436e00fbbc6683db03d"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>latitude</b></td></tr>
-<tr class="separator:ae4fdf49863bfa436e00fbbc6683db03d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ee80310bd47d753bfdfa514b9a9887e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ee80310bd47d753bfdfa514b9a9887e"></a>
-static char *&#160;</td><td class="memItemRight" valign="bottom"><b>datum</b></td></tr>
-<tr class="separator:a0ee80310bd47d753bfdfa514b9a9887e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43a80153485fe8136296c47fcb6f5801"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_warning_messages.html#a43a80153485fe8136296c47fcb6f5801">longitude</a> = &quot;Longitude is too far from Central Meridian, distortion may be significant\n&quot;</td></tr>
+<tr class="separator:a43a80153485fe8136296c47fcb6f5801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae681e39b461918572053df752a370df2"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_warning_messages.html#ae681e39b461918572053df752a370df2">latitude</a> = &quot;Latitude band boundary cuts across 100km square\n&quot;</td></tr>
+<tr class="separator:ae681e39b461918572053df752a370df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08e6814134ebaf244b750394621e342f"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_m_s_p_1_1_c_c_s_1_1_warning_messages.html#a08e6814134ebaf244b750394621e342f">datum</a> = &quot;Location is not within valid domain for current datum\n&quot;</td></tr>
+<tr class="separator:a08e6814134ebaf244b750394621e342f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="_warning_messages_8h_source.html#l00019">19</a> of file <a class="el" href="_warning_messages_8h_source.html">WarningMessages.h</a>.</p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a08e6814134ebaf244b750394621e342f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * WarningMessages::datum = &quot;Location is not within valid domain for current datum\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_warning_messages_8h_source.html#l00027">27</a> of file <a class="el" href="_warning_messages_8h_source.html">WarningMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae681e39b461918572053df752a370df2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * WarningMessages::latitude = &quot;Latitude band boundary cuts across 100km square\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_warning_messages_8h_source.html#l00025">25</a> of file <a class="el" href="_warning_messages_8h_source.html">WarningMessages.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a43a80153485fe8136296c47fcb6f5801"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * WarningMessages::longitude = &quot;Longitude is too far from Central Meridian, distortion may be significant\n&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_warning_messages_8h_source.html#l00024">24</a> of file <a class="el" href="_warning_messages_8h_source.html">WarningMessages.h</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 19 2013 10:39:17 for GeographicTranslator by doxygen 1.8.2
+Generated on Tue Dec 2 2014 17:07:58 for GeographicTranslator by doxygen 1.8.2
 </small></address>
 </body>
 </html>
