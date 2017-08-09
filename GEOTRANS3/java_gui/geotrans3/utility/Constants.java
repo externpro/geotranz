@@ -24,6 +24,8 @@ public class Constants
   
   /** 180.0 / PI VALUE */
   public static final double _180_OVER_PI = (180.0 / PI);
+
+  public static final double RADIANS_TO_DEGREES_FACTOR = _180_OVER_PI;
   
   /** PI / 180.0 VALUE */
   public static final double PI_OVER_180 = (PI / 180.0);

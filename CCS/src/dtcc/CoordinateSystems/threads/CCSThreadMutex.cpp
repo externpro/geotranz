@@ -12,6 +12,8 @@ CCSThreadMutex::CCSThreadMutex()
 {
 #ifdef WIN32
    mutex = (void*)CreateMutex(NULL,FALSE,NULL);
+#elif NDK_BUILD
+   // do nothing for Android
 #else
    // force a recursive mutex to match windows implementation.
    pthread_mutexattr_t attr;
@@ -26,6 +28,8 @@ CCSThreadMutex::~CCSThreadMutex()
 {
 #ifdef WIN32
    CloseHandle((HANDLE)mutex);
+#elif NDK_BUILD
+   // do nothing for Android
 #else
    // force a recursive mutex to match windows implementation.
    pthread_mutex_destroy(&mutex);
@@ -36,6 +40,8 @@ CCSThreadMutex::lock() const
 {
 #ifdef WIN32
    WaitForSingleObject((HANDLE)mutex, INFINITE);
+#elif NDK_BUILD
+   // do nothing for Android
 #else
    // force a recursive mutex to match windows implementation.
    pthread_mutex_lock(&mutex);
@@ -48,6 +54,8 @@ CCSThreadMutex::unlock() const
 {
 #ifdef WIN32
    ReleaseMutex((HANDLE)mutex);
+#elif NDK_BUILD
+   // do nothing for Android
 #else
    // force a recursive mutex to match windows implementation.
    pthread_mutex_unlock(&mutex);

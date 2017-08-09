@@ -50,24 +50,47 @@ public class GeodeticCoordinates extends CoordinateTuple
     latitude = _latitude;
     height = _height;
   }
+
   
-  
+  public void setLongitude(double lon) {
+    this.longitude = lon;
+  }
+
   public double getLongitude()
   {
     return longitude;
   }
   
   
+  public void setLatitude(double lat) {
+    this.latitude = lat;
+  }
+
   public double getLatitude()
   {
     return latitude;
   }
   
+
+  public void setHeight(double height) {
+    this.height = height;
+  }
   
   public double getHeight()
   {
     return height;
   }
+
+  public String toString() {
+    String s;
+
+    s = String.valueOf(this.latitude) + " " 
+      + String.valueOf(this.longitude) + " " 
+      + String.valueOf(this.height);
+
+    return s;
+  }
+
 }
 
 // CLASSIFICATION: UNCLASSIFIED

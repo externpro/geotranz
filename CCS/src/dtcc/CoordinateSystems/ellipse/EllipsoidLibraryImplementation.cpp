@@ -114,6 +114,18 @@
 #include "CCSThreadMutex.h"
 #include "CCSThreadLock.h"
 
+#ifdef NDK_BUILD
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <android/log.h>
+
+using namespace std;
+
+#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "GtApp", __VA_ARGS__))
+#endif
+
+
 /*
  *    ctype.h    - standard C character handling library
  *    stdio.h    - standard C input/output library
@@ -305,6 +317,10 @@ void EllipsoidLibraryImplementation::defineEllipsoid( const char* code, const ch
   long index = 0;
   long numEllipsoids = ellipsoidList.size();
   double inv_f = 1 / flattening;
+
+#ifdef NDK_BUILD
+  __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "numEllipsoid %d ", numEllipsoids );
+#endif
 
   if( !( numEllipsoids < MAX_ELLIPSOIDS ) )
     throw CoordinateConversionException( ErrorMessages::ellipsoidOverflow );
@@ -505,6 +521,11 @@ void EllipsoidLibraryImplementation::ellipsoidIndex( const char *code, long* ind
   temp_code[ELLIPSOID_CODE_LENGTH - 1] = 0;
 
   int numEllipsoids = ellipsoidList.size();
+
+#ifdef NDK_BUILD
+  __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "ellipsoid code %s %d ", code, numEllipsoids );
+#endif
+
   while( ( i < numEllipsoids )
          && strcmp( temp_code, ellipsoidList[i]->code() ) )
   {
@@ -674,6 +695,12 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
   /*  Check the environment for a user provided path, else current directory;   */
   /*  Build a File Name, including specified or default path:                   */
 
+#ifdef NDK_BUILD
+  PathName = "/data/data/com.baesystems.msp.geotrans/lib/";
+  FileName = new char[ 80 ];
+  strcpy( FileName, PathName );
+  strcat( FileName, "libellipsdat.so" );
+#else
   PathName = getenv( "MSPCCS_DATA" );
   if (PathName != NULL)
   {
@@ -687,6 +714,7 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
     strcpy( FileName, "../../data/" );
   }
   strcat( FileName, "ellips.dat" );
+#endif
 
   /*  Open the File READONLY, or Return Error Condition:                        */
 
@@ -733,6 +761,15 @@ void EllipsoidLibraryImplementation::loadEllipsoids()
 
         double flattening = 1 / recpF;
         double eccentricitySquared = 2.0 * flattening - flattening * flattening;
+
+#ifdef NDK_BUILD
+      //      LOGW("GtApp: name=%s code=%s recpF=%f", name, code, recpF);      
+      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "name %s", name);
+      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "code %s", code);
+      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "major %f", semiMajorAxis);
+      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "minor %f", semiMinorAxis);
+      __android_log_print(ANDROID_LOG_VERBOSE, "GtApp", "recpF %f", recpF);
+#endif
 
         ellipsoidList.push_back( new Ellipsoid( index, code, name, semiMajorAxis, semiMinorAxis, flattening, eccentricitySquared, userDefined ) );
 

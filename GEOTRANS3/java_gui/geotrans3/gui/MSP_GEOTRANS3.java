@@ -15,15 +15,14 @@
 *                                    since gui didn't display on Solaris 8
 * 11/18/11  K. Lam      MSP_029475   Update version to 3.3
 * 07/18/12  S. Gillis   MSP_00029550 Updated exception handling 
+* 07/31/13  K. Lam      MSP_00029595 Fix Load/Save Settings &
+*                                    update version to 3.4
 *****************************************************************************/
 
 package geotrans3.gui;
 
 import geotrans3.misc.AOI;
-import geotrans3.misc.SaveSettings;
-import geotrans3.misc.LoadSettings;
 import geotrans3.misc.FormatOptions;
-import geotrans3.utility.StartBrowser;
 import geotrans3.utility.ReadEnv;
 import geotrans3.utility.Platform;
 import geotrans3.utility.Directory;
@@ -85,7 +84,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     lookAndFeelGroup.add(unixRadioButtonMenuItem);
     lookAndFeelGroup.add(windowsRadioButtonMenuItem);
 
-    Utility.setIcon(this, "/geotrans3/gui/icons/NGA.gif");
+    Utility.setIcon(this, "/geotrans3/gui/icons/geotrans_logo.gif");
 
     if (Platform.isUnix)
         setSize(new java.awt.Dimension(484, 679));
@@ -196,7 +195,7 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     helpMenuSeparator = new javax.swing.JSeparator();
     aboutMenuItem = new javax.swing.JMenuItem();
 
-    setTitle("MSP GEOTRANS 3.3");
+    setTitle("MSP GEOTRANS 3.4");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -630,7 +629,8 @@ public class MSP_GEOTRANS3 extends javax.swing.JFrame
     {
       if(defaultFile.exists())
       {
-        new LoadSettings(this, defaultFile);
+        // DR 29595 - initialize defaultSettings
+        defaultSettings = new LoadSettings(this, defaultFile);
       }
       else
       {

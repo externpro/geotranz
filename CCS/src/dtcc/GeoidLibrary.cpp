@@ -1033,7 +1033,7 @@ void GeoidLibrary::initializeEGM96Geoid()
 
   int items_read = 0;
   char* file_name = 0;
-  char* path_name = getenv( "MSPCCS_DATA" );
+  char* path_name = NULL;
   long elevations_read = 0;
   long items_discarded = 0;
   long num = 0;
@@ -1044,6 +1044,13 @@ void GeoidLibrary::initializeEGM96Geoid()
 /*  Check the environment for a user provided path, else current directory;   */
 /*  Build a File Name, including specified or default path:                   */
 
+#ifdef NDK_BUILD
+  path_name = "/data/data/com.baesystems.msp.geotrans/lib/";
+  file_name = new char[ 80 ];
+  strcpy( file_name, path_name );
+  strcat( file_name, "libegm96grd.so" );
+#else
+  path_name = getenv( "MSPCCS_DATA" );;
   if (path_name != NULL)
   {
     file_name = new char[ strlen( path_name ) + 11 ];
@@ -1056,6 +1063,7 @@ void GeoidLibrary::initializeEGM96Geoid()
     strcpy( file_name, "../../data/" );
   }
   strcat( file_name, "egm96.grd" );
+#endif
 
 /*  Open the File READONLY, or Return Error Condition:                        */
 
@@ -1129,7 +1137,7 @@ void GeoidLibrary::initializeEGM84Geoid()
 
   int items_read = 0;
   char* file_name = 0;
-  char* path_name = getenv( "MSPCCS_DATA" );
+  char* path_name = NULL;
   long elevations_read = 0;
   long num = 0;
   FILE*  geoid_height_file;
@@ -1139,6 +1147,13 @@ void GeoidLibrary::initializeEGM84Geoid()
 /*  Check the environment for a user provided path, else current directory;   */
 /*  Build a File Name, including specified or default path:                   */
 
+#ifdef NDK_BUILD
+  path_name = "/data/data/com.baesystems.msp.geotrans/lib/";
+  file_name = new char[ 80 ];
+  strcpy( file_name, path_name );
+  strcat( file_name, "libegm84grd.so" );
+#else
+  path_name = getenv( "MSPCCS_DATA" );
   if (path_name != NULL)
   {
     file_name = new char[ strlen( path_name ) + 11 ];
@@ -1151,6 +1166,7 @@ void GeoidLibrary::initializeEGM84Geoid()
     strcpy( file_name, "../../data/" );
   }
   strcat( file_name, "egm84.grd" );
+#endif
 
 /*  Open the File READONLY, or Return Error Condition:                        */
 
@@ -1197,7 +1213,7 @@ void GeoidLibrary::initializeEGM84ThirtyMinGeoid()
 
   int items_read = 0;
   char* file_name = 0;
-  char* path_name = getenv( "MSPCCS_DATA" );
+  char* path_name = NULL;
   long elevations_read = 0;
   long num = 0;
   FILE*  geoid_height_file;
@@ -1207,6 +1223,13 @@ void GeoidLibrary::initializeEGM84ThirtyMinGeoid()
 /*  Check the environment for a user provided path, else current directory;   */
 /*  Build a File Name, including specified or default path:                   */
 
+#ifdef NDK_BUILD
+  path_name = "/data/data/com.baesystems.msp.geotrans/lib/";
+  file_name = new char[ 80 ];
+  strcpy( file_name, path_name );
+  strcat( file_name, "libwwgridbin.so" );
+#else
+  path_name = getenv( "MSPCCS_DATA" );
   if (path_name != NULL)
   {
     file_name = new char[ strlen( path_name ) + 12 ]; 
@@ -1219,6 +1242,7 @@ void GeoidLibrary::initializeEGM84ThirtyMinGeoid()
     strcpy( file_name, "../../data/" );
   }
   strcat( file_name, "wwgrid.bin" );
+#endif
 
 /*  Open the File READONLY, or Return Error Condition:                        */
 
@@ -1272,6 +1296,8 @@ void GeoidLibrary::initializeEGM2008Geoid( void )
    // Based on an environment variable, the following
    // logic instantiates the appropriate grid interpolator)
 
+//#ifdef NDK_BUILD
+//#else
    char   message[256] = "";
    char*  gridUsage    = NULL;
 
@@ -1304,7 +1330,7 @@ void GeoidLibrary::initializeEGM2008Geoid( void )
          this->egm2008Geoid = new Egm2008AoiGrid;
       }
    }
-
+//#endif
 }  // End of function initializeEGM2008Geoid()
 
 

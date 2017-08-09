@@ -74,6 +74,12 @@ public class MGRSorUSNGCoordinates extends StringCoordinates
   {
     super(coordinateType, _warningMessage, _coordinateString, _precision);
   }
+  
+  public String toString() {
+
+    return coordinateString;
+  }
+  
 }
 
 // CLASSIFICATION: UNCLASSIFIED

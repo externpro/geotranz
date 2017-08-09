@@ -1,13 +1,16 @@
-Source File: 'C:\MSP\Test_Drivers\inputs\combHorizVertTrans.txt'
-Output File: 'C:\MSP\Test_Drivers\outputs\output\combHorizVertTrans.txt'
+Source File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\inputs\combHorizVertTrans.txt'
+Output File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\outputs\output\combHorizVertTrans.txt'
 Display Warnings: '1'
 
 Test Case Id: 10 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
+Test Case Id: 28 - Expected: 31.119164, -20.698961, 210.000000   Calculated: 31.119158, -20.698959, 213.236209 
 Test Case Id: 36 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
+Test Case Id: 38 - Expected: 148.024478, -30.001625, 467.230000   Calculated: 148.024470, -30.001635, 475.242101 
+Test Case Id: 39 - Expected: 147.096646, -35.083650, 864.780000   Calculated: 147.096639, -35.083654, 872.863122 
 Test Case Id: 46 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
@@ -20,6 +23,7 @@ Location is not within valid domain for current datum
 Test Case Id: 63 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
+Test Case Id: 93 - Expected: -17.839409, 63.412722, 210.000000   Calculated: -17.839428, 63.412708, 207.452211 
 Test Case Id: 115 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
@@ -32,6 +36,7 @@ Location is not within valid domain for current datum
 Test Case Id: 138 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
+Test Case Id: 165 - Expected: 57.932744, 22.065052, 396.740000   Calculated: 57.932732, 22.065074, 393.484391 
 Test Case Id: 173 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
@@ -50,6 +55,8 @@ Location is not within valid domain for current datum
 Test Case Id: 209 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
+Test Case Id: 222 - Expected: 45.608357, -24.385443, 210.000000   Calculated: 45.608274, -24.385300, 196.506216 
+Test Case Id: 228 - Expected: 177.447085, -16.242815, 281.300000   Calculated: 177.447095, -16.242817, 330.336658 
 Test Case Id: 232 - Warning: Output Geodetic: 
 Location is not within valid domain for current datum
 
@@ -61,8 +68,8 @@ Location is not within valid domain for current datum
 Results: 
 
 	Successful
-		Equivalent Results	239 
-		Different Results	0 
+		Equivalent Results	232 
+		Different Results	7 
 	Warnings
 		Equivalent Results	18 
 		Different Results	0 

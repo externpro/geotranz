@@ -12,6 +12,7 @@
  * 08/13/10  S Gillis    BAEts27457        Update to GeoTrans 3.1
  * 05/31/11  K. Lam      BAEts28657        Update version to 3.2
  * 11/18/11  K. Lam      MSP_029475        Update version to 3.3
+ * 07/30/13  K. Lam      MSP_029595        Update version to 3.4
  */
 
 package geotrans3.gui;
@@ -33,8 +34,8 @@ public class AboutDlg extends javax.swing.JDialog {
         initComponents ();
         pack ();
         Utility.center(parent, this);
-        iconPanel.add(new AboutIconPanel("/geotrans3/gui/icons/Geotrans.gif"));
-        iconPanel.add(new AboutIconPanel("/geotrans3/gui/icons/NGA.gif"));
+        iconPanel.add(new AboutIconPanel("/geotrans3/gui/icons/msp_logo.gif"));
+        //iconPanel.add(new AboutIconPanel("/geotrans3/gui/icons/NGA.gif"));
         if (Platform.isJavaV1_3)
         {
             versionLabel.setForeground(java.awt.Color.black);
@@ -76,7 +77,7 @@ public class AboutDlg extends javax.swing.JDialog {
     iconPanel = new javax.swing.JPanel();
     tempPanel = new javax.swing.JPanel();
 
-    setTitle("About MSP GEOTRANS 3.3");
+    setTitle("About MSP GEOTRANS 3.4");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -85,15 +86,15 @@ public class AboutDlg extends javax.swing.JDialog {
     });
 
     descriptPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 5, 0));
-    descriptPanel.setMinimumSize(new java.awt.Dimension(230, 105));
-    descriptPanel.setPreferredSize(new java.awt.Dimension(230, 105));
+    descriptPanel.setMinimumSize(new java.awt.Dimension(270, 105));
+    descriptPanel.setPreferredSize(new java.awt.Dimension(270, 105));
     descriptPanel.setLayout(new java.awt.GridLayout(3, 1, 0, 2));
 
     versionPanel.setMinimumSize(new java.awt.Dimension(50, 5));
     versionPanel.setPreferredSize(new java.awt.Dimension(50, 5));
     versionPanel.setLayout(new java.awt.GridLayout(1, 1));
 
-    versionLabel.setText("MSP GEOTRANS 3.3");
+    versionLabel.setText("MSP GEOTRANS 3.4");
     versionPanel.add(versionLabel);
 
     descriptPanel.add(versionPanel);
@@ -102,27 +103,27 @@ public class AboutDlg extends javax.swing.JDialog {
     tecPanel.setPreferredSize(new java.awt.Dimension(50, 5));
     tecPanel.setLayout(new java.awt.GridLayout(2, 1));
 
-    tecLabel.setText("US Army Topograhic Engineering Center");
+    tecLabel.setText("National Geospatial-Intelligence Agency (NGA)");
     tecLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
     tecPanel.add(tecLabel);
 
-    tecDivisionLabel.setText("Geospatial Information Division");
+    tecDivisionLabel.setText("Mensuration Services Program (MSP)");
     tecPanel.add(tecDivisionLabel);
 
     descriptPanel.add(tecPanel);
 
-    ngaPanel.setMinimumSize(new java.awt.Dimension(50, 5));
-    ngaPanel.setPreferredSize(new java.awt.Dimension(50, 5));
-    ngaPanel.setLayout(new java.awt.GridLayout(2, 1));
+    //ngaPanel.setMinimumSize(new java.awt.Dimension(50, 5));
+    //ngaPanel.setPreferredSize(new java.awt.Dimension(50, 5));
+    //ngaPanel.setLayout(new java.awt.GridLayout(2, 1));
 
-    ngaLabel.setText("National Geospatial-Intelligence Agency");
-    ngaLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-    ngaPanel.add(ngaLabel);
+    //ngaLabel.setText("National Geospatial-Intelligence Agency");
+    //ngaLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+    //ngaPanel.add(ngaLabel);
 
-    ngaDivisionLabel.setText("Exploitation Division");
-    ngaPanel.add(ngaDivisionLabel);
+    //ngaDivisionLabel.setText("Exploitation Division");
+    //ngaPanel.add(ngaDivisionLabel);
 
-    descriptPanel.add(ngaPanel);
+    //descriptPanel.add(ngaPanel);
 
     getContentPane().add(descriptPanel, java.awt.BorderLayout.CENTER);
 

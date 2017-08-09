@@ -77,6 +77,18 @@ public class UTMCoordinates extends CoordinateTuple
   {
     return northing;
   }
+
+  public String toString() {
+    String s;
+
+    s = String.valueOf(this.zone) + " "
+      + String.valueOf(this.hemisphere) + " "	
+      + String.valueOf(this.easting) + " "	
+      + String.valueOf(this.northing);
+
+    return s;
+  }
+  
 }
 
 // CLASSIFICATION: UNCLASSIFIED

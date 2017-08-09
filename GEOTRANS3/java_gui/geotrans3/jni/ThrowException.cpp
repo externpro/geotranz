@@ -1,6 +1,7 @@
 // CLASSIFICATION: UNCLASSIFIED
 
 #include <jni.h>
+#include <stdio.h>
 #include "ThrowException.h"
 
 

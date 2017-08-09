@@ -74,6 +74,14 @@ public class PolarStereographicStandardParallelParameters extends CoordinateSyst
   {
     return falseNorthing;
   }
+  
+  public String toString()
+  {
+	return "PolarStereographicStandardParallelParameters: CentralMeridian = " + centralMeridian +
+	" StandardParallel = " + standardParallel +
+	" FalseEasting = " + falseEasting +
+	" FalseNorthing = " + falseNorthing;
+  }
 }
 
 // CLASSIFICATION: UNCLASSIFIED

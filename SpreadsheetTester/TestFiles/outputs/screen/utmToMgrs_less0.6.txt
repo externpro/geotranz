@@ -1,5 +1,5 @@
-Source File: 'C:\MSP\Test_Drivers\inputs\utmToMgrs_less0.6.txt'
-Output File: 'C:\MSP\Test_Drivers\outputs\output\utmToMgrs_less0.6.txt'
+Source File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\inputs\utmToMgrs_less0.6.txt'
+Output File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\outputs\output\utmToMgrs_less0.6.txt'
 Display Warnings: '1'
 
 

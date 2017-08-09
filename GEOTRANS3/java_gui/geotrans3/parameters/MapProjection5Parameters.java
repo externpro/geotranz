@@ -82,6 +82,14 @@ public class MapProjection5Parameters extends CoordinateSystemParameters
   {
     return falseNorthing;
   }
-}
 
+   public String toString()
+  {
+	return "MapProjection5Parameters: CentralMeridian = " + centralMeridian +
+	" OriginLatitude = " + originLatitude +
+	" ScaleFactor = " + scaleFactor +
+	" FalseEasting = " + falseEasting +
+	" FalseNorthing = " + falseNorthing;
+  }
+}
 // CLASSIFICATION: UNCLASSIFIED

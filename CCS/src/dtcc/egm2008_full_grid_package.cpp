@@ -1,7 +1,9 @@
 
+// CLASSIFICATION: UNCLASSIFIED
+
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//          UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED            //
+//   File name: egm2008_full_grid_package.cpp                                 //
 //                                                                            //
 //   Description of this module:                                              //
 //      Utility software that interpolates EGM 2008                           //
@@ -21,6 +23,10 @@
 //   -----------  ------------  ----------------------------------------------//
 //   19 Nov 2010  RD Craig      Release                                       //
 //   27 Jan 2011  S. Gillis     BAEts28121, Terrain Service rearchitecture    //
+//   30 May 2013  RD Craig      MSP 1.3: ER29758                              //
+//                              Added second constructor to                   //
+//                              permit multiple geoid-height grids            //
+//                              when assessing relative interpolation errors. //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
   
@@ -63,11 +69,13 @@ namespace
 // ** Public user functions **
 // ***************************
 
-// *******************************
-// * Egm2008FullGrid constructor *
-// *******************************
+// ***************************************
+// * Default Egm2008FullGrid constructor *
+// ***************************************
 
-Egm2008FullGrid::Egm2008FullGrid (void)
+Egm2008FullGrid::Egm2008FullGrid( void )
+
+// : Egm2008GeoidGrid()                            // base class initializer
 {
    // November  19, 2010: Version 1.00
    // February  11, 2011: Version 1.01
@@ -95,7 +103,53 @@ Egm2008FullGrid::Egm2008FullGrid (void)
          "Error: Egm2008GeoidGrid: constructor failed.");
    }
 
-}  // End of Egm2008FullGrid constuctor
+}  // End of default Egm2008FullGrid constuctor
+
+
+// *******************************************
+// * Non-default Egm2008FullGrid constructor *
+// *******************************************
+
+Egm2008FullGrid::Egm2008FullGrid( 
+   const std::string  &gridFname )              // input
+
+: Egm2008GeoidGrid( gridFname )                 // base class initializer
+{
+   // November  19, 2010: Version 1.00
+   // February  11, 2011: Version 1.01
+   // May       30, 2013: Version 2.00
+
+   // This function implements a 
+   // non-default Egm2008FullGrid constructor.
+
+   // Definition:
+
+   // gridFname:             The support geoid-height grid's file name; this
+   //                        file name should not contain the directory path;
+   //                        the base-class constructor will prepend the 
+   //                        path specified by environment variable MSPCCS_DATA.
+
+   int     status;
+
+   // The base class constructor
+   // initialized most data members.
+
+   // Initialize grid pointer for proper
+   // operation of derived-class functions .....
+
+   _heightGrid     = NULL; 
+
+   // Read entire worldwide EGM 2008 grid here .....
+
+   status          = this->loadGrid();
+
+   if ( status != 0 )
+   {
+      throw MSP::CCS::CoordinateConversionException(
+         "Error: Egm2008GeoidGrid: constructor failed.");
+   }
+
+}  // End of default Egm2008FullGrid constuctor
 
 
 // ************************************
@@ -736,7 +790,5 @@ Egm2008FullGrid::loadGrid( void )
 
 }  // End of function Egm2008FullGrid::loadGrid
 
-////////////////////////////////////////////////////////////////////////////////
-//          UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED            //
-////////////////////////////////////////////////////////////////////////////////
+// CLASSIFICATION: UNCLASSIFIED
 

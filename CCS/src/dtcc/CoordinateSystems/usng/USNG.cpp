@@ -79,6 +79,7 @@
 
 #include <ctype.h>
 #include <math.h>
+#include <stdio.h>
 #include <string.h>
 #include "UPS.h"
 #include "UTM.h"

@@ -135,6 +135,7 @@
  */
 
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include "DatumLibraryImplementation.h"
@@ -172,7 +173,6 @@
 using namespace MSP::CCS;
 using MSP::CCSThreadMutex;
 using MSP::CCSThreadLock;
-
 
 /***************************************************************************/
 /*
@@ -2027,6 +2027,12 @@ void DatumLibraryImplementation::loadDatums()
   /*  Check the environment for a user provided path, else current directory; */
   /*  Build a File Name, including specified or default path:                */
 
+#ifdef NDK_BUILD
+  PathName = "/data/data/com.baesystems.msp.geotrans/lib/";
+  FileName7 = new char[ 80 ];
+  strcpy( FileName7, PathName );
+  strcat( FileName7, "lib7paramdat.so" );
+#else
   PathName = getenv( "MSPCCS_DATA" );
   if (PathName != NULL)
   {
@@ -2040,6 +2046,7 @@ void DatumLibraryImplementation::loadDatums()
     strcpy( FileName7, "../../data/" );
   }
   strcat( FileName7, "7_param.dat" );
+#endif
 
   /*  Open the File READONLY, or Return Error Condition:                    */
 
@@ -2060,7 +2067,6 @@ void DatumLibraryImplementation::loadDatums()
     }
     throw CoordinateConversionException( message );
   }
-
 
   /*  Open the File READONLY, or Return Error Condition:                    */
 
@@ -2145,7 +2151,12 @@ void DatumLibraryImplementation::loadDatums()
     }
     fclose( fp_7param );
 
-
+#ifdef NDK_BUILD
+  PathName = "/data/data/com.baesystems.msp.geotrans/lib/";
+  FileName3 = new char[ 80 ];
+  strcpy( FileName3, PathName );
+  strcat( FileName3, "lib3paramdat.so" );
+#else
     if (PathName != NULL)
     {
        FileName3 = new char[ strlen( PathName ) + 13 ];
@@ -2158,6 +2169,7 @@ void DatumLibraryImplementation::loadDatums()
        strcpy( FileName3, "../../data/" );
     }
     strcat( FileName3, "3_param.dat" );
+#endif
 
     if (( fp_3param = fopen( FileName3, "r" ) ) == NULL)
     {

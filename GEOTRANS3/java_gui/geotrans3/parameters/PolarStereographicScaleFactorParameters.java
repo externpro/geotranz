@@ -82,6 +82,16 @@ public class PolarStereographicScaleFactorParameters extends CoordinateSystemPar
   {
     return falseNorthing;
   }
+  
+  public String toString()
+  {
+	return "PolarStereographicScaleFactorParameters: CentralMeridian = " + centralMeridian +
+	" ScaleFactor = " + scaleFactor +
+	" Hemisphere = " + hemisphere +
+	" FalseEasting = " + falseEasting +
+	" FalseNorthing = " + falseNorthing;
+  }
+  
 }
 
 // CLASSIFICATION: UNCLASSIFIED

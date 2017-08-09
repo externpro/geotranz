@@ -1,7 +1,9 @@
 
+// CLASSIFICATION: UNCLASSIFIED
+
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//          UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED            //
+//   File name: egm2008_geoid_grid.cpp                                        //
 //                                                                            //
 //   Description of this module:                                              //
 //                                                                            //
@@ -26,6 +28,10 @@
 //   27 Jan 2011  S. Gillis     BAEts28121, Terrain Service rearchitecture    //
 //   17 May 2011  T. Thompson   BAEts27393, let user know when problem        //
 //                              is due to undefined MSPCCS_DATA               //
+//   30 May 2013  RD Craig      MSP 1.3: ER29758                              //
+//                              Added second constructor to                   //
+//                              permit multiple geoid-height grids            //
+//                              when assessing relative interpolation errors. //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
   
@@ -38,16 +44,34 @@
 // Note: Following common usage, this class uses the term 
 //       "geoid height" to mean heights of the geoid above or
 //       below the earth ellipsoid.  The GeoidLibrary class confuses
-//       the term "geoid height" with height of a point above or below
-//       the geoid: these heights are properly called "orthometric heights".
+//       the term "geoid height" with height of a point above or below the
+//       geoid: these heights are properly called elevations or heights-above-MSL.
  
+#include <iostream>           // DEBUG
+#include <iomanip>            // DEBUG
+
 #include <fstream>
+
+#include <string>
 
 #ifdef IRIXN32
 #include <math.h>
 #else
 #include <cmath>
 #endif
+
+/* DEBUG
+
+using std::ios;
+
+using std::cin;
+using std::cout;
+using std::endl;
+using std::setprecision;
+using std::setw;
+
+END DEBUG */
+
 
 #include "CoordinateConversionException.h"
 
@@ -75,11 +99,11 @@ using namespace MSP;
 // ** Public user functions **
 // ***************************
 
-// ********************************
-// * Egm2008GeoidGrid constructor *
-// ********************************
+// ****************************************
+// * Default Egm2008GeoidGrid constructor *
+// ****************************************
 
-Egm2008GeoidGrid::Egm2008GeoidGrid (void)
+Egm2008GeoidGrid::Egm2008GeoidGrid( void )
 {
    // November  19, 2010: Version 1.00
 
@@ -88,11 +112,17 @@ Egm2008GeoidGrid::Egm2008GeoidGrid (void)
 
    //_mutex.lock();  // Use CCSThreadMutex function in constructors
 
-   int     i;
-   int     length;
+   int     i        =    0;
+   int     length   =    0;
+
    char*   pathName = NULL;
 
    // Get reformatted geoid height grid's file name .....
+#ifdef NDK_BUILD
+   pathName = "/data/data/com.baesystems.msp.geotrans/lib/";
+   _gridFname += pathName;
+   _gridFname += "libegm2008grd.so";
+#else
    pathName        = getenv( "MSPCCS_DATA" ); 
 
    if ( NULL == pathName )
@@ -101,10 +131,12 @@ Egm2008GeoidGrid::Egm2008GeoidGrid (void)
    }
 
    length          = strlen( pathName );
+
    for (i = 0; i < length; i++) _gridFname += pathName[i];
 
    _gridFname     +=  
       "/Und_min2.5x2.5_egm2008_WGS84_TideFree_reformatted";
+#endif
 
    // BAEts27393 Reverse the change for this DR for plug-in backward 
    // compatible with MSP 1.1, i.e. do not throw error when plug-in is
@@ -171,7 +203,71 @@ Egm2008GeoidGrid::Egm2008GeoidGrid (void)
    // The thread will be unlocked 
    // by a derived class constructor.
 
-}  // End of Egm2008GeoidGrid constuctor
+}  // End of default Egm2008GeoidGrid constuctor
+
+
+// ********************************************
+// * Non-default Egm2008GeoidGrid constructor *
+// ********************************************
+
+Egm2008GeoidGrid::Egm2008GeoidGrid( const std::string  &gridFname )
+{
+   // 30 May 2013: Version 1.00
+
+   // This function implements a
+   // non-default Egm2008GeoidGrid constructor.
+
+   // Definition:
+
+   // gridFname:             The geoid height grid's file name; this
+   //                        file name should not contain the directory path;
+   //                        this function will pre-pend the path
+   //                        specified by environment variable MSPCCS_DATA.
+
+   int     i        =    0;
+   int     length   =    0;
+
+   char*   pathName = NULL;
+
+   // Get reformatted geoid height grid's file name .....
+#ifdef NDK_BUILD
+   pathName = "/data/data/com.baesystems.msp.geotrans/lib/";
+   _gridFname += pathName;
+   _gridFname += "libegm2008grd.so";
+#else
+   pathName        = getenv( "MSPCCS_DATA" ); 
+
+   if ( NULL == pathName )
+   {
+      strcpy( pathName, "../../data" );
+   }
+
+   length          = strlen( pathName );
+
+   for( i = 0; i < length; i++ ) _gridFname += pathName[ i ];
+
+   _gridFname     += '/';
+
+   _gridFname     += gridFname; 
+#endif
+
+   // Initialize base grid parameters .....
+
+   MAX_WSIZE       =  20;
+
+   _nGridPad       =   0;
+   _nGridCols      =   0;
+   _nGridRows      =   0;
+   _nOrigCols      =   0;
+   _nOrigRows      =   0;
+
+   _baseLatitude   = 0.0;
+   _baseLongitude  = 0.0;
+
+   _dLat           = 0.0;
+   _dLon           = 0.0;
+
+}  // End of non-default Egm2008GeoidGrid constructor
 
 
 // *************************************

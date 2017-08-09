@@ -1,5 +1,5 @@
-Source File: 'C:\MSP\Test_Drivers\inputs\projections.txt'
-Output File: 'C:\MSP\Test_Drivers\outputs\output\projections.txt'
+Source File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\inputs\projections.txt'
+Output File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\outputs\output\projections.txt'
 Display Warnings: '1'
 
 Test Case Id: 5 - Warning: Input Geodetic: 
@@ -395,9 +395,6 @@ Location is not within valid domain for current datum
 
 Output Geodetic: 
 Location is not within valid domain for current datum
-
-Test Case Id: 130 - Warning: Input Transverse Mercator: 
-Longitude is too far from Central Meridian, distortion may be significant
 
 Test Case Id: 133 - Warning: Input Geodetic: 
 Location is not within valid domain for current datum
@@ -1541,8 +1538,8 @@ Location is not within valid domain for current datum
 Output Geodetic: 
 Location is not within valid domain for current datum
 
-Test Case Id: 443 - Expected: -2.710000, 9009964.760000   Calculated: -3.751134, 9009964.761287 
-Test Case Id: 445 - Expected: 4.520000, -9009964.760000   Calculated: 6.251891, -9009964.761238 - Warning: Input Geodetic: 
+Test Case Id: 443 - Expected: -2.710000, 9009964.760000   Calculated: -3.751126, 9009964.761287 
+Test Case Id: 445 - Expected: 4.520000, -9009964.760000   Calculated: 6.251877, -9009964.761238 - Warning: Input Geodetic: 
 Location is not within valid domain for current datum
 
 Output Mollweide (S): 
@@ -1657,8 +1654,7 @@ Location is not within valid domain for current datum
 Output Geodetic: 
 Location is not within valid domain for current datum
 
-Test Case Id: 486 - Expected: 0.000000, 5017021.350000   Calculated: -0.000000, -14986910.107760 
-Test Case Id: 488 - Expected: 0.050000, -5017021.070000   Calculated: 0.000000, 14986910.107558 - Warning: Input Geodetic: 
+Test Case Id: 488 - Warning: Input Geodetic: 
 Location is not within valid domain for current datum
 
 Output Transverse Cylindrical Equal Area: 
@@ -1677,10 +1673,10 @@ Test Case Id: 495 - Expected: 8050247.000000, 26775888.000000   Calculated: 8060
 Results: 
 
 	Successful
-		Equivalent Results	211 
-		Different Results	4 
+		Equivalent Results	213 
+		Different Results	3 
 	Warnings
 		Equivalent Results	280 
-		Different Results	2 
+		Different Results	1 
 	Errors (No Results)		0 
 	Total Test Cases		497 

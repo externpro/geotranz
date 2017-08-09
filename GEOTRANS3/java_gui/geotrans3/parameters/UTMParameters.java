@@ -58,6 +58,13 @@ public class UTMParameters extends CoordinateSystemParameters
   {
     return override;
   }
+
+  public String toString()
+  {
+	return "PolarStereographicStandardParallelParameters: Zone = " + zone +
+	" Override = " + override;
+  }
+
 }
 
 // CLASSIFICATION: UNCLASSIFIED

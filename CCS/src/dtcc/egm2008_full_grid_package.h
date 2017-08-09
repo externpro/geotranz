@@ -1,7 +1,9 @@
 
+// CLASSIFICATION: UNCLASSIFIED
+
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//          UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED            //
+//   File name: egm2008_full_grid_package.h                                   //
 //                                                                            //
 //   Description of this module:                                              //
 //      Utility software that interpolates EGM 2008                           //
@@ -21,6 +23,10 @@
 //   -----------  ------------  ----------------------------------------------//
 //   19 Nov 2010  RD Craig      Release                                       //
 //   11 Feg 2011  RD Craig      Upgrades following code review                //
+//   30 May 2013  RD Craig      MSP 1.3: ER29758                              //
+//                              Added second constructor to                   //
+//                              permit multiple geoid-height grids            //
+//                              when assessing relative interpolation errors. //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -54,6 +60,8 @@ namespace MSP
       // Basic functions .....
 
       Egm2008FullGrid( void );
+
+      Egm2008FullGrid( const std::string  &gridFname );  // new 5/30/2013
  
       Egm2008FullGrid( const Egm2008FullGrid& oldGrid );
 
@@ -102,7 +110,5 @@ namespace MSP
 
 #endif
 
-////////////////////////////////////////////////////////////////////////////////
-//          UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED            //
-////////////////////////////////////////////////////////////////////////////////
+// CLASSIFICATION: UNCLASSIFIED
 

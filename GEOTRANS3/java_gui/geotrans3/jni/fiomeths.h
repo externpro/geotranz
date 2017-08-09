@@ -3,6 +3,7 @@
 #ifndef __fiomeths_h__
 #define __fiomeths_h__
 
+#include <stdio.h>
 #include "CoordinateConversionService.h"
 
 #ifdef __cplusplus

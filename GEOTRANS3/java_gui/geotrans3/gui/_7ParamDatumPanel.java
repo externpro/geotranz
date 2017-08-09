@@ -20,7 +20,7 @@ import geotrans3.enumerations.ListType;
 import geotrans3.exception.CoordinateConversionException;
 import geotrans3.jni.JNIDatumLibrary;
 import geotrans3.jni.JNIEllipsoidLibrary;
-import geotrans3.misc.FillList;
+import geotrans3.jni.FillList;
 import geotrans3.misc.Info;
 import geotrans3.misc.StringHandler;
 import geotrans3.utility.Constants;

@@ -68,7 +68,7 @@ TEST CASE ID	INPUT DATUM(Code)	INPUT PROJECTION	OUTPUT DATUM(Code)	OUTPUT PROJEC
 65	ARF-D	Geodetic	WGE	Geodetic			-26.839383	31.484697		-26.839911	31.484500		-26.839911	31.484500																							Successful-Equivalent
 66	ARF-E	Geodetic	WGE	Geodetic			-4.922094	27.718950		-4.924183	27.719507		-4.924184	27.719507																							Successful-Equivalent
 67	ARF-F	Geodetic	WGE	Geodetic			-14.609394	23.581853		-14.610706	23.581769		-14.610706	23.581769																							Successful-Equivalent
-68	ARF-G	Geodetic	WGE	Geodetic			-20.698964	31.119169		-20.699903	31.119085		-20.699903	31.119085																							Successful-Equivalent
+68	ARF-G	Geodetic	WGE	Geodetic			-20.698964	31.119169		-20.699903	31.119085		-20.699905	31.119092																							Successful-Equivalent
 69	ARF-H	Geodetic	WGE	Geodetic			-3.878008	30.115033		-3.880300	30.115685		-3.880300	30.115685																							Successful-Equivalent
 70	ARF-H	Geodetic	WGE	Geodetic			-3.525864	29.544697		-3.528188	29.545337		-3.528188	29.545337																							Successful-Equivalent
 71	ARF-M	Geodetic	WGE	Geodetic			-30.431444	28.148864		-30.431751	28.148740		-30.431751	28.148740																							Successful-Equivalent
@@ -76,8 +76,8 @@ TEST CASE ID	INPUT DATUM(Code)	INPUT PROJECTION	OUTPUT DATUM(Code)	OUTPUT PROJEC
 73	ARS-M	Geodetic	WGE	Geodetic			-0.671249	36.813719		-0.673919	36.814537		-0.673920	36.814538																							Successful-Equivalent
 74	ASM	Geodetic	WGE	Geodetic			16.700000	-62.200000		16.702039	-62.196987		16.702039	-62.196987																							Successful-Equivalent
 75	ATF	Geodetic	WGE	Geodetic			24.802432	141.233753		24.799827	141.232270		24.799827	141.232277																							Successful-Equivalent
-76	AUA	Geodetic	WGE	Geodetic			-35.083646	147.096642		-35.082106	147.097876		-35.082105	147.097876																							Successful-Equivalent
-77	AUA	Geodetic	WGE	Geodetic			-30.001628	148.024477		-30.000073	148.025620		-30.000073	148.025629																							Successful-Equivalent
+76	AUA	Geodetic	WGE	Geodetic			-35.083646	147.096642		-35.082106	147.097876		-35.082102	147.097883																							Successful-Equivalent
+77	AUA	Geodetic	WGE	Geodetic			-30.001628	148.024477		-30.000073	148.025620		-30.000063	148.025636																							Successful-Equivalent
 78	AUG	Geodetic	WGE	Geodetic			-29.463894	133.172886		-29.462467	133.174230		-29.462467	133.174232																							Successful-Equivalent
 79	BAT	Geodetic	WGE	Geodetic			-5.430018	95.545041		-5.429970	95.547833		-5.429970	95.547834																							Successful-Equivalent
 80	BAT	Geodetic	WGE	Geodetic			-1.647979	99.834368		-1.648274	99.836660		-1.648274	99.836661																							Successful-Equivalent
@@ -120,7 +120,7 @@ TEST CASE ID	INPUT DATUM(Code)	INPUT PROJECTION	OUTPUT DATUM(Code)	OUTPUT PROJEC
 117	EUR-S	Geodetic	WGE	Geodetic			32.000000	37.000000		31.998880	36.999760		31.998880	36.999760																							Successful-Equivalent
 118	EUR-T	Geodetic	WGE	Geodetic			35.000000	10.000000		34.998796	9.999382		34.998796	9.999382																							Successful-Equivalent
 119	EUS	Geodetic	WGE	Geodetic			57.738333	11.903811		57.737813	11.902499		57.737814	11.902499																							Successful-Equivalent
-120	FAH	Geodetic	WGE	Geodetic			22.065050	57.932747		22.065357	57.935583		22.065358	57.935583																							Successful-Equivalent
+120	FAH	Geodetic	WGE	Geodetic			22.065050	57.932747		22.065357	57.935583		22.065336	57.935595																							Successful-Equivalent
 121	FLO	Geodetic	WGE	Geodetic			39.676207	-31.110936		39.677550	-31.115190		39.677550	-31.115182																							Successful-Equivalent
 122	FOT	Geodetic	WGE	Geodetic			17.300000	-63.000000		17.300676	-62.999141		17.300676	-62.999141																							Successful-Equivalent
 123	GAA	Geodetic	WGE	Geodetic			5.000000	73.000000		5.000580	73.000301		5.000580	73.000301																							Successful-Equivalent
@@ -132,7 +132,7 @@ TEST CASE ID	INPUT DATUM(Code)	INPUT PROJECTION	OUTPUT DATUM(Code)	OUTPUT PROJEC
 129	HEN	Geodetic	WGE	Geodetic			31.587600	65.446900		31.589349	65.449119		31.589349	65.449119																							Successful-Equivalent
 130	HER	Geodetic	WGE	Geodetic			43.000000	19.000000		43.000204	18.994924		43.000204	18.994922																							Successful-Equivalent
 131	HIT	Geodetic	WGE	Geodetic			-55.000000	-70.000000		-55.000064	-69.998718		-55.000064	-69.998718																							Successful-Equivalent
-132	HJO	Geodetic	WGE	Geodetic			63.412722	-17.839411		63.412390	-17.838990		63.412390	-17.838982																							Successful-Equivalent
+132	HJO	Geodetic	WGE	Geodetic			63.412722	-17.839411		63.412390	-17.838990		63.412405	-17.838963																							Successful-Equivalent
 133	HKD	Geodetic	WGE	Geodetic			22.199736	114.220426		22.198205	114.222884		22.198205	114.222884																							Successful-Equivalent
 134	HTN	Geodetic	WGE	Geodetic			25.023152	121.635521		25.021369	121.643746		25.021369	121.643747																							Successful-Equivalent
 135	IBE	Geodetic	WGE	Geodetic			-16.266300	168.349899		-16.261841	168.357180		-16.261841	168.357185																							Successful-Equivalent
@@ -164,7 +164,7 @@ TEST CASE ID	INPUT DATUM(Code)	INPUT PROJECTION	OUTPUT DATUM(Code)	OUTPUT PROJEC
 161	MIN-B	Geodetic	WGE	Geodetic			6.682036	7.281156		6.682512	7.280427		6.682512	7.280427																							Successful-Equivalent
 162	MOD	Geodetic	WGE	Geodetic			40.817523	8.417768		40.818136	8.417396		40.818137	8.417396																							Successful-Equivalent
 163	MPO	Geodetic	WGE	Geodetic			0.241322	12.828419		0.241679	12.827428		0.241679	12.827428																							Successful-Equivalent
-164	MVS	Geodetic	WGE	Geodetic			-16.242814	177.447085		-16.241518	177.443410		-16.241519	177.443410																							Successful-Equivalent
+164	MVS	Geodetic	WGE	Geodetic			-16.242814	177.447085		-16.241518	177.443410		-16.241516	177.443400																							Successful-Equivalent
 165	NAH-A	Geodetic	WGE	Geodetic			25.682792	48.121728		25.684409	48.122575		25.684410	48.122576																							Warning-Equivalent
 166	NAH-B	Geodetic	WGE	Geodetic			24.246756	49.791472		24.248571	49.792353		24.248571	49.792353																							Successful-Equivalent
 167	NAH-C	Geodetic	WGE	Geodetic			24.848239	46.060375		24.850909	46.060788		24.850909	46.060788																							Successful-Equivalent
@@ -203,7 +203,7 @@ TEST CASE ID	INPUT DATUM(Code)	INPUT PROJECTION	OUTPUT DATUM(Code)	OUTPUT PROJEC
 200	OGB-M	Geodetic	WGE	Geodetic			56.455303	-6.923413		56.455203	-6.924470		56.455203	-6.924467																							Successful-Equivalent
 201	OHA-D	Geodetic	WGE	Geodetic			21.560026	-158.235894		21.556862	-158.233149		21.556862	-158.233149																							Successful-Equivalent
 202	OHA-M	Geodetic	WGE	Geodetic			19.000000	-155.000000		18.996943	-154.997302		18.996942	-154.997302																							Successful-Equivalent
-203	PHA	Geodetic	WGE	Geodetic			11.531825	42.762506		11.532138	42.762129		11.532138	42.762129																							Successful-Equivalent
+203	PHA	Geodetic	WGE	Geodetic			11.531825	42.762506		11.532138	42.762129		11.532108	42.762123																							Successful-Equivalent
 204	POS	Geodetic	WGE	Geodetic			-33.060285	-16.337739		-33.059170	-16.341810		-33.059170	-16.341800																							Warning-Equivalent
 205	PRP-A	Geodetic	WGE	Geodetic			-20.000000	-65.000000		-20.003642	-65.001578		-20.003643	-65.001579																							Successful-Equivalent
 206	PRP-B	Geodetic	WGE	Geodetic			-20.000000	-70.000000		-20.003597	-70.001826		-20.003598	-70.001826																							Successful-Equivalent
@@ -244,7 +244,7 @@ TEST CASE ID	INPUT DATUM(Code)	INPUT PROJECTION	OUTPUT DATUM(Code)	OUTPUT PROJEC
 241	SPK-D	Geodetic	WGE	Geodetic			57.000000	24.000000		56.999824	23.997994		56.999836	23.997975																							Successful-Equivalent
 242	SPK-G	Geodetic	WGE	Geodetic			44.000000	24.000000		43.999674	23.998480		43.999674	23.998480																							Successful-Equivalent
 243	SRL	Geodetic	WGE	Geodetic			8.000000	-12.000000		8.000145	-12.000130		8.000145	-12.000130																							Successful-Equivalent
-244	TAN	Geodetic	WGE	Geodetic			-24.385447	45.608358		-24.386713	45.608020		-24.386714	45.608021																							Successful-Equivalent
+244	TAN	Geodetic	WGE	Geodetic			-24.385447	45.608358		-24.386713	45.608020		-24.386857	45.608104																							Successful-Equivalent
 245	TDC	Geodetic	WGE	Geodetic			-36.935275	-12.314974		-36.942720	-12.311690		-36.942720	-12.311684																							Successful-Equivalent
 246	TIL	Geodetic	WGE	Geodetic			1.910904	112.867014		1.910315	112.870300		1.910315	112.870301																							Successful-Equivalent
 247	TOY-A	Geodetic	WGE	Geodetic			34.662396	129.479646		34.665546	129.477375		34.665546	129.477375																							Successful-Equivalent

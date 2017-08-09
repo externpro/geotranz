@@ -163,6 +163,11 @@ public class StringCoordinates extends CoordinateTuple
   {
     return precision;
   }
+
+  public String toString() {
+    return this.coordinateString;
+  }
+
 }
 
 // CLASSIFICATION: UNCLASSIFIED

@@ -1,3 +1,4 @@
+ACC     "ACCRA, Ghana"                   WO -170    3   33    4   326    3    4   13   -4    3 
 ADI-M   "ADINDAN, Mean"                  CD -166    5  -15    5   204    3   -5   31   15   55 
 ADI-A   "ADINDAN, Ethiopia"              CD -165    3  -11    3   206    3   -3   25   26   50 
 ADI-B   "ADINDAN, Sudan"                 CD -161    3  -14    5   205    3   -3   31   15   45 
@@ -5,6 +6,7 @@ ADI-C   "ADINDAN, Mali"                  CD -123   25  -20   25   220   25    3 
 ADI-D   "ADINDAN, Senegal"               CD -128   25  -18   25   224   25    5   23  -24   -5 
 ADI-E   "ADINDAN, Burkina Faso"          CD -118   25  -14   25   218   25    4   22  -12    8 
 ADI-F   "ADINDAN, Cameroon"              CD -134   25   -2   25   210   25   -4   19    3   23 
+ADN     "ADEN, Yemen"                    CD  -24   -1 -203   -1   268   -1   12   19   42   47 
 AFG     "AFGOOYE, Somalia"               KA  -43   25 -163   25    45   25   -8   19   35   60 
 AIA     "ANTIGUA ISLAND ASTRO 1943"      CD -270   25   13   25    62   25   16   20  -65  -61 
 AIN-A   "AIN EL ABD 1970, Bahrain"       IN -150   25 -250   25    -1   25   24   28   49   53 
@@ -18,22 +20,25 @@ ARF-C   "ARC 1950, Malawi"               CD -161    9  -73   24  -317    8  -21 
 ARF-D   "ARC 1950, Swaziland"            CD -134   15 -105   15  -295   15  -33  -20   25   40 
 ARF-E   "ARC 1950, Zaire"                CD -169   25  -19   25  -278   25  -21   10    4   38 
 ARF-F   "ARC 1950, Zambia"               CD -147   21  -74   21  -283   27  -24   -1   15   40 
-ARF-G   "ARC 1950, Zimbabwe"             CD -142    5  -96    8  -293   11  -29   -9   19   39 
+ARF-G   "ARC 1950, Zimbabwe"             CD -145   10  -97   10  -292   10  -29   -9   19   39 
 ARF-H   "ARC 1950, Burundi"              CD -153   20   -5   20  -292   20  -11    4   21   37 
 ARS-M   "ARC 1960, Kenya & Tanzania"     CD -160   20   -6   20  -302   20  -18    8   23   47 
 ARS-A   "ARC 1960, Kenya"                CD -157    4   -2    3  -299    3  -11    8   28   47 
 ARS-B   "ARC 1960, Tanzania"             CD -175    6  -23    9  -303   10  -18    5   23   47 
+ARS-C   "ARC 1960, Malawi"               CD -179   13  -81   25  -314    7  -18   -9   32   37 
 ASC     "ASCENSION ISLAND 1958"          IN -205   25  107   25    53   25   -9   -6  -16  -13 
 ASM     "MONTSERRAT ISLAND ASTRO 1958"   CD  174   25  359   25   365   25   15   18  -64  -61 
 ASQ     "ASTRO STATION 1952, Marcus Is." IN  124   25 -234   25   -25   25   22   26  152  156 
 ATF     "ASTRO BEACON E 1945, Iwo Jima"  IN  145   25   75   25  -272   25   22   26  140  144 
-AUA     "AUSTRALIAN GEODETIC 1966"       AN -133    3  -48    3   148    3  -46   -4  109  161 
+AUA     "AUSTRALIAN GEODETIC 1966"       AN -128    5  -52    5   153    5  -46   -4  109  161 
 AUG     "AUSTRALIAN GEODETIC 1984"       AN -134    2  -48    2   149    2  -46   -4  109  161 
 BAT     "DJAKARTA, INDONESIA"            BR -377    3  681    3   -50    3  -16   11   89  146 
 BID     "BISSAU, Guinea-Bissau"          IN -173   25  253   25    27   25    5   19  -23   -7 
+BIO     "BIOKO, Bioko Island"            IN -235    5 -110   17   393   38    2    5    8   10 
 BER     "BERMUDA 1957, Bermuda Islands"  CC  -73   20  213   20   296   20   31   34  -66  -63 
 BOO     "BOGOTA OBSERVATORY, Colombia"   IN  307    6  304    5  -318    6  -10   16  -85  -61 
 BUR     "BUKIT RIMPAH, Banka & Belitung" BR -384   -1  664   -1   -48   -1   -6    0  103  110 
+BVD     "BEKAA VALLEY 1920, Lebanon"     CD -183   -1  -15   -1   273   -1   29   38   33   43 
 CAC     "CAPE CANAVERAL, Fla & Bahamas"  CC   -2    3  151    3   181    3   15   38  -94  -58 
 CAI     "CAMPO INCHAUSPE 1969, Arg."     IN -148    5  136    5    90    5  -62  -20  -76  -47 
 CAO     "CANTON ASTRO 1966, Phoenix Is." IN  298   15 -304   15  -375   15  -13    3 -180 -165 
@@ -43,8 +48,12 @@ CCD     "S-JTSK, Czech Republic"         BR  589    4   76    2   480    3   43 
 CGE     "CARTHAGE, Tunisia"              CD -263    6    6    9   431    8   24   43    2   18 
 CHI     "CHATHAM ISLAND ASTRO 1971, NZ"  IN  175   15  -38   15   113   15  -46  -42 -180 -174 
 CHU     "CHUA ASTRO, Paraguay"           IN -134    6  229    9   -29    5  -33  -14  -69  -49 
+CIR     "CIRCUIT, Zimbabwe"              CD -144   10  -97   10  -291   10  -23  -15   25   34 
 COA     "CORREGO ALEGRE, Brazil"         IN -206    5  172    3    -6    5  -39    9  -80  -29 
+COU     "CONAKRY 1905, Guinea"           CG  -23   -1  259   -1    -9   -1    7   13  -16   -7 
+CPR     "OBSERVATORIO 1907, Mozambique"  CC -132   10 -110   10  -335   10  -27   -9   30   41 
 DAL     "DABOLA, Guinea"                 CD  -83   15   37   15   124   15    1   19  -18   -4 
+DCS     "DCS-3 (ASTRO 1955), St Lucia"   CD -153    1  153    1   307    1   13   15  -62  -60 
 DID     "DECEPTION ISLAND"               CD  260   20   12   20  -147   20  -65  -62  -62  -58 
 DOB     "GUX 1 ASTRO, Guadalcanal Is."   IN  252   25 -209   25  -751   25  -12   -8  158  163 
 EAS     "EASTER ISLAND 1967"             IN  211   25  147   25   111   25  -29  -26 -111 -108 
@@ -66,10 +75,12 @@ EUR-L   "EUROPEAN 1950, Malta"           IN -107   25  -88   25  -149   25   34 
 EUR-S   "EUROPEAN 1950, Iraq, Israel"    IN -103   -1 -106   -1  -141   -1   20   48   24   60 
 EUR-T   "EUROPEAN 1950, Tunisia"         IN -112   25  -77   25  -145   25   24   43    2   18 
 EUS     "EUROPEAN 1979"                  IN  -86    3  -98    3  -119    3   30   80  -15   24 
-FAH     "OMAN"                           CD -346    3   -1    3   224    9   10   32   46   65 
+FAH     "OMAN"                           CD -345    3    3    3   223    6   10   32   46   65 
+FJI     "FIJI 1956"                      IN  265    5  385    3  -194    2  -20  -15  175 -177 
 FLO     "OBSERVATORIO MET. 1939, Flores" IN -425   20 -169   20    81   20   38   41  -33  -30 
 FOT     "FORT THOMAS 1955, Leeward Is."  CD   -7   25  215   25   225   25   16   19  -64  -61 
 GAA     "GAN 1970, Rep. of Maldives"     IN -133   25 -321   25    50   25   -2    9   71   75 
+GAI     "GAMBIA, Gambia"                 CD  -63   25  176   25   185   25   13   14  -18  -13 
 GEO     "GEODETIC DATUM 1949, NZ"        IN   84    5  -22    3   209    5  -48  -33  165  180 
 GIZ     "DOS 1968, Gizo Island"          IN  230   25 -199   25  -752   25  -10   -7  155  158 
 GRA     "GRACIOSA BASE SW 1948, Azores"  IN -104    3  167    3   -38    3   37   41  -30  -26 
@@ -78,7 +89,7 @@ GSE     "GUNUNG SEGARA, Indonesia"       BR -403   -1  684   -1    41   -1   -6 
 HEN     "HERAT NORTH, Afghanistan"       IN -333   -1 -222   -1   114   -1   23   44   55   81 
 HER     "HERMANNSKOGEL, old Yugoslavia"  BR  682   -1 -203   -1   480   -1   35   52    7   29 
 HIT     "PROVISIONAL SOUTH CHILEAN 1963" IN   16   25  196   25    93   25  -64  -25  -83  -60 
-HJO     "HJORSEY 1955, Iceland"          IN  -73    3   46    3   -86    6   61   69  -27  -11 
+HJO     "HJORSEY 1955, Iceland"          IN  -73    3   47    3   -83    6   61   69  -27  -11 
 HKD     "HONG KONG 1963"                 IN -156   25 -271   25  -189   25   21   24  112  116 
 HTN     "HU-TZU-SHAN, Taiwan"            IN -637   15 -549   15  -203   15   20   28  117  124 
 IBE     "BELLEVUE (IGN), Efate Is."      IN -127   20 -769   20   472   20  -20  -16  167  171 
@@ -86,6 +97,7 @@ IDN     "INDONESIAN 1974"                ID  -24   25  -15   25     5   25  -16 
 IND-B   "INDIAN, Bangladesh"             EA  282   10  726    8   254   12   15   33   80  100 
 IND-I   "INDIAN, India & Nepal"          EC  295   12  736   10   257   15    2   44   62  105 
 IND-P   "INDIAN, Pakistan"               EF  283   -1  682   -1   231   -1   17   44   55   81 
+IND-S   "INDIAN, Sri Lanka"              EA  272   -1  706   -1   242   -1    5   11   78   83 
 INF-A   "INDIAN 1954, Thailand"          EA  217   15  823    6   299   12    0   27   91  111 
 ING-A   "INDIAN 1960, Vietnam 16N"       EA  198   25  881   25   317   25    2   30  101  115 
 ING-B   "INDIAN 1960, Con Son Island"    EA  182   25  915   25   344   25    6   11  104  109 
@@ -98,13 +110,16 @@ JOH     "JOHNSTON ISLAND 1961"           IN  189   25  -79   25  -202   25   15 
 KAN     "KANDAWALA, Sri Lanka"           EA  -97   20  787   20    86   20    4   12   77   85 
 KEG     "KERGUELEN ISLAND 1949"          IN  145   25 -187   25   103   25  -52  -47   65   74 
 KEA     "KERTAU 1948, W Malaysia & Sing."EE  -11   10  851    8     5    6   -5   12   94  112 
+KGS     "KOREAN GEO DATUM 1995, S Korea" WE    0    1    0    1     0    1   27   45  120  139 
 KUS     "KUSAIE ASTRO 1951, Caroline Is."IN  647   25 1777   25 -1124   25   -1   12  134  167 
 LCF     "L.C. 5 ASTRO 1961, Cayman Brac" CC   42   25  124   25   147   25   18   21  -83  -78 
 LEH     "LEIGON, Ghana"                  CD -130    2   29    3   364    2   -1   17   -9    7 
 LIB     "LIBERIA 1964"                   CD  -90   15   40   15    88   15   -1   14  -17   -1 
+LIS     "LISBON, Portugal"               IN -306   25  -62   25   105   25   36   43  -10   -6 
 LUZ-A   "LUZON, Philippines"             CC -133    8  -77   11   -51    9    3   23  115  128 
 LUZ-B   "LUZON, Mindanao Island"         CC -133   25  -79   25   -72   25    4   12  120  128 
 MAS     "MASSAWA, Ethiopia"              BR  639   25  405   25    60   25    7   25   37   53 
+MCX     "MAYOTTE COMBANI, Comoros"       IN -382   -1  -59   -1  -262   -1  -14  -12   44   46 
 MER     "MERCHICH, Morocco"              CD   31    5  146    3    47    3   22   42  -19    5 
 MID     "MIDWAY ASTRO 1961, Midway Is."  IN  403   25  -81   25   277   25   25   30 -180 -169 
 MIK     "MAHE 1971, Mahe Is."            CD   41   25 -220   25  -134   25   -6   -3   54   57 
@@ -112,7 +127,7 @@ MIN-A   "MINNA, Cameroon"                CD  -81   25  -84   25   115   25   -4 
 MIN-B   "MINNA, Nigeria"                 CD  -92    3  -93    6   122    5   -1   21   -4   20 
 MOD     "ROME 1940, Sardinia"            IN -225   25  -65   25     9   25   37   43    6   12 
 MPO     "M'PORALOKO, Gabon"              CD  -74   25 -130   25    42   25  -10    8    3   20 
-MVS     "VITI LEVU 1916, Viti Levu Is."  CD   51   25  391   25   -36   25  -20  -16  176  180 
+MVS     "VITI LEVU 1916, Viti Levu Is."  CD   98    3  390    3   -22    3  -20  -16  176  180 
 NAH-A   "NAHRWAN, Masirah Island (Oman)" CD -247   25 -148   25   369   25   19   22   57   60 
 NAH-B   "NAHRWAN, United Arab Emirates"  CD -249   25 -156   25   381   25   17   32   45   62 
 NAH-C   "NAHRWAN, Saudi Arabia"          CD -243   20 -192   20   477   20    8   38   28   62 
@@ -144,6 +159,8 @@ NAS-U   "NORTH AMERICAN 1927, Greenland" CC   11   25  114   25   195   25   74 
 NAS-V   "NORTH AMERICAN 1927, Aleutian E"CC   -2    6  152    8   149   10   50   58 -180 -161 
 NAS-W   "NORTH AMERICAN 1927, Aleutian W"CC    2   10  204   10   105   10   50   58  169  180 
 NSD     "NORTH SAHARA 1959, Algeria"     CD -186   25  -93   25   310   25   13   43  -15   18 
+NTF     "NEW TRIANGULATION OF FRANCE"    CG -168   -1  -60   -1   320   -1   41   52   -6    9 
+OCE     "OCOTEPEQUE, Costa Rica"         CC  205   -1   96   -1   -98   -1    7   12  -87  -82 
 OEG     "OLD EGYPTIAN 1907"              HE -130    3  110    6   -13    8   16   38   19   42 
 OGB-M   "ORDNANCE GB 1936, Mean (3 Para)"AA  375   10 -111   10   431   15   44   66  -14    7 
 OGB-A   "ORDNANCE GB 1936, England"      AA  371    5 -112    5   434    6   44   61  -12    7 
@@ -160,7 +177,8 @@ OHI-A   "OLD HAWAIIAN (IN), Hawaii"      IN  229   25 -222   25  -348   25   17 
 OHI-B   "OLD HAWAIIAN (IN), Kauai"       IN  185   20 -233   20  -337   20   20   24 -161 -158 
 OHI-C   "OLD HAWAIIAN (IN), Maui"        IN  205   25 -233   25  -355   25   19   23 -158 -154 
 OHI-D   "OLD HAWAIIAN (IN), Oahu"        IN  198   10 -226    6  -347    6   20   23 -160 -156 
-PHA     "AYABELLE LIGHTHOUSE, Djibouti"  CD  -79   25 -129   25   145   25    5   20   36   49 
+PED     "BEIJING (PEKING), China"        KA  -11   -1 -113   -1   -41   -1   18   55   72  135 
+PHA     "AYABELLE LIGHTHOUSE, Djibouti"  CD  -77   10 -128   10   142   10    5   20   36   49  
 PIT     "PITCAIRN ASTRO 1967"            IN  185   25  165   25    42   25  -27  -21 -134 -119 
 PLN     "PICO DE LAS NIEVES, Canary Is." IN -307   25  -92   25   127   25   26   31  -20  -12 
 POS     "PORTO SANTO 1936, Madeira Is."  IN -499   25 -249   25   314   25   31   35  -18  -15 
@@ -197,8 +215,10 @@ SAN-J   "SOUTH AMERICAN 1969, Baltra"    SA  -47   25   26   25   -42   25   -2 
 SAN-K   "SOUTH AMERICAN 1969, Trinidad"  SA  -45   25   12   25   -33   25    4   17  -68  -55 
 SAN-L   "SOUTH AMERICAN 1969, Venezuela" SA  -45    3    8    6   -33    3   -5   18  -79  -54 
 SCK     "SCHWARZECK, Namibia"            BN  616   20   97   20  -251   20  -35  -11    5   31 
+SEI     "SOUTH EAST ISLAND, Seychelles"  CD  -44    1 -180    1  -268    1   -5   -4   55   56 
 SGM     "SELVAGEM GRANDE 1938, Salvage Is"IN -289   25 -124   25    60   25   28   32  -18  -14 
 SHB     "ASTRO DOS 71/4, St. Helena Is." IN -320   25  550   25  -494   25  -18  -14   -7   -4 
+SIR     "SIRGAS, South America"          RF    0    1    0    1     0    1  -65  -50  -90  -25 
 SOA     "SOUTH ASIA, Singapore"          FA    7   25  -10   25   -26   25    0    3  102  106 
 SPK-A   "S-42 (PULKOVO 1942), Hungary"   KA   28    2 -121    2   -77    2   40   54   11   29 
 SPK-B   "S-42 (PULKOVO 1942), Poland"    KA   23    4 -124    2   -82    4   43   60    8   30 
@@ -207,10 +227,14 @@ SPK-D   "S-42 (PULKOVO 1942), Latvia"    KA   24    2 -124    2   -82    2   50 
 SPK-E   "S-42 (PK 1942), Kazakhstan"     KA   15   25 -130   25   -84   25   35   62   41   93 
 SPK-F   "S-42 (PULKOVO 1942), Albania"   KA   24    3 -130    3   -92    3   34   48   14   26 
 SPK-G   "S-42 (PULKOVO 1942), Romania"   KA   28    3 -121    5   -77    3   38   54   15   35 
+SPK-H   "S-42 (PULKOVO 1942), Estonia"   KA   22    2 -126    3   -85    3   57   60   21   29 
+SPX     "ST PIERRE et MIQUELON 1950"     CC   30   -1  430   -1   368   -1   46   48  -57  -56 
 SRL     "SIERRA LEONE 1960"              CD  -88   15    4   15   101   15    1   16  -19   -4 
-TAN     "TANANARIVE OBSERVATORY 1925"    IN -189   -1 -242   -1   -91   -1  -34   -8   40   53 
+TAN     "TANANARIVE OBSERVATORY 1925"    IN -191    6 -232    5  -111    2  -34   -8   40   53 
 TDC     "TRISTAN ASTRO 1968"             IN -632   25  438   25  -609   25  -39  -36  -14  -11 
+TEC     "TETE 1960, Mozambique"          CC  -80   10 -100   10  -228   10  -27   -9   30   41 
 TIL     "TIMBALAI 1948, Brunei & E Malay"EB -679   10  669   10   -48   12   -5   15  101  125 
+TIN     "TIMBALAI 1968, Brunei"          EB -679    1  667    6   -49    2    0    7  109  120 
 TOY-A   "TOKYO, Japan"                   BR -148    8  507    5   685    8   19   51  119  156 
 TOY-B   "TOKYO, South Korea"             BR -146    8  507    5   687    8   27   45  120  139 
 TOY-B1  "TOKYO, South Korea"             BR -147    2  506    2   687    2   27   45  120  139 
@@ -222,5 +246,5 @@ VOR     "VOIROL 1960, Algeria"           CD -123   25 -206   25   219   25   13 
 WAK     "WAKE ISLAND ASTRO 1952"         IN  276   25  -57   25   149   25   17   21  164  168 
 YAC     "YACARE, Uruguay"                IN -155   -1  171   -1    37   -1  -40  -25  -65  -47 
 ZAN     "ZANDERIJ, Suriname"             IN -265    5  120    5  -358    8  -10   20  -76  -47 
-KGS     "KOREAN GEO DATUM 1995, S Korea" WE    0    1    0    1     0    1   27   45  120  139 
-SIR     "SIRGAS, South America"          RF    0    1    0    1     0    1  -65  -50  -90  -25 
+YOF     "YOF ASTRO 1967, Senegal"        CD  -30    3  190    3    89    3   11   17  -19  -11 
+

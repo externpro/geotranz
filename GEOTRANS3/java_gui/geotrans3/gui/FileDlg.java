@@ -19,7 +19,7 @@ import geotrans3.misc.StringHandler;
 import geotrans3.utility.DATFileFilter;
 import geotrans3.utility.Directory;
 import geotrans3.utility.Utility;
-import geotrans3.utility.StartBrowser;
+
 /**
  *
  * @author  amyc

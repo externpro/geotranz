@@ -74,6 +74,14 @@ public class MercatorScaleFactorParameters extends CoordinateSystemParameters
   {
     return falseNorthing;
   }
+  
+   public String toString()
+  {
+	return "MercatorScaleFactorParameters: CentralMeridian = " + centralMeridian + 
+	" ScaleFactor = " + scaleFactor +
+	" FalseEasting = " + falseEasting +
+	" FalseNorthing = " + falseNorthing;
+  }
 }
 
 // CLASSIFICATION: UNCLASSIFIED

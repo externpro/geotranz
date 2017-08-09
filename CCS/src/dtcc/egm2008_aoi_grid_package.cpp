@@ -1,7 +1,9 @@
 
+// CLASSIFICATION: UNCLASSIFIED
+
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//          UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED            //
+//   File name: egm2008_aoi_grid_package.cpp                                  //
 //                                                                            //
 //   Description of this module:                                              //
 //      Utility software that interpolates EGM 2008 geoid                     //
@@ -28,6 +30,10 @@
 //   19 Nov 2010  RD Craig      Release                                       //
 //   27 Jan 2011  S. Gillis     BAEts28121, Terrain Service rearchitecture    //
 //   11 Feb 2011  RD Craig      Updates following code review                 //
+//   30 May 2013  RD Craig      MSP 1.3: ER29758                              //
+//                              Added second constructor to                   //
+//                              permit multiple geoid-height grids            //
+//                              when assessing relative interpolation errors. //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
   
@@ -69,10 +75,7 @@ namespace
    const double DEG_PER_RAD      = 180.0 / PI;
    const double RAD_PER_DEG      = PI / 180.0;
 
-   const double DLAT1            = RAD_PER_DEG * (1.0 / 60.0);  // 1' x 1' grid row spacing, radians
-   const double DLON1            = RAD_PER_DEG * (1.0 / 60.0);  // 1' x 1' grid col spacing, radians
-   const double DLAT2_5          = RAD_PER_DEG * (2.5 / 60.0);  // 2.5' x 2.5' grid row spacing, radians
-   const double DLON2_5          = RAD_PER_DEG * (2.5 / 60.0);  // 2.5' x 2.5' grid col spacing, radians
+   const double MTR_PER_NM       = 1852.0;                 // meters per International nautical mile
 
    const double EPSILON          = 1.0e-15;  // ~4 times machine epsilon
 
@@ -86,11 +89,13 @@ using namespace MSP;
 // ** Public user functions **
 // ***************************
 
-// ******************************
-// * Egm2008AoiGrid constructor *
-// ******************************
+// **************************************
+// * Default Egm2008AoiGrid constructor *
+// **************************************
 
-Egm2008AoiGrid::Egm2008AoiGrid (void)
+Egm2008AoiGrid::Egm2008AoiGrid( void )
+
+// : Egm2008GeoidGrid()                            // base class initializer
 {
    // November  19, 2010: Version 1.00
    // February  11, 2011: Version 1.01
@@ -129,6 +134,62 @@ Egm2008AoiGrid::Egm2008AoiGrid (void)
    }
 
 }  // End of Egm2008AoiGrid constuctor
+
+
+// ******************************************
+// * Non-default Egm2008AoiGrid constructor *
+// ******************************************
+
+Egm2008AoiGrid::Egm2008AoiGrid( 
+   const std::string  &gridFname )              // input
+
+: Egm2008GeoidGrid( gridFname )                 // base class initializer
+{
+   // November  19, 2010: Version 1.00
+   // February  11, 2011: Version 1.01
+   // May       30, 2013: Version 2.00
+
+   // Definition:
+
+   // gridFname:             The support geoid-height grid's file name; this
+   //                        file name should not contain the directory path;
+   //                        the base-class constructor will prepend the 
+   //                        path specified by environment variable MSPCCS_DATA.
+
+   int     status;
+
+   // This function implements the
+   // non-default Egm2008AoiGrid constructor.
+
+   // The base class constructor
+   // initialized most data members.
+
+   // Initialize AOI grid parameters .....
+
+   _minAoiRowIndex =  10000000; // these invalid values
+   _maxAoiRowIndex = -10000000; // will force the first 
+   _minAoiColIndex =  10000000; // geoid height request
+   _maxAoiColIndex = -10000000; // to load a new AOI grid
+
+   _nAoiCols       = 0;
+   _nAoiRows       = 0;
+
+   _nomAoiCols     = 0;
+   _nomAoiRows     = 0;
+
+   _heightGrid     = NULL;
+
+   // Get worldwide grid's metadata .....
+
+   status          = this->loadGridMetadata();
+
+   if ( status != 0 )
+   {
+      throw MSP::CCS::CoordinateConversionException(
+         "Error: Egm2008AoiGrid: constructor failed." );
+   }
+
+}  // End of non-default Egm2008AoiGrid constuctor
 
 
 // ***********************************
@@ -957,7 +1018,8 @@ Egm2008AoiGrid::loadGridMetadata( void )
 {
    // November  19, 2010: Version 1.00
    // February  11, 2011: Version 2.00:
-   // the function's name was changed following code review
+   //    the function's name was changed following code review
+   // June       4, 2013: Version 2.01
 
    // This function reads 
    // the grid metadata from NGA's 
@@ -971,6 +1033,8 @@ Egm2008AoiGrid::loadGridMetadata( void )
    // thread locks / unlocks reside in the constructors.
 
    try {
+
+      double         ewDelta;
 
       std::ifstream  fin;
 
@@ -1024,26 +1088,14 @@ Egm2008AoiGrid::loadGridMetadata( void )
       _nGridRows     = _nOrigRows + ( 2 * _nGridPad );
       _nGridCols     = _nOrigCols + ( 2 * _nGridPad ) + 1;
 
-      if ((( _dLat - EPSILON ) <      DLAT1 ) &&
-          (( _dLat + EPSILON ) >      DLAT1 ) &&
-          (( _dLon - EPSILON ) <      DLON1 ) &&
-          (( _dLon + EPSILON ) >      DLON1 ))
-      {
-         _nomAoiCols = NOM_AOI_COLS1;
-         _nomAoiRows = NOM_AOI_ROWS1;
-      }
-      else if ((( _dLat - EPSILON ) < DLAT2_5 ) &&
-               (( _dLat + EPSILON ) > DLAT2_5 ) &&
-               (( _dLon - EPSILON ) < DLON2_5 ) &&
-               (( _dLon + EPSILON ) > DLON2_5 ))
-      {
-         _nomAoiCols = NOM_AOI_COLS2_5;
-         _nomAoiRows = NOM_AOI_ROWS2_5;
-      }
-      else
-      {
-         ;                                                 return( 1 );
-      }
+      ewDelta        = _dLon * SEMI_MAJOR_AXIS;
+
+      _nomAoiCols    = 1 + int( 150.0 * MTR_PER_NM / ewDelta );
+
+      if( _nomAoiCols <            25 ) _nomAoiCols =  25;
+      if( _nomAoiCols > _nOrigCols/40 ) _nomAoiCols = _nOrigCols / 40;
+
+      _nomAoiRows    = _nomAoiCols;
 
       _baseLatitude  =
          -PIDIV2 - _dLat * double( _nGridPad );     // radians
@@ -1058,7 +1110,5 @@ Egm2008AoiGrid::loadGridMetadata( void )
 
 }  // End of function Egm2008AoiGrid::loadGridMetadata
 
-////////////////////////////////////////////////////////////////////////////////
-//          UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED  UNCLASSIFIED            //
-////////////////////////////////////////////////////////////////////////////////
+// CLASSIFICATION: UNCLASSIFIED
 

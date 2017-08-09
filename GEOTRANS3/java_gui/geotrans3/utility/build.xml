@@ -1,0 +1,27 @@
+<!-- CLASSIFICATION: UNCLASSIFIED -->
+
+<project name="geotrans3.utility" default="all">
+
+   <import file="../../../../../../build/common.xml"/>
+   <import file="../../../../../../build/src.xml"/>
+
+   <property name="proj.dir" value="${msp.home}/src/apps/CoordinateConversion"/>
+   <property name="src.dir" value="java_gui"/>
+   <property name="package.dir" value="geotrans3/utility"/>
+
+   <target name="all" depends="compile"/>
+
+   <target name="compile">
+      <compile
+         proj.dir="${proj.dir}"
+         src.dir="${src.dir}"
+         package.dir="${package.dir}"/>
+   </target>  
+
+   <target name="clean">
+      <delete dir="${proj.dir}/build/classes/${package.dir}"/>
+   </target>  
+
+</project>
+
+<!-- CLASSIFICATION: UNCLASSIFIED -->

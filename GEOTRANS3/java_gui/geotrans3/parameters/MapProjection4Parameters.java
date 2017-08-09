@@ -74,6 +74,14 @@ public class MapProjection4Parameters extends CoordinateSystemParameters
   {
     return falseNorthing;
   }
+  
+  public String toString()
+  {
+	return "MapProjection4Parameters: CentralMeridian = " + centralMeridian +
+	" OriginLatitude = " + originLatitude +
+	" FalseEasting = " + falseEasting +
+	" FalseNorthing = " + falseNorthing;
+  }
 }
 
 // CLASSIFICATION: UNCLASSIFIED

@@ -1,5 +1,5 @@
-Source File: 'C:\MSP\Test_Drivers\inputs\localHorizDT-DDFormat.txt'
-Output File: 'C:\MSP\Test_Drivers\outputs\output\localHorizDT-DDFormat.txt'
+Source File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\inputs\localHorizDT-DDFormat.txt'
+Output File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\outputs\output\localHorizDT-DDFormat.txt'
 Display Warnings: '1'
 
 

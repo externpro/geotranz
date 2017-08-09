@@ -621,7 +621,7 @@ int CoordinateConversionService::getServiceVersion()
  * The function getServiceVersion returns current service version.
  */
 
-  return 330;
+  return 340;
 }
 
 

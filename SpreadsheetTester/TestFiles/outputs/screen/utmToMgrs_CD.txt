@@ -1,14 +1,35 @@
-Source File: 'C:\MSP\Test_Drivers\inputs\utmToMgrs_CD.txt'
-Output File: 'C:\MSP\Test_Drivers\outputs\output\utmToMgrs_CD.txt'
+Source File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\inputs\utmToMgrs_CD.txt'
+Output File: 'P:\Engineering\PROGRAMS\P_Imagery\Projects\MSP\Releases\MSP 1.3\GeoTrans\GT3.4_dev_kit\geotrans3.4\SpreadsheetTester\TestFiles\outputs\output\utmToMgrs_CD.txt'
 Display Warnings: '1'
 
+Test Case Id: 101 - Expected: 32VJF9776514135   Calculated: 31VDA9999900000 
+Test Case Id: 113 - Expected: 31XGL0000000000   Calculated: 31XFK9999999999 
+Test Case Id: 117 - Expected: 31XFR0000000000   Calculated: 31XEQ9999999999 
+Test Case Id: 121 - Expected: 31XFA0000000000   Calculated: 31XEV9999999999 
+Test Case Id: 367 - Expected: 32VLA0000000000   Calculated: 32VLV0000099999 
+Test Case Id: 372 - Expected: 32VLF0000000000   Calculated: 32VLE0000099999 
+Test Case Id: 655 - Expected: 33XUL0000000000   Calculated: 33XUK0000099999 
+Test Case Id: 659 - Expected: 33XYL0000000000   Calculated: 33XXK9999999999 
+Test Case Id: 661 - Expected: 33XVR0000000000   Calculated: 33XVQ0000099999 
+Test Case Id: 663 - Expected: 33XXR0000000000   Calculated: 33XWQ9999999999 
+Test Case Id: 665 - Expected: 33XVA0000000000   Calculated: 33XVV0000099999 
+Test Case Id: 667 - Expected: 33XXA0000000000   Calculated: 33XWV9999999999 
+Test Case Id: 1201 - Expected: 35XLL0000000000   Calculated: 35XLK0000099999 
+Test Case Id: 1205 - Expected: 35XQL0000000000   Calculated: 35XPK9999999999 
+Test Case Id: 1207 - Expected: 35XMR0000000000   Calculated: 35XMQ0000099999 
+Test Case Id: 1209 - Expected: 35XPR0000000000   Calculated: 35XNQ9999999999 
+Test Case Id: 1211 - Expected: 35XMA0000000000   Calculated: 35XMV0000099999 
+Test Case Id: 1213 - Expected: 35XPA0000000000   Calculated: 35XNV9999999999 
+Test Case Id: 1747 - Expected: 37XCL0000000000   Calculated: 37XCK0000099999 
+Test Case Id: 1753 - Expected: 37XDR0000000000   Calculated: 37XDQ0000099999 
+Test Case Id: 1757 - Expected: 37XDA0000000000   Calculated: 37XDV0000099999 
 
 
 Results: 
 
 	Successful
-		Equivalent Results	16380 
-		Different Results	0 
+		Equivalent Results	16359 
+		Different Results	21 
 	Warnings
 		Equivalent Results	0 
 		Different Results	0 

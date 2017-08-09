@@ -82,6 +82,16 @@ public class MercatorStandardParallelParameters extends CoordinateSystemParamete
   {
     return falseNorthing;
   }
+  
+  public String toString()
+  {
+	return "MercatorStandardParallelParameters: CentralMeridian = " + centralMeridian +
+	" StandardParallel = " + standardParallel +
+	" ScaleFactor = " + scaleFactor +
+	" FalseEasting = " + falseEasting +
+	" FalseNorthing = " + falseNorthing;
+  }
+
 }
 
 // CLASSIFICATION: UNCLASSIFIED

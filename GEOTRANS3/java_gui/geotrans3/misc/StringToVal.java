@@ -345,14 +345,14 @@ public class StringToVal
         }
         
         if(integer_Minutes < 10)
-          minutesString = "0" + Double.toString(minutes);
+          minutesString = "0" + this.doubleToString(minutes, (precision-2));
         else
-          minutesString = Double.toString(minutes);
+          minutesString = this.doubleToString(minutes, (precision-2));
       }
       else
       {
         degreesString = Integer.toString(integer_Degrees) + latLonSeparator;
-        minutesString = Double.toString(minutes);
+        minutesString = this.doubleToString(minutes, (precision-2));
       }
       
       if(precision <= 2)
@@ -451,9 +451,9 @@ public class StringToVal
             minutesString = Long.toString(integer_Minutes) + latLonSeparator;
 
           if(integer_Seconds < 10)
-            secondsString = "0" + Double.toString(seconds);
+            secondsString = "0" + this.doubleToString(seconds, (precision-4));
           else
-            secondsString = Double.toString(seconds);
+            secondsString = this.doubleToString(seconds, (precision-4));
         }
         else
         {

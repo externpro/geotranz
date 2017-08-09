@@ -90,6 +90,16 @@ public class MapProjection6Parameters extends CoordinateSystemParameters
   {
     return falseNorthing;
   }
+  
+   public String toString()
+  {
+	return "MapProjection6Parameters: CentralMeridian = " + centralMeridian +
+	" OriginLatitude = " + originLatitude +
+	" StandardParallel1 = " + standardParallel1 +
+	" StandardParallel2 = " + standardParallel2 +
+	" FalseEasting = " + falseEasting +
+	" FalseNorthing = " + falseNorthing;
+  }
 }
 
 // CLASSIFICATION: UNCLASSIFIED

@@ -59,6 +59,16 @@ public class MapProjectionCoordinates extends CoordinateTuple
   {
     return northing;
   }
+  
+  public String toString() {
+    String s;
+
+    s = String.valueOf(this.easting) + " " 
+      + String.valueOf(this.northing);
+
+    return s;
+  }
+
 }
 
 // CLASSIFICATION: UNCLASSIFIED

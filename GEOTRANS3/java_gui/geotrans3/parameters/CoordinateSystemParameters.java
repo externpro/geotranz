@@ -11,7 +11,7 @@
 
 package geotrans3.parameters;
 
-
+import geotrans3.coordinates.*;
 import geotrans3.enumerations.CoordinateType;
 
 

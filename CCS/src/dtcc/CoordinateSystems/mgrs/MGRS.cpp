@@ -71,8 +71,9 @@
  *    2-27-07          Original Code
  *    3/23/2011 NGL    BAEts28583 Updated for memory leak in method toUTM,  
  *                     if MGRS input is not within zone letter bounds. 
+ *    9/16/2013 KNL    MSP_29918 Validate MGRS string, display errors if
+ *                     special character is found in input string.
  */
-
 
 /***************************************************************************/
 /*
@@ -82,6 +83,9 @@
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
+#include <stdio.h>
+#include <string>
+#include <sstream>
 #include "UPS.h"
 #include "UTM.h"
 #include "MGRS.h"
@@ -94,6 +98,7 @@
 #include "ErrorMessages.h"
 #include "WarningMessages.h"
 
+using namespace std;
 /*
  *      ctype.h     - Standard C character handling library
  *      math.h      - Standard C math library
@@ -322,6 +327,9 @@ void breakMGRSString(
   {
      if( MGRSString[i] != ' ' )
      {
+        // check for invalid character
+        if (!isdigit(MGRSString[i]) && !isalpha(MGRSString[i]) )
+          throw CoordinateConversionException( ErrorMessages::mgrsString );
         tempMGRSString[j] = MGRSString[i];
         j++;
      }
@@ -408,6 +416,7 @@ void breakMGRSString(
   }
   else
     throw CoordinateConversionException( ErrorMessages::mgrsString );
+
 }
 
 

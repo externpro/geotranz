@@ -66,6 +66,13 @@ public class MapProjection3Parameters extends CoordinateSystemParameters
   {
     return falseNorthing;
   }
+  
+  public String toString()
+  {
+	return "MapProjection3Parameters: CentralMeridian = " + centralMeridian +
+	" FalseEasting = " + falseEasting +
+	" FalseNorthing = " + falseNorthing;
+  }
 }
 
 // CLASSIFICATION: UNCLASSIFIED

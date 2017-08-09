@@ -24,7 +24,7 @@ import geotrans3.coordinates.CoordinateTuple;
 import geotrans3.enumerations.*;
 import geotrans3.exception.CoordinateConversionException;
 import geotrans3.jni.*;
-import geotrans3.misc.FillList;
+import geotrans3.jni.FillList;
 import geotrans3.misc.FormatOptions;
 import geotrans3.misc.Info;
 import geotrans3.misc.StringHandler;

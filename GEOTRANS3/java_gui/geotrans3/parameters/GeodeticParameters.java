@@ -50,6 +50,11 @@ public class GeodeticParameters extends CoordinateSystemParameters
   {
     return heightType;
   }
+  
+  public String toString()
+  {
+	return "GeodeticParameters: Height = " + getHeightType();
+  }
 }
 
 // CLASSIFICATION: UNCLASSIFIED
