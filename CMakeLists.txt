@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(geotrans)
 include(flags OPTIONAL)
-set(lib_name geotrans)
+set(lib_name ${PROJECT_NAME})
 #######################################
 # preprocessor
 include(TestBigEndian)
@@ -154,15 +154,23 @@ set(${lib_name}_data
   geotrans2/data/ellips.dat
   )
 #######################################
+# version
+if(DEFINED GEOTRANS_VER)
+  set(ver _${GEOTRANS_VER})
+  set(verDir /${PROJECT_NAME}${ver})
+endif()
+#######################################
 # library
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
+set_target_properties(${lib_name} PROPERTIES OUTPUT_NAME ${lib_name}${ver})
 #######################################
 # install
-install(TARGETS ${lib_name} EXPORT ${PROJECT_NAME}-targets
+set(targetsFile ${PROJECT_NAME}${ver}-targets)
+install(TARGETS ${lib_name} EXPORT ${targetsFile}
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   )
-install(FILES ${${lib_name}_libhdrs} DESTINATION include/geotrans)
-install(FILES ${${lib_name}_data} DESTINATION include/geotrans/data)
-install(EXPORT ${PROJECT_NAME}-targets DESTINATION lib/cmake)
+install(FILES ${${lib_name}_libhdrs} DESTINATION include${verDir}/${PROJECT_NAME})
+install(FILES ${${lib_name}_data} DESTINATION include${verDir}/${PROJECT_NAME}/data)
+install(EXPORT ${targetsFile} DESTINATION lib/cmake)
