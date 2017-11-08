@@ -172,5 +172,8 @@ install(TARGETS ${lib_name} EXPORT ${targetsFile}
   ARCHIVE DESTINATION lib
   )
 install(FILES ${${lib_name}_libhdrs} DESTINATION include${verDir}/${PROJECT_NAME})
-install(FILES ${${lib_name}_data} DESTINATION include${verDir}/${PROJECT_NAME}/data)
+if(DEFINED CSV_DIR)
+  file(GLOB csvFiles ${CSV_DIR}/*.csv ${CSV_DIR}/README)
+endif()
+install(FILES ${${lib_name}_data} ${csvFiles} DESTINATION include${verDir}/${PROJECT_NAME}/data)
 install(EXPORT ${targetsFile} DESTINATION lib/cmake)
