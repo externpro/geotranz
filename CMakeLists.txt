@@ -162,6 +162,7 @@ endif()
 #######################################
 # library
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
+target_include_directories(${lib_name} PUBLIC $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include${verDir}>)
 set_target_properties(${lib_name} PROPERTIES OUTPUT_NAME ${lib_name}${ver})
 #######################################
 # install
@@ -176,4 +177,7 @@ if(DEFINED CSV_DIR)
   file(GLOB csvFiles ${CSV_DIR}/*.csv ${CSV_DIR}/README)
 endif()
 install(FILES ${${lib_name}_data} ${csvFiles} DESTINATION include${verDir}/${PROJECT_NAME}/data)
-install(EXPORT ${targetsFile} DESTINATION lib/cmake)
+if(DEFINED XP_NAMESPACE)
+  set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
+endif()
+install(EXPORT ${targetsFile} DESTINATION lib/cmake ${nameSpace})
