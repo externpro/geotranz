@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 project(geotrans)
+include(GNUInstallDirs)
 include(flags OPTIONAL)
 set(lib_name ${PROJECT_NAME})
 #######################################
@@ -154,30 +155,26 @@ set(${lib_name}_data
   geotrans2/data/ellips.dat
   )
 #######################################
-# version
-if(DEFINED GEOTRANS_VER)
-  set(ver _${GEOTRANS_VER})
-  set(verDir /${PROJECT_NAME}${ver})
-endif()
-#######################################
 # library
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
-target_include_directories(${lib_name} PUBLIC $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include${verDir}>)
-set_target_properties(${lib_name} PROPERTIES OUTPUT_NAME ${lib_name}${ver})
+target_include_directories(${lib_name} PUBLIC $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 #######################################
 # install
-set(targetsFile ${PROJECT_NAME}${ver}-targets)
+set(targetsFile ${PROJECT_NAME}-targets)
 install(TARGETS ${lib_name} EXPORT ${targetsFile}
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
-install(FILES ${${lib_name}_libhdrs} DESTINATION include${verDir}/${PROJECT_NAME})
+install(FILES ${${lib_name}_libhdrs} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 if(DEFINED CSV_DIR)
   file(GLOB csvFiles ${CSV_DIR}/*.csv ${CSV_DIR}/README)
 endif()
-install(FILES ${${lib_name}_data} ${csvFiles} DESTINATION include${verDir}/${PROJECT_NAME}/data)
+install(FILES ${${lib_name}_data} ${csvFiles} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/data)
 if(DEFINED XP_NAMESPACE)
   set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
 endif()
-install(EXPORT ${targetsFile} DESTINATION lib/cmake ${nameSpace})
+if(NOT DEFINED XP_INSTALL_CMAKEDIR)
+  set(XP_INSTALL_CMAKEDIR ${CMAKE_INSTALL_DATADIR}/cmake)
+endif()
+install(EXPORT ${targetsFile} DESTINATION ${XP_INSTALL_CMAKEDIR} ${nameSpace})
