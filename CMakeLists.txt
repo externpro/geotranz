@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.31)
 project(geotrans)
 include(GNUInstallDirs)
-include(flags OPTIONAL)
+include(xpflags)
 set(lib_name ${PROJECT_NAME})
 #######################################
 # preprocessor
