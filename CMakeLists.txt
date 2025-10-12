@@ -173,22 +173,30 @@ if(MSVC)
   target_compile_definitions(${lib_name} PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif()
 #######################################
-# install
+set(lib ${lib_name})
+if(DEFINED XP_NAMESPACE)
+  set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
+  string(PREPEND lib "${XP_NAMESPACE}::")
+endif()
+if(NOT DEFINED XP_INSTALL_CMAKEDIR)
+  set(XP_INSTALL_CMAKEDIR ${CMAKE_INSTALL_DATADIR}/cmake)
+endif()
 set(targetsFile ${PROJECT_NAME}-targets)
+string(TOUPPER ${PROJECT_NAME} PRJ)
+string(JOIN "\n" EXT3
+  "get_target_property(incDir ${lib} INTERFACE_INCLUDE_DIRECTORIES)"
+  "set(${PRJ}_DATA_DIR \${incDir}/${PROJECT_NAME}/data)"
+  "set(${PRJ}_CREDIT \"The product was developed using GEOTRANS, a product of the National Geospatial-Intelligence Agency (NGA) and U.S. Army Engineering Research and Development Center.\")"
+  "list(APPEND reqVars ${PRJ}_DATA_DIR ${PRJ}_CREDIT)"
+  ""
+  )
+xpPackageDevel(TARGETS_FILE ${targetsFile} LIBRARIES ${lib})
 install(TARGETS ${lib_name} EXPORT ${targetsFile}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
-install(FILES ${${lib_name}_libhdrs} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
-if(DEFINED CSV_DIR)
-  file(GLOB csvFiles ${CSV_DIR}/*.csv ${CSV_DIR}/README)
-endif()
-install(FILES ${${lib_name}_data} ${csvFiles} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/data)
-if(DEFINED XP_NAMESPACE)
-  set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
-endif()
-if(NOT DEFINED XP_INSTALL_CMAKEDIR)
-  set(XP_INSTALL_CMAKEDIR ${CMAKE_INSTALL_DATADIR}/cmake)
-endif()
+install(FILES ${lib_hdrs} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+list(TRANSFORM csvFile PREPEND ${csvDir}/)
+install(FILES ${geotrans2_data} ${csvFile} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/data)
 install(EXPORT ${targetsFile} DESTINATION ${XP_INSTALL_CMAKEDIR} ${nameSpace})
