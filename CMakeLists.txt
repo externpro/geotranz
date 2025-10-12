@@ -5,63 +5,7 @@ include(GNUInstallDirs)
 include(xpflags)
 set(lib_name ${PROJECT_NAME})
 #######################################
-# preprocessor
-include(TestBigEndian)
-test_big_endian(IS_BIG_ENDIAN)
-if(NOT ${IS_BIG_ENDIAN})
-  add_definitions(-DLITTLE_ENDIAN)
-endif()
-if(MSVC)
-  add_definitions(
-    -D_CRT_SECURE_NO_WARNINGS
-    )
-endif()
-#######################################
-# include directories
-include_directories(
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/albers
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/azeq
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/bng
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/bonne
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/cassini
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/cyleqa
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/datum
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/eckert4
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/eckert6
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/ellipse
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/eqdcyl
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/gars
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/geocent
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/geoid
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/georef
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/gnomonic
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/grinten
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/lambert_1
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/lambert_2
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/loccart
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/mercator
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/mgrs
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/miller
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/mollweid
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/neys
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/nzmg
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/omerc
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/orthogr
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/polarst
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/polycon
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/sinusoid
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/stereogr
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/threads
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/tranmerc
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/trcyleqa
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/ups
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/usng
-  ${CMAKE_CURRENT_SOURCE_DIR}/dt_cc/utm
-  ${CMAKE_CURRENT_SOURCE_DIR}/engine/src
-  )
-#######################################
-# library sources
-set(${lib_name}_libsrcs
+set(lib_srcs
   dt_cc/albers/albers.c
   dt_cc/azeq/azeq.c
   dt_cc/bng/bng.c
@@ -104,7 +48,7 @@ set(${lib_name}_libsrcs
   geotrans2/src/strndup.c
   geotrans2/src/strtoval.c
   )
-set(${lib_name}_libhdrs
+set(lib_hdrs
   dt_cc/albers/albers.h
   dt_cc/azeq/azeq.h
   dt_cc/bng/bng.h
@@ -148,7 +92,7 @@ set(${lib_name}_libhdrs
   geotrans2/src/strndup.h
   geotrans2/src/strtoval.h
   )
-set(${lib_name}_data
+set(geotrans2_data
   geotrans2/data/3_param.dat
   geotrans2/data/7_param.dat
   geotrans2/data/egm84.grd
@@ -156,9 +100,25 @@ set(${lib_name}_data
   geotrans2/data/ellips.dat
   )
 #######################################
-# library
-add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
-target_include_directories(${lib_name} PUBLIC $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+add_library(${lib_name} STATIC ${lib_srcs})
+target_include_directories(${lib_name} PUBLIC $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  PRIVATE dt_cc/albers dt_cc/azeq dt_cc/bng dt_cc/bonne dt_cc/cassini dt_cc/cyleqa
+  dt_cc/datum dt_cc/eckert4 dt_cc/eckert6 dt_cc/ellipse dt_cc/eqdcyl
+  dt_cc/gars dt_cc/geocent dt_cc/geoid dt_cc/georef dt_cc/gnomonic dt_cc/grinten
+  dt_cc/lambert_1 dt_cc/lambert_2 dt_cc/loccart
+  dt_cc/mercator dt_cc/mgrs dt_cc/miller dt_cc/mollweid
+  dt_cc/neys dt_cc/nzmg dt_cc/omerc dt_cc/orthogr dt_cc/polarst dt_cc/polycon
+  dt_cc/sinusoid dt_cc/stereogr dt_cc/threads dt_cc/tranmerc dt_cc/trcyleqa
+  dt_cc/ups dt_cc/usng dt_cc/utm engine/src
+  )
+include(TestBigEndian)
+test_big_endian(IS_BIG_ENDIAN)
+if(NOT ${IS_BIG_ENDIAN})
+  target_compile_definitions(${lib_name} PRIVATE LITTLE_ENDIAN)
+endif()
+if(MSVC)
+  target_compile_definitions(${lib_name} PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif()
 #######################################
 # install
 set(targetsFile ${PROJECT_NAME}-targets)
