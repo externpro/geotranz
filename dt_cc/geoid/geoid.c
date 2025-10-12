@@ -67,6 +67,7 @@
  */
 #include <stdio.h>   /* standard C input/output library */
 #include <stdlib.h>  /* standard C library */
+#include <string.h>
 #include "geoid.h"
 #include "threads.h"
 
