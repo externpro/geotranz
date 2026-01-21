@@ -1175,7 +1175,10 @@ long Get_Datum_Type (const long Index,
     error_code |= ENGINE_NOT_INITIALIZED;
   else
   {
-    temp_error = Retrieve_Datum_Type (Index, Type);
+    Datum_Type datum_type;
+    temp_error = Retrieve_Datum_Type(Index, &datum_type);
+    if (temp_error == DATUM_NO_ERROR)
+      *Type = (Define_Datum_Type)datum_type;
     if (temp_error == DATUM_INVALID_INDEX_ERROR)
       error_code |= ENGINE_INVALID_INDEX_ERROR;
     else if (temp_error != DATUM_NO_ERROR)

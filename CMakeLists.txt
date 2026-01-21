@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.31)
 set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES .devcontainer/cmake/xproinc.cmake)
 project(geotranz)
-include(GNUInstallDirs)
-include(xpflags)
 set(lib_name ${PROJECT_NAME})
 #######################################
 set(lib_srcs
@@ -173,24 +171,28 @@ if(MSVC)
   target_compile_definitions(${lib_name} PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif()
 #######################################
-set(lib ${lib_name})
-if(DEFINED XP_NAMESPACE)
-  set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
-  string(PREPEND lib "${XP_NAMESPACE}::")
-endif()
-if(NOT DEFINED XP_INSTALL_CMAKEDIR)
-  set(XP_INSTALL_CMAKEDIR ${CMAKE_INSTALL_DATADIR}/cmake)
-endif()
 set(targetsFile ${PROJECT_NAME}-targets)
-string(TOUPPER ${PROJECT_NAME} PRJ)
-string(JOIN "\n" EXT3
-  "get_target_property(incDir ${lib} INTERFACE_INCLUDE_DIRECTORIES)"
-  "set(${PRJ}_DATA_DIR \${incDir}/${PROJECT_NAME}/data)"
-  "set(${PRJ}_CREDIT \"The product was developed using GEOTRANS, a product of the National Geospatial-Intelligence Agency (NGA) and U.S. Army Engineering Research and Development Center.\")"
-  "list(APPEND reqVars ${PRJ}_DATA_DIR ${PRJ}_CREDIT)"
-  ""
-  )
-xpPackageDevel(TARGETS_FILE ${targetsFile} LIBRARIES ${lib})
+if(DEFINED XP_NAMESPACE)
+  string(TOUPPER ${PROJECT_NAME} PRJ)
+  string(JOIN "\n" EXT3
+    "get_target_property(incDir ${XP_NAMESPACE}::${lib_name} INTERFACE_INCLUDE_DIRECTORIES)"
+    "set(${PRJ}_DATA_DIR \${incDir}/${PROJECT_NAME}/data)"
+    "list(APPEND reqVars ${PRJ}_DATA_DIR)"
+    ""
+    )
+  xpExternPackage(NAMESPACE ${XP_NAMESPACE}
+    TARGETS_FILE ${targetsFile} LIBRARIES ${lib_name}
+    BASE v2.4.2 XPDIFF "intro"
+    WEB "https://earth-info.nga.mil"
+    DESC "geographic translator (convert coordinates)"
+    LICENSE "[public domain](https://github.com/externpro/geotranz 'see GEOTRANS Terms of Use in README or download https://earth-info.nga.mil/php/download.php?file=wgs-terms')"
+    ATTRIBUTION "The product was developed using GEOTRANS, a product of the National Geospatial-Intelligence Agency (NGA) and U.S. Army Engineering Research and Development Center."
+    )
+  set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
+  set(CMAKE_INSTALL_CMAKEDIR ${XP_INSTALL_CMAKEDIR})
+elseif(NOT DEFINED CMAKE_INSTALL_CMAKEDIR)
+  set(CMAKE_INSTALL_CMAKEDIR ${CMAKE_INSTALL_DATADIR}/cmake)
+endif()
 install(TARGETS ${lib_name} EXPORT ${targetsFile}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -199,4 +201,4 @@ install(TARGETS ${lib_name} EXPORT ${targetsFile}
 install(FILES ${lib_hdrs} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 list(TRANSFORM csvFile PREPEND ${csvDir}/)
 install(FILES ${geotrans2_data} ${csvFile} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/data)
-install(EXPORT ${targetsFile} DESTINATION ${XP_INSTALL_CMAKEDIR} ${nameSpace})
+install(EXPORT ${targetsFile} DESTINATION ${CMAKE_INSTALL_CMAKEDIR} ${nameSpace})
