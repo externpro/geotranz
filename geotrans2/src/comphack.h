@@ -7,14 +7,17 @@
 extern "C" {
 #endif
 
-#if ((defined (COMPILER_HAS_NO_BOOLEAN) || !defined __cplusplus) && !defined (BOOL_DEFINED))
+#if (!defined(__cplusplus) && !defined(BOOL_DEFINED))
+
+  #include <stdbool.h>
+  typedef bool boole;
+  #define BOOL_DEFINED
+
+#elif (defined (COMPILER_HAS_NO_BOOLEAN) && !defined (BOOL_DEFINED))
 
   typedef char boole;
+  #define BOOL_DEFINED
 
-  static const boole true = 1;
-  static const boole false = 0;
-
-#define BOOL_DEFINED
 #else
   #define boole bool
 
