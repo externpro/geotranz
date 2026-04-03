@@ -185,7 +185,7 @@ if(DEFINED XP_NAMESPACE)
     BASE v2.4.2 XPDIFF "intro"
     WEB "https://earth-info.nga.mil"
     DESC "geographic translator (convert coordinates)"
-    LICENSE "[public domain](https://github.com/externpro/geotranz 'see GEOTRANS Terms of Use in README or download https://earth-info.nga.mil/php/download.php?file=wgs-terms')"
+    LICENSE "[LicenseRef-NGA-GEOTRANS-Terms-Of-Use](https://github.com/externpro/geotranz/blob/xpro/readme.txt 'GEOTRANS Terms of Use')"
     ATTRIBUTION "The product was developed using GEOTRANS, a product of the National Geospatial-Intelligence Agency (NGA) and U.S. Army Engineering Research and Development Center."
     )
   set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
