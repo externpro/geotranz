@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.31)
-set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES .devcontainer/cmake/xproinc.cmake)
+cmake_minimum_required(VERSION 4.3)
 project(geotranz)
 set(lib_name ${PROJECT_NAME})
 #######################################
@@ -172,23 +171,22 @@ if(MSVC)
 endif()
 #######################################
 set(targetsFile ${PROJECT_NAME}-targets)
-if(DEFINED XP_NAMESPACE)
+if(COMMAND xpExternPackage)
   string(TOUPPER ${PROJECT_NAME} PRJ)
   string(JOIN "\n" EXT3
-    "get_target_property(incDir ${XP_NAMESPACE}::${lib_name} INTERFACE_INCLUDE_DIRECTORIES)"
+    "get_target_property(incDir ${PROJECT_NAME}::${lib_name} INTERFACE_INCLUDE_DIRECTORIES)"
     "set(${PRJ}_DATA_DIR \${incDir}/${PROJECT_NAME}/data)"
     "list(APPEND reqVars ${PRJ}_DATA_DIR)"
     ""
     )
-  xpExternPackage(NAMESPACE ${XP_NAMESPACE}
-    TARGETS_FILE ${targetsFile} LIBRARIES ${lib_name}
+  xpExternPackage(TARGETS_FILE ${targetsFile}
+    LIBRARIES ${lib_name} DEFAULT_TARGETS ${lib_name}
     BASE v2.4.2 XPDIFF "intro"
     WEB "https://earth-info.nga.mil"
     DESC "geographic translator (convert coordinates)"
     LICENSE "[LicenseRef-NGA-GEOTRANS-Terms-Of-Use](https://github.com/externpro/geotranz/blob/xpro/readme.txt 'GEOTRANS Terms of Use')"
     ATTRIBUTION "The product was developed using GEOTRANS, a product of the National Geospatial-Intelligence Agency (NGA) and U.S. Army Engineering Research and Development Center."
     )
-  set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
 elseif(NOT DEFINED CMAKE_INSTALL_CMAKEDIR)
   set(CMAKE_INSTALL_CMAKEDIR ${CMAKE_INSTALL_DATADIR}/cmake)
 endif()
@@ -200,4 +198,4 @@ install(TARGETS ${lib_name} EXPORT ${targetsFile}
 install(FILES ${lib_hdrs} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 list(TRANSFORM csvFile PREPEND ${csvDir}/)
 install(FILES ${geotrans2_data} ${csvFile} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/data)
-install(EXPORT ${targetsFile} DESTINATION ${CMAKE_INSTALL_CMAKEDIR} ${nameSpace})
+install(EXPORT ${targetsFile} DESTINATION ${CMAKE_INSTALL_CMAKEDIR} NAMESPACE ${PROJECT_NAME}::)
