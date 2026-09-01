@@ -179,7 +179,7 @@ if(COMMAND xpExternPackage)
     "list(APPEND reqVars ${PRJ}_DATA_DIR)"
     ""
     )
-  xpExternPackage(TARGETS_FILE ${targetsFile} PKG_CMAKE_USEXT
+  xpExternPackage(TARGETS_FILE ${targetsFile}
     LIBRARIES ${lib_name} DEFAULT_TARGETS ${lib_name}
     BASE v2.4.2 XPDIFF "intro"
     WEB "https://earth-info.nga.mil"
